@@ -2692,11 +2692,11 @@ abstract class RenderBox extends RenderObject {
   bool debugHandleEvent(PointerEvent event, HitTestEntry entry) {
     assert(() {
       if (debugPaintPointersEnabled) {
-        _debugActivePointers += switch (event) {
-          PointerDownEvent() => 1,
-          PointerUpEvent() || PointerCancelEvent() => -1,
-          _ => 0,
-        };
+        if (event is PointerDownEvent) {
+          _debugActivePointers += 1;
+        } else if (event is PointerUpEvent || event is PointerCancelEvent) {
+          _debugActivePointers -= 1;
+        }
         markNeedsPaint();
       }
       return true;

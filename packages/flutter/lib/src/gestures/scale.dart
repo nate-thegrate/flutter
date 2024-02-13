@@ -698,13 +698,16 @@ class ScaleGestureRecognizer extends OneSequenceGestureRecognizer {
   }
 
   void _advanceStateMachine(bool shouldStartIfAccepted, PointerEvent event) {
+    if (_state == _ScaleState.ready) {
+      _state = _ScaleState.possible;
+    }
     switch (_state) {
-      case _ScaleState.ready:
-        _state = _ScaleState.possible;
-      case _ScaleState.possible:
+      case _ScaleState.ready || _ScaleState.possible:
         final double spanDelta = (_currentSpan - _initialSpan).abs();
         final double focalPointDelta = (_currentFocalPoint! - _initialFocalPoint).distance;
-        if (spanDelta > computeScaleSlop(event.kind) || focalPointDelta > computePanSlop(event.kind, gestureSettings) || math.max(_scaleFactor / _pointerScaleFactor, _pointerScaleFactor / _scaleFactor) > 1.05) {
+        if (spanDelta > computeScaleSlop(event.kind)
+            || focalPointDelta > computePanSlop(event.kind, gestureSettings)
+            || math.max(_scaleFactor / _pointerScaleFactor, _pointerScaleFactor / _scaleFactor) > 1.05) {
           resolve(GestureDisposition.accepted);
         }
       case _ScaleState.accepted:

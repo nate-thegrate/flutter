@@ -600,23 +600,25 @@ class _BottomNavigationTile extends StatelessWidget {
       );
     }
 
+    result = Semantics(
+      selected: selected,
+      container: true,
+      child: Stack(
+        children: <Widget>[
+          result,
+          Semantics(
+            label: indexLabel,
+          ),
+        ],
+      ),
+    );
+
     return Expanded(
       flex: switch (type) {
         BottomNavigationBarType.fixed => 1,
         BottomNavigationBarType.shifting => (flex! * 1000.0).round(),
       },
-      child: Semantics(
-        selected: selected,
-        container: true,
-        child: Stack(
-          children: <Widget>[
-            result,
-            Semantics(
-              label: indexLabel,
-            ),
-          ],
-        ),
-      ),
+      child: result,
     );
   }
 }

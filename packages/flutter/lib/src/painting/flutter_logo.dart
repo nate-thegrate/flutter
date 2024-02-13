@@ -432,8 +432,6 @@ class _FlutterLogoPainter extends BoxPainter {
           );
         }
         canvas.restore();
-      default:
-        break;
     }
     _paintLogo(canvas, logoSquare);
     if (_config._opacity < 1.0) {

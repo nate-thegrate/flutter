@@ -278,11 +278,11 @@ abstract class MultiDragGestureRecognizer extends GestureRecognizer {
         // We might be disposed here.
         _removeState(event.pointer);
       case PointerDownEvent():
-        break;
-      default:
         // we get the PointerDownEvent that resulted in our addPointer getting called since we
         // add ourselves to the pointer router then (before the pointer router has heard of
         // the event).
+        break;
+      default:
         assert(false);
     }
   }

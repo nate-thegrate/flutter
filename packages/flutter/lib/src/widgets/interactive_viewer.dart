@@ -1018,10 +1018,8 @@ class _InteractiveViewerState extends State<InteractiveViewer> with TickerProvid
         ));
         widget.onInteractionEnd?.call(ScaleEndDetails());
         return;
-      case PointerScrollEvent() when event.scrollDelta.dy == 0.0:
+      case PointerScrollEvent() when event.scrollDelta.dy != 0.0:
         // Ignore left and right mouse wheel scroll.
-        return;
-      case PointerScrollEvent():
         scaleChange = math.exp(-event.scrollDelta.dy / widget.scaleFactor);
       case PointerScaleEvent():
         scaleChange = event.scale;

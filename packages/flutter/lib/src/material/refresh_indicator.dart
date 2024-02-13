@@ -365,48 +365,48 @@ class RefreshIndicatorState extends State<RefreshIndicator> with TickerProviderS
       if (_mode == _RefreshIndicatorMode.drag || _mode == _RefreshIndicatorMode.armed) {
         _dismiss(_RefreshIndicatorMode.canceled);
       }
-      return false;
-    }
-    switch (notification) {
-      case ScrollUpdateNotification():
-        if (_mode == _RefreshIndicatorMode.drag || _mode == _RefreshIndicatorMode.armed) {
-          if (notification.metrics.axisDirection == AxisDirection.down) {
-            _dragOffset = _dragOffset! - notification.scrollDelta!;
-          } else if (notification.metrics.axisDirection == AxisDirection.up) {
-            _dragOffset = _dragOffset! + notification.scrollDelta!;
-          }
-          _checkDragOffset(notification.metrics.viewportDimension);
+    } else if (notification is ScrollUpdateNotification) {
+      if (_mode == _RefreshIndicatorMode.drag || _mode == _RefreshIndicatorMode.armed) {
+        if (notification.metrics.axisDirection == AxisDirection.down) {
+          _dragOffset = _dragOffset! - notification.scrollDelta!;
+        } else if (notification.metrics.axisDirection == AxisDirection.up) {
+          _dragOffset = _dragOffset! + notification.scrollDelta!;
         }
-        if (_mode == _RefreshIndicatorMode.armed && notification.dragDetails == null) {
-          // On iOS start the refresh when the Scrollable bounces back from the
-          // overscroll (ScrollNotification indicating this don't have dragDetails
-          // because the scroll activity is not directly triggered by a drag).
-          _show();
+        _checkDragOffset(notification.metrics.viewportDimension);
+      }
+      if (_mode == _RefreshIndicatorMode.armed && notification.dragDetails == null) {
+        // On iOS start the refresh when the Scrollable bounces back from the
+        // overscroll (ScrollNotification indicating this don't have dragDetails
+        // because the scroll activity is not directly triggered by a drag).
+        _show();
+      }
+    } else if (notification is OverscrollNotification) {
+      if (_mode == _RefreshIndicatorMode.drag || _mode == _RefreshIndicatorMode.armed) {
+        if (notification.metrics.axisDirection == AxisDirection.down) {
+          _dragOffset = _dragOffset! - notification.overscroll;
+        } else if (notification.metrics.axisDirection == AxisDirection.up) {
+          _dragOffset = _dragOffset! + notification.overscroll;
         }
-      case OverscrollNotification():
-        if (_mode == _RefreshIndicatorMode.drag || _mode == _RefreshIndicatorMode.armed) {
-          if (notification.metrics.axisDirection == AxisDirection.down) {
-            _dragOffset = _dragOffset! - notification.overscroll;
-          } else if (notification.metrics.axisDirection == AxisDirection.up) {
-            _dragOffset = _dragOffset! + notification.overscroll;
-          }
-          _checkDragOffset(notification.metrics.viewportDimension);
-        }
-      case ScrollEndNotification():
-        switch (_mode) {
-          case _RefreshIndicatorMode.armed when _positionController.value < 1.0:
+        _checkDragOffset(notification.metrics.viewportDimension);
+      }
+    } else if (notification is ScrollEndNotification) {
+      switch (_mode) {
+        case _RefreshIndicatorMode.armed:
+          if (_positionController.value < 1.0) {
             _dismiss(_RefreshIndicatorMode.canceled);
-          case _RefreshIndicatorMode.armed:
+          } else {
             _show();
-          case _RefreshIndicatorMode.drag:
-            _dismiss(_RefreshIndicatorMode.canceled);
-          case _RefreshIndicatorMode.canceled:
-          case _RefreshIndicatorMode.done:
-          case _RefreshIndicatorMode.refresh:
-          case _RefreshIndicatorMode.snap:
-          case null:
-            // do nothing
-            break;
+          }
+        case _RefreshIndicatorMode.drag:
+          _dismiss(_RefreshIndicatorMode.canceled);
+        case _RefreshIndicatorMode.canceled:
+        case _RefreshIndicatorMode.done:
+        case _RefreshIndicatorMode.refresh:
+        case _RefreshIndicatorMode.snap:
+        case null:
+          // do nothing
+          break;
+      }
     }
     return false;
   }

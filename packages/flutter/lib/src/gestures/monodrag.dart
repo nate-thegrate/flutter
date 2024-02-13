@@ -404,14 +404,12 @@ abstract class DragGestureRecognizer extends OneSequenceGestureRecognizer {
          event is PointerMoveEvent ||
          event is PointerPanZoomStartEvent ||
          event is PointerPanZoomUpdateEvent)) {
-      _velocityTrackers[event.pointer]!.addPosition(
-        event.timeStamp,
-        switch (event) {
-          PointerPanZoomStartEvent() => Offset.zero,
-          PointerPanZoomUpdateEvent() => event.pan,
-          _ => event.localPosition,
-        },
-      );
+      final Offset position = switch (event) {
+        PointerPanZoomStartEvent() => Offset.zero,
+        PointerPanZoomUpdateEvent() => event.pan,
+        _ => event.localPosition,
+      };
+      _velocityTrackers[event.pointer]!.addPosition(event.timeStamp, position);
     }
     if (event is PointerMoveEvent && event.buttons != _initialButtons) {
       _giveUpPointer(event.pointer);

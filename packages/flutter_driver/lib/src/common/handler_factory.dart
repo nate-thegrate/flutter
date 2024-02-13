@@ -409,15 +409,15 @@ mixin CommandHandlerFactory {
     final Finder target = await waitForElement(finderFactory.createFinder(getTextCommand.finder));
 
     final Widget widget = target.evaluate().single.widget;
-    final String text = switch (widget.runtimeType) {
-      Text => (widget as Text).data,
-      RichText => (widget as RichText).text.toPlainText(
+    final String text = switch (widget) {
+      Text() => widget.data,
+      RichText() => widget.text.toPlainText(
         includeSemanticsLabels: false,
         includePlaceholders: false,
       ),
-      TextField => (widget as TextField).controller?.text,
-      TextFormField => (widget as TextFormField).controller?.text,
-      EditableText => (widget as EditableText).controller.text,
+      TextField() => widget.controller!.text,
+      TextFormField() => widget.controller!.text,
+      EditableText() => widget.controller.text,
       _ => throw UnsupportedError('Type ${widget.runtimeType} is currently not supported by getText'),
     };
 

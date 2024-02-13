@@ -1837,7 +1837,6 @@ class TextInput {
         _scribbleInProgress = false;
         return;
     }
-
     if (_currentConnection == null) {
       return;
     }

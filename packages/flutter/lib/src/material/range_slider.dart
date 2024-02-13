@@ -1227,10 +1227,9 @@ class _RenderRangeSlider extends RenderBox with RelayoutWhenSystemFontsChangeMix
       // a tap, it consists of a call to onChangeStart with the previous value and
       // a call to onChangeEnd with the new value.
       final RangeValues currentValues = _discretizeRangeValues(values);
-      _newValues = switch (_lastThumbSelection) {
+      _newValues = switch (_lastThumbSelection!) {
         Thumb.start => RangeValues(tapValue, currentValues.end),
         Thumb.end   => RangeValues(currentValues.start, tapValue),
-        null => _newValues,
       };
       _updateLabelPainter(_lastThumbSelection!);
 
@@ -1283,10 +1282,9 @@ class _RenderRangeSlider extends RenderBox with RelayoutWhenSystemFontsChangeMix
       }
       final double currentDragValue = _discretize(dragValue);
 
-      _newValues = switch (_lastThumbSelection) {
+      _newValues = switch (_lastThumbSelection!) {
         Thumb.start => RangeValues(math.min(currentDragValue, currentValues.end - _minThumbSeparationValue), currentValues.end),
         Thumb.end   => RangeValues(currentValues.start, math.max(currentDragValue, currentValues.start + _minThumbSeparationValue)),
-        null => _newValues,
       };
       onChanged!(_newValues);
     }

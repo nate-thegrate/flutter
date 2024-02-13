@@ -1454,8 +1454,7 @@ class _ImageWidgetFinder extends MatchFinder {
   bool matches(Element candidate) {
     final Widget widget = candidate.widget;
     return switch (widget) {
-      Image()       => widget.image == image,
-      FadeInImage() => widget.image == image,
+      Image() || FadeInImage() => widget.image == image,
       _ => false,
     };
   }

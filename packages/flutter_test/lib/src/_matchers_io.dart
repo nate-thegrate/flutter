@@ -84,7 +84,7 @@ class MatchesGoldenFile extends AsyncMatcher {
       case Future<ui.Image?>():
         imageFuture = item;
         disposeImage = false;
-      case ui.Image:
+      case ui.Image():
         imageFuture = Future<ui.Image>.value(item);
         disposeImage = false;
       case Finder():
