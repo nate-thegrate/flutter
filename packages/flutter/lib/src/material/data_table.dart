@@ -1075,9 +1075,9 @@ class DataTable extends StatelessWidget {
     for (int dataColumnIndex = 0; dataColumnIndex < columns.length; dataColumnIndex += 1) {
       final DataColumn column = columns[dataColumnIndex];
 
-      final double paddingStart = switch ((dataColumnIndex, displayCheckboxColumn)) {
-        (0, true) when checkboxHorizontalMargin == null => effectiveHorizontalMargin / 2.0,
-        (0, _) => effectiveHorizontalMargin,
+      final double paddingStart = switch (dataColumnIndex) {
+        0 when displayCheckboxColumn && checkboxHorizontalMargin == null => effectiveHorizontalMargin / 2.0,
+        0 => effectiveHorizontalMargin,
         _ => effectiveColumnSpacing / 2.0,
       };
 
