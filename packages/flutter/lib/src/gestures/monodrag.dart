@@ -386,14 +386,10 @@ abstract class DragGestureRecognizer extends OneSequenceGestureRecognizer {
   }
 
   bool _shouldTrackMoveEvent(int pointer) {
-    final bool result;
-    switch (multitouchDragStrategy) {
-      case MultitouchDragStrategy.sumAllPointers:
-        result = true;
-      case MultitouchDragStrategy.latestPointer:
-        result = _acceptedActivePointers.length <= 1 || pointer == _acceptedActivePointers.last;
-    }
-    return result;
+    return switch (multitouchDragStrategy) {
+      MultitouchDragStrategy.sumAllPointers => true,
+      MultitouchDragStrategy.latestPointer => _acceptedActivePointers.length <= 1 || pointer == _acceptedActivePointers.last,
+    };
   }
 
   @override

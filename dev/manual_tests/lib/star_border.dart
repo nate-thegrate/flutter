@@ -474,58 +474,20 @@ const Color lerpToColor = Colors.red;
 const BorderSide lerpToBorder = BorderSide(width: 5, color: lerpToColor);
 
 ShapeBorder? lerpBorder(StarBorder border, LerpTarget target, double t, {bool to = true}) {
-  switch (target) {
-    case LerpTarget.circle:
-      if (to) {
-        return border.lerpTo(const CircleBorder(side: lerpToBorder, eccentricity: 0.5), t);
-      } else {
-        return border.lerpFrom(const CircleBorder(side: lerpToBorder, eccentricity: 0.5), t);
-      }
-    case LerpTarget.roundedRect:
-      if (to) {
-        return border.lerpTo(
-          const RoundedRectangleBorder(
-            side: lerpToBorder,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          t,
-        );
-      } else {
-        return border.lerpFrom(
-          const RoundedRectangleBorder(
-            side: lerpToBorder,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          t,
-        );
-      }
-    case LerpTarget.rect:
-      if (to) {
-        return border.lerpTo(const RoundedRectangleBorder(side: lerpToBorder), t);
-      } else {
-        return border.lerpFrom(const RoundedRectangleBorder(side: lerpToBorder), t);
-      }
-    case LerpTarget.stadium:
-      if (to) {
-        return border.lerpTo(const StadiumBorder(side: lerpToBorder), t);
-      } else {
-        return border.lerpFrom(const StadiumBorder(side: lerpToBorder), t);
-      }
-    case LerpTarget.polygon:
-      if (to) {
-        return border.lerpTo(const StarBorder.polygon(side: lerpToBorder, sides: 4), t);
-      } else {
-        return border.lerpFrom(const StarBorder.polygon(side: lerpToBorder, sides: 4), t);
-      }
-    case LerpTarget.star:
-      if (to) {
-        return border.lerpTo(const StarBorder(side: lerpToBorder, innerRadiusRatio: .5), t);
-      } else {
-        return border.lerpFrom(const StarBorder(side: lerpToBorder, innerRadiusRatio: .5), t);
-      }
-  }
+  return switch ((to, target)) {
+    (true, LerpTarget.roundedRect) => border.lerpTo(const RoundedRectangleBorder(side: lerpToBorder,
+        borderRadius: BorderRadius.all(Radius.circular(10))), t),
+    (false, LerpTarget.roundedRect) => border.lerpFrom(const RoundedRectangleBorder(side: lerpToBorder,
+        borderRadius: BorderRadius.all(Radius.circular(10))), t),
+    (true,  LerpTarget.circle)  => border.lerpTo(const CircleBorder(side: lerpToBorder, eccentricity: 0.5), t),
+    (false, LerpTarget.circle)  => border.lerpFrom(const CircleBorder(side: lerpToBorder, eccentricity: 0.5), t),
+    (true,  LerpTarget.rect)    => border.lerpTo(const RoundedRectangleBorder(side: lerpToBorder), t),
+    (false, LerpTarget.rect)    => border.lerpFrom(const RoundedRectangleBorder(side: lerpToBorder), t),
+    (true,  LerpTarget.stadium) => border.lerpTo(const StadiumBorder(side: lerpToBorder), t),
+    (false, LerpTarget.stadium) => border.lerpFrom(const StadiumBorder(side: lerpToBorder), t),
+    (true,  LerpTarget.polygon) => border.lerpTo(const StarBorder.polygon(side: lerpToBorder, sides: 4), t),
+    (false, LerpTarget.polygon) => border.lerpFrom(const StarBorder.polygon(side: lerpToBorder, sides: 4), t),
+    (true,  LerpTarget.star)    => border.lerpTo(const StarBorder(side: lerpToBorder, innerRadiusRatio: .5), t),
+    (false, LerpTarget.star)    => border.lerpFrom(const StarBorder(side: lerpToBorder, innerRadiusRatio: .5), t),
+  };
 }

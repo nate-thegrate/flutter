@@ -282,20 +282,15 @@ class CardCollectionState extends State<CardCollection> {
       ),
     );
 
-    String backgroundMessage;
-    switch (_dismissDirection) {
-      case DismissDirection.horizontal:
-        backgroundMessage = 'Swipe in either direction';
-      case DismissDirection.endToStart:
-        backgroundMessage = 'Swipe left to dismiss';
-      case DismissDirection.startToEnd:
-        backgroundMessage = 'Swipe right to dismiss';
-      case DismissDirection.vertical:
-      case DismissDirection.up:
-      case DismissDirection.down:
-      case DismissDirection.none:
-        backgroundMessage = 'Unsupported dismissDirection';
-    }
+    final String backgroundMessage = switch (_dismissDirection) {
+      DismissDirection.horizontal => 'Swipe in either direction',
+      DismissDirection.endToStart => 'Swipe left to dismiss',
+      DismissDirection.startToEnd => 'Swipe right to dismiss',
+      DismissDirection.vertical
+        || DismissDirection.up
+        || DismissDirection.down
+        || DismissDirection.none => 'Unsupported dismissDirection',
+    };
 
     // This icon is wrong in RTL.
     Widget leftArrowIcon = const Icon(Icons.arrow_back, size: 36.0);

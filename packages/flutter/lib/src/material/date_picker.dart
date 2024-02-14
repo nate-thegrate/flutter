@@ -482,26 +482,20 @@ class _DatePickerDialogState extends State<DatePickerDialog> with RestorationMix
 
   Size _dialogSize(BuildContext context) {
     final bool useMaterial3 = Theme.of(context).useMaterial3;
+    final bool isInput = switch (_entryMode.value) {
+      DatePickerEntryMode.input || DatePickerEntryMode.inputOnly => true,
+      DatePickerEntryMode.calendar || DatePickerEntryMode.calendarOnly => false,
+    };
     final Orientation orientation = MediaQuery.orientationOf(context);
 
-    switch (_entryMode.value) {
-      case DatePickerEntryMode.calendar:
-      case DatePickerEntryMode.calendarOnly:
-        switch (orientation) {
-          case Orientation.portrait:
-            return useMaterial3 ? _calendarPortraitDialogSizeM3 : _calendarPortraitDialogSizeM2;
-          case Orientation.landscape:
-            return _calendarLandscapeDialogSize;
-        }
-      case DatePickerEntryMode.input:
-      case DatePickerEntryMode.inputOnly:
-        switch (orientation) {
-          case Orientation.portrait:
-            return useMaterial3 ? _inputPortraitDialogSizeM3 : _inputPortraitDialogSizeM2;
-          case Orientation.landscape:
-            return _inputLandscapeDialogSize;
-        }
-    }
+    return switch ((isInput, orientation)) {
+      (true,  Orientation.portrait) when useMaterial3 => _inputPortraitDialogSizeM3,
+      (false, Orientation.portrait) when useMaterial3 => _calendarPortraitDialogSizeM3,
+      (true,  Orientation.portrait)  => _inputPortraitDialogSizeM2,
+      (false, Orientation.portrait)  => _calendarPortraitDialogSizeM2,
+      (true,  Orientation.landscape) => _inputLandscapeDialogSize,
+      (false, Orientation.landscape) => _calendarLandscapeDialogSize,
+    };
   }
 
   static const Map<ShortcutActivator, Intent> _formShortcutMap = <ShortcutActivator, Intent>{

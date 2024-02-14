@@ -475,16 +475,10 @@ class _DropdownMenuState<T> extends State<DropdownMenu<T>> {
     if (widget.requestFocusOnTap != null) {
       return widget.requestFocusOnTap!;
     }
-    switch (Theme.of(context).platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-        return false;
-      case TargetPlatform.macOS:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
-        return true;
-    }
+    return switch (Theme.of(context).platform) {
+      TargetPlatform.iOS || TargetPlatform.android || TargetPlatform.fuchsia => false,
+      TargetPlatform.macOS || TargetPlatform.linux || TargetPlatform.windows => true,
+    };
   }
 
   void refreshLeadingPadding() {

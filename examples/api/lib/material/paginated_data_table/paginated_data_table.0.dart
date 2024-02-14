@@ -12,30 +12,30 @@ class MyDataSource extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
-    switch (index) {
-      case 0: return const DataRow(
+    return switch (index) {
+      0 => const DataRow(
         cells: <DataCell>[
           DataCell(Text('Sarah')),
           DataCell(Text('19')),
           DataCell(Text('Student')),
         ],
-      );
-      case 1: return const DataRow(
+      ),
+      1 => const DataRow(
         cells: <DataCell>[
           DataCell(Text('Janine')),
           DataCell(Text('43')),
           DataCell(Text('Professor')),
         ],
-      );
-      case 2: return const DataRow(
+      ),
+      2 => const DataRow(
         cells: <DataCell>[
           DataCell(Text('William')),
           DataCell(Text('27')),
           DataCell(Text('Associate Professor')),
         ],
-      );
-      default: return null;
-    }
+      ),
+      _ => null,
+    };
   }
 
   @override

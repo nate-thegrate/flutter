@@ -1026,23 +1026,16 @@ class CupertinoDynamicColor extends Color with Diagnosticable {
       ? CupertinoUserInterfaceLevel.maybeOf(context) ?? CupertinoUserInterfaceLevelData.base
       : CupertinoUserInterfaceLevelData.base;
 
-    final Color resolved;
-    switch (brightness) {
-      case Brightness.light:
-        switch (level) {
-          case CupertinoUserInterfaceLevelData.base:
-            resolved = isHighContrastEnabled ? highContrastColor : color;
-          case CupertinoUserInterfaceLevelData.elevated:
-            resolved = isHighContrastEnabled ? highContrastElevatedColor : elevatedColor;
-        }
-      case Brightness.dark:
-        switch (level) {
-          case CupertinoUserInterfaceLevelData.base:
-            resolved = isHighContrastEnabled ? darkHighContrastColor : darkColor;
-          case CupertinoUserInterfaceLevelData.elevated:
-            resolved = isHighContrastEnabled ? darkHighContrastElevatedColor : darkElevatedColor;
-        }
-    }
+    final Color resolved = switch ((brightness, level, isHighContrastEnabled)) {
+      (Brightness.light, CupertinoUserInterfaceLevelData.base,     true)  => highContrastColor,
+      (Brightness.light, CupertinoUserInterfaceLevelData.base,     false) => color,
+      (Brightness.light, CupertinoUserInterfaceLevelData.elevated, true)  => highContrastElevatedColor,
+      (Brightness.light, CupertinoUserInterfaceLevelData.elevated, false) => elevatedColor,
+      (Brightness.dark,  CupertinoUserInterfaceLevelData.base,     true)  => darkHighContrastColor,
+      (Brightness.dark,  CupertinoUserInterfaceLevelData.base,     false) => darkColor,
+      (Brightness.dark,  CupertinoUserInterfaceLevelData.elevated, true)  => darkHighContrastElevatedColor,
+      (Brightness.dark,  CupertinoUserInterfaceLevelData.elevated, false) => darkElevatedColor,
+    };
 
     Element? debugContext;
     assert(() {

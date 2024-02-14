@@ -596,19 +596,14 @@ class Tab2ConversationBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color? backgroundColor;
-    Color? foregroundColor;
-
-    switch (color) {
-      case Tab2ConversationBubbleColor.gray:
-        backgroundColor = CupertinoDynamicColor.resolve(CupertinoColors.systemFill, context);
-        foregroundColor = CupertinoDynamicColor.resolve(CupertinoColors.label, context);
-      case Tab2ConversationBubbleColor.blue:
-        backgroundColor = CupertinoTheme.of(context).primaryColor;
-        foregroundColor = CupertinoColors.white;
-      case null:
-        break;
-    }
+    final (Color? backgroundColor, Color? foregroundColor) = switch (color) {
+      Tab2ConversationBubbleColor.gray => (
+        CupertinoDynamicColor.resolve(CupertinoColors.systemFill, context),
+        CupertinoDynamicColor.resolve(CupertinoColors.label, context),
+      ),
+      Tab2ConversationBubbleColor.blue => (CupertinoTheme.of(context).primaryColor, CupertinoColors.white),
+      null => (null, null),
+    };
 
     return Container(
       decoration: BoxDecoration(

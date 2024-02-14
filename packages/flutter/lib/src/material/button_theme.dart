@@ -444,15 +444,12 @@ class ButtonThemeData with Diagnosticable {
       return _buttonColor;
     }
 
-    switch (getTextTheme(button)) {
-      case ButtonTextTheme.normal:
-      case ButtonTextTheme.accent:
-        return button.enabled ? colorScheme!.primary : getDisabledFillColor(button);
-      case ButtonTextTheme.primary:
-        return button.enabled
-          ? _buttonColor ?? colorScheme!.primary
-          : colorScheme!.onSurface.withOpacity(0.12);
-    }
+    return switch (getTextTheme(button)) {
+      ButtonTextTheme.normal || ButtonTextTheme.accent when button.enabled => colorScheme!.primary,
+      ButtonTextTheme.normal || ButtonTextTheme.accent => getDisabledFillColor(button),
+      ButtonTextTheme.primary when button.enabled => _buttonColor ?? colorScheme!.primary,
+      ButtonTextTheme.primary => colorScheme!.onSurface.withOpacity(0.12),
+    };
   }
 
   /// The foreground color of the [button]'s text and icon.
@@ -617,21 +614,11 @@ class ButtonThemeData with Diagnosticable {
   /// [getTextTheme] is [ButtonTextTheme.primary], 16.0 on the left and right
   /// otherwise.
   EdgeInsetsGeometry getPadding(MaterialButton button) {
-    if (button.padding != null) {
-      return button.padding!;
-    }
-
-    if (_padding != null) {
-      return _padding;
-    }
-
-    switch (getTextTheme(button)) {
-      case ButtonTextTheme.normal:
-      case ButtonTextTheme.accent:
-        return const EdgeInsets.symmetric(horizontal: 16.0);
-      case ButtonTextTheme.primary:
-        return const EdgeInsets.symmetric(horizontal: 24.0);
-    }
+    return button.padding ?? padding ?? switch (getTextTheme(button)) {
+      ButtonTextTheme.normal  => const EdgeInsets.symmetric(horizontal: 16.0),
+      ButtonTextTheme.accent  => const EdgeInsets.symmetric(horizontal: 16.0),
+      ButtonTextTheme.primary => const EdgeInsets.symmetric(horizontal: 24.0),
+    };
   }
 
   /// The shape of the [button]'s [Material].

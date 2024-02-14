@@ -57,23 +57,11 @@ class _BottomNavPageState extends State<_BottomNavPage> {
   List<_TabPage> _tabTwoPages = <_TabPage>[_TabPage.home];
 
   BottomNavigationBarItem _itemForPage(_Tab page) {
-    switch (page) {
-      case _Tab.home:
-        return const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Go to Home',
-        );
-      case _Tab.one:
-        return const BottomNavigationBarItem(
-          icon: Icon(Icons.one_k),
-          label: 'Go to One',
-        );
-      case _Tab.two:
-        return const BottomNavigationBarItem(
-          icon: Icon(Icons.two_k),
-          label: 'Go to Two',
-        );
-    }
+    return switch (page) {
+      _Tab.home => const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Go to Home'),
+      _Tab.one  => const BottomNavigationBarItem(icon: Icon(Icons.one_k), label: 'Go to One'),
+      _Tab.two  => const BottomNavigationBarItem(icon: Icon(Icons.two_k), label: 'Go to Two'),
+    };
   }
 
   Widget _getPage(_Tab page) {

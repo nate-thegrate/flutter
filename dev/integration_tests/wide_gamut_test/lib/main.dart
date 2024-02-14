@@ -277,32 +277,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    late Widget imageWidget;
-    switch (widget.setup) {
-      case Setup.none:
-        imageWidget = Container();
-      case Setup.image:
-        imageWidget = Image.memory(base64Decode(_displayP3Logo));
-      case Setup.drawnImage:
-        imageWidget = CustomPaint(painter: _SaveLayerDrawer(_image));
-      case Setup.canvasSaveLayer:
-        imageWidget = CustomPaint(painter: _SaveLayerDrawer(_image));
-      case Setup.blur:
-        imageWidget = Stack(
-          children: <Widget>[
-            const ColoredBox(
-              color: Color(0xff00ff00),
-              child: SizedBox(
-                width: 100,
-                height: 100,
-              ),
-            ),
-            ImageFiltered(
-                imageFilter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                child: Image.memory(base64Decode(_displayP3Logo))),
-          ],
-        );
-    }
+    final Widget imageWidget = switch (widget.setup) {
+      Setup.none => const SizedBox.shrink(),
+      Setup.image => Image.memory(base64Decode(_displayP3Logo)),
+      Setup.drawnImage => CustomPaint(painter: _SaveLayerDrawer(_image)),
+      Setup.canvasSaveLayer => CustomPaint(painter: _SaveLayerDrawer(_image)),
+      Setup.blur => Stack(
+        children: <Widget>[
+          const ColoredBox(
+            color: Color(0xff00ff00),
+            child: SizedBox(width: 100, height: 100),
+          ),
+          ImageFiltered(
+            imageFilter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+            child: Image.memory(base64Decode(_displayP3Logo)),
+          ),
+        ],
+      ),
+    };
 
     return Scaffold(
       appBar: AppBar(

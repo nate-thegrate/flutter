@@ -626,13 +626,11 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
 
   // Platform or null affinity defaults to trailing.
   ListTileControlAffinity _effectiveAffinity(ListTileControlAffinity? affinity) {
-    switch (affinity ?? ListTileControlAffinity.trailing) {
-      case ListTileControlAffinity.leading:
-        return ListTileControlAffinity.leading;
-      case ListTileControlAffinity.trailing:
-      case ListTileControlAffinity.platform:
-        return ListTileControlAffinity.trailing;
-    }
+    return switch (affinity ?? ListTileControlAffinity.trailing) {
+      ListTileControlAffinity.leading => ListTileControlAffinity.leading,
+      ListTileControlAffinity.trailing => ListTileControlAffinity.trailing,
+      ListTileControlAffinity.platform => ListTileControlAffinity.trailing,
+    };
   }
 
   Widget? _buildIcon(BuildContext context) {
