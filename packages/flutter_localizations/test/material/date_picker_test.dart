@@ -80,11 +80,11 @@ void main() {
           // taking text direction into account.
           final Offset offset = tester.getCenter(dayCell);
           if (previousCellOffset != null) {
-            if (textDirection == TextDirection.ltr) {
-              expect(offset.dx > previousCellOffset.dx && offset.dy == previousCellOffset.dy || offset.dy > previousCellOffset.dy, true);
-            } else {
-              expect(offset.dx < previousCellOffset.dx && offset.dy == previousCellOffset.dy || offset.dy > previousCellOffset.dy, true);
-            }
+            final bool movedForward = switch (textDirection) {
+              TextDirection.ltr => offset.dx > previousCellOffset.dx,
+              TextDirection.rtl => offset.dx < previousCellOffset.dx,
+            };
+            expect(movedForward && offset.dy == previousCellOffset.dy || offset.dy > previousCellOffset.dy, true);
           }
           previousCellOffset = offset;
         }
