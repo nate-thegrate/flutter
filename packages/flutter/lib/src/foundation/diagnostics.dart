@@ -2139,17 +2139,11 @@ class FlagProperty extends DiagnosticsProperty<bool> {
 
   @override
   DiagnosticLevel get level {
-    if (value ?? false) {
-      if (ifTrue == null) {
-        return DiagnosticLevel.hidden;
-      }
-    }
-    if (value == false) {
-      if (ifFalse == null) {
-        return DiagnosticLevel.hidden;
-      }
-    }
-    return super.level;
+    return switch (value) {
+      true  when ifTrue == null => DiagnosticLevel.hidden,
+      false when ifFalse == null => DiagnosticLevel.hidden,
+      _ => super.level,
+    };
   }
 }
 
