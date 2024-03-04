@@ -527,37 +527,40 @@ class _BottomNavigationTile extends StatelessWidget {
     // | text
     // |      <-- Padding equal to 1/2 text height + 1/2 unselectedIconDiff.
     // =======
-    final EdgeInsets padding = switch ((showSelectedLabels, showUnselectedLabels)) {
-      (true, false) => EdgeInsets.only(
-        top: Tween<double>(
-          begin: selectedFontSize + selectedIconDiff / 2.0,
-          end: selectedFontSize / 2.0 - unselectedIconDiff / 2.0,
-        ).evaluate(animation),
-        bottom: Tween<double>(
-          begin: selectedIconDiff / 2.0,
-          end: unselectedIconDiff / 2.0,
-        ).evaluate(animation),
-      ),
-      (false, false) => EdgeInsets.only(
-        top: Tween<double>(
-          begin: selectedFontSize + selectedIconDiff / 2.0,
-          end: selectedFontSize + unselectedIconDiff / 2.0,
-        ).evaluate(animation),
-        bottom: Tween<double>(
-          begin: selectedIconDiff / 2.0,
-          end: unselectedIconDiff / 2.0,
-        ).evaluate(animation),
-      ),
-      _ => EdgeInsets.only(
-        top: Tween<double>(
-          begin: selectedFontSize / 2.0 + selectedIconDiff / 2.0,
-          end: selectedFontSize / 2.0 + unselectedIconDiff / 2.0,
-        ).evaluate(animation),
-        bottom: Tween<double>(
-          begin: selectedFontSize / 2.0 + selectedIconDiff / 2.0,
-          end: selectedFontSize / 2.0 + unselectedIconDiff / 2.0,
-        ).evaluate(animation),
-      ),
+    double bottomPadding;
+    double topPadding;
+    if (showSelectedLabels && !showUnselectedLabels) {
+      bottomPadding = Tween<double>(
+        begin: selectedIconDiff / 2.0,
+        end: selectedFontSize / 2.0 - unselectedIconDiff / 2.0,
+      ).evaluate(animation);
+      topPadding = Tween<double>(
+        begin: selectedFontSize + selectedIconDiff / 2.0,
+        end: selectedFontSize / 2.0 - unselectedIconDiff / 2.0,
+      ).evaluate(animation);
+    } else if (!showSelectedLabels && !showUnselectedLabels) {
+      bottomPadding = Tween<double>(
+        begin: selectedIconDiff / 2.0,
+        end: unselectedIconDiff / 2.0,
+      ).evaluate(animation);
+      topPadding = Tween<double>(
+        begin: selectedFontSize + selectedIconDiff / 2.0,
+        end: selectedFontSize + unselectedIconDiff / 2.0,
+      ).evaluate(animation);
+    } else {
+      bottomPadding = Tween<double>(
+        begin: selectedFontSize / 2.0 + selectedIconDiff / 2.0,
+        end: selectedFontSize / 2.0 + unselectedIconDiff / 2.0,
+      ).evaluate(animation);
+      topPadding = Tween<double>(
+        begin: selectedFontSize / 2.0 + selectedIconDiff / 2.0,
+        end: selectedFontSize / 2.0 + unselectedIconDiff / 2.0,
+      ).evaluate(animation);
+    }
+
+    size = switch (type) {
+      BottomNavigationBarType.fixed => 1,
+      BottomNavigationBarType.shifting => (flex! * 1000.0).round(),
     };
 
     Widget result = InkResponse(
@@ -565,7 +568,7 @@ class _BottomNavigationTile extends StatelessWidget {
       mouseCursor: mouseCursor,
       enableFeedback: enableFeedback,
       child: Padding(
-        padding: padding,
+        padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
         child: _Tile(
           layout: layout,
           icon: _TileIcon(
@@ -614,10 +617,7 @@ class _BottomNavigationTile extends StatelessWidget {
     );
 
     return Expanded(
-      flex: switch (type) {
-        BottomNavigationBarType.fixed => 1,
-        BottomNavigationBarType.shifting => (flex! * 1000.0).round(),
-      },
+      flex: size,
       child: result,
     );
   }

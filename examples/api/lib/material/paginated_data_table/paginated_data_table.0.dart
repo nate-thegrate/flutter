@@ -12,30 +12,16 @@ class MyDataSource extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
-    return switch (index) {
-      0 => const DataRow(
-        cells: <DataCell>[
-          DataCell(Text('Sarah')),
-          DataCell(Text('19')),
-          DataCell(Text('Student')),
-        ],
-      ),
-      1 => const DataRow(
-        cells: <DataCell>[
-          DataCell(Text('Janine')),
-          DataCell(Text('43')),
-          DataCell(Text('Professor')),
-        ],
-      ),
-      2 => const DataRow(
-        cells: <DataCell>[
-          DataCell(Text('William')),
-          DataCell(Text('27')),
-          DataCell(Text('Associate Professor')),
-        ],
-      ),
+    final List<String>? info = switch (index) {
+      0 => <String>['Sarah', '19', 'Student'],
+      1 => <String>['Janine', '43', 'Professor'],
+      2 => <String>['William', '27', 'Associate Professor'],
       _ => null,
     };
+    if (info == null) {
+      return null;
+    }
+    return DataRow(cells: <DataCell>[for (final item in info) DataCell(Text(item))]);
   }
 
   @override

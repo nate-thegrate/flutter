@@ -1233,25 +1233,24 @@ class RenderParagraph extends RenderBox with ContainerRenderObjectMixin<RenderBo
           ..textDirection = initialDirection
           ..attributedLabel = AttributedString(info.semanticsLabel ?? info.text, attributes: info.stringAttributes);
         final GestureRecognizer? recognizer = info.recognizer;
-        switch (recognizer) {
-          case null:
-            break;
-          case TapGestureRecognizer():
+        if (recognizer != null) {
+          if (recognizer is TapGestureRecognizer) {
             if (recognizer.onTap != null) {
               configuration.onTap = recognizer.onTap;
               configuration.isLink = true;
             }
-          case DoubleTapGestureRecognizer():
+          } else if (recognizer is DoubleTapGestureRecognizer) {
             if (recognizer.onDoubleTap != null) {
               configuration.onTap = recognizer.onDoubleTap;
               configuration.isLink = true;
             }
-          case LongPressGestureRecognizer():
+          } else if (recognizer is LongPressGestureRecognizer) {
             if (recognizer.onLongPress != null) {
               configuration.onLongPress = recognizer.onLongPress;
             }
-          default:
+          } else {
             assert(false, '${recognizer.runtimeType} is not supported.');
+          }
         }
         if (node.parentPaintClipRect != null) {
           final Rect paintRect = node.parentPaintClipRect!.intersect(currentRect);

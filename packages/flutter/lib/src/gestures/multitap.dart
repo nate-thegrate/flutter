@@ -251,17 +251,18 @@ class DoubleTapGestureRecognizer extends GestureRecognizer {
 
   void _handleEvent(PointerEvent event) {
     final _TapTracker tracker = _trackers[event.pointer]!;
-    switch (event) {
-      case PointerUpEvent() when _firstTap == null:
+    if (event is PointerUpEvent) {
+      if (_firstTap == null) {
         _registerFirstTap(tracker);
-      case PointerUpEvent():
+      } else {
         _registerSecondTap(tracker);
-      case PointerMoveEvent():
-        if (!tracker.isWithinGlobalTolerance(event, kDoubleTapTouchSlop)) {
-          _reject(tracker);
-        }
-      case PointerCancelEvent():
+      }
+    } else if (event is PointerMoveEvent) {
+      if (!tracker.isWithinGlobalTolerance(event, kDoubleTapTouchSlop)) {
         _reject(tracker);
+      }
+    } else if (event is PointerCancelEvent) {
+      _reject(tracker);
     }
   }
 
@@ -412,15 +413,18 @@ class _TapGesture extends _TapTracker {
 
   void handleEvent(PointerEvent event) {
     assert(event.pointer == pointer);
-    switch (event) {
-      case PointerMoveEvent() when isWithinGlobalTolerance(event, computeHitSlop(event.kind, gestureSettings)):
-        _lastPosition = OffsetPair.fromEventPosition(event);
-      case PointerMoveEvent() || PointerCancelEvent():
+    if (event is PointerMoveEvent) {
+      if (!isWithinGlobalTolerance(event, computeHitSlop(event.kind, gestureSettings))) {
         cancel();
-      case PointerUpEvent():
-        stopTrackingPointer(handleEvent);
-        _finalPosition = OffsetPair.fromEventPosition(event);
-        _check();
+      } else {
+        _lastPosition = OffsetPair.fromEventPosition(event);
+      }
+    } else if (event is PointerCancelEvent) {
+      cancel();
+    } else if (event is PointerUpEvent) {
+      stopTrackingPointer(handleEvent);
+      _finalPosition = OffsetPair.fromEventPosition(event);
+      _check();
     }
   }
 
@@ -899,13 +903,14 @@ class SerialTapGestureRecognizer extends GestureRecognizer {
     assert(_pendingTap != null);
     assert(_pendingTap!.pointer == event.pointer);
     final _TapTracker tracker = _pendingTap!;
-    switch (event) {
-      case PointerUpEvent():
-        _registerTap(event, tracker);
-      case PointerMoveEvent() when tracker.isWithinGlobalTolerance(event, kDoubleTapTouchSlop):
-        break;
-      case PointerMoveEvent() || PointerCancelEvent():
+    if (event is PointerUpEvent) {
+      _registerTap(event, tracker);
+    } else if (event is PointerMoveEvent) {
+      if (!tracker.isWithinGlobalTolerance(event, kDoubleTapTouchSlop)) {
         _reset();
+      }
+    } else if (event is PointerCancelEvent) {
+      _reset();
     }
   }
 

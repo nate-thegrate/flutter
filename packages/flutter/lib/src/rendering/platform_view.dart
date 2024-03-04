@@ -486,13 +486,12 @@ class _UiKitViewGestureRecognizer extends OneSequenceGestureRecognizer {
         // The below gesture recognizers requires at least one non-empty callback to
         // compete in the gesture arena.
         // https://github.com/flutter/flutter/issues/35394#issuecomment-562285087
-        switch (gestureRecognizer) {
-          case LongPressGestureRecognizer():
-            gestureRecognizer.onLongPress ??= (){};
-          case DragGestureRecognizer():
-            gestureRecognizer.onDown ??= (_){};
-          case TapGestureRecognizer():
-            gestureRecognizer.onTapDown ??= (_){};
+        if (gestureRecognizer is LongPressGestureRecognizer) {
+          gestureRecognizer.onLongPress ??= (){};
+        } else if (gestureRecognizer is DragGestureRecognizer) {
+          gestureRecognizer.onDown ??= (_){};
+        } else if (gestureRecognizer is TapGestureRecognizer) {
+          gestureRecognizer.onTapDown ??= (_){};
         }
         return gestureRecognizer;
       },
@@ -563,13 +562,12 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
         // The below gesture recognizers requires at least one non-empty callback to
         // compete in the gesture arena.
         // https://github.com/flutter/flutter/issues/35394#issuecomment-562285087
-        switch (gestureRecognizer) {
-          case LongPressGestureRecognizer():
-            gestureRecognizer.onLongPress ??= (){};
-          case DragGestureRecognizer():
-            gestureRecognizer.onDown ??= (_){};
-          case TapGestureRecognizer():
-            gestureRecognizer.onTapDown ??= (_){};
+        if (gestureRecognizer is LongPressGestureRecognizer) {
+          gestureRecognizer.onLongPress ??= (){};
+        } else if (gestureRecognizer is DragGestureRecognizer) {
+          gestureRecognizer.onDown ??= (_){};
+        } else if (gestureRecognizer is TapGestureRecognizer) {
+          gestureRecognizer.onTapDown ??= (_){};
         }
         return gestureRecognizer;
       },

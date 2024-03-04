@@ -404,7 +404,6 @@ class StartContext extends Context {
       ReleaseType.STABLE_HOTFIX  => Version.increment(lastVersion, 'z'),
       ReleaseType.BETA_INITIAL   => Version.fromCandidateBranch(candidateBranch),
       ReleaseType.BETA_HOTFIX    => Version.increment(lastVersion, 'n'),
-      _ => throw StateError('unreachable'),
     };
   }
 

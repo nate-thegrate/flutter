@@ -16,13 +16,12 @@ class RenderDots extends RenderConstrainedBox {
 
   @override
   void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
-    switch (event) {
-      case PointerDownEvent() || PointerMoveEvent():
-        _dots[event.pointer] = event.position;
-        markNeedsPaint();
-      case PointerUpEvent() || PointerCancelEvent():
-        _dots.remove(event.pointer);
-        markNeedsPaint();
+    if (event is PointerDownEvent || event is PointerMoveEvent) {
+      _dots[event.pointer] = event.position;
+      markNeedsPaint();
+    } else if (event is PointerUpEvent || event is PointerCancelEvent) {
+      _dots.remove(event.pointer);
+      markNeedsPaint();
     }
   }
 
