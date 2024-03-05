@@ -521,11 +521,9 @@ class _MismatchedCall extends Error {
 
 bool _evaluatePainter(Object? object, Canvas canvas, PaintingContext context) {
   switch (object) {
-    case _ContextPainterFunction():
-      final _ContextPainterFunction function = object;
+    case final _ContextPainterFunction function:
       function(context, Offset.zero);
-    case _CanvasPainterFunction():
-      final _CanvasPainterFunction function = object;
+    case final _CanvasPainterFunction function:
       function(canvas);
     case Finder():
       TestAsyncUtils.guardSync();

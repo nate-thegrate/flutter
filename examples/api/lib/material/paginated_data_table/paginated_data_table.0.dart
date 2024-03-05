@@ -13,9 +13,9 @@ class MyDataSource extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final List<String>? info = switch (index) {
-      0 => <String>['Sarah', '19', 'Student'],
-      1 => <String>['Janine', '43', 'Professor'],
-      2 => <String>['William', '27', 'Associate Professor'],
+      0 => const <String>['Sarah', '19', 'Student'],
+      1 => const <String>['Janine', '43', 'Professor'],
+      2 => const <String>['William', '27', 'Associate Professor'],
       _ => null,
     };
     if (info == null) {

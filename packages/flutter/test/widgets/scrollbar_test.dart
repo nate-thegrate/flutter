@@ -242,7 +242,7 @@ void main() {
 
           switch (axisDirectionToAxis(direction)) {
             case Axis.vertical:
-              expect(margin, switch ((textDirection)) {
+              expect(margin, switch (textDirection) {
                 TextDirection.ltr => size.width - rect.right,
                 TextDirection.rtl => rect.left,
               });

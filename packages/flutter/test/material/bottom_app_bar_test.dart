@@ -66,13 +66,10 @@ void main() {
     );
     final Widget widget = tester.widgetList(finder).single;
     switch (widget) {
-      case PhysicalShape():
-        expect(widget.color, bottomAppBarColor);
-      case PhysicalModel():
+      case PhysicalShape() || PhysicalModel():
         expect(widget.color, bottomAppBarColor);
       default:
-        // Should be unreachable: compare with the finder.
-        assert(false);
+        assert(false); // Should be unreachable: compare with the finder.
     }
   });
 

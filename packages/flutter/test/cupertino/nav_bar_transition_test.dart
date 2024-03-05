@@ -67,15 +67,11 @@ CupertinoPageScaffold? scaffoldForNavBar(Widget? navBar) {
       );
     case CupertinoSliverNavigationBar():
       return CupertinoPageScaffold(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            navBar,
-            // Add filler so it's scrollable.
-            const SliverToBoxAdapter(
-              child: Placeholder(fallbackHeight: 1000.0),
-            ),
-          ],
-        ),
+        child: CustomScrollView(slivers: <Widget>[
+          navBar,
+          // Add filler so it's scrollable.
+          const SliverToBoxAdapter(child: Placeholder(fallbackHeight: 1000.0)),
+        ]),
       );
     default:
       assert(false, 'Unexpected nav bar type ${navBar.runtimeType}');

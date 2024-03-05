@@ -2114,7 +2114,7 @@ class FlagProperty extends DiagnosticsProperty<bool> {
   @override
   String valueToString({ TextTreeConfiguration? parentConfiguration }) {
     return switch (value) {
-      true  when ifTrue  != null => ifTrue!,
+      true when ifTrue != null => ifTrue!,
       false when ifFalse != null => ifFalse!,
       _ => super.valueToString(parentConfiguration: parentConfiguration),
     };

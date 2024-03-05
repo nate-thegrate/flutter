@@ -448,8 +448,7 @@ class IOSCoreDevice {
   String? get udid => hardwareProperties?.udid;
 
   DeviceConnectionInterface? get connectionInterface {
-    final String? transportType = connectionProperties?.transportType?.toLowerCase();
-    return switch (transportType) {
+    return switch (connectionProperties?.transportType?.toLowerCase()) {
       'localnetwork' => DeviceConnectionInterface.wireless,
       'wired' => DeviceConnectionInterface.attached,
       _ => null,
