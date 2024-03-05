@@ -132,7 +132,7 @@ class FlutterDevice {
             extraFrontEndOptions.add('--sound-null-safety');
           }
         case NullSafetyMode.autodetect:
-          throw StateError('Expected buildInfo.nullSafetyMode to be one of unsound or sound, got ${buildInfo.nullSafetyMode}');
+          throw StateError('Expected buildInfo.nullSafetyMode to be one of unsound or sound, got NullSafetyMode.autodetect');
       }
 
       final String platformDillPath = globals.fs.path.join(

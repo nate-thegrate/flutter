@@ -2151,23 +2151,22 @@ class _MatchesReferenceImage extends AsyncMatcher {
   Future<String?> matchAsync(dynamic item) async {
     Future<ui.Image> imageFuture;
     final bool disposeImage; // set to true if the matcher created and owns the image and must therefore dispose it.
-    switch (item) {
-      case Future<ui.Image>():
-        imageFuture = item;
-        disposeImage = false;
-      case ui.Image:
-        imageFuture = Future<ui.Image>.value(item);
-        disposeImage = false;
-      default:
-        final Finder finder = item as Finder;
-        final Iterable<Element> elements = finder.evaluate();
-        if (elements.isEmpty) {
-          return 'could not be rendered because no widget was found';
-        } else if (elements.length > 1) {
-          return 'matched too many widgets';
-        }
-        imageFuture = captureImage(elements.single);
-        disposeImage = true;
+    if (item is Future<ui.Image>) {
+      imageFuture = item;
+      disposeImage = false;
+    } else if (item is ui.Image) {
+      imageFuture = Future<ui.Image>.value(item);
+      disposeImage = false;
+    } else {
+      final Finder finder = item as Finder;
+      final Iterable<Element> elements = finder.evaluate();
+      if (elements.isEmpty) {
+        return 'could not be rendered because no widget was found';
+      } else if (elements.length > 1) {
+        return 'matched too many widgets';
+      }
+      imageFuture = captureImage(elements.single);
+      disposeImage = true;
     }
 
     final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.instance;

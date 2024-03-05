@@ -330,15 +330,7 @@ class _CupertinoListTileState extends State<CupertinoListTile> {
     };
 
     final Widget child = Container(
-      constraints: BoxConstraints(
-        minWidth: double.infinity,
-        minHeight: switch (widget._type) {
-          _CupertinoListTileType.base when subtitle != null => _kMinHeightWithSubtitle,
-          _CupertinoListTileType.notched when widget.leading != null => _kNotchedMinHeight,
-          _CupertinoListTileType.base => _kMinHeight,
-          _CupertinoListTileType.notched => _kNotchedMinHeightWithoutLeading,
-        },
-      ),
+      constraints: BoxConstraints(minWidth: double.infinity, minHeight: minHeight),
       color: backgroundColor,
       child: Padding(
         padding: padding,

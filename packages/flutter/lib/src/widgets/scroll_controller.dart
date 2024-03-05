@@ -322,12 +322,11 @@ class ScrollController extends ChangeNotifier {
     if (initialScrollOffset != 0.0) {
       description.add('initialScrollOffset: ${initialScrollOffset.toStringAsFixed(1)}, ');
     }
-    final int clientCount = _positions.length;
-    description.add(switch (clientCount) {
+    description.add(switch (_positions.length) {
       0 => 'no clients',
       // Don't actually list the client itself, since its toString may refer to us.
       1 => 'one client, offset ${offset.toStringAsFixed(1)}',
-      _ => '$clientCount clients',
+      _ => '${_positions.length} clients',
     });
   }
 }

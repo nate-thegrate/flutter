@@ -420,7 +420,7 @@ class _ReorderableListViewState extends State<ReorderableListView> {
       restorationId: widget.restorationId,
       clipBehavior: widget.clipBehavior,
       slivers: <Widget>[
-        if (header != null)
+        if (widget.header != null)
           SliverPadding(
             padding: headerPadding,
             sliver: SliverToBoxAdapter(child: widget.header),
@@ -440,7 +440,7 @@ class _ReorderableListViewState extends State<ReorderableListView> {
             autoScrollerVelocityScalar: widget.autoScrollerVelocityScalar,
           ),
         ),
-        if (footer != null)
+        if (widget.footer != null)
           SliverPadding(
             padding: footerPadding,
             sliver: SliverToBoxAdapter(child: widget.footer),

@@ -607,15 +607,6 @@ class AnimationController extends Animation<double>
       AnimationBehavior.normal when SemanticsBinding.instance.disableAnimations => 0.05,
       AnimationBehavior.normal || AnimationBehavior.preserve => 1.0,
     };
-    final double scale = switch (animationBehavior) {
-      // Since the framework cannot handle zero duration animations, we run it at 5% of the normal
-      // duration to limit most animations to a single frame.
-      // Ideally, the framework would be able to handle zero duration animations, however, the common
-      // pattern of an eternally repeating animation might cause an endless loop if it weren't delayed
-      // for at least one frame.
-      AnimationBehavior.normal when SemanticsBinding.instance.disableAnimations => 0.05,
-      AnimationBehavior.normal || AnimationBehavior.preserve => 1.0,
-    };
     Duration? simulationDuration = duration;
     if (simulationDuration == null) {
       assert(!(this.duration == null && _direction == _AnimationDirection.forward));

@@ -108,10 +108,8 @@ class DaemonInputStreamConverter {
           final int bytesSent = _addBinaryChunk(chunk, start, remainingBinaryLength);
           start += bytesSent;
           remainingBinaryLength -= bytesSent;
-
           if (remainingBinaryLength <= 0) {
             assert(remainingBinaryLength == 0);
-
             unawaited(currentBinaryStream.close());
             state = _InputStreamParseState.json;
           }

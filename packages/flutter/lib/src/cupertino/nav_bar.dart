@@ -2450,10 +2450,18 @@ Widget _navBarHeroFlightShuttleBuilder(
     'The to nav bar to Hero must have been mounted in the previous frame',
   );
 
-  final (Widget bottomNavBar, Widget topNavBar) = switch (flightDirection) {
-    HeroFlightDirection.push => (fromNavBar, toNavBar),
-    HeroFlightDirection.pop  => (toNavBar, fromNavBar),
-  };
-
-  return _NavigationBarTransition(animation: animation, bottomNavBar: bottomNavBar, topNavBar: topNavBar);
+  switch (flightDirection) {
+    case HeroFlightDirection.push:
+      return _NavigationBarTransition(
+        animation: animation,
+        bottomNavBar: fromNavBar,
+        topNavBar: toNavBar,
+      );
+    case HeroFlightDirection.pop:
+      return _NavigationBarTransition(
+        animation: animation,
+        bottomNavBar: toNavBar,
+        topNavBar: fromNavBar,
+      );
+  }
 }

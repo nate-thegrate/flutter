@@ -597,11 +597,11 @@ class Tab2ConversationBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (Color? backgroundColor, Color? foregroundColor) = switch (color) {
+      Tab2ConversationBubbleColor.blue => (CupertinoTheme.of(context).primaryColor, CupertinoColors.white),
       Tab2ConversationBubbleColor.gray => (
         CupertinoDynamicColor.resolve(CupertinoColors.systemFill, context),
         CupertinoDynamicColor.resolve(CupertinoColors.label, context),
       ),
-      Tab2ConversationBubbleColor.blue => (CupertinoTheme.of(context).primaryColor, CupertinoColors.white),
       null => (null, null),
     };
 

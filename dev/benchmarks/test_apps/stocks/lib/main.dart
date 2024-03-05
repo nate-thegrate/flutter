@@ -47,14 +47,11 @@ class StocksAppState extends State<StocksApp> {
   }
 
   ThemeData get theme {
-    return ThemeData(
-      useMaterial3: false,
-      brightness: switch (_configuration) {
-        StockMode.optimistic => Brightness.light,
-        StockMode.pessimistic => Brightness.dark,
-      },
-      primarySwatch: Colors.purple,
-    );
+    final Brightness brightness = switch (_configuration) {
+      StockMode.optimistic => Brightness.light,
+      StockMode.pessimistic => Brightness.dark,
+    };
+    return ThemeData(useMaterial3: false, brightness: brightness, primarySwatch: Colors.purple);
   }
 
   Route<dynamic>? _getRoute(RouteSettings settings) {
