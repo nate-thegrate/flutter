@@ -427,8 +427,7 @@ class CurvedAnimation extends Animation<double> with AnimationWithParentMixin<do
   void _updateCurveDirection(AnimationStatus status) {
     _curveDirection = switch (status) {
       AnimationStatus.dismissed || AnimationStatus.completed => null,
-      AnimationStatus.forward => _curveDirection ?? AnimationStatus.forward,
-      AnimationStatus.reverse => _curveDirection ?? AnimationStatus.reverse,
+      AnimationStatus.forward || AnimationStatus.reverse => _curveDirection ?? status,
     };
   }
 

@@ -614,7 +614,7 @@ class ButtonThemeData with Diagnosticable {
   /// [getTextTheme] is [ButtonTextTheme.primary], 16.0 on the left and right
   /// otherwise.
   EdgeInsetsGeometry getPadding(MaterialButton button) {
-    return button.padding ?? padding ?? switch (getTextTheme(button)) {
+    return button.padding ?? _padding ?? switch (getTextTheme(button)) {
       ButtonTextTheme.normal  => const EdgeInsets.symmetric(horizontal: 16.0),
       ButtonTextTheme.accent  => const EdgeInsets.symmetric(horizontal: 16.0),
       ButtonTextTheme.primary => const EdgeInsets.symmetric(horizontal: 24.0),

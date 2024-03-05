@@ -2246,10 +2246,7 @@ class EnumProperty<T extends Enum?> extends DiagnosticsProperty<T> {
 
   @override
   String valueToString({ TextTreeConfiguration? parentConfiguration }) {
-    if (value == null) {
-      return value.toString();
-    }
-    return value!.name;
+    return value?.name ?? 'null';
   }
 }
 
@@ -2918,7 +2915,6 @@ String describeIdentity(Object? object) => '${objectRuntimeType(object, '<optimi
 ///
 /// void validateDescribeEnum() {
 ///   assert(Day.monday.toString() == 'Day.monday');
-///   // ignore: deprecated_member_use
 ///   assert(describeEnum(Day.monday) == 'monday');
 ///   assert(Day.monday.name == 'monday'); // preferred for real enums
 /// }

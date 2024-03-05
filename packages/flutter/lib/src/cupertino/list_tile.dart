@@ -289,9 +289,9 @@ class _CupertinoListTileState extends State<CupertinoListTile> {
 
     final EdgeInsetsGeometry padding = widget.padding ?? switch (widget._type) {
       _CupertinoListTileType.base when widget.subtitle != null => _kPaddingWithSubtitle,
-      _CupertinoListTileType.notched when widget.leading != null => _kNotchedPaddingWithoutLeading,
+      _CupertinoListTileType.notched when widget.leading != null => _kNotchedPadding,
       _CupertinoListTileType.base => _kPadding,
-      _CupertinoListTileType.notched => _kNotchedPadding,
+      _CupertinoListTileType.notched => _kNotchedPaddingWithoutLeading,
     };
 
     Widget? subtitle;
@@ -321,6 +321,13 @@ class _CupertinoListTileState extends State<CupertinoListTile> {
     if (_tapped) {
       backgroundColor = widget.backgroundColorActivated ?? CupertinoColors.systemGrey4.resolveFrom(context);
     }
+
+    final double minHeight = switch (widget._type) {
+      _CupertinoListTileType.base when subtitle != null => _kMinHeightWithSubtitle,
+      _CupertinoListTileType.notched when widget.leading != null => _kNotchedMinHeight,
+      _CupertinoListTileType.base => _kMinHeight,
+      _CupertinoListTileType.notched => _kNotchedMinHeightWithoutLeading,
+    };
 
     final Widget child = Container(
       constraints: BoxConstraints(
