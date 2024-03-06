@@ -823,16 +823,14 @@ abstract class BoxScrollView extends ScrollView {
         final EdgeInsets mediaQueryVerticalPadding =
             mediaQuery.padding.copyWith(left: 0.0, right: 0.0);
         // Consume the main axis padding with SliverPadding.
-        effectivePadding = scrollDirection == Axis.vertical
-            ? mediaQueryVerticalPadding
-            : mediaQueryHorizontalPadding;
+        final EdgeInsets crossPadding;
+        (effectivePadding, crossPadding) = switch (direction) {
+          Axis.horizontal => (mediaQueryHorizontalPadding, mediaQueryVerticalPadding),
+          Axis.vertical   => (mediaQueryVerticalPadding, mediaQueryHorizontalPadding),
+        };
         // Leave behind the cross axis padding.
         sliver = MediaQuery(
-          data: mediaQuery.copyWith(
-            padding: scrollDirection == Axis.vertical
-                ? mediaQueryHorizontalPadding
-                : mediaQueryVerticalPadding,
-          ),
+          data: mediaQuery.copyWith(padding: crossPadding),
           child: sliver,
         );
       }

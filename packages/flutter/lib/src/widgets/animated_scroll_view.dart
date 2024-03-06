@@ -604,16 +604,14 @@ abstract class _AnimatedScrollViewState<T extends _AnimatedScrollView> extends S
         final EdgeInsets mediaQueryVerticalPadding =
             mediaQuery.padding.copyWith(left: 0.0, right: 0.0);
         // Consume the main axis padding with SliverPadding.
-        effectivePadding = direction == Axis.vertical
-            ? mediaQueryVerticalPadding
-            : mediaQueryHorizontalPadding;
+        final EdgeInsets crossPadding;
+        (effectivePadding, crossPadding) = switch (direction) {
+          Axis.horizontal => (mediaQueryHorizontalPadding, mediaQueryVerticalPadding),
+          Axis.vertical   => (mediaQueryVerticalPadding, mediaQueryHorizontalPadding),
+        };
         // Leave behind the cross axis padding.
         sliver = MediaQuery(
-          data: mediaQuery.copyWith(
-            padding: direction == Axis.vertical
-                ? mediaQueryHorizontalPadding
-                : mediaQueryVerticalPadding,
-          ),
+          data: mediaQuery.copyWith(padding: crossPadding),
           child: sliver,
         );
       }

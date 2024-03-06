@@ -133,14 +133,12 @@ class StdoutHandler {
       compilerOutput?.complete(output);
       return;
     }
-    if (state == StdoutState.CollectDiagnostic) {
-      if (!_suppressCompilerMessages) {
-        _logger.printError(message);
-      } else {
+    switch (state) {
+      case StdoutState.CollectDiagnostic when _suppressCompilerMessages:
         _logger.printTrace(message);
-      }
-    } else {
-      assert(state == StdoutState.CollectDependencies);
+      case StdoutState.CollectDiagnostic:
+        _logger.printError(message);
+      case StdoutState.CollectDependencies:
       switch (message[0]) {
         case '+':
           sources.add(Uri.parse(message.substring(1)));

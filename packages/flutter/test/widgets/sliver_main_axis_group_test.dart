@@ -756,16 +756,16 @@ Widget _buildSliverList({
   return SliverList(
     delegate: SliverChildBuilderDelegate(
       (BuildContext context, int i) {
-        return scrollDirection == Axis.vertical
-          ? SizedBox(
-            key: ValueKey<int>(items[i]),
-            height: itemMainAxisExtent,
-            child: label(items[i]),
-          )
-          : SizedBox(
-            key: ValueKey<int>(items[i]),
-            width: itemMainAxisExtent,
-            child: label(items[i]));
+        final (double? width, double? height) = switch (scrollDirection) {
+          Axis.horizontal => (itemMainAxisExtent, null),
+          Axis.vertical   => (null, itemMainAxisExtent),
+        };
+        return SizedBox(
+          key: ValueKey<int>(items[i]),
+          width: width,
+          height: height,
+          child: label(items[i]),
+        );
       },
       findChildIndexCallback: (Key key) {
         final ValueKey<int> valueKey = key as ValueKey<int>;

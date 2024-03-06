@@ -625,9 +625,7 @@ class SliverReorderableListState extends State<SliverReorderableList> with Ticke
 
   late ScrollableState _scrollable;
   Axis get _scrollDirection => axisDirectionToAxis(_scrollable.axisDirection);
-  bool get _reverse =>
-    _scrollable.axisDirection == AxisDirection.up ||
-    _scrollable.axisDirection == AxisDirection.left;
+  bool get _reverse => axisDirectionIsReversed(_scrollable.axisDirection);
 
   @override
   void didChangeDependencies() {
@@ -991,9 +989,10 @@ class SliverReorderableListState extends State<SliverReorderableList> with Ticke
       semanticsActions[CustomSemanticsAction(label: localizations.reorderItemToStart)] = moveToStart;
       String reorderItemBefore = localizations.reorderItemUp;
       if (isHorizontal) {
-        reorderItemBefore = Directionality.of(context) == TextDirection.ltr
-            ? localizations.reorderItemLeft
-            : localizations.reorderItemRight;
+        reorderItemBefore = switch (Directionality.of(context)) {
+          TextDirection.rtl => localizations.reorderItemRight,
+          TextDirection.ltr => localizations.reorderItemLeft,
+        };
       }
       semanticsActions[CustomSemanticsAction(label: reorderItemBefore)] = moveBefore;
     }
@@ -1002,9 +1001,10 @@ class SliverReorderableListState extends State<SliverReorderableList> with Ticke
     if (index < widget.itemCount - 1) {
       String reorderItemAfter = localizations.reorderItemDown;
       if (isHorizontal) {
-        reorderItemAfter = Directionality.of(context) == TextDirection.ltr
-            ? localizations.reorderItemRight
-            : localizations.reorderItemLeft;
+        reorderItemAfter = switch (Directionality.of(context)) {
+          TextDirection.rtl => localizations.reorderItemLeft,
+          TextDirection.ltr => localizations.reorderItemRight,
+        };
       }
       semanticsActions[CustomSemanticsAction(label: reorderItemAfter)] = moveAfter;
       semanticsActions[CustomSemanticsAction(label: localizations.reorderItemToEnd)] = moveToEnd;

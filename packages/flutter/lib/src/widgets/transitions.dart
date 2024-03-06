@@ -482,12 +482,10 @@ class SizeTransition extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AlignmentDirectional alignment;
-    if (axis == Axis.vertical) {
-      alignment = AlignmentDirectional(-1.0, axisAlignment);
-    } else {
-      alignment = AlignmentDirectional(axisAlignment, -1.0);
-    }
+    final AlignmentDirectional alignment = switch (axis) {
+      Axis.horizontal => AlignmentDirectional(axisAlignment, -1.0),
+      Axis.vertical   => AlignmentDirectional(-1.0, axisAlignment),
+    };
     return ClipRect(
       child: Align(
         alignment: alignment,
