@@ -685,10 +685,10 @@ abstract class CompoundAnimation<T> extends Animation<T>
   /// Otherwise, default to [first].
   @override
   AnimationStatus get status {
-    if (next.status == AnimationStatus.forward || next.status == AnimationStatus.reverse) {
-      return next.status;
-    }
-    return first.status;
+    return switch (next.status) {
+      AnimationStatus.forward || AnimationStatus.reverse => next.status,
+      AnimationStatus.completed || AnimationStatus.dismissed => first.status,
+    };
   }
 
   @override

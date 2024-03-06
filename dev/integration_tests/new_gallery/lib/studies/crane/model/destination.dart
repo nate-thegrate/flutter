@@ -54,12 +54,12 @@ class FlyDestination extends Destination {
     if (duration == null) {
       return stopsText;
     } else {
-      final TextDirection? textDirection = GalleryOptions.of(context).resolvedTextDirection();
       final String durationText =
           formattedDuration(context, duration!, abbreviated: true);
-      return textDirection == TextDirection.ltr
-          ? '$stopsText · $durationText'
-          : '$durationText · $stopsText';
+      return switch (GalleryOptions.of(context).resolvedTextDirection()) {
+        TextDirection.rtl => '$durationText · $stopsText',
+        TextDirection.ltr => '$stopsText · $durationText',
+      };
     }
   }
 

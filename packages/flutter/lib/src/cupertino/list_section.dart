@@ -375,15 +375,16 @@ class CupertinoListSection extends StatelessWidget {
     Widget? headerWidget;
     if (header != null) {
       headerWidget = DefaultTextStyle(
-        style: CupertinoTheme.of(context).textTheme.textStyle.merge(
-              type == CupertinoListSectionType.base
-                  ? TextStyle(
-                      fontSize: 13.0,
-                      color: CupertinoDynamicColor.resolve(
-                          _kHeaderFooterColor, context))
-                  : const TextStyle(
-                      fontSize: 20.0, fontWeight: FontWeight.bold),
-            ),
+        style: CupertinoTheme.of(context).textTheme.textStyle.merge(switch (type) {
+          CupertinoListSectionType.base => TextStyle(
+            fontSize: 13.0,
+            color: CupertinoDynamicColor.resolve(_kHeaderFooterColor, context),
+          ),
+          CupertinoListSectionType.insetGrouped => const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        }),
         child: header!,
       );
     }
@@ -391,13 +392,12 @@ class CupertinoListSection extends StatelessWidget {
     Widget? footerWidget;
     if (footer != null) {
       footerWidget = DefaultTextStyle(
-        style: type == CupertinoListSectionType.base
-            ? CupertinoTheme.of(context).textTheme.textStyle.merge(TextStyle(
-                  fontSize: 13.0,
-                  color: CupertinoDynamicColor.resolve(
-                      _kHeaderFooterColor, context),
-                ))
-            : CupertinoTheme.of(context).textTheme.textStyle,
+        style: switch (type) {
+          CupertinoListSectionType.base => CupertinoTheme.of(context).textTheme.textStyle.merge(
+            TextStyle(fontSize: 13.0, color: CupertinoDynamicColor.resolve(_kHeaderFooterColor, context)),
+          ),
+          CupertinoListSectionType.insetGrouped => CupertinoTheme.of(context).textTheme.textStyle,
+        },
         child: footer!,
       );
     }
@@ -464,9 +464,10 @@ class CupertinoListSection extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: type == CupertinoListSectionType.base
-                    ? _kDefaultHeaderMargin
-                    : _kInsetGroupedDefaultHeaderMargin,
+                padding: switch (type) {
+                  CupertinoListSectionType.base => _kDefaultHeaderMargin,
+                  CupertinoListSectionType.insetGrouped => _kInsetGroupedDefaultHeaderMargin,
+                },
                 child: headerWidget,
               ),
             ),
@@ -476,9 +477,10 @@ class CupertinoListSection extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: type == CupertinoListSectionType.base
-                    ? _kDefaultFooterMargin
-                    : _kInsetGroupedDefaultFooterMargin,
+                padding: switch (type) {
+                  CupertinoListSectionType.base => _kDefaultFooterMargin,
+                  CupertinoListSectionType.insetGrouped => _kInsetGroupedDefaultFooterMargin,
+                },
                 child: footerWidget,
               ),
             ),

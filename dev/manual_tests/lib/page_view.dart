@@ -47,40 +47,29 @@ class PageViewAppState extends State<PageViewApp> {
   bool itemsWrap = false;
 
   Widget buildCard(CardModel cardModel) {
-    final Widget card = Card(
-      color: cardModel.color,
-      child: Container(
-        width: cardModel.size.width,
-        height: cardModel.size.height,
-        padding: const EdgeInsets.all(8.0),
-        child: Center(child: Text(cardModel.label, style: cardLabelStyle)),
-      ),
-    );
-
-    final BoxConstraints constraints = (scrollDirection == Axis.vertical)
-      ? BoxConstraints.tightFor(height: pageSize.height)
-      : BoxConstraints.tightFor(width: pageSize.width);
-
     return Container(
       key: cardModel.key,
-      constraints: constraints,
-      child: Center(child: card),
+      constraints: switch (scrollDirection) {
+        Axis.horizontal => BoxConstraints.tightFor(width: pageSize.width),
+        Axis.vertical => BoxConstraints.tightFor(height: pageSize.height),
+      },
+      child: Center(
+        child: Card(
+          color: cardModel.color,
+          child: Container(
+            width: cardModel.size.width,
+            height: cardModel.size.height,
+            padding: const EdgeInsets.all(8.0),
+            child: Center(child: Text(cardModel.label, style: cardLabelStyle)),
+          ),
+        ),
+      ),
     );
   }
 
-  void switchScrollDirection() {
-    setState(() {
-      scrollDirection = (scrollDirection == Axis.vertical)
-        ? Axis.horizontal
-        : Axis.vertical;
-    });
-  }
+  void switchScrollDirection() => setState(() => scrollDirection = flipAxis(scrollDirection));
 
-  void toggleItemsWrap() {
-    setState(() {
-      itemsWrap = !itemsWrap;
-    });
-  }
+  void toggleItemsWrap() => setState(() => itemsWrap = !itemsWrap);
 
   Widget _buildDrawer() {
     return Drawer(
@@ -113,9 +102,7 @@ class PageViewAppState extends State<PageViewApp> {
   AppBar _buildAppBar() {
     return AppBar(
       title: const Text('PageView'),
-      actions: <Widget>[
-        Text(scrollDirection == Axis.horizontal ? 'horizontal' : 'vertical'),
-      ],
+      actions: <Widget>[Text(scrollDirection.name)],
     );
   }
 

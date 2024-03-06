@@ -1277,21 +1277,15 @@ class _CurvedAnimationBuilderState extends State<_CurvedAnimationBuilder> {
   // direction.
   void _updateStatus(AnimationStatus status) {
     if (_animationDirection != status) {
-      setState(() {
-        _animationDirection = status;
-      });
+      setState(() => _animationDirection = status);
     }
-
-    if (status == AnimationStatus.completed || status == AnimationStatus.dismissed) {
-      setState(() {
-        _preservedDirection = null;
-      });
-    }
-
-    if (_preservedDirection == null && (status == AnimationStatus.forward || status == AnimationStatus.reverse)) {
-      setState(() {
-        _preservedDirection = status;
-      });
+    switch (status) {
+      case AnimationStatus.forward || AnimationStatus.reverse when _preservedDirection != null:
+        break;
+      case AnimationStatus.forward || AnimationStatus.reverse:
+        setState(() => _preservedDirection = status);
+      case AnimationStatus.completed || AnimationStatus.dismissed:
+        setState(() => _preservedDirection = null);
     }
   }
 
@@ -1310,8 +1304,10 @@ class _CurvedAnimationBuilderState extends State<_CurvedAnimationBuilder> {
 /// Returns `true` if this animation is ticking forward, or has completed,
 /// based on [status].
 bool _isForwardOrCompleted(Animation<double> animation) {
-  return animation.status == AnimationStatus.forward
-      || animation.status == AnimationStatus.completed;
+  return switch (animation.status) {
+    AnimationStatus.forward || AnimationStatus.completed => true,
+    AnimationStatus.reverse || AnimationStatus.dismissed => false,
+  };
 }
 
 NavigationBarThemeData _defaultsFor(BuildContext context) {

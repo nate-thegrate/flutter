@@ -35,11 +35,11 @@ class _SettingsIconPainter extends CustomPainter {
   /// The icon is aligned to the bottom-start corner.
   void _computeCenterAndScaling(Size size) {
     _scaling = min(size.width / unitWidth, size.height / unitHeight);
-    _center = Directionality.of(context) == TextDirection.ltr
-        ? Offset(
-            unitWidth * _scaling / 2, size.height - unitHeight * _scaling / 2)
-        : Offset(size.width - unitWidth * _scaling / 2,
-            size.height - unitHeight * _scaling / 2);
+    final double offsetX = switch (Directionality.of(context)) {
+      TextDirection.rtl => size.width - unitWidth * _scaling / 2,
+      TextDirection.ltr => unitWidth * _scaling / 2,
+    };
+    _center = Offset(offsetX, size.height - unitHeight * _scaling / 2);
   }
 
   /// Transforms an offset in relative units into an offset in logical pixels.
@@ -61,11 +61,10 @@ class _SettingsIconPainter extends CustomPainter {
 
   /// Black or white paint, depending on brightness.
   Paint get _monoPaint {
-    final Color monoColor =
-        Theme.of(context).colorScheme.brightness == Brightness.light
-            ? Colors.black
-            : Colors.white;
-    return Paint()..color = monoColor;
+    return Paint()..color = switch (Theme.of(context).colorScheme.brightness) {
+      Brightness.light => Colors.black,
+      Brightness.dark  => Colors.white,
+    };
   }
 
   /// Pink paint with horizontal gradient.

@@ -302,9 +302,10 @@ class _FilterChipDefaultsM3 extends ChipThemeData {
   late final TextTheme _textTheme = Theme.of(context).textTheme;
 
   @override
-  double? get elevation => _chipVariant == _ChipVariant.flat
-    ? 0.0
-    : isEnabled ? 1.0 : 0.0;
+  double? get elevation => switch (_chipVariant) {
+    _ChipVariant.elevated when isEnabled => 1.0,
+    _ChipVariant.elevated || _ChipVariant.flat => 0.0,
+  };
 
   @override
   double? get pressElevation => 1.0;
@@ -322,29 +323,28 @@ class _FilterChipDefaultsM3 extends ChipThemeData {
   MaterialStateProperty<Color?>? get color =>
     MaterialStateProperty.resolveWith((Set<MaterialState> states) {
       if (states.contains(MaterialState.selected) && states.contains(MaterialState.disabled)) {
-        return _chipVariant == _ChipVariant.flat
-          ? _colors.onSurface.withOpacity(0.12)
-          : _colors.onSurface.withOpacity(0.12);
+        return _colors.onSurface.withOpacity(0.12);
       }
       if (states.contains(MaterialState.disabled)) {
-        return _chipVariant == _ChipVariant.flat
-          ? null
-          : _colors.onSurface.withOpacity(0.12);
+        return switch (_chipVariant) {
+          _ChipVariant.flat => null,
+          _ChipVariant.elevated => _colors.onSurface.withOpacity(0.12),
+        };
       }
       if (states.contains(MaterialState.selected)) {
-        return _chipVariant == _ChipVariant.flat
-          ? _colors.secondaryContainer
-          : _colors.secondaryContainer;
+        return _colors.secondaryContainer;
       }
-      return _chipVariant == _ChipVariant.flat
-        ? null
-        : _colors.surfaceContainerLow;
+      return switch (_chipVariant) {
+        _ChipVariant.flat => null,
+        _ChipVariant.elevated => _colors.surfaceContainerLow,
+      };
     });
 
   @override
-  Color? get shadowColor => _chipVariant == _ChipVariant.flat
-    ? Colors.transparent
-    : _colors.shadow;
+  Color? get shadowColor => switch (_chipVariant) {
+    _ChipVariant.flat => Colors.transparent,
+    _ChipVariant.elevated => _colors.shadow,
+  };
 
   @override
   Color? get surfaceTintColor => Colors.transparent;

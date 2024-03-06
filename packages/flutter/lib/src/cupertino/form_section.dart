@@ -210,24 +210,25 @@ class CupertinoFormSection extends StatelessWidget {
             ),
             child: footer!);
 
-    return _type == CupertinoListSectionType.base
-        ? CupertinoListSection(
-            header: headerWidget,
-            footer: footerWidget,
-            margin: margin,
-            backgroundColor: backgroundColor,
-            decoration: decoration,
-            clipBehavior: clipBehavior,
-            hasLeading: false,
-            children: children)
-        : CupertinoListSection.insetGrouped(
-            header: headerWidget,
-            footer: footerWidget,
-            margin: margin,
-            backgroundColor: backgroundColor,
-            decoration: decoration,
-            clipBehavior: clipBehavior,
-            hasLeading: false,
-            children: children);
+    return switch (_type) {
+      CupertinoListSectionType.base => CupertinoListSection(
+        header: headerWidget,
+        footer: footerWidget,
+        margin: margin,
+        backgroundColor: backgroundColor,
+        decoration: decoration,
+        clipBehavior: clipBehavior,
+        hasLeading: false,
+        children: children),
+      CupertinoListSectionType.insetGrouped => CupertinoListSection.insetGrouped(
+        header: headerWidget,
+        footer: footerWidget,
+        margin: margin,
+        backgroundColor: backgroundColor,
+        decoration: decoration,
+        clipBehavior: clipBehavior,
+        hasLeading: false,
+        children: children),
+    };
   }
 }

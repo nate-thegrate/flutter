@@ -1334,20 +1334,15 @@ class _SearchBarState extends State<SearchBar> {
       ?? searchBarTheme.textStyle?.resolve(states)
       ?? defaults.hintStyle?.resolve(states);
 
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-    bool isIconThemeColorDefault(Color? color) {
-      if (isDark) {
-        return color == kDefaultIconLightColor;
-      }
-      return color == kDefaultIconDarkColor;
-    }
+    final bool isDefaultColor = switch (Theme.of(context).brightness) {
+      Brightness.light => iconTheme.color == kDefaultIconDarkColor,
+      Brightness.dark  => iconTheme.color == kDefaultIconLightColor,
+    };
 
     Widget? leading;
     if (widget.leading != null) {
       leading = IconTheme.merge(
-        data: isIconThemeColorDefault(iconTheme.color)
-          ? IconThemeData(color: colorScheme.onSurface)
-          : iconTheme,
+        data: isDefaultColor ? IconThemeData(color: colorScheme.onSurface) : iconTheme,
         child: widget.leading!,
       );
     }
@@ -1355,9 +1350,7 @@ class _SearchBarState extends State<SearchBar> {
     List<Widget>? trailing;
     if (widget.trailing != null) {
       trailing = widget.trailing?.map((Widget trailing) => IconTheme.merge(
-        data: isIconThemeColorDefault(iconTheme.color)
-          ? IconThemeData(color: colorScheme.onSurfaceVariant)
-          : iconTheme,
+        data: isDefaultColor ? IconThemeData(color: colorScheme.onSurfaceVariant) : iconTheme,
         child: trailing,
       )).toList();
     }

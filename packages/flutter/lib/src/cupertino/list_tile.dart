@@ -261,19 +261,15 @@ class _CupertinoListTileState extends State<CupertinoListTile> {
                   ),
                 );
 
-    final TextStyle subtitleTextStyle = widget._type == _CupertinoListTileType.base
-        ? CupertinoTheme.of(context).textTheme.textStyle.merge(
-              TextStyle(
-                fontSize: _kSubtitleFontSize,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
-              ),
-            )
-        : CupertinoTheme.of(context).textTheme.textStyle.merge(
-              TextStyle(
-                fontSize: _kNotchedSubtitleFontSize,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
-              ),
-            );
+    final TextStyle subtitleTextStyle = CupertinoTheme.of(context).textTheme.textStyle.merge(
+      TextStyle(
+        fontSize: switch (widget._type) {
+          _CupertinoListTileType.base => _kSubtitleFontSize,
+          _CupertinoListTileType.notched => _kNotchedSubtitleFontSize,
+        },
+        color: CupertinoColors.secondaryLabel.resolveFrom(context),
+      ),
+    );
 
     final TextStyle? additionalInfoTextStyle = widget.additionalInfo != null
         ? CupertinoTheme.of(context).textTheme.textStyle.merge(

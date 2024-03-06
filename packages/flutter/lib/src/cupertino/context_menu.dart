@@ -825,20 +825,23 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
   static Rect _getSheetRectBegin(Orientation? orientation, _ContextMenuLocation contextMenuLocation, Rect childRect, Rect sheetRect) {
     switch (contextMenuLocation) {
       case _ContextMenuLocation.center:
-        final Offset target = orientation == Orientation.portrait
-          ? childRect.bottomCenter
-          : childRect.topCenter;
+        final Offset target = switch (orientation) {
+          Orientation.portrait  => childRect.bottomCenter,
+          Orientation.landscape => childRect.topCenter,
+        };
         final Offset centered = target - Offset(sheetRect.width / 2, 0.0);
         return centered & sheetRect.size;
       case _ContextMenuLocation.right:
-        final Offset target = orientation == Orientation.portrait
-          ? childRect.bottomRight
-          : childRect.topRight;
+        final Offset target = switch (orientation) {
+          Orientation.portrait  => childRect.bottomRight,
+          Orientation.landscape => childRect.topRight,
+        };
         return (target - Offset(sheetRect.width, 0.0)) & sheetRect.size;
       case _ContextMenuLocation.left:
-        final Offset target = orientation == Orientation.portrait
-          ? childRect.bottomLeft
-          : childRect.topLeft;
+        final Offset target = switch (orientation) {
+          Orientation.portrait  => childRect.bottomLeft,
+          Orientation.landscape => childRect.topLeft,
+        };
         return target & sheetRect.size;
     }
   }
@@ -950,25 +953,22 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
         // While the animation is running, render everything in a Stack so that
         // they're movable.
         if (!animation.isCompleted) {
-          final bool reverse = animation.status == AnimationStatus.reverse;
-          final Rect rect = reverse
-            ? _rectAnimatableReverse.evaluate(animation)!
-            : _rectAnimatable.evaluate(animation)!;
-          final Rect sheetRect = reverse
-            ? _sheetRectAnimatableReverse.evaluate(animation)!
-            : _sheetRectAnimatable.evaluate(animation)!;
-          final double sheetScale = reverse
-            ? _sheetScaleAnimatableReverse.evaluate(animation)
-            : _sheetScaleAnimatable.evaluate(animation);
+          final Animatable<Rect?> rect, sheetRect;
+          final Animatable<double> sheetScale;
+          (rect, sheetRect, sheetScale) = switch (animation.status) {
+            AnimationStatus.dismissed || AnimationStatus.forward
+              || AnimationStatus.completed => (_rectAnimatable, _sheetRectAnimatable, _sheetScaleAnimatable),
+            AnimationStatus.reverse => (_rectAnimatableReverse, _sheetRectAnimatableReverse, _sheetScaleAnimatableReverse),
+          };
           return Stack(
             children: <Widget>[
               Positioned.fromRect(
-                rect: sheetRect,
+                rect: sheetRect.evaluate(animation)!,
                 child: FadeTransition(
                   opacity: _sheetOpacity,
                   child: Transform.scale(
                     alignment: getSheetAlignment(_contextMenuLocation),
-                    scale: sheetScale,
+                    scale: sheetScale.evaluate(animation),
                     child: _ContextMenuSheet(
                       key: _sheetGlobalKey,
                       actions: _actions,
@@ -980,7 +980,7 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
               ),
               Positioned.fromRect(
                 key: _childGlobalKey,
-                rect: rect,
+                rect: rect.evaluate(animation)!,
                 child: _builder!(context, animation),
               ),
             ],
@@ -1304,15 +1304,14 @@ class _ContextMenuRouteStaticState extends State<_ContextMenuRouteStatic> with T
           child: AnimatedBuilder(
             animation: _moveController,
             builder: _buildAnimation,
-            child: widget.orientation == Orientation.portrait
-              ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: children,
-              )
-              : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: children,
-              ),
+            child: Flex(
+              direction: switch (widget.orientation) {
+                Orientation.portrait  => Axis.vertical,
+                Orientation.landscape => Axis.horizontal,
+              },
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: children,
+            ),
           ),
         ),
       ),

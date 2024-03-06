@@ -44,9 +44,10 @@ class DesktopTextSelectionToolbarButton extends StatelessWidget {
          text,
          overflow: TextOverflow.ellipsis,
          style: _kToolbarButtonFontStyle.copyWith(
-           color: Theme.of(context).colorScheme.brightness == Brightness.dark
-               ? Colors.white
-               : Colors.black87,
+           color: switch (Theme.of(context).colorScheme.brightness) {
+            Brightness.light => Colors.black87,
+            Brightness.dark  => Colors.white,
+           },
          ),
        );
 
@@ -58,11 +59,6 @@ class DesktopTextSelectionToolbarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(hansmuller): Should be colorScheme.onSurface
-    final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.colorScheme.brightness == Brightness.dark;
-    final Color foregroundColor = isDark ? Colors.white : Colors.black87;
-
     return SizedBox(
       width: double.infinity,
       child: TextButton(
@@ -70,7 +66,11 @@ class DesktopTextSelectionToolbarButton extends StatelessWidget {
           alignment: Alignment.centerLeft,
           enabledMouseCursor: SystemMouseCursors.basic,
           disabledMouseCursor: SystemMouseCursors.basic,
-          foregroundColor: foregroundColor,
+          // TODO(hansmuller): Should be colorScheme.onSurface
+          foregroundColor: switch (Theme.of(context).colorScheme.brightness) {
+            Brightness.light => Colors.black87,
+            Brightness.dark  => Colors.white,
+          },
           shape: const RoundedRectangleBorder(),
           minimumSize: const Size(kMinInteractiveDimension, 36.0),
           padding: _kToolbarButtonPadding,
