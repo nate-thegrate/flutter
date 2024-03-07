@@ -5580,10 +5580,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
   }
 }
 
-enum _RouteRestorationType {
-  named,
-  anonymous,
-}
+enum _RouteRestorationType { named, anonymous }
 
 abstract class _RestorationInformation {
   _RestorationInformation(this.type);
@@ -5601,13 +5598,11 @@ abstract class _RestorationInformation {
   factory _RestorationInformation.fromSerializableData(Object data) {
     final List<Object?> casted = data as List<Object?>;
     assert(casted.isNotEmpty);
-    final _RouteRestorationType type = _RouteRestorationType.values[casted[0]! as int];
-    switch (type) {
-      case _RouteRestorationType.named:
-        return _NamedRestorationInformation.fromSerializableData(casted.sublist(1));
-      case _RouteRestorationType.anonymous:
-        return _AnonymousRestorationInformation.fromSerializableData(casted.sublist(1));
-    }
+
+    return switch (_RouteRestorationType.values[casted.removeAt(0)! as int]) {
+      _RouteRestorationType.named     => _NamedRestorationInformation.fromSerializableData(casted),
+      _RouteRestorationType.anonymous => _AnonymousRestorationInformation.fromSerializableData(casted),
+    };
   }
 
   final _RouteRestorationType type;
