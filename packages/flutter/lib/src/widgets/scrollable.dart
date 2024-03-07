@@ -1693,16 +1693,7 @@ enum DiagonalDragBehavior {
 
   /// This behavior allows free movement in any and all directions when
   /// dragging.
-  free;
-
-  /// Whether diagonal scrolling is allowed for the given type.
-  ///
-  /// Returns `false` for [none], and `true` for [weightedEvent],
-  /// [weightedContinuous], and [free].
-  bool get allowed => switch (this) {
-    none => false,
-    weightedEvent || weightedContinuous || free => true,
-  };
+  free,
 }
 
 /// A widget that manages scrolling in both the vertical and horizontal
