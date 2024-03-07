@@ -2426,8 +2426,9 @@ class _MenuDirectionalFocusAction extends DirectionalFocusAction {
       super.invoke(intent);
       return;
     }
-    final Axis orientation = (buttonIsFocused ? parentOrientation : null) ?? anchor._orientation;
+
     final Axis? parentOrientation = anchor._parent?._orientation;
+    final Axis orientation = (buttonIsFocused ? parentOrientation : null) ?? anchor._orientation;
     final bool differentParent = orientation != parentOrientation;
     final bool buttonIsFocused = anchor.widget.childFocusNode?.hasPrimaryFocus ?? false;
     final bool firstItemIsFocused = anchor._firstItemFocusNode?.hasPrimaryFocus ?? false;
@@ -2440,20 +2441,20 @@ class _MenuDirectionalFocusAction extends DirectionalFocusAction {
         'button is${buttonIsFocused ? '' : ' not'} focused. Assuming ${orientation.name} orientation.'));
 
     final bool Function(_MenuAnchorState) traversal = switch ((intent.direction, orientation)) {
-      (TraversalDirection.up,    Axis.horizontal) => _moveToParent,
-      (TraversalDirection.up,    Axis.vertical)   => firstItemIsFocused ? _moveToParent: _moveToPrevious,
-      (TraversalDirection.down,  Axis.horizontal) => _moveToSubmenu,
-      (TraversalDirection.down,  Axis.vertical)   => _moveToNext,
-      (TraversalDirection.left,  Axis.horizontal) when rtl => _moveToNext,
-      (TraversalDirection.left,  Axis.horizontal) => _moveToPrevious,
-      (TraversalDirection.left,  Axis.vertical) when rtl => buttonIsFocused ? _moveToSubmenu : _moveToNextFocusableTopLevel,
-      (TraversalDirection.left,  Axis.vertical) when differentParent => _moveToPreviousFocusableTopLevel,
-      (TraversalDirection.left,  Axis.vertical)   => buttonIsFocused ? _moveToPreviousFocusableTopLevel : _moveToParent,
+      (TraversalDirection.up, Axis.horizontal) => _moveToParent,
+      (TraversalDirection.up, Axis.vertical) => firstItemIsFocused ? _moveToParent: _moveToPrevious,
+      (TraversalDirection.down, Axis.horizontal) => _moveToSubmenu,
+      (TraversalDirection.down, Axis.vertical) => _moveToNext,
+      (TraversalDirection.left, Axis.horizontal) when rtl => _moveToNext,
+      (TraversalDirection.left, Axis.horizontal) => _moveToPrevious,
+      (TraversalDirection.left, Axis.vertical) when rtl => buttonIsFocused ? _moveToSubmenu : _moveToNextFocusableTopLevel,
+      (TraversalDirection.left, Axis.vertical) when differentParent => _moveToPreviousFocusableTopLevel,
+      (TraversalDirection.left, Axis.vertical)   => buttonIsFocused ? _moveToPreviousFocusableTopLevel : _moveToParent,
       (TraversalDirection.right, Axis.horizontal) when !rtl => _moveToNext,
       (TraversalDirection.right, Axis.horizontal) => _moveToPrevious,
       (TraversalDirection.right, Axis.vertical) when !rtl => buttonIsFocused ? _moveToSubmenu : _moveToNextFocusableTopLevel,
       (TraversalDirection.right, Axis.vertical) when differentParent => _moveToPreviousFocusableTopLevel,
-      (TraversalDirection.right, Axis.vertical)   => buttonIsFocused ? _moveToPreviousFocusableTopLevel : _moveToParent,
+      (TraversalDirection.right, Axis.vertical) => buttonIsFocused ? _moveToPreviousFocusableTopLevel : _moveToParent,
     };
     if (!traversal(anchor)) {
       super.invoke(intent);
