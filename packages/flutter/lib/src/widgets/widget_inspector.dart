@@ -285,11 +285,6 @@ class _MulticastCanvas implements Canvas {
     _main.translate(dx, dy);
     _screenshot.translate(dx, dy);
   }
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) {
-    super.noSuchMethod(invocation);
-  }
 }
 
 Rect _calculateSubtreeBoundsHelper(RenderObject object, Matrix4 transform) {
