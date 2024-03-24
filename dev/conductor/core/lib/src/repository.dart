@@ -846,12 +846,6 @@ class EngineRepository extends Repository {
   }
 }
 
-/// An enum of all the repositories that the Conductor supports.
-enum RepositoryType {
-  framework,
-  engine,
-}
-
 class Checkouts {
   Checkouts({
     required this.fileSystem,
