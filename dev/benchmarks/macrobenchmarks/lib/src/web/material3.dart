@@ -890,8 +890,6 @@ class _CheckboxesState extends State<Checkboxes> {
   }
 }
 
-enum Value { first, second }
-
 class Radios extends StatefulWidget {
   const Radios({super.key});
 
