@@ -1012,22 +1012,6 @@ typedef _MasterViewBuilder = Widget Function(BuildContext context, bool isLatera
 /// sheet in the lateral UI. Otherwise, it is null.
 typedef _DetailPageBuilder = Widget Function(BuildContext context, Object? arguments, ScrollController? scrollController);
 
-/// Signature for the builder callback used by [_MasterDetailFlow.actionBuilder].
-///
-/// Builds the actions that go in the app bars constructed for the master and
-/// lateral UI pages. actionLevel indicates the intended destination of the
-/// return actions.
-typedef _ActionBuilder = List<Widget> Function(BuildContext context, _ActionLevel actionLevel);
-
-/// Describes which type of app bar the actions are intended for.
-enum _ActionLevel {
-  /// Indicates the top app bar in the lateral UI.
-  top,
-
-  /// Indicates the master view app bar in the lateral UI.
-  view,
-}
-
 /// Describes which layout will be used by [_MasterDetailFlow].
 enum _LayoutMode {
   /// Always use a lateral layout.
@@ -1244,7 +1228,6 @@ class _MasterDetailFlowState extends State<_MasterDetailFlow> implements _PageOp
   Widget _lateralUI(BuildContext context) {
     _builtLayout = _LayoutMode.lateral;
     return _MasterDetailScaffold(
-      actionBuilder: (_, __) => const<Widget>[],
       detailPageBuilder: (BuildContext context, Object? args, ScrollController? scrollController) =>
           widget.detailPageBuilder(context, args ?? _cachedDetailArguments, scrollController),
       detailPageFABlessGutterWidth: widget.detailPageFABlessGutterWidth,
@@ -1289,7 +1272,6 @@ class _MasterDetailScaffold extends StatefulWidget {
   const _MasterDetailScaffold({
     required this.detailPageBuilder,
     required this.masterViewBuilder,
-    this.actionBuilder,
     this.initialArguments,
     this.title,
     this.detailPageFABlessGutterWidth,
@@ -1303,7 +1285,6 @@ class _MasterDetailScaffold extends StatefulWidget {
   /// that uses the [ScrollController] provided. In fact, it is strongly recommended the entire
   /// lateral page is scrollable.
   final _DetailPageBuilder detailPageBuilder;
-  final _ActionBuilder? actionBuilder;
   final Object? initialArguments;
   final Widget? title;
   final double? detailPageFABlessGutterWidth;
@@ -1354,32 +1335,7 @@ class _MasterDetailScaffoldState extends State<_MasterDetailScaffold>
       children: <Widget>[
         Scaffold(
           floatingActionButtonLocation: floatingActionButtonLocation,
-          appBar: AppBar(
-            title: widget.title,
-            actions: widget.actionBuilder!(context, _ActionLevel.top),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: Row(
-                children: <Widget>[
-                  ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: masterViewWidth),
-                    child: IconTheme(
-                      data: Theme.of(context).primaryIconTheme,
-                      child: Container(
-                        alignment: AlignmentDirectional.centerEnd,
-                        padding: const EdgeInsets.all(8),
-                        child: OverflowBar(
-                          spacing: 8,
-                          overflowAlignment: OverflowBarAlignment.end,
-                          children: widget.actionBuilder!(context, _ActionLevel.view),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          appBar: AppBar(title: widget.title),
           body: Align(
             alignment: AlignmentDirectional.centerStart,
             child: _masterPanel(context),
@@ -1427,10 +1383,7 @@ class _MasterDetailScaffoldState extends State<_MasterDetailScaffold>
       constraints: BoxConstraints(maxWidth: masterViewWidth),
       child: needsScaffold
           ? Scaffold(
-              appBar: AppBar(
-                title: widget.title,
-                actions: widget.actionBuilder!(context, _ActionLevel.top),
-              ),
+              appBar: AppBar(title: widget.title),
               body: widget.masterViewBuilder(context, true),
             )
           : widget.masterViewBuilder(context, true),
