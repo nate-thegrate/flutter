@@ -78,9 +78,9 @@ class _ListTileExampleState extends State<ListTileExample> with TickerProviderSt
         children: <Widget>[
           Hero(
             tag: 'ListTile-Hero',
-            // Wrap the ListTile in a Material widget so the ListTile has someplace
-            // to draw the animated colors during the hero transition.
-            child: Material(
+            // Wrap the ListTile in a BlankMaterial widget so the ListTile has
+            // a place to draw the animated colors during the hero transition.
+            child: BlankMaterial(
               child: ListTile(
                 title: const Text('ListTile with Hero'),
                 subtitle: const Text('Tap here for Hero transition'),
@@ -94,7 +94,7 @@ class _ListTileExampleState extends State<ListTileExample> with TickerProviderSt
                         body: Center(
                           child: Hero(
                             tag: 'ListTile-Hero',
-                            child: Material(
+                            child: BlankMaterial(
                               child: ListTile(
                                 title: const Text('ListTile with Hero'),
                                 subtitle: const Text('Tap here to go back'),
@@ -115,9 +115,9 @@ class _ListTileExampleState extends State<ListTileExample> with TickerProviderSt
           ),
           FadeTransition(
             opacity: _fadeAnimation,
-            // Wrap the ListTile in a Material widget so the ListTile has someplace
-            // to draw the animated colors during the fade transition.
-            child: const Material(
+            // Wrap the ListTile in a BlankMaterial widget so the ListTile has
+            // a place to draw the animated colors during the fade transition.
+            child: const BlankMaterial(
               child: ListTile(
                 title: Text('ListTile with FadeTransition'),
                 selectedTileColor: Colors.green,
@@ -132,9 +132,9 @@ class _ListTileExampleState extends State<ListTileExample> with TickerProviderSt
               child: SizeTransition(
                 sizeFactor: _sizeAnimation,
                 axisAlignment: -1.0,
-                // Wrap the ListTile in a Material widget so the ListTile has someplace
-                // to draw the animated colors during the size transition.
-                child: const Material(
+                // Wrap the ListTile in a BlankMaterial widget so the ListTile has
+                // a place to draw the animated colors during the size transition.
+                child: const BlankMaterial(
                   child: ListTile(
                     title: Text('ListTile with SizeTransition'),
                     tileColor: Colors.red,

@@ -1117,10 +1117,7 @@ class _AppBarState extends State<AppBar> {
             explicitChildNodes: true,
             // Creates a material widget to prevent the flexibleSpace from
             // obscuring the ink splashes produced by appBar children.
-            child: Material(
-              type: MaterialType.transparency,
-              child: appBar,
-            ),
+            child: BlankMaterial(child: appBar),
           ),
         ],
       );

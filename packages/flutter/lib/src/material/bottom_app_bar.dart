@@ -211,19 +211,16 @@ class _BottomAppBarState extends State<BottomAppBar> {
       ),
     );
 
-    final Material material = Material(
-      key: materialKey,
-      type: MaterialType.transparency,
-      child: SafeArea(child: child),
-    );
-
     return PhysicalShape(
       clipper: clipper,
       elevation: elevation,
       shadowColor: shadowColor,
       color: effectiveColor,
       clipBehavior: widget.clipBehavior,
-      child: material,
+      child: BlankMaterial(
+        key: materialKey,
+        child: SafeArea(child: child),
+      ),
     );
   }
 }
