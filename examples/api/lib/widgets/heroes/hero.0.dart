@@ -25,7 +25,7 @@ class HeroExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Hero Sample')),
+      appBar: const AppBar(title: Text('Hero Sample')),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -47,11 +47,9 @@ class HeroExample extends StatelessWidget {
 
   void _gotoDetailsPage(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Second Page'),
-        ),
-        body: const Center(
+      builder: (BuildContext context) => const Scaffold(
+        appBar: AppBar(title: Text('Second Page')),
+        body: Center(
           child: Hero(
             tag: 'hero-rectangle',
             child: BoxWidget(size: Size(200.0, 200.0)),

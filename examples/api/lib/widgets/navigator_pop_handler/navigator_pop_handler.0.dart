@@ -54,8 +54,8 @@ class _HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Nested Navigators Example'),
+      appBar: const AppBar(
+        title: Text('Nested Navigators Example'),
       ),
       body: Center(
         child: Column(

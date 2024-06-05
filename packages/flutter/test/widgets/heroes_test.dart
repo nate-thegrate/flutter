@@ -3333,7 +3333,7 @@ Future<void> main() async {
       MaterialApp(
         navigatorKey: navigatorKey,
         home: Scaffold(
-          appBar: AppBar(title: const Text('test')),
+          appBar: const AppBar(title: Text('test')),
           body: Hero(
             tag: 'imageHero',
             child: GridView.count(
