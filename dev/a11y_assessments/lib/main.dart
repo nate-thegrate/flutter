@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Accessibility Assessments')),
+      appBar: const AppBar(title: Text('Accessibility Assessments')),
       body: Center(
         child: ListView(
           controller: scrollController,
