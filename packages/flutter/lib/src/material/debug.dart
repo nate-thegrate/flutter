@@ -31,32 +31,54 @@ import 'scaffold.dart' show Scaffold, ScaffoldMessenger;
 /// This method can be expensive (it walks the element tree).
 ///
 /// Does nothing if asserts are disabled. Always returns true.
-bool debugCheckHasMaterial(BuildContext context) {
+@Deprecated(
+  'Use debugCheckSplash instead. '
+  'With the addition of SplashBox, a Material widget is no longer required. '
+  'This feature was deprecated after v3.24.0-0.2.pre.',
+)
+bool debugCheckHasMaterial(BuildContext context) => debugCheckSplash(context);
+
+/// Asserts that the given context has a [SplashBox] ancestor within the closest
+/// [LookupBoundary].
+///
+/// Used by many widgets to make sure that they are only used in contexts where
+/// they have a [SplashBox] or other widget that enables [Splash] effects.
+///
+/// To call this function, use the following pattern, typically in the
+/// relevant Widget's build method:
+///
+/// ```dart
+/// assert(debugCheckSplash(context));
+/// ```
+///
+/// Always place this before any early returns, so that the invariant is checked
+/// in all cases. This prevents bugs from hiding until a particular codepath is
+/// hit.
+///
+/// This method can be expensive (it walks the element tree).
+///
+/// Does nothing if asserts are disabled. Always returns true.
+bool debugCheckSplash(BuildContext context) {
   assert(() {
-    if (LookupBoundary.findAncestorWidgetOfExactType<Material>(context) == null) {
-      final bool hiddenByBoundary = LookupBoundary.debugIsHidingAncestorWidgetOfExactType<Material>(context);
+    if (Splash.maybeOf(context) == null) {
+      final bool hiddenByBoundary = LookupBoundary.debugIsHidingAncestorRenderObjectOfType<SplashController>(context);
       throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No Material widget found${hiddenByBoundary ? ' within the closest LookupBoundary' : ''}.'),
+        ErrorSummary('No SplashController found${hiddenByBoundary ? ' within the closest LookupBoundary' : ''}.'),
         if (hiddenByBoundary)
           ErrorDescription(
-            'There is an ancestor Material widget, but it is hidden by a LookupBoundary.'
+            "There is an ancestor SplashController, but it's hidden by a LookupBoundary.",
           ),
         ErrorDescription(
-          '${context.widget.runtimeType} widgets require a Material '
-          'widget ancestor within the closest LookupBoundary.\n'
-          'In Material Design, most widgets are conceptually "printed" on '
-          "a sheet of material. In Flutter's material library, that "
-          'material is represented by the Material widget. It is the '
-          'Material widget that renders ink splashes, for instance. '
-          'Because of this, many material library widgets require that '
-          'there be a Material widget in the tree above them.',
+          '${context.widget.runtimeType} widgets use a SplashController to show '
+          'Splash effects, and no SplashController ancestor was found within '
+          'the closest LookupBoundary.\n',
         ),
         ErrorHint(
-          'To introduce a Material widget, you can either directly '
-          'include one, or use a widget that contains Material itself, '
-          'such as a Card, Dialog, Drawer, or Scaffold.',
+          'A SplashController can be provided by an ancestor SplashBox; alternatively, '
+          'there are several viable options from the Material libary, including '
+          'Material, Card, Dialog, Drawer, and Scaffold.',
         ),
-        ...context.describeMissingAncestor(expectedAncestorType: Material),
+        ...context.describeMissingAncestor(expectedAncestorType: SplashController),
       ]);
     }
     return true;
