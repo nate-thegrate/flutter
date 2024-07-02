@@ -165,13 +165,10 @@ class FlutterManifest {
   ///   licenses:
   ///     - assets/foo_license.txt
   /// ```
-  List<String> get additionalLicenses {
-    final Object? licenses = _flutterDescriptor['licenses'];
-    if (licenses is YamlList) {
-      return licenses.map((Object? element) => element.toString()).toList();
-    }
-    return <String>[];
-  }
+  List<String> get additionalLicenses => <String>[
+    if (_flutterDescriptor['licenses'] case final YamlList list)
+      for (final dynamic item in list) item.toString(),
+  ];
 
   /// True if this manifest declares a Flutter module project.
   ///
@@ -197,9 +194,8 @@ class FlutterManifest {
   /// such declaration.
   String? get androidPackage {
     if (isModule) {
-      final Object? module = _flutterDescriptor['module'];
-      if (module is YamlMap) {
-        return module['androidPackage'] as String?;
+      if (_flutterDescriptor['module'] case final YamlMap map) {
+        return map['androidPackage'] as String?;
       }
     }
     final Map<String, Object?>? platforms = supportedPlatforms;
@@ -211,11 +207,8 @@ class FlutterManifest {
       }
       return null;
     }
-    if (platforms.containsKey('android')) {
-      final Object? android = platforms['android'];
-      if (android is YamlMap) {
-        return android['package'] as String?;
-      }
+    if (platforms['android'] case final YamlMap map) {
+      return map['package'] as String?;
     }
     return null;
   }
@@ -253,9 +246,8 @@ class FlutterManifest {
   /// module descriptor. Returns null if there is no such declaration.
   String? get iosBundleIdentifier {
     if (isModule) {
-      final Object? module = _flutterDescriptor['module'];
-      if (module is YamlMap) {
-        return module['iosBundleIdentifier'] as String?;
+      if (_flutterDescriptor['module'] case final YamlMap map) {
+        return map['iosBundleIdentifier'] as String?;
       }
     }
     return null;

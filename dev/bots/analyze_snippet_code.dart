@@ -992,14 +992,14 @@ class _SnippetChecker {
       int delta = 0;
       while (true) {
         // find the nearest non-generated line to the error
-        if ((lineNumber - delta > 0) && (lineNumber - delta <= snippet.code.length) && !snippet.code[lineNumber - delta - 1].generated) {
-          actualSource = snippet.code[lineNumber - delta - 1];
+        if (lineNumber - delta - 1 case final int i when i >= 0 && !(snippet.code.elementAtOrNull(i)?.generated ?? true)) {
+          actualSource = snippet.code[i];
           actualLine = actualSource.line;
           actualColumn = delta == 0 ? columnNumber : actualSource.code.length + 1;
           actualMessage = delta == 0 ? message : '$message -- in later generated code';
           break;
         }
-        if ((lineNumber + delta < snippet.code.length) && (lineNumber + delta >= 0) && !snippet.code[lineNumber + delta].generated) {
+        if (lineNumber + delta case final int i when i >= 0 && !(snippet.code.elementAtOrNull(i)?.generated ?? true)) {
           actualSource = snippet.code[lineNumber + delta];
           actualLine = actualSource.line;
           actualColumn = 1;

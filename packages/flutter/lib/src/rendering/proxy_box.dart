@@ -2562,8 +2562,7 @@ class RenderTransform extends RenderProxyBox {
           effectiveTransform.storage,
           filterQuality: filterQuality!,
         );
-        if (layer is ImageFilterLayer) {
-          final ImageFilterLayer filterLayer = layer! as ImageFilterLayer;
+        if (layer case final ImageFilterLayer filterLayer) {
           filterLayer.imageFilter = filter;
         } else {
           layer = ImageFilterLayer(imageFilter: filter);

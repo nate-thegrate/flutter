@@ -10,10 +10,8 @@ class GPUMemorySumarizer {
   /// Creates a RasterCacheSummarizer given the timeline events.
   GPUMemorySumarizer(List<TimelineEvent> gpuEvents) {
     for (final TimelineEvent event in gpuEvents) {
-      final Object? value = event.arguments!['MemoryBudgetUsageMB'];
-      if (value is String) {
-        final double? parsedValue = double.tryParse(value);
-        if (parsedValue != null) {
+      if (event.arguments case {'MemoryBudgetUsageMB': final String value}) {
+        if (double.tryParse(value) case final double parsedValue) {
           _memoryMB.add(parsedValue);
         }
       }

@@ -3967,8 +3967,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       if (child != null) {
         _debugRemoveGlobalKeyReservation(child);
       }
-      final Key? key = newWidget.key;
-      if (key is GlobalKey) {
+      if (newWidget.key case final GlobalKey key) {
         assert(owner != null);
         owner!._debugReserveGlobalKeyFor(this, newChild, key);
       }
@@ -4225,8 +4224,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       _parentBuildScope = parent.buildScope;
     }
     assert(owner != null);
-    final Key? key = widget.key;
-    if (key is GlobalKey) {
+    if (widget.key case final GlobalKey key) {
       owner!._registerGlobalKey(key, this);
     }
     _updateInheritance();
@@ -4435,10 +4433,8 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
     }
 
     try {
-      final Key? key = newWidget.key;
-      if (key is GlobalKey) {
-        final Element? newChild = _retakeInactiveElement(key, newWidget);
-        if (newChild != null) {
+      if (newWidget.key case final GlobalKey key) {
+        if (_retakeInactiveElement(key, newWidget) case final Element newChild) {
           assert(newChild._parent == null);
           assert(() {
             _debugCheckForCycles(newChild);
@@ -4680,8 +4676,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       FlutterMemoryAllocations.instance.dispatchObjectDisposed(object: this);
     }
     // Use the private property to avoid a CastError during hot reload.
-    final Key? key = _widget?.key;
-    if (key is GlobalKey) {
+    if (_widget?.key case final GlobalKey key) {
       owner!._unregisterGlobalKey(key, this);
     }
     // Release resources to reduce the severity of memory leaks caused by

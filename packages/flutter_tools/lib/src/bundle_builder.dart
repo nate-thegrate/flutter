@@ -195,9 +195,7 @@ Future<void> writeBundle(
         // and the native APIs will look for files this way.
         final File file = fileSystem.file(fileSystem.path.join(bundleDir.path, entry.key));
         file.parent.createSync(recursive: true);
-        final DevFSContent devFSContent = entry.value.content;
-        if (devFSContent is DevFSFileContent) {
-          final File input = devFSContent.file as File;
+        if (entry.value.content case DevFSFileContent(file: final File input)) {
           bool doCopy = true;
           switch (entry.value.kind) {
           case AssetKind.regular:

@@ -176,10 +176,10 @@ class SnippetGenerator {
       int blocks = 0;
       SourceLine? subLine;
       final List<SourceLine> subsections = <SourceLine>[];
-      for (int index = 0; index < block.length; index += 1) {
+      for (final SourceLine line in block) {
         // Each section of the dart code that is either split by a blank line, or with
         // '// ...' is treated as a separate code block.
-        if (block[index].text.trim().isEmpty || block[index].text == '// ...') {
+        if (line.text.trim() case '' || '// ...') {
           if (subLine == null) {
             continue;
           }
@@ -188,15 +188,15 @@ class SnippetGenerator {
           buffer.clear();
           assert(buffer.isEmpty);
           subLine = null;
-        } else if (block[index].text.startsWith('// ')) {
+        } else if (line.text.startsWith('// ')) {
           if (buffer.length > 1) {
             // don't include leading comments
             // so that it doesn't start with "// " and get caught in this again
-            buffer.add(SourceLine('/${block[index].text}'));
+            buffer.add(SourceLine('/${line.text}'));
           }
         } else {
-          subLine ??= block[index];
-          buffer.add(block[index]);
+          subLine ??= line;
+          buffer.add(line);
         }
       }
       if (blocks > 0) {

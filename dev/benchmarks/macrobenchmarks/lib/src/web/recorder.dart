@@ -203,8 +203,7 @@ abstract class RawRecorder extends Recorder {
     _profile = Profile(name: name, useCustomWarmUp: _useCustomWarmUp);
     do {
       await Future<void>.delayed(Duration.zero);
-      final FutureOr<void> result = body(_profile!);
-      if (result is Future) {
+      if (body(_profile!) case final Future<dynamic> result) {
         await result;
       }
     } while (shouldContinue());

@@ -368,33 +368,23 @@ class LogicalKeyData {
       final String value = match.namedGroup('value')!;
       replaced[name] = int.tryParse(value) ?? value.replaceAll('GLFW_KEY_', '');
     }
-    final Map<String, int> glfwNameToKeyCode = <String, int>{};
-    replaced.forEach((String key, dynamic value) {
-      // Some definition values point to other definitions (e.g #define GLFW_KEY_LAST GLFW_KEY_MENU).
-      if (value is String) {
-        glfwNameToKeyCode[key] = replaced[value] as int;
-      } else {
-        glfwNameToKeyCode[key] = value as int;
-      }
-    });
+    final Map<String, int> glfwNameToKeyCode = <String, int>{
+      for (final MapEntry<String, dynamic>(:String key, :dynamic value) in replaced.entries)
+        key: (value is int) ? value : replaced[value] as int,
+    };
 
-    glfwNameToKeyCode.forEach((String glfwName, int value) {
+    for (final MapEntry<String, int>(key: String glfwName, :int value) in glfwNameToKeyCode.entries) {
       final String? name = nameToFlutterName[glfwName];
       if (name == null) {
         return;
       }
-      final LogicalKeyEntry? entry = data[nameToFlutterName[glfwName]];
-      if (entry == null) {
+      if (data[nameToFlutterName[glfwName]] case final LogicalKeyEntry entry) {
+        addNameValue(entry.glfwNames, entry.glfwValues, glfwName, value);
+      } else {
         print('Invalid logical entry by name $name (from GLFW $glfwName)');
         return;
       }
-      addNameValue(
-        entry.glfwNames,
-        entry.glfwValues,
-        glfwName,
-        value,
-      );
-    });
+    }
   }
 
   // Map Web key to the pair of key names
