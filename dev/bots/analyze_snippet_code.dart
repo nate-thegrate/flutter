@@ -253,36 +253,23 @@ class _ErrorBase implements Comparable<Object> {
 
   @override
   int compareTo(Object other) {
+    (Comparable<Object>?, Comparable<Object>?)? comparison;
+
     if (other is _ErrorBase) {
       if (other.file != file) {
-        if (other.file == null) {
-          return -1;
-        }
-        if (file == null) {
-          return 1;
-        }
-        return file!.compareTo(other.file!);
-      }
-      if (other.line != line) {
-        if (other.line == null) {
-          return -1;
-        }
-        if (line == null) {
-          return 1;
-        }
-        return line!.compareTo(other.line!);
-      }
-      if (other.column != column) {
-        if (other.column == null) {
-          return -1;
-        }
-        if (column == null) {
-          return 1;
-        }
-        return column!.compareTo(other.column!);
+        comparison = (file, other.file);
+      } else if (other.line != line) {
+        comparison = (line, other.line);
+      } else if (other.column != column) {
+        comparison = (column, other.column);
       }
     }
-    return toString().compareTo(other.toString());
+    return switch (comparison) {
+      (_, null) => -1,
+      (null, _) => 1,
+      null => toString().compareTo(other.toString()),
+      _ => comparison.$1!.compareTo(comparison.$2!),
+    };
   }
 }
 
@@ -1045,19 +1032,19 @@ class _SnippetChecker {
           || line.startsWith('Flutter assets will be downloaded from ');
     });
     // Check out the stderr to see if the analyzer had it's own issues.
-    if (stderr.isNotEmpty && stderr.first.contains(RegExp(r' issues? found\. \(ran in '))) {
+    if (stderr.firstOrNull?.contains(RegExp(r' issues? found\. \(ran in ')) ?? false) {
       stderr.removeAt(0);
-      if (stderr.isNotEmpty && stderr.last.isEmpty) {
+      if (stderr.lastOrNull?.isEmpty ?? false) {
         stderr.removeLast();
       }
     }
     if (stderr.isNotEmpty && stderr.any((String line) => line.isNotEmpty)) {
       throw _SnippetCheckerException('Cannot analyze dartdocs; unexpected error output:\n$stderr');
     }
-    if (stdout.isNotEmpty && stdout.first == 'Building flutter tool...') {
+    if (stdout.firstOrNull == 'Building flutter tool...') {
       stdout.removeAt(0);
     }
-    if (stdout.isNotEmpty && stdout.first.isEmpty) {
+    if (stdout.firstOrNull?.isEmpty ?? false) {
       stdout.removeAt(0);
     }
     return stdout;
@@ -1076,7 +1063,7 @@ class _SnippetFile {
     String generatorComment,
     String filename,
   ) {
-    while (code.isNotEmpty && code.last.code.isEmpty) {
+    while (code.lastOrNull?.code.isEmpty ?? false) {
       code.removeLast();
     }
     assert(code.isNotEmpty);

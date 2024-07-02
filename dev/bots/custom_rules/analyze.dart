@@ -39,29 +39,7 @@ Future<void> analyzeWithRules(String flutterRootDirectory, List<AnalyzeRule> rul
     excludedPaths: excludePaths?.map((String relativePath) => path.canonicalize('$flutterRootDirectory/$relativePath')).toList(),
   );
 
-  final List<String> analyzerErrors = <String>[];
-  for (final AnalysisContext context in collection.contexts) {
-    final Iterable<String> analyzedFilePaths = context.contextRoot.analyzedFiles();
-    final AnalysisSession session = context.currentSession;
-
-    for (final String filePath in analyzedFilePaths) {
-      final SomeResolvedUnitResult unit = await session.getResolvedUnit(filePath);
-      if (unit is ResolvedUnitResult) {
-        for (final AnalyzeRule rule in rules) {
-          rule.applyTo(unit);
-        }
-      } else {
-        analyzerErrors.add('Analyzer error: file $unit could not be resolved. Expected "ResolvedUnitResult", got ${unit.runtimeType}.');
-      }
-    }
-  }
-
-  if (analyzerErrors.isNotEmpty) {
-    foundError(analyzerErrors);
-  }
-  for (final AnalyzeRule verifier in rules) {
-    verifier.reportViolations(flutterRootDirectory);
-  }
+  _analyzeWithRules(flutterRootDirectory, rules, collection);
 }
 
 Future<void> analyzeToolWithRules(String flutterRootDirectory, List<AnalyzeRule> rules) async {
@@ -74,6 +52,14 @@ Future<void> analyzeToolWithRules(String flutterRootDirectory, List<AnalyzeRule>
     includedPaths: <String>[libPath, testPath],
   );
 
+  _analyzeWithRules(flutterRootDirectory, rules, collection);
+}
+
+Future<void> _analyzeWithRules(
+  String flutterRootDirectory,
+  List<AnalyzeRule> rules,
+  AnalysisContextCollection collection,
+) async {
   final List<String> analyzerErrors = <String>[];
   for (final AnalysisContext context in collection.contexts) {
     final Iterable<String> analyzedFilePaths = context.contextRoot.analyzedFiles();

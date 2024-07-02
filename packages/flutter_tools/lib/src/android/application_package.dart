@@ -197,7 +197,7 @@ class AndroidApk extends ApplicationPackage implements PrebuiltApplicationPackag
             categoryName = name;
           }
         }
-        if (actionName != null && categoryName != null && actionName.isNotEmpty && categoryName.isNotEmpty) {
+        if ((actionName?.isNotEmpty ?? false) && (categoryName?.isNotEmpty ?? false)) {
           final String? activityName = activity.getAttribute('android:name');
           launchActivity = '$packageId/$activityName';
           break;

@@ -164,90 +164,87 @@ Future<int> _handleToolError(
   String Function() getFlutterVersion,
   ShutdownHooks shutdownHooks,
 ) async {
-  if (error is UsageException) {
-    globals.printError('${error.message}\n');
-    globals.printError("Run 'flutter -h' (or 'flutter <command> -h') for available flutter commands and options.");
-    // Argument error exit code.
-    return exitWithHooks(64, shutdownHooks: shutdownHooks);
-  } else if (error is ToolExit) {
-    if (error.message != null) {
-      globals.printError(error.message!);
-    }
-    if (verbose) {
-      globals.printError('\n$stackTrace\n');
-    }
-    return exitWithHooks(error.exitCode ?? 1, shutdownHooks: shutdownHooks);
-  } else if (error is ProcessExit) {
-    // We've caught an exit code.
-    if (error.immediate) {
-      exit(error.exitCode);
-      return error.exitCode;
-    } else {
-      return exitWithHooks(error.exitCode, shutdownHooks: shutdownHooks);
-    }
-  } else {
-    // We've crashed; emit a log report.
-    globals.stdio.stderrWrite('\n');
+  switch (error) {
+    case UsageException(:final String message):
+      globals.printError('$message\n');
+      globals.printError("Run 'flutter -h' (or 'flutter <command> -h') for available flutter commands and options.");
+      const int argumentErrorCode = 64;
+      return exitWithHooks(argumentErrorCode, shutdownHooks: shutdownHooks);
+    case ToolExit(:final String? message, :final int? exitCode):
+      if (message != null) {
+        globals.printError(message);
+      }
+      if (verbose) {
+        globals.printError('\n$stackTrace\n');
+      }
+      return exitWithHooks(exitCode ?? 1, shutdownHooks: shutdownHooks);
+    case ProcessExit(:final int exitCode, immediate: true):
+      exit(exitCode);
+      return exitCode;
+    case ProcessExit(:final int exitCode):
+      return exitWithHooks(exitCode, shutdownHooks: shutdownHooks);
+  }
+  // We've crashed; emit a log report.
+  globals.stdio.stderrWrite('\n');
 
-    if (!reportCrashes) {
-      // Print the stack trace on the bots - don't write a crash report.
-      globals.stdio.stderrWrite('$error\n');
-      globals.stdio.stderrWrite('$stackTrace\n');
-      return exitWithHooks(1, shutdownHooks: shutdownHooks);
-    }
+  if (!reportCrashes) {
+    // Print the stack trace on the bots - don't write a crash report.
+    globals.stdio.stderrWrite('$error\n');
+    globals.stdio.stderrWrite('$stackTrace\n');
+    return exitWithHooks(1, shutdownHooks: shutdownHooks);
+  }
 
-    // Report to both [Usage] and [CrashReportSender].
-    globals.flutterUsage.sendException(error);
-    globals.analytics.send(Event.exception(exception: error.runtimeType.toString()));
-    await asyncGuard(() async {
-      final CrashReportSender crashReportSender = CrashReportSender(
-        platform: globals.platform,
-        logger: globals.logger,
-        operatingSystemUtils: globals.os,
-        analytics: globals.analytics,
-      );
-      await crashReportSender.sendReport(
-        error: error,
-        stackTrace: stackTrace!,
-        getFlutterVersion: getFlutterVersion,
-        command: args.join(' '),
-      );
-    }, onError: (dynamic error) {
-      globals.printError('Error sending crash report: $error');
-    });
+  // Report to both [Usage] and [CrashReportSender].
+  globals.flutterUsage.sendException(error);
+  globals.analytics.send(Event.exception(exception: error.runtimeType.toString()));
+  await asyncGuard(() async {
+    final CrashReportSender crashReportSender = CrashReportSender(
+      platform: globals.platform,
+      logger: globals.logger,
+      operatingSystemUtils: globals.os,
+      analytics: globals.analytics,
+    );
+    await crashReportSender.sendReport(
+      error: error,
+      stackTrace: stackTrace!,
+      getFlutterVersion: getFlutterVersion,
+      command: args.join(' '),
+    );
+  }, onError: (dynamic error) {
+    globals.printError('Error sending crash report: $error');
+  });
 
-    globals.printError('Oops; flutter has exited unexpectedly: "$error".');
+  globals.printError('Oops; flutter has exited unexpectedly: "$error".');
 
-    try {
-      final BufferLogger logger = BufferLogger(
-        terminal: globals.terminal,
-        outputPreferences: globals.outputPreferences,
-      );
+  try {
+    final BufferLogger logger = BufferLogger(
+      terminal: globals.terminal,
+      outputPreferences: globals.outputPreferences,
+    );
 
-      final DoctorText doctorText = DoctorText(logger);
+    final DoctorText doctorText = DoctorText(logger);
 
-      final CrashDetails details = CrashDetails(
-        command: _crashCommand(args),
-        error: error,
-        stackTrace: stackTrace!,
-        doctorText: doctorText,
-      );
-      final File file = await _createLocalCrashReport(details);
-      await globals.crashReporter!.informUser(details, file);
+    final CrashDetails details = CrashDetails(
+      command: _crashCommand(args),
+      error: error,
+      stackTrace: stackTrace!,
+      doctorText: doctorText,
+    );
+    final File file = await _createLocalCrashReport(details);
+    await globals.crashReporter!.informUser(details, file);
 
-      return exitWithHooks(1, shutdownHooks: shutdownHooks);
-    // This catch catches all exceptions to ensure the message below is printed.
-    } catch (error, st) { // ignore: avoid_catches_without_on_clauses
-      globals.stdio.stderrWrite(
-        'Unable to generate crash report due to secondary error: $error\n$st\n'
-        '${globals.userMessages.flutterToolBugInstructions}\n',
-      );
-      // Any exception thrown here (including one thrown by `_exit()`) will
-      // get caught by our zone's `onError` handler. In order to avoid an
-      // infinite error loop, we throw an error that is recognized above
-      // and will trigger an immediate exit.
-      throw ProcessExit(1, immediate: true);
-    }
+    return exitWithHooks(1, shutdownHooks: shutdownHooks);
+  // This catch catches all exceptions to ensure the message below is printed.
+  } catch (error, st) { // ignore: avoid_catches_without_on_clauses
+    globals.stdio.stderrWrite(
+      'Unable to generate crash report due to secondary error: $error\n$st\n'
+      '${globals.userMessages.flutterToolBugInstructions}\n',
+    );
+    // Any exception thrown here (including one thrown by `_exit()`) will
+    // get caught by our zone's `onError` handler. In order to avoid an
+    // infinite error loop, we throw an error that is recognized above
+    // and will trigger an immediate exit.
+    throw ProcessExit(1, immediate: true);
   }
 }
 

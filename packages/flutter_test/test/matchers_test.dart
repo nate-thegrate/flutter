@@ -22,7 +22,7 @@ class _MockToStringDeep {
 
     // If the last line is empty, that really just means that the previous
     // line was terminated with a line break.
-    if (lines.isNotEmpty && lines.last.isNotEmpty) {
+    if (lines.lastOrNull?.isNotEmpty ?? false) {
       _lines.add(lines.last);
     }
   }

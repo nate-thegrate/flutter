@@ -133,14 +133,11 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
 
   String? _validatePassword(String? value) {
     _formWasEdited = true;
-    final FormFieldState<String> passwordField = _passwordFieldKey.currentState!;
-    if (passwordField.value == null || passwordField.value!.isEmpty) {
-      return 'Please enter a password.';
-    }
-    if (passwordField.value != value) {
-      return "The passwords don't match";
-    }
-    return null;
+    return switch (_passwordFieldKey.currentState!.value) {
+      '' || null => 'Please enter a password.',
+      final String fieldValue when value != fieldValue => "The passwords don't match",
+      _ => null,
+    };
   }
 
   Future<void> _handlePopInvoked(bool didPop, Object? result) async {

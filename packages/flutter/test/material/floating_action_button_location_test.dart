@@ -132,7 +132,7 @@ void main() {
           );
           final Iterable<double> currentRotations = rotationTransitions.map((RotationTransition t) => t.turns.value);
 
-          if (previousRotations != null && previousRotations!.isNotEmpty && currentRotations.isNotEmpty
+          if ((previousRotations?.isNotEmpty ?? false) && currentRotations.isNotEmpty
               && previousRect != null && currentRect != null) {
             final List<double> deltas = <double>[];
             for (final double currentRotation in currentRotations) {

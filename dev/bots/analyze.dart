@@ -1178,7 +1178,7 @@ Future<void> verifyNoTrailingSpaces(String workingDirectory, { int minimumMatche
         problems.add('${file.path}:${index + 1}: trailing U+0009 tab character');
       }
     }
-    if (lines.isNotEmpty && lines.last == '') {
+    if (lines.lastOrNull == '') {
       problems.add('${file.path}:${lines.length}: trailing blank line');
     }
   }

@@ -466,17 +466,9 @@ class SliverChildBuilderDelegate extends SliverChildDelegate {
 
   @override
   int? findIndexByKey(Key key) {
-    if (findChildIndexCallback == null) {
-      return null;
-    }
-    final Key childKey;
-    if (key is _SaltedValueKey) {
-      final _SaltedValueKey saltedValueKey = key;
-      childKey = saltedValueKey.value;
-    } else {
-      childKey = key;
-    }
-    return findChildIndexCallback!(childKey);
+    return findChildIndexCallback?.call(switch (key) {
+      _SaltedValueKey(:final Key value) || final Key value => value,
+    });
   }
 
   @override
@@ -692,14 +684,9 @@ class SliverChildListDelegate extends SliverChildDelegate {
 
   @override
   int? findIndexByKey(Key key) {
-    final Key childKey;
-    if (key is _SaltedValueKey) {
-      final _SaltedValueKey saltedValueKey = key;
-      childKey = saltedValueKey.value;
-    } else {
-      childKey = key;
-    }
-    return _findChildIndex(childKey);
+    return _findChildIndex(switch (key) {
+      _SaltedValueKey(:final Key value) || final Key value => value,
+    });
   }
 
   @override

@@ -334,7 +334,7 @@ PubspecEditor _addDependencyEditor(String packageToAdd, {String? version, String
   assert(version != null || path != null,
       'Need to define a source for the package.');
   assert(version == null || path == null,
-      'Cannot only load a package from path or from Pub, not both.');
+      'Cannot load a package both from path and from Pub.');
   void editor(List<String> lines) {
     for (int i = 0; i < lines.length; i++) {
       final String line = lines[i];
@@ -353,8 +353,7 @@ PubspecEditor _addDependencyEditor(String packageToAdd, {String? version, String
 PubspecEditor _setDartSDKVersionEditor(String version) {
   void editor(List<String> lines) {
     for (int i = 0; i < lines.length; i++) {
-      final String line = lines[i];
-      if (line.startsWith('environment:')) {
+      if (lines[i].startsWith('environment:')) {
         for (i++; i < lines.length; i++) {
           final String innerLine = lines[i];
           final String sdkLine = "  sdk: '$version'";

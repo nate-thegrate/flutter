@@ -966,18 +966,16 @@ class _PrefixedStringBuilder {
       return;
     }
 
-    final List<String> lines = s.split('\n');
-    for (int i = 0; i < lines.length; i += 1) {
-      if (i > 0) {
+    for (final (int index, String line) in s.split('\n').indexed) {
+      if (index > 0) {
         _finalizeLine(true);
         _updatePrefix();
       }
-      final String line = lines[i];
       if (line.isNotEmpty) {
         if (allowWrap && wrapWidth != null) {
           final int wrapStart = _currentLine.length;
           final int wrapEnd = wrapStart + line.length;
-          if (_wrappableRanges.isNotEmpty && _wrappableRanges.last == wrapStart) {
+          if (_wrappableRanges.lastOrNull == wrapStart) {
             // Extend last range.
             _wrappableRanges.last = wrapEnd;
           } else {
@@ -2562,40 +2560,25 @@ class DiagnosticsProperty<T> extends DiagnosticsNode {
         delegate,
       );
     }
-    final Map<String, Object?> json = super.toJsonMap(delegate);
-    if (properties != null) {
-      json['properties'] = properties;
-    }
-    if (defaultValue != kNoDefaultValue) {
-      json['defaultValue'] = defaultValue.toString();
-    }
-    if (ifEmpty != null) {
-      json['ifEmpty'] = ifEmpty;
-    }
-    if (ifNull != null) {
-      json['ifNull'] = ifNull;
-    }
-    if (tooltip != null) {
-      json['tooltip'] = tooltip;
-    }
-    json['missingIfNull'] = missingIfNull;
-    if (exception != null) {
-      json['exception'] = exception.toString();
-    }
-    json['propertyType'] = propertyType.toString();
-    json['defaultLevel'] = _defaultLevel.name;
-    if (value is Diagnosticable || value is DiagnosticsNode) {
-      json['isDiagnosticableValue'] = true;
-    }
-    if (v is num) {
-      // TODO(jacob314): Workaround, since JSON.stringify replaces infinity and NaN with null,
-      // https://github.com/flutter/flutter/issues/39937#issuecomment-529558033)
-      json['value'] = v.isFinite ? v :  v.toString();
-    }
-    if (value is String || value is bool || value == null) {
-      json['value'] = value;
-    }
-    return json;
+    return super.toJsonMap(delegate)..addAll(
+      <String, Object?>{
+        if (properties != null) 'properties': properties,
+        if (defaultValue != kNoDefaultValue) 'defaultValue': defaultValue.toString(),
+        if (ifEmpty != null) 'ifEmpty': ifEmpty,
+        if (ifNull != null) 'ifNull': ifNull,
+        if (tooltip != null) 'tooltip': tooltip,
+        'missingIfNull': missingIfNull,
+        if (exception != null) 'exception': exception.toString(),
+        'propertyType': propertyType.toString(),
+        'defaultLevel': _defaultLevel.name,
+        if (value is Diagnosticable || value is DiagnosticsNode)
+          'isDiagnosticableValue': true,
+        // TODO(jacob314): Workaround, since JSON.stringify replaces infinity and NaN with null,
+        // https://github.com/flutter/flutter/issues/39937#issuecomment-529558033)
+        if (v is num) 'value': v.isFinite ? v : v.toString(),
+        if (value case String() || bool() || null) 'value': value,
+      },
+    );
   }
 
   /// Returns a string representation of the property value.

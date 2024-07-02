@@ -116,7 +116,7 @@ class FlutterErrorFormatter {
   /// Writes a simple summary of [node] to the output.
   void _writeSummary(_ErrorNode node) {
     final bool allChildrenAreLeaf = node.children.isNotEmpty &&
-        !node.children.any((_ErrorNode child) => child.children.isNotEmpty);
+        node.children.every((_ErrorNode child) => child.children.isEmpty);
     if (node.level == _DiagnosticsNodeLevel.summary || allChildrenAreLeaf) {
       // DiagnosticsBlock is a container, so recurse into its children if
       // there's only a single level. The container may be

@@ -39,12 +39,11 @@ class SynchronousFuture<T> implements Future<T> {
   Future<T> catchError(Function onError, { bool Function(Object error)? test }) => Completer<T>().future;
 
   @override
-  Future<R> then<R>(FutureOr<R> Function(T value) onValue, { Function? onError }) {
-    final FutureOr<R> result = onValue(_value);
-    if (result is Future<R>) {
-      return result;
-    }
-    return SynchronousFuture<R>(result);
+  Future<R> then<R>(FutureOr<R> Function(T value) onValue, {Function? onError}) {
+    return switch (onValue(_value)) {
+      final Future<R> result => result,
+      final R result => SynchronousFuture<R>(result),
+    };
   }
 
   @override

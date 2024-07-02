@@ -3071,33 +3071,18 @@ class RenderPointerListener extends RenderProxyBoxWithHitTestBehavior {
   @override
   void handleEvent(PointerEvent event, HitTestEntry entry) {
     assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent) {
-      return onPointerDown?.call(event);
-    }
-    if (event is PointerMoveEvent) {
-      return onPointerMove?.call(event);
-    }
-    if (event is PointerUpEvent) {
-      return onPointerUp?.call(event);
-    }
-    if (event is PointerHoverEvent) {
-      return onPointerHover?.call(event);
-    }
-    if (event is PointerCancelEvent) {
-      return onPointerCancel?.call(event);
-    }
-    if (event is PointerPanZoomStartEvent) {
-      return onPointerPanZoomStart?.call(event);
-    }
-    if (event is PointerPanZoomUpdateEvent) {
-      return onPointerPanZoomUpdate?.call(event);
-    }
-    if (event is PointerPanZoomEndEvent) {
-      return onPointerPanZoomEnd?.call(event);
-    }
-    if (event is PointerSignalEvent) {
-      return onPointerSignal?.call(event);
-    }
+    return switch (event) {
+      PointerDownEvent()          => onPointerDown?.call(event),
+      PointerMoveEvent()          => onPointerMove?.call(event),
+      PointerUpEvent()            => onPointerUp?.call(event),
+      PointerHoverEvent()         => onPointerHover?.call(event),
+      PointerCancelEvent()        => onPointerCancel?.call(event),
+      PointerPanZoomStartEvent()  => onPointerPanZoomStart?.call(event),
+      PointerPanZoomUpdateEvent() => onPointerPanZoomUpdate?.call(event),
+      PointerPanZoomEndEvent()    => onPointerPanZoomEnd?.call(event),
+      PointerSignalEvent()        => onPointerSignal?.call(event),
+      _ => null,
+    };
   }
 
   @override
@@ -3166,8 +3151,8 @@ class RenderMouseRegion extends RenderProxyBoxWithHitTestBehavior implements Mou
   @override
   void handleEvent(PointerEvent event, HitTestEntry entry) {
     assert(debugHandleEvent(event, entry));
-    if (onHover != null && event is PointerHoverEvent) {
-      return onHover!(event);
+    if (event is PointerHoverEvent) {
+      onHover?.call(event);
     }
   }
 

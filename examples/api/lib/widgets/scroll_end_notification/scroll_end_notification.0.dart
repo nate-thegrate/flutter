@@ -57,8 +57,7 @@ class _ScrollEndNotificationExampleState extends State<ScrollEndNotificationExam
   bool handleScrollNotification(ScrollNotification notification) {
     if (notification is ScrollStartNotification) {
       lastScrollOffset = scrollController.position.pixels;
-    }
-    if (notification is ScrollEndNotification) {
+    } else if (notification is ScrollEndNotification) {
       final ScrollMetrics m = notification.metrics;
       final int lastIndex = ((m.extentBefore + m.extentInside) ~/ itemExtent).clamp(0, itemCount - 1);
       final double alignedScrollOffset = itemExtent * (lastIndex + 1) - m.extentInside;

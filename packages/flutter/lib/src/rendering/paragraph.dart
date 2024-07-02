@@ -2530,12 +2530,10 @@ class _SelectableFragment with Selectable, Diagnosticable, ChangeNotifier implem
 
   bool _isPlaceholder() {
     // Determine whether this selectable fragment is a placeholder.
-    RenderObject? current = paragraph.parent;
-    while (current != null) {
-      if (current is RenderParagraph) {
+    for (RenderObject? object = paragraph.parent; object != null; object = object.parent) {
+      if (object is RenderParagraph) {
         return true;
       }
-      current = current.parent;
     }
     return false;
   }
@@ -2547,9 +2545,8 @@ class _SelectableFragment with Selectable, Diagnosticable, ChangeNotifier implem
     assert(_selectableContainsOriginTextBoundary);
     // Begin at the parent because it is guaranteed the paragraph containing
     // this selectable fragment contains the origin boundary.
-    RenderObject? current = paragraph.parent;
     RenderParagraph? originParagraph;
-    while (current != null) {
+    for (RenderObject? current = paragraph.parent; current != null; current = current.parent) {
       if (current is RenderParagraph) {
         if (current._lastSelectableFragments != null) {
           bool paragraphContainsOriginTextBoundary = false;
@@ -2565,7 +2562,6 @@ class _SelectableFragment with Selectable, Diagnosticable, ChangeNotifier implem
           }
         }
       }
-      current = current.parent;
     }
     return originParagraph ?? paragraph;
   }
@@ -2575,8 +2571,7 @@ class _SelectableFragment with Selectable, Diagnosticable, ChangeNotifier implem
     // contains the given `globalPosition` and the given `globalPosition`
     // relative to that [RenderParagraph]. If no ancestor [RenderParagraph]
     // contains the given `globalPosition` then this method will return null.
-    RenderObject? current = paragraph;
-    while (current != null) {
+    for (RenderObject? current = paragraph; current != null; current = current.parent) {
       if (current is RenderParagraph) {
         final Matrix4 currentTransform = current.getTransformTo(null);
         currentTransform.invert();
@@ -2586,7 +2581,6 @@ class _SelectableFragment with Selectable, Diagnosticable, ChangeNotifier implem
           return (paragraph: current, localPosition: currentParagraphLocalPosition);
         }
       }
-      current = current.parent;
     }
     return null;
   }

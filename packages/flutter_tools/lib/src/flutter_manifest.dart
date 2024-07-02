@@ -145,13 +145,10 @@ class FlutterManifest {
   /// True if this Flutter module should use AndroidX dependencies.
   ///
   /// If false the deprecated Android Support library will be used.
-  bool get usesAndroidX {
-    final Object? module = _flutterDescriptor['module'];
-    if (module is YamlMap) {
-      return module['androidX'] == true;
-    }
-    return false;
-  }
+  bool get usesAndroidX => switch (_flutterDescriptor['module']) {
+    final YamlMap yamlMap => yamlMap['androidX'] == true,
+    _ => false,
+  };
 
   /// Any additional license files listed under the `flutter` key.
   ///

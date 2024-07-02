@@ -17,12 +17,9 @@ void main() {
       await tester.pump(); // see https://github.com/flutter/flutter/issues/1865
       await tester.pump(); // triggers a frame
 
-      final Finder navigationMenu = find.byWidgetPredicate((Widget widget) {
-        if (widget is Tooltip) {
-          return widget.message == 'Open navigation menu';
-        }
-        return false;
-      });
+      final Finder navigationMenu = find.byWidgetPredicate(
+        (Widget widget) => widget is Tooltip && widget.message == 'Open navigation menu',
+      );
 
       expect(navigationMenu, findsOneWidget);
 
