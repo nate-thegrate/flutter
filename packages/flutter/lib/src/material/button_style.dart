@@ -31,7 +31,7 @@ typedef ButtonLayerBuilder = Widget Function(BuildContext context, Set<MaterialS
 ///
 /// All of the ButtonStyle properties are null by default.
 ///
-/// Many of the ButtonStyle properties are [MaterialStateProperty] objects which
+/// Many of the ButtonStyle properties are [WidgetStateProperty] objects which
 /// resolve to different values depending on the button's state. For example
 /// the [Color] properties are defined with `MaterialStateProperty<Color>` and
 /// can resolve to different colors depending on if the button is pressed,

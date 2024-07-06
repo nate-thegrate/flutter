@@ -116,9 +116,9 @@ abstract class ButtonStyleButton extends StatefulWidget {
   /// Customizes this button's appearance.
   ///
   /// Non-null properties of this style override the corresponding
-  /// properties in [themeStyleOf] and [defaultStyleOf]. [MaterialStateProperty]s
+  /// properties in [themeStyleOf] and [defaultStyleOf]. [WidgetStateProperty]s
   /// that resolve to non-null values will similarly override the corresponding
-  /// [MaterialStateProperty]s in [themeStyleOf] and [defaultStyleOf].
+  /// [WidgetStateProperty]s in [themeStyleOf] and [defaultStyleOf].
   ///
   /// Null by default.
   final ButtonStyle? style;
@@ -166,7 +166,7 @@ abstract class ButtonStyleButton extends StatefulWidget {
   /// [TextButtonTheme].
   ///
   /// Concrete button subclasses should return a ButtonStyle that
-  /// has no null properties, and where all of the [MaterialStateProperty]
+  /// has no null properties, and where all of the [WidgetStateProperty]
   /// properties resolve to non-null values.
   ///
   /// See also:

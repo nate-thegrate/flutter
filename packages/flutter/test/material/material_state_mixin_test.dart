@@ -12,7 +12,7 @@ const Color trueColor = Colors.red;
 const Color falseColor = Colors.green;
 
 /// Mock widget which plays the role of a button -- it can emit notifications
-/// that [MaterialState] values are now in or out of play.
+/// that [WidgetState] values are now in or out of play.
 class _InnerWidget extends StatefulWidget {
   const _InnerWidget({required this.onValueChanged, required this.controller});
   final ValueChanged<bool> onValueChanged;

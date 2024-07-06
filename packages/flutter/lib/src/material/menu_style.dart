@@ -34,7 +34,7 @@ import 'theme_data.dart';
 ///
 /// All of the [MenuStyle] properties are null by default.
 ///
-/// Many of the [MenuStyle] properties are [MaterialStateProperty] objects which
+/// Many of the [MenuStyle] properties are [WidgetStateProperty] objects which
 /// resolve to different values depending on the menu's state. For example the
 /// [Color] properties are defined with `MaterialStateProperty<Color>` and can
 /// resolve to different colors depending on if the menu is pressed, hovered,

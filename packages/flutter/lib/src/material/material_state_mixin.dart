@@ -7,20 +7,20 @@ import 'package:flutter/widgets.dart';
 
 import 'material_state.dart';
 
-/// Mixin for [State] classes that require knowledge of changing [MaterialState]
+/// Mixin for [State] classes that require knowledge of changing [WidgetState]
 /// values for their child widgets.
 ///
 /// This mixin does nothing by mere application to a [State] class, but is
 /// helpful when writing `build` methods that include child [InkWell],
 /// [GestureDetector], [MouseRegion], or [Focus] widgets. Instead of manually
 /// creating handlers for each type of user interaction, such [State] classes can
-/// instead provide a `ValueChanged<bool>` function and allow [MaterialStateMixin]
-/// to manage the set of active [MaterialState]s, and the calling of [setState]
+/// instead provide a `ValueChanged<bool>` function and allow [WidgetStateMixin]
+/// to manage the set of active [WidgetState]s, and the calling of [setState]
 /// as necessary.
 ///
 /// {@tool snippet}
 /// This example shows how to write a [StatefulWidget] that uses the
-/// [MaterialStateMixin] class to watch [MaterialState] values.
+/// [WidgetStateMixin] class to watch [WidgetState] values.
 ///
 /// ```dart
 /// class MyWidget extends StatefulWidget {
@@ -49,8 +49,8 @@ import 'material_state.dart';
 /// {@end-tool}
 @optionalTypeArgs
 mixin MaterialStateMixin<T extends StatefulWidget> on State<T> {
-  /// Managed set of active [MaterialState] values; designed to be passed to
-  /// [MaterialStateProperty.resolve] methods.
+  /// Managed set of active [WidgetState] values; designed to be passed to
+  /// [WidgetStateProperty.resolve] methods.
   ///
   /// To mutate and have [setState] called automatically for you, use
   /// [setMaterialState], [addMaterialState], or [removeMaterialState]. Directly
@@ -58,17 +58,17 @@ mixin MaterialStateMixin<T extends StatefulWidget> on State<T> {
   /// list without calling [setState] (and thus triggering a re-render).
   ///
   /// To check for a single condition, convenience getters [isPressed], [isHovered],
-  /// [isFocused], etc, are available for each [MaterialState] value.
+  /// [isFocused], etc, are available for each [WidgetState] value.
   @protected
   Set<MaterialState> materialStates = <MaterialState>{};
 
-  /// Callback factory which accepts a [MaterialState] value and returns a
+  /// Callback factory which accepts a [WidgetState] value and returns a
   /// closure to mutate [materialStates] and call [setState].
   ///
   /// Accepts an optional second named parameter, `onChanged`, which allows
-  /// arbitrary functionality to be wired through the [MaterialStateMixin].
+  /// arbitrary functionality to be wired through the [WidgetStateMixin].
   /// If supplied, the [onChanged] function is only called when child widgets
-  /// report events that make changes to the current set of [MaterialState]s.
+  /// report events that make changes to the current set of [WidgetState]s.
   ///
   /// {@tool snippet}
   /// This example shows how to use the [updateMaterialState] callback factory
@@ -116,13 +116,13 @@ mixin MaterialStateMixin<T extends StatefulWidget> on State<T> {
     };
   }
 
-  /// Mutator to mark a [MaterialState] value as either active or inactive.
+  /// Mutator to mark a [WidgetState] value as either active or inactive.
   @protected
   void setMaterialState(MaterialState state, bool isSet) {
     return isSet ? addMaterialState(state) : removeMaterialState(state);
   }
 
-  /// Mutator to mark a [MaterialState] value as active.
+  /// Mutator to mark a [WidgetState] value as active.
   @protected
   void addMaterialState(MaterialState state) {
     if (materialStates.add(state)) {
@@ -130,7 +130,7 @@ mixin MaterialStateMixin<T extends StatefulWidget> on State<T> {
     }
   }
 
-  /// Mutator to mark a [MaterialState] value as inactive.
+  /// Mutator to mark a [WidgetState] value as inactive.
   @protected
   void removeMaterialState(MaterialState state) {
     if (materialStates.remove(state)) {
@@ -138,28 +138,28 @@ mixin MaterialStateMixin<T extends StatefulWidget> on State<T> {
     }
   }
 
-  /// Getter for whether this class considers [MaterialState.disabled] to be active.
+  /// Getter for whether this class considers [WidgetState.disabled] to be active.
   bool get isDisabled => materialStates.contains(MaterialState.disabled);
 
-  /// Getter for whether this class considers [MaterialState.dragged] to be active.
+  /// Getter for whether this class considers [WidgetState.dragged] to be active.
   bool get isDragged => materialStates.contains(MaterialState.dragged);
 
-  /// Getter for whether this class considers [MaterialState.error] to be active.
+  /// Getter for whether this class considers [WidgetState.error] to be active.
   bool get isErrored => materialStates.contains(MaterialState.error);
 
-  /// Getter for whether this class considers [MaterialState.focused] to be active.
+  /// Getter for whether this class considers [WidgetState.focused] to be active.
   bool get isFocused => materialStates.contains(MaterialState.focused);
 
-  /// Getter for whether this class considers [MaterialState.hovered] to be active.
+  /// Getter for whether this class considers [WidgetState.hovered] to be active.
   bool get isHovered => materialStates.contains(MaterialState.hovered);
 
-  /// Getter for whether this class considers [MaterialState.pressed] to be active.
+  /// Getter for whether this class considers [WidgetState.pressed] to be active.
   bool get isPressed => materialStates.contains(MaterialState.pressed);
 
-  /// Getter for whether this class considers [MaterialState.scrolledUnder] to be active.
+  /// Getter for whether this class considers [WidgetState.scrolledUnder] to be active.
   bool get isScrolledUnder => materialStates.contains(MaterialState.scrolledUnder);
 
-  /// Getter for whether this class considers [MaterialState.selected] to be active.
+  /// Getter for whether this class considers [WidgetState.selected] to be active.
   bool get isSelected => materialStates.contains(MaterialState.selected);
 
   @override
