@@ -143,12 +143,6 @@ class CupertinoRadio<T> extends StatefulWidget {
   /// If null, then [SystemMouseCursors.basic] is used when this radio button is disabled.
   /// When this radio button is enabled, [SystemMouseCursors.click] is used on Web, and
   /// [SystemMouseCursors.basic] is used on other platforms.
-  ///
-  /// See also:
-  ///
-  ///  * [WidgetStateMouseCursor], a [MouseCursor] that implements
-  ///    `WidgetStateProperty` which is used in APIs that need to accept
-  ///    either a [MouseCursor] or a [WidgetStateProperty<MouseCursor>].
   final MouseCursor? mouseCursor;
 
   /// Set to true if this radio button is allowed to be returned to an

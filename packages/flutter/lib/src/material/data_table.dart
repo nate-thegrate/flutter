@@ -94,9 +94,6 @@ class DataColumn {
   ///
   /// If this is null, then the value of [DataTableThemeData.headingCellCursor]
   /// is used. If that's null, then [WidgetStateMouseCursor.clickable] is used.
-  ///
-  /// See also:
-  ///  * [WidgetStateMouseCursor], which can be used to create a [MouseCursor].
   final MaterialStateProperty<MouseCursor?>? mouseCursor;
 
   /// Defines the horizontal layout of the [label] and sort indicator in the
@@ -238,9 +235,6 @@ class DataRow {
   ///
   /// If this is null, then the value of [DataTableThemeData.dataRowCursor]
   /// is used. If that's null, then [WidgetStateMouseCursor.clickable] is used.
-  ///
-  /// See also:
-  ///  * [WidgetStateMouseCursor], which can be used to create a [MouseCursor].
   final MaterialStateProperty<MouseCursor?>? mouseCursor;
 
   bool get _debugInteractive => onSelectChanged != null || cells.any((DataCell cell) => cell._debugInteractive);
