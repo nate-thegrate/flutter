@@ -1017,8 +1017,7 @@ void main() {
       editable.painter = null;
       editable.paintCount = 0;
 
-      final RenderObject? parent = editable.parent;
-      if (parent is RenderConstrainedBox) {
+      if (editable.parent case final RenderConstrainedBox parent) {
         parent.child = null;
       }
     });

@@ -107,10 +107,7 @@ Future<Command> startCommand(String executable, List<String> arguments, {
       .transform(const LineSplitter())
       .where((String line) => removeLine == null || !removeLine(line))
       .map<String>((String line) {
-        final String formattedLine = '$line\n';
-        if (outputListener != null) {
-          outputListener(formattedLine, process);
-        }
+        outputListener?.call('$line\n', process);
         switch (outputMode) {
           case OutputMode.print:
             print(line);

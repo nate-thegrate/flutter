@@ -90,14 +90,8 @@ abstract class ProcessTextService {
 ///
 ///  * [ProcessTextService], the service that this implements.
 class DefaultProcessTextService implements ProcessTextService {
-  /// Creates the default service to interact with the platform text processing
-  /// feature via communication over the text processing [MethodChannel].
-  DefaultProcessTextService() {
-    _processTextChannel = SystemChannels.processText;
-  }
-
   /// The channel used to communicate with the engine side.
-  late MethodChannel _processTextChannel;
+  MethodChannel _processTextChannel = SystemChannels.processText;
 
   /// Set the [MethodChannel] used to communicate with the engine text processing
   /// feature.

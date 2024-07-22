@@ -198,9 +198,8 @@ class FlutterTesterDevice extends Device {
       );
       _logReader.initializeProcess(_process!);
 
-      final Uri? vmServiceUri = await vmServiceDiscovery.uri;
-      if (vmServiceUri != null) {
-        return LaunchResult.succeeded(vmServiceUri: vmServiceUri);
+      if (await vmServiceDiscovery.uri case final Uri uri?) {
+        return LaunchResult.succeeded(vmServiceUri: uri);
       }
       _logger.printError(
         'Failed to launch $package: '

@@ -108,13 +108,10 @@ class ProtocolDiscovery {
     return globals.kVMServiceMessageRegExp.firstMatch(line);
   }
 
-  Uri? _getVmServiceUri(String line) {
-    final Match? match = _getPatternMatch(line);
-    if (match != null) {
-      return Uri.parse(match[1]!);
-    }
-    return null;
-  }
+  Uri? _getVmServiceUri(String line) => switch (_getPatternMatch(line)) {
+    final Match match => Uri.parse(match[1]!),
+    null => null,
+  };
 
   void _handleLine(String line) {
     Uri? uri;
@@ -137,8 +134,7 @@ class ProtocolDiscovery {
     _logger.printTrace('$serviceName URL on device: $deviceUri');
     Uri hostUri = deviceUri;
 
-    final DevicePortForwarder? forwarder = portForwarder;
-    if (forwarder != null) {
+    if (portForwarder case final DevicePortForwarder forwarder) {
       final int actualDevicePort = deviceUri.port;
       final int actualHostPort = await forwarder.forward(actualDevicePort, hostPort: hostPort);
       _logger.printTrace('Forwarded host port $actualHostPort to device port $actualDevicePort for $serviceName');

@@ -2063,10 +2063,7 @@ class Inherited extends InheritedWidget {
 
   @override
   InheritedElement createElement() {
-    if (elementCreator != null) {
-      return elementCreator!(this);
-    }
-    return super.createElement();
+    return elementCreator?.call(this) ?? super.createElement();
   }
 }
 
@@ -2403,8 +2400,7 @@ class _CustomBuildScopeElement extends Element {
 
   @override
   void visitChildren(ElementVisitor visitor) {
-    final Element? child = _child;
-    if (child != null) {
+    if (_child case final Element child) {
       visitor(child);
     }
   }

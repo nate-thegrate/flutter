@@ -79,10 +79,10 @@ class FileSystemResourceProvider implements ResourceProvider {
   @override
   Folder? getStateLocation(String pluginId) {
     if (_stateLocation != null) {
-      final file.Directory directory =
-          filesystem.directory(join(_stateLocation, pluginId));
-      directory.createSync(recursive: true);
-      return _PhysicalFolder(directory);
+      return _PhysicalFolder(
+        filesystem.directory(join(_stateLocation, pluginId))
+          ..createSync(recursive: true),
+      );
     }
     return null;
   }
@@ -290,19 +290,12 @@ class _PhysicalFolder extends _PhysicalResource implements Folder {
   @override
   List<Resource> getChildren() {
     try {
-      final List<Resource> children = <Resource>[];
       final io.Directory directory = _entry as io.Directory;
-      final List<io.FileSystemEntity> entries = directory.listSync();
-      final int numEntries = entries.length;
-      for (int i = 0; i < numEntries; i++) {
-        final io.FileSystemEntity entity = entries[i];
-        if (entity is io.Directory) {
-          children.add(_PhysicalFolder(entity));
-        } else if (entity is io.File) {
-          children.add(_PhysicalFile(entity));
-        }
-      }
-      return children;
+      return <Resource>[
+        for (final io.FileSystemEntity entity in directory.listSync())
+          if (entity is io.Directory) _PhysicalFolder(entity)
+          else if (entity is io.File) _PhysicalFile(entity),
+      ];
     } on io.FileSystemException catch (exception) {
       throw _wrapException(exception);
     }

@@ -85,14 +85,10 @@ Future<void> testWithNewIOSSimulator(
   final String? iosKey = decodeResult.keys
       .where((String key) => key.contains('iphoneos'))
       .firstOrNull;
-  final Object? iosDetails = decodeResult[iosKey];
-  String? runtimeBuildForSelectedXcode;
-  if (iosDetails != null && iosDetails is Map<String, Object?>) {
-    final Object? preferredBuild = iosDetails['preferredBuild'];
-    if (preferredBuild is String) {
-      runtimeBuildForSelectedXcode = preferredBuild;
-    }
-  }
+  final String? runtimeBuildForSelectedXcode = switch (decodeResult[iosKey]) {
+    {'preferredBuild': final String preferredBuild} => preferredBuild,
+    _ => null,
+  };
 
   String? iOSSimRuntime;
 
@@ -229,13 +225,14 @@ Future<bool> runXcodeTests({
   );
 
   if (testResultExit != 0) {
-    final Directory? dumpDirectory = hostAgent.dumpDirectory;
     final Directory xcresultBundle = Directory(path.join(resultBundleTemp, 'result.xcresult'));
-    if (dumpDirectory != null) {
+    if (hostAgent.dumpDirectory?.path case final String dumpPath) {
       if (xcresultBundle.existsSync()) {
         // Zip the test results to the artifacts directory for upload.
-        final String zipPath = path.join(dumpDirectory.path,
-            '$testName-${DateTime.now().toLocal().toIso8601String()}.zip');
+        final String zipPath = path.join(
+          dumpPath,
+          '$testName-${DateTime.now().toLocal().toIso8601String()}.zip',
+        );
         await exec(
           'zip',
           <String>[

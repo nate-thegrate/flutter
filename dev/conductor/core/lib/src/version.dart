@@ -29,15 +29,15 @@ enum VersionType {
   ///
   /// Example: '1.2.3-4.0.pre-10-gabc123'.
   /// Example: '1.2.3-10-gabc123'.
-  gitDescribe,
-}
+  gitDescribe;
 
-final Map<VersionType, RegExp> versionPatterns = <VersionType, RegExp>{
-  VersionType.stable: RegExp(r'^(\d+)\.(\d+)\.(\d+)$'),
-  VersionType.development: RegExp(r'^(\d+)\.(\d+)\.(\d+)-(\d+)\.(\d+)\.pre$'),
-  VersionType.latest: RegExp(r'^(\d+)\.(\d+)\.(\d+)-(\d+)\.(\d+)\.pre\.(\d+)$'),
-  VersionType.gitDescribe: RegExp(r'^(\d+)\.(\d+)\.(\d+)-((\d+)\.(\d+)\.pre-)?(\d+)-g[a-f0-9]+$'),
-};
+  Match? match(String versionString) => switch (this) {
+    VersionType.stable      => RegExp(r'^(\d+)\.(\d+)\.(\d+)$'),
+    VersionType.development => RegExp(r'^(\d+)\.(\d+)\.(\d+)-(\d+)\.(\d+)\.pre$'),
+    VersionType.latest      => RegExp(r'^(\d+)\.(\d+)\.(\d+)-(\d+)\.(\d+)\.pre\.(\d+)$'),
+    VersionType.gitDescribe => RegExp(r'^(\d+)\.(\d+)\.(\d+)-((\d+)\.(\d+)\.pre-)?(\d+)-g[a-f0-9]+$'),
+  }.firstMatch(versionString);
+}
 
 class Version {
   Version({
@@ -76,74 +76,50 @@ class Version {
 
     versionString = versionString.trim();
     // stable tag
-    Match? match = versionPatterns[VersionType.stable]!.firstMatch(versionString);
+    Match? match = VersionType.stable.match(versionString);
     if (match != null) {
       // parse stable
-      final List<int> parts = match
-          .groups(<int>[1, 2, 3])
-          .map((String? s) => int.parse(s!))
-          .toList();
-      return Version(
-        x: parts[0],
-        y: parts[1],
-        z: parts[2],
-        type: VersionType.stable,
-      );
+      final [int x, int y, int z] = <int>[
+        for (final String? part in match.groups(<int>[1, 2, 3])) int.parse(part!),
+      ];
+      return Version(x: x, y: y, z: z, type: VersionType.stable);
     }
     // development tag
-    match = versionPatterns[VersionType.development]!.firstMatch(versionString);
+    match = VersionType.development.match(versionString);
     if (match != null) {
       // parse development
-      final List<int> parts =
-          match.groups(<int>[1, 2, 3, 4, 5]).map((String? s) => int.parse(s!)).toList();
-      return Version(
-        x: parts[0],
-        y: parts[1],
-        z: parts[2],
-        m: parts[3],
-        n: parts[4],
-        type: VersionType.development,
-      );
+      final [int x, int y, int z, int m, int n] = <int>[
+        for (final String? part in match.groups(<int>[1, 2, 3, 4, 5])) int.parse(part!),
+      ];
+      return Version(x: x, y: y, z: z, m: m, n: n, type: VersionType.development);
     }
     // latest tag
-    match = versionPatterns[VersionType.latest]!.firstMatch(versionString);
+    match = VersionType.latest.match(versionString);
     if (match != null) {
       // parse latest
-      final List<int> parts = match.groups(
-        <int>[1, 2, 3, 4, 5, 6],
-      ).map(
-        (String? s) => int.parse(s!),
-      ).toList();
+      final [int x, int y, int z, int m, int n, int commits] = <int>[
+        for (final String? part in match.groups(<int>[1, 2, 3, 4, 5, 6])) int.parse(part!),
+      ];
       return Version(
-        x: parts[0],
-        y: parts[1],
-        z: parts[2],
-        m: parts[3],
-        n: parts[4],
-        commits: parts[5],
+        x: x, y: y, z: z, m: m, n: n,
+        commits: commits,
         type: VersionType.latest,
       );
     }
-    match = versionPatterns[VersionType.gitDescribe]!.firstMatch(versionString);
+    match = VersionType.gitDescribe.match(versionString);
     if (match != null) {
       // parse latest
-      final int x = int.parse(match.group(1)!);
-      final int y = int.parse(match.group(2)!);
-      final int z = int.parse(match.group(3)!);
-      final int? m = int.tryParse(match.group(5) ?? '');
-      final int? n = int.tryParse(match.group(6) ?? '');
-      final int commits = int.parse(match.group(7)!);
       return Version(
-        x: x,
-        y: y,
-        z: z,
-        m: m,
-        n: n,
-        commits: commits,
+        x: int.parse(match.group(1)!),
+        y: int.parse(match.group(2)!),
+        z: int.parse(match.group(3)!),
+        m: int.tryParse(match.group(5) ?? ''),
+        n: int.tryParse(match.group(6) ?? ''),
+        commits: int.parse(match.group(7)!),
         type: VersionType.gitDescribe,
       );
     }
-    throw Exception('${versionString.trim()} cannot be parsed');
+    throw Exception('$versionString cannot be parsed');
   }
 
   // Returns a new version with the given [increment] part incremented.

@@ -662,8 +662,7 @@ class FuchsiaDevice extends Device {
         if (line == '') {
           continue;
         }
-        final int? port = int.tryParse(line);
-        if (port != null) {
+        if (int.tryParse(line) case final int port) {
           ports.add(port);
         }
       }

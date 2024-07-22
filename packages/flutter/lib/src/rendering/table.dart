@@ -787,9 +787,7 @@ class RenderTable extends RenderBox {
     for (int y = 0; y < rows; y += 1) {
       double rowHeight = 0.0;
       for (int x = 0; x < columns; x += 1) {
-        final int xy = x + y * columns;
-        final RenderBox? child = _children[xy];
-        if (child != null) {
+        if (_children[x + y * columns] case final RenderBox child) {
           rowHeight = math.max(rowHeight, child.getMaxIntrinsicHeight(widths[x]));
         }
       }
@@ -820,9 +818,7 @@ class RenderTable extends RenderBox {
   // lazy iterable.
   Iterable<RenderBox> column(int x) sync* {
     for (int y = 0; y < rows; y += 1) {
-      final int xy = x + y * columns;
-      final RenderBox? child = _children[xy];
-      if (child != null) {
+      if (_children[x + y * columns] case final RenderBox child) {
         yield child;
       }
     }
@@ -838,8 +834,7 @@ class RenderTable extends RenderBox {
     final int start = y * columns;
     final int end = (y + 1) * columns;
     for (int xy = start; xy < end; xy += 1) {
-      final RenderBox? child = _children[xy];
-      if (child != null) {
+      if (_children[xy] case final RenderBox child) {
         yield child;
       }
     }
@@ -880,8 +875,7 @@ class RenderTable extends RenderBox {
       minWidths[x] = minIntrinsicWidth;
       assert(maxIntrinsicWidth >= minIntrinsicWidth);
       // collect flex information while we're at it
-      final double? flex = columnWidth.flex(columnCells);
-      if (flex != null) {
+      if (columnWidth.flex(columnCells) case final double flex) {
         assert(flex.isFinite);
         assert(flex > 0.0);
         flexes[x] = flex;
@@ -1069,9 +1063,7 @@ class RenderTable extends RenderBox {
     for (int y = 0; y < rows; y += 1) {
       double rowHeight = 0.0;
       for (int x = 0; x < columns; x += 1) {
-        final int xy = x + y * columns;
-        final RenderBox? child = _children[xy];
-        if (child != null) {
+        if (_children[x + y * columns] case final RenderBox child) {
           final TableCellParentData childParentData = child.parentData! as TableCellParentData;
           switch (childParentData.verticalAlignment ?? defaultVerticalAlignment) {
             case TableCellVerticalAlignment.baseline:
@@ -1138,9 +1130,7 @@ class RenderTable extends RenderBox {
       double afterBaselineDistance = 0.0;
       final List<double> baselines = List<double>.filled(columns, 0.0);
       for (int x = 0; x < columns; x += 1) {
-        final int xy = x + y * columns;
-        final RenderBox? child = _children[xy];
-        if (child != null) {
+        if (_children[x + y * columns] case final RenderBox child) {
           final TableCellParentData childParentData = child.parentData! as TableCellParentData;
           childParentData.x = x;
           childParentData.y = y;
@@ -1176,9 +1166,7 @@ class RenderTable extends RenderBox {
         rowHeight = math.max(rowHeight, beforeBaselineDistance + afterBaselineDistance);
       }
       for (int x = 0; x < columns; x += 1) {
-        final int xy = x + y * columns;
-        final RenderBox? child = _children[xy];
-        if (child != null) {
+        if (_children[x + y * columns] case final RenderBox child) {
           final TableCellParentData childParentData = child.parentData! as TableCellParentData;
           switch (childParentData.verticalAlignment ?? defaultVerticalAlignment) {
             case TableCellVerticalAlignment.baseline:
@@ -1207,8 +1195,7 @@ class RenderTable extends RenderBox {
   bool hitTestChildren(BoxHitTestResult result, { required Offset position }) {
     assert(_children.length == rows * columns);
     for (int index = _children.length - 1; index >= 0; index -= 1) {
-      final RenderBox? child = _children[index];
-      if (child != null) {
+      if (_children[index] case final RenderBox child) {
         final BoxParentData childParentData = child.parentData! as BoxParentData;
         final bool isHit = result.addWithPaintOffset(
           offset: childParentData.offset,
@@ -1255,8 +1242,7 @@ class RenderTable extends RenderBox {
       }
     }
     for (int index = 0; index < _children.length; index += 1) {
-      final RenderBox? child = _children[index];
-      if (child != null) {
+      if (_children[index] case final RenderBox child) {
         final BoxParentData childParentData = child.parentData! as BoxParentData;
         context.paintChild(child, childParentData.offset + offset);
       }

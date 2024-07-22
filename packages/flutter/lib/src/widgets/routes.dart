@@ -351,8 +351,7 @@ abstract class TransitionRoute<T> extends OverlayRoute<T> implements PredictiveB
     _trainHoppingListenerRemover = null;
 
     if (nextRoute is TransitionRoute<dynamic> && canTransitionTo(nextRoute) && nextRoute.canTransitionFrom(this)) {
-      final Animation<double>? current = _secondaryAnimation.parent;
-      if (current != null) {
+      if (_secondaryAnimation.parent case final Animation<double> current) {
         final Animation<double> currentTrain = (current is TrainHoppingAnimation ? current.currentTrain : current)!;
         final Animation<double> nextTrain = nextRoute._animation!;
         if (currentTrain.value == nextTrain.value || !nextTrain.isAnimating) {
@@ -411,9 +410,7 @@ abstract class TransitionRoute<T> extends OverlayRoute<T> implements PredictiveB
     }
     // Finally, we dispose any previous train hopping animation because it
     // has been successfully updated at this point.
-    if (previousTrainHoppingListenerRemover != null) {
-      previousTrainHoppingListenerRemover();
-    }
+    previousTrainHoppingListenerRemover?.call();
   }
 
   void _setSecondaryAnimation(Animation<double>? animation, [Future<dynamic>? disposed]) {
@@ -2175,10 +2172,8 @@ class RouteObserver<R extends Route<dynamic>> extends NavigatorObserver {
   /// [routeAware] is no longer informed about changes to its route. If the given argument was
   /// subscribed to multiple types, this will unregister it (once) from each type.
   void unsubscribe(RouteAware routeAware) {
-    final List<R> routes = _listeners.keys.toList();
-    for (final R route in routes) {
-      final Set<RouteAware>? subscribers = _listeners[route];
-      if (subscribers != null) {
+    for (final R route in _listeners.keys) {
+      if (_listeners[route] case final Set<RouteAware> subscribers) {
         subscribers.remove(routeAware);
         if (subscribers.isEmpty) {
           _listeners.remove(route);
@@ -2190,17 +2185,13 @@ class RouteObserver<R extends Route<dynamic>> extends NavigatorObserver {
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route is R && previousRoute is R) {
-      final List<RouteAware>? previousSubscribers = _listeners[previousRoute]?.toList();
-
-      if (previousSubscribers != null) {
+      if (_listeners[previousRoute] case final Set<RouteAware> previousSubscribers) {
         for (final RouteAware routeAware in previousSubscribers) {
           routeAware.didPopNext();
         }
       }
 
-      final List<RouteAware>? subscribers = _listeners[route]?.toList();
-
-      if (subscribers != null) {
+      if (_listeners[route] case final Set<RouteAware> subscribers) {
         for (final RouteAware routeAware in subscribers) {
           routeAware.didPop();
         }

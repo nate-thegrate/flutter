@@ -484,10 +484,9 @@ class _RawViewElement extends RenderTreeRootElement {
   }
 
   void _detachView() {
-    final PipelineOwner? parentPipelineOwner = _parentPipelineOwner;
-    if (parentPipelineOwner != null) {
+    if (_parentPipelineOwner != null) {
       RendererBinding.instance.removeRenderView(renderObject);
-      parentPipelineOwner.dropChild(_effectivePipelineOwner);
+      _parentPipelineOwner!.dropChild(_effectivePipelineOwner);
       _parentPipelineOwner = null;
     }
   }

@@ -173,22 +173,26 @@ The recommended changes can be quickly applied by running:
         logger.printStatus('$_thinDivider\n');
       }
       // Log loading unit golden changes, if any.
-      if (loadingUnitComparisonResults != null) {
-        if ((loadingUnitComparisonResults!['new'] as List<LoadingUnit>).isNotEmpty) {
+      if (loadingUnitComparisonResults case {
+        'new': final List<LoadingUnit> newUnits,
+        'missing': final Set<LoadingUnit> missingUnits,
+        'match': final bool match,
+      }) {
+        if (newUnits.isNotEmpty) {
           logger.printStatus('New loading units were found:', emphasis: true);
-          for (final LoadingUnit unit in loadingUnitComparisonResults!['new'] as List<LoadingUnit>) {
+          for (final LoadingUnit unit in newUnits) {
             logger.printStatus(unit.toString(), color: TerminalColor.grey, indent: 2);
           }
           logger.printStatus('');
         }
-        if ((loadingUnitComparisonResults!['missing'] as Set<LoadingUnit>).isNotEmpty) {
+        if (missingUnits.isNotEmpty) {
           logger.printStatus('Previously existing loading units no longer exist:', emphasis: true);
-          for (final LoadingUnit unit in loadingUnitComparisonResults!['missing'] as Set<LoadingUnit>) {
+          for (final LoadingUnit unit in missingUnits) {
             logger.printStatus(unit.toString(), color: TerminalColor.grey, indent: 2);
           }
           logger.printStatus('');
         }
-        if (loadingUnitComparisonResults!['match'] as bool) {
+        if (match) {
           logger.printStatus('No change in generated loading units.\n');
         } else {
           logger.printStatus('''

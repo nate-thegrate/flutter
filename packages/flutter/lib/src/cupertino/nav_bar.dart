@@ -1347,15 +1347,14 @@ class _NavigationBarStaticComponents {
 
     if (userLeading != null) {
       leadingContent = userLeading;
-    } else if (
-      automaticallyImplyLeading &&
-      route is PageRoute &&
-      route.canPop &&
-      route.fullscreenDialog
-    ) {
+    } else if (route case PageRoute<Object?>(
+      canPop: true,
+      fullscreenDialog: true,
+      :final NavigatorState? navigator,
+    ) when automaticallyImplyLeading) {
       leadingContent = CupertinoButton(
         padding: EdgeInsets.zero,
-        onPressed: () { route.navigator!.maybePop(); },
+        onPressed: navigator!.maybePop,
         child: const Text('Close'),
       );
     }

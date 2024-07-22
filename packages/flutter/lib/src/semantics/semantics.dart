@@ -2722,21 +2722,19 @@ class SemanticsNode with DiagnosticableTreeMixin {
     for (final CustomSemanticsAction action in _customSemanticsActions.keys) {
       customSemanticsActionIds.add(CustomSemanticsAction.getIdentifier(action));
     }
-    if (hintOverrides != null) {
-      if (hintOverrides!.onTapHint != null) {
-        final CustomSemanticsAction action = CustomSemanticsAction.overridingAction(
-          hint: hintOverrides!.onTapHint!,
-          action: SemanticsAction.tap,
-        );
-        customSemanticsActionIds.add(CustomSemanticsAction.getIdentifier(action));
-      }
-      if (hintOverrides!.onLongPressHint != null) {
-        final CustomSemanticsAction action = CustomSemanticsAction.overridingAction(
-          hint: hintOverrides!.onLongPressHint!,
-          action: SemanticsAction.longPress,
-        );
-        customSemanticsActionIds.add(CustomSemanticsAction.getIdentifier(action));
-      }
+    if (hintOverrides?.onTapHint case final String hint) {
+      final CustomSemanticsAction action = CustomSemanticsAction.overridingAction(
+        hint: hint,
+        action: SemanticsAction.tap,
+      );
+      customSemanticsActionIds.add(CustomSemanticsAction.getIdentifier(action));
+    }
+    if (hintOverrides?.onLongPressHint case final String hint) {
+      final CustomSemanticsAction action = CustomSemanticsAction.overridingAction(
+        hint: hint,
+        action: SemanticsAction.longPress,
+      );
+      customSemanticsActionIds.add(CustomSemanticsAction.getIdentifier(action));
     }
 
     if (mergeAllDescendantsIntoThisNode) {
@@ -3484,8 +3482,7 @@ class SemanticsOwner extends ChangeNotifier {
         return true;
       }
 
-      final SemanticsNode? rootSemanticsNode = this.rootSemanticsNode;
-      if (rootSemanticsNode != null) {
+      if (rootSemanticsNode case final SemanticsNode rootSemanticsNode) {
         // The root node is allowed to be invisible when it has no children.
         if (rootSemanticsNode.childrenCount > 0 && rootSemanticsNode.rect.isEmpty) {
           invisibleNodes.add(rootSemanticsNode);
@@ -4347,10 +4344,7 @@ class SemanticsConfiguration {
     if (action == null) {
       return;
     }
-    final VoidCallback? callback = _customSemanticsActions[action];
-    if (callback != null) {
-      callback();
-    }
+    _customSemanticsActions[action]?.call();
   }
 
   /// {@macro flutter.semantics.SemanticsProperties.identifier}

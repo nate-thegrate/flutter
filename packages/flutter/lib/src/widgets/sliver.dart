@@ -1459,8 +1459,7 @@ class KeepAlive extends ParentDataWidget<KeepAliveParentDataMixin> {
     if (parentData.keepAlive != keepAlive) {
       // No need to redo layout if it became true.
       parentData.keepAlive = keepAlive;
-      final RenderObject? targetParent = renderObject.parent;
-      if (targetParent is RenderObject && !keepAlive) {
+      if (renderObject.parent case final RenderObject targetParent when !keepAlive) {
         targetParent.markNeedsLayout();
       }
     }
@@ -1556,8 +1555,7 @@ class _SliverZeroFlexParentDataWidget extends ParentDataWidget<SliverPhysicalPar
     }
 
     if (needsLayout) {
-      final RenderObject? targetParent = renderObject.parent;
-      if (targetParent is RenderObject) {
+      if (renderObject.parent case final RenderObject targetParent) {
         targetParent.markNeedsLayout();
       }
 
@@ -1628,8 +1626,7 @@ class SliverCrossAxisExpanded extends ParentDataWidget<SliverPhysicalContainerPa
     }
 
     if (needsLayout) {
-      final RenderObject? targetParent = renderObject.parent;
-      if (targetParent is RenderObject) {
+      if (renderObject.parent case final RenderObject targetParent) {
         targetParent.markNeedsLayout();
       }
     }

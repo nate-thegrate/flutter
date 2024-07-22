@@ -984,8 +984,7 @@ class FocusNode with DiagnosticableTreeMixin, ChangeNotifier {
     assert(node._manager == _manager);
 
     if (removeScopeFocus) {
-      final FocusScopeNode? nodeScope = node.enclosingScope;
-      if (nodeScope != null) {
+      if (node.enclosingScope case final FocusScopeNode nodeScope) {
         nodeScope._focusedChildren.remove(node);
         node.descendants.where((FocusNode descendant) {
           return descendant.enclosingScope == nodeScope;
@@ -1921,8 +1920,7 @@ class FocusManager with DiagnosticableTreeMixin, ChangeNotifier {
     properties.add(FlagProperty('haveScheduledUpdate', value: _haveScheduledUpdate, ifTrue: 'UPDATE SCHEDULED'));
     properties.add(DiagnosticsProperty<FocusNode>('primaryFocus', primaryFocus, defaultValue: null));
     properties.add(DiagnosticsProperty<FocusNode>('nextFocus', _markedForFocus, defaultValue: null));
-    final Element? element = primaryFocus?.context as Element?;
-    if (element != null) {
+    if (primaryFocus?.context case final Element element) {
       properties.add(DiagnosticsProperty<String>('primaryFocusCreator', element.debugGetCreatorChain(20)));
     }
   }

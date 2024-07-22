@@ -82,8 +82,8 @@ class HttpHostValidator extends DoctorValidator {
     final List<String?> availabilityResults = <String?>[];
 
     final List<Uri> requiredHosts = <Uri>[];
-    if (_platform.environment.containsKey(kPubDevOverride)) {
-      final Uri? url = _parseUrl(_platform.environment[kPubDevOverride]!);
+    if (_platform.environment case {kPubDevOverride: final String value}) {
+      final Uri? url = _parseUrl(value);
       if (url == null) {
         availabilityResults.add(
           'Environment variable $kPubDevOverride does not specify a valid URL: "${_platform.environment[kPubDevOverride]}"\n'

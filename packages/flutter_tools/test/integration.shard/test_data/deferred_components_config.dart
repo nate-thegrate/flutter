@@ -26,8 +26,7 @@ abstract class DeferredComponentsConfig {
 
   void setUpIn(Directory dir) {
     writeFile(fileSystem.path.join(dir.path, 'lib', 'deferred_library.dart'), deferredLibrary);
-    final String? golden = deferredComponentsGolden;
-    if (golden != null) {
+    if (deferredComponentsGolden case final String golden) {
       writeFile(fileSystem.path.join(dir.path, 'deferred_components_loading_units.yaml'), golden);
     }
     writeFile(fileSystem.path.join(dir.path, 'android', 'settings.gradle'), androidSettings);

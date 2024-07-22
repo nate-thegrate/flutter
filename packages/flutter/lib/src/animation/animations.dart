@@ -198,9 +198,9 @@ class ProxyAnimation extends Animation<double>
     if (value == _parent) {
       return;
     }
-    if (_parent != null) {
-      _status = _parent!.status;
-      _value = _parent!.value;
+    if (_parent case final Animation<double> parent) {
+      _status = parent.status;
+      _value = parent.value;
       if (isListening) {
         didStopListening();
       }
@@ -502,7 +502,7 @@ enum _TrainHoppingMode { minimize, maximize }
 ///
 /// Since this object must track the two animations even when it has no
 /// listeners of its own, instead of shutting down when all its listeners are
-/// removed, it exposes a [dispose()] method. Call this method to shut this
+/// removed, it exposes a [dispose] method. Call this method to shut this
 /// object down.
 class TrainHoppingAnimation extends Animation<double>
   with AnimationEagerListenerMixin, AnimationLocalListenersMixin, AnimationLocalStatusListenersMixin {

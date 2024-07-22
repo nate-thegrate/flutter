@@ -467,8 +467,7 @@ class FlutterDebugAdapter extends FlutterBaseDebugAdapter with VmServiceInfoFile
     // On Windows, the pid from the process we spawn is the shell running
     // flutter.bat and terminating it may not be reliable, so we also take the
     // pid provided from the VM running flutter_tools.
-    final int? pid = params['pid'] as int?;
-    if (pid != null) {
+    if (params case {'pid': final int pid}) {
       pidsToTerminate.add(pid);
     }
   }
@@ -476,8 +475,7 @@ class FlutterDebugAdapter extends FlutterBaseDebugAdapter with VmServiceInfoFile
   /// Handles the app.debugPort event from Flutter, connecting to the VM Service if everything else is ready.
   Future<void> _handleDebugPort(Map<String, Object?> params) async {
     // Capture the VM Service URL which we'll connect to when we get app.started.
-    final String? wsUri = params['wsUri'] as String?;
-    if (wsUri != null) {
+    if (params case {'wsUri': final String wsUri}) {
       final Uri vmServiceUri = Uri.parse(wsUri);
       // Also wait for app.started before we connect, to ensure Flutter's
       // initialization is all complete.
@@ -736,8 +734,7 @@ class FlutterDebugAdapter extends FlutterBaseDebugAdapter with VmServiceInfoFile
   }
 
   void _sendServiceExtensionStateChanged(vm.ExtensionData? extensionData) {
-    final Map<String, dynamic>? data = extensionData?.data;
-    if (data != null) {
+    if (extensionData?.data case final Map<String, dynamic> data) {
       sendEvent(
         RawEventBody(data),
         eventType: 'flutter.serviceExtensionStateChanged',

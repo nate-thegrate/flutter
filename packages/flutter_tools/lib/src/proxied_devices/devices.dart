@@ -606,7 +606,8 @@ class ProxiedPortForwarder extends DevicePortForwarder {
         await connection.sendRequest('device.forward', <String, Object>{
           'deviceId': deviceId,
           'devicePort': devicePort,
-        }));
+        }),
+      );
       remoteDevicePort = devicePort;
       devicePort = result['hostPort']! as int;
     }

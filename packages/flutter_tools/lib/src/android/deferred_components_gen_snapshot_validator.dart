@@ -215,70 +215,39 @@ class DeferredComponentsGenSnapshotValidator extends DeferredComponentsValidator
     if (!cacheFile.existsSync()) {
       return loadingUnits;
     }
-    final YamlMap data = loadYaml(cacheFile.readAsStringSync()) as YamlMap;
-    // validate yaml format.
-    if (!data.containsKey('loading-units')) {
-      invalidFiles[cacheFile.path] = "Invalid loading units yaml file, 'loading-units' "
-                                       'entry did not exist.';
-      return loadingUnits;
-    } else {
-      if (data['loading-units'] is! YamlList && data['loading-units'] != null) {
-        invalidFiles[cacheFile.path] = "Invalid loading units yaml file, 'loading-units' "
-                                         'is not a list.';
-        return loadingUnits;
-      }
-      if (data['loading-units'] != null) {
-        for (final Object? loadingUnitData in data['loading-units'] as List<Object?>) {
-          if (loadingUnitData is! YamlMap) {
-            invalidFiles[cacheFile.path] = "Invalid loading units yaml file, 'loading-units' "
-                                             'is not a list of maps.';
-            return loadingUnits;
-          }
-          final YamlMap loadingUnitDataMap = loadingUnitData;
-          if (loadingUnitDataMap['id'] == null) {
-            invalidFiles[cacheFile.path] = 'Invalid loading units yaml file, all '
-                                             "loading units must have an 'id'";
-            return loadingUnits;
-          }
-          if (loadingUnitDataMap['libraries'] != null) {
-            if (loadingUnitDataMap['libraries'] is! YamlList) {
-              invalidFiles[cacheFile.path] = "Invalid loading units yaml file, 'libraries' "
-                                               'is not a list.';
-              return loadingUnits;
-            }
-            for (final Object? node in loadingUnitDataMap['libraries'] as YamlList) {
-              if (node is! String) {
-                invalidFiles[cacheFile.path] = "Invalid loading units yaml file, 'libraries' "
-                                                 'is not a list of strings.';
-                return loadingUnits;
-              }
-            }
-          }
-        }
-      }
+    List<LoadingUnit> invalidFile(String message) {
+      invalidFiles[cacheFile.path] = 'Invalid loading units yaml file, $message';
+      return <LoadingUnit>[];
     }
 
-    // Parse out validated yaml.
-    if (data.containsKey('loading-units')) {
-      if (data['loading-units'] != null) {
-        for (final Object? loadingUnitData in data['loading-units'] as List<Object?>) {
-          final YamlMap? loadingUnitDataMap = loadingUnitData as YamlMap?;
-          final List<String> libraries = <String>[];
-          final YamlList? nodes = loadingUnitDataMap?['libraries'] as YamlList?;
-          if (nodes != null) {
-            for (final Object node in nodes.whereType<Object>()) {
-              libraries.add(node as String);
-            }
+    final YamlMap data = loadYaml(cacheFile.readAsStringSync()) as YamlMap;
+    switch (data['loadingUnits']) {
+      case final YamlList yamlList:
+        for (final Object? loadingUnitData in yamlList) {
+          switch (loadingUnitData) {
+            case {'id': final int id, 'libraries': final YamlList libraryData}:
+              final List<String> libraries = <String>[];
+              for (final Object? node in libraryData) {
+                if (node is! String) {
+                  return invalidFile("'libraries' is not a list of strings.");
+                }
+                libraries.add(node);
+              }
+              loadingUnits.add(LoadingUnit(id: id, libraries: libraries));
+            case {'id': int _}:
+              return invalidFile("'libraries' is not a list.");
+            case YamlMap():
+              return invalidFile("all loading units must have an 'id'");
+            default:
+              return invalidFile("'loading-units' is not a list of maps.");
           }
-          loadingUnits.add(
-              LoadingUnit(
-                id: loadingUnitDataMap!['id'] as int,
-                libraries: libraries,
-              ));
         }
-      }
+        return loadingUnits;
+      case null:
+        return invalidFile("'loading-units' entry did not exist.");
+      default:
+        return invalidFile("'loading-units' is not a list.");
     }
-    return loadingUnits;
   }
 
   /// Writes the provided generatedLoadingUnits as `deferred_components_loading_units.yaml`

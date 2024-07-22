@@ -187,10 +187,8 @@ class Plugin {
     bool isDirectDependency,
   ) {
     final Map<String, PluginPlatform> platforms = <String, PluginPlatform>{};
-    final String? pluginClass = (pluginYaml as Map<dynamic, dynamic>)['pluginClass'] as String?;
-    if (pluginClass != null) {
-      final String? androidPackage = pluginYaml['androidPackage'] as String?;
-      if (androidPackage != null) {
+    if (pluginYaml case {'pluginClass': final String pluginClass}) {
+      if (pluginYaml case {'androidPackage': final String androidPackage}) {
         platforms[AndroidPlugin.kConfigKey] = AndroidPlugin(
           name: name,
           package: androidPackage,
@@ -200,13 +198,11 @@ class Plugin {
         );
       }
 
-      final String iosPrefix = pluginYaml['iosPrefix'] as String? ?? '';
-      platforms[IOSPlugin.kConfigKey] =
-          IOSPlugin(
-            name: name,
-            classPrefix: iosPrefix,
-            pluginClass: pluginClass,
-          );
+      platforms[IOSPlugin.kConfigKey] = IOSPlugin(
+        name: name,
+        classPrefix: pluginYaml['iosPrefix'] as String? ?? '',
+        pluginClass: pluginClass,
+      );
     }
     return Plugin(
       name: name,
@@ -270,11 +266,11 @@ class Plugin {
     }
 
     if (usesNewPluginFormat) {
-      if (yaml['platforms'] != null && yaml['platforms'] is! YamlMap) {
-        const String errorMessage = 'flutter.plugin.platforms should be a map with the platform name as the key';
-        return <String>[errorMessage];
+      if (yaml['platforms'] case final YamlMap? yamlMap) {
+        return _validateMultiPlatformYaml(yamlMap);
       }
-      return _validateMultiPlatformYaml(yaml['platforms'] as YamlMap?);
+      const String errorMessage = 'flutter.plugin.platforms should be a map with the platform name as the key';
+      return <String>[errorMessage];
     } else {
       return _validateLegacyYaml(yaml);
     }

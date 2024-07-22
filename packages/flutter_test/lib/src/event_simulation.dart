@@ -671,8 +671,7 @@ abstract final class KeyEventSimulator {
   static final Map<String, PhysicalKeyboardKey> _debugNameToPhysicalKey = (() {
     final Map<String, PhysicalKeyboardKey> result = <String, PhysicalKeyboardKey>{};
     for (final PhysicalKeyboardKey key in PhysicalKeyboardKey.knownPhysicalKeys) {
-      final String? debugName = key.debugName;
-      if (debugName != null) {
+      if (key.debugName case final String debugName) {
         result[debugName] = key;
       }
     }

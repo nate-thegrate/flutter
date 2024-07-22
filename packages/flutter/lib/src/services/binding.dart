@@ -574,9 +574,7 @@ class _DefaultBinaryMessenger extends BinaryMessenger {
     ui.PlatformMessageResponseCallback? callback,
   ) async {
     ui.channelBuffers.push(channel, message, (ByteData? data) {
-      if (callback != null) {
-        callback(data);
-      }
+      callback?.call(data);
     });
   }
 

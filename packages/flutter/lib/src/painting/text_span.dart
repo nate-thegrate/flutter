@@ -297,8 +297,7 @@ class TextSpan extends InlineSpan implements HitTestTarget, MouseTrackerAnnotati
         builder.addText('\uFFFD');
       }
     }
-    final List<InlineSpan>? children = this.children;
-    if (children != null) {
+    if (children case final List<InlineSpan> children) {
       for (final InlineSpan child in children) {
         child.build(
           builder,
@@ -322,8 +321,7 @@ class TextSpan extends InlineSpan implements HitTestTarget, MouseTrackerAnnotati
     if (text != null && !visitor(this)) {
       return false;
     }
-    final List<InlineSpan>? children = this.children;
-    if (children != null) {
+    if (children case final List<InlineSpan> children) {
       for (final InlineSpan child in children) {
         if (!child.visitChildren(visitor)) {
           return false;
@@ -398,10 +396,10 @@ class TextSpan extends InlineSpan implements HitTestTarget, MouseTrackerAnnotati
     final ui.Locale? effectiveLocale = locale ?? inheritedLocale;
     final bool effectiveSpellOut = spellOut ?? inheritedSpellOut;
 
-    if (text != null) {
-      final int textLength = semanticsLabel?.length ?? text!.length;
+    if (text case final String text) {
+      final int textLength = semanticsLabel?.length ?? text.length;
       collector.add(InlineSpanSemanticsInformation(
-        text!,
+        text,
         stringAttributes: <ui.StringAttribute>[
           if (effectiveSpellOut && textLength > 0)
             ui.SpellOutStringAttribute(range: TextRange(start: 0, end: textLength)),
@@ -412,8 +410,7 @@ class TextSpan extends InlineSpan implements HitTestTarget, MouseTrackerAnnotati
         recognizer: recognizer,
       ));
     }
-    final List<InlineSpan>? children = this.children;
-    if (children != null) {
+    if (children case final List<InlineSpan> children?) {
       for (final InlineSpan child in children) {
         if (child is TextSpan) {
           child.computeSemanticsInformation(

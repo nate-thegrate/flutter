@@ -1379,8 +1379,7 @@ The plural cases must be one of "=0", "=1", "=2", "zero", "one", "two", "few", "
     baseOutputFile.writeAsStringSync(
       useCRLF ? generatedLocalizationsFile.replaceAll('\n', '\r\n') : generatedLocalizationsFile
     );
-    final File? messagesFile = untranslatedMessagesFile;
-    if (messagesFile != null) {
+    if (untranslatedMessagesFile case final File messagesFile) {
       _generateUntranslatedMessagesFile(logger, messagesFile);
     } else if (_unimplementedMessages.isNotEmpty) {
       _unimplementedMessages.forEach((LocaleInfo locale, List<String> messages) {
@@ -1407,9 +1406,8 @@ The plural cases must be one of "=0", "=1", "=2", "zero", "one", "two", "few", "
         'need to be translated.'
       );
     }
-    final File? inputsAndOutputsListFileLocal = inputsAndOutputsListFile;
     _outputFileList.add(baseOutputFile.absolute.path);
-    if (inputsAndOutputsListFileLocal != null) {
+    if (inputsAndOutputsListFile case final File inputsAndOutputsListFileLocal) {
       // Generate a JSON file containing the inputs and outputs of the gen_l10n script.
       if (!inputsAndOutputsListFileLocal.existsSync()) {
         inputsAndOutputsListFileLocal.createSync(recursive: true);

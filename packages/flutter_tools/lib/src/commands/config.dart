@@ -107,8 +107,7 @@ class ConfigCommand extends FlutterCommand {
     }
 
     if (boolArg('clear-features')) {
-      for (final Feature feature in allFeatures) {
-        final String? configSetting = feature.configSetting;
+      for (final Feature(:String? configSetting) in allFeatures) {
         if (configSetting != null) {
           globals.config.removeValue(configSetting);
         }

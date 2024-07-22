@@ -100,8 +100,7 @@ class _ActionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ActionIconThemeData? actionIconTheme = ActionIconTheme.of(context);
-    final WidgetBuilder? iconBuilder = iconBuilderCallback(actionIconTheme);
-    if (iconBuilder != null) {
+    if (iconBuilderCallback(actionIconTheme) case final WidgetBuilder iconBuilder) {
       return iconBuilder(context);
     }
 

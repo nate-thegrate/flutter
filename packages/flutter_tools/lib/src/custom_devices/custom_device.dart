@@ -230,8 +230,7 @@ class CustomDevicePortForwarder extends DevicePortForwarder {
 
     // since a forwarded port represents a running process launched with
     // the forwardPortCommand, unforwarding is as easy as killing the process
-    final int? pid = forwardedPort.context?.pid;
-    if (pid != null) {
+    if (forwardedPort.context?.pid case final int pid) {
       _processManager.killPid(pid);
     }
     _forwardedPorts.remove(forwardedPort);

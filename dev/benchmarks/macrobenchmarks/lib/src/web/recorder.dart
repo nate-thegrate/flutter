@@ -203,8 +203,7 @@ abstract class RawRecorder extends Recorder {
     _profile = Profile(name: name, useCustomWarmUp: _useCustomWarmUp);
     do {
       await Future<void>.delayed(Duration.zero);
-      final FutureOr<void> result = body(_profile!);
-      if (result is Future) {
+      if (body(_profile!) case final Future<dynamic> result) {
         await result;
       }
     } while (shouldContinue());
@@ -1349,8 +1348,5 @@ void stopListeningToEngineBenchmarkValues(String name) {
 //
 // If there are no listeners registered for [name], ignores the value.
 void _dispatchEngineBenchmarkValue(String name, double value) {
-  final EngineBenchmarkValueListener? listener = _engineBenchmarkListeners[name];
-  if (listener != null) {
-    listener(value);
-  }
+  _engineBenchmarkListeners[name]?.call(value);
 }

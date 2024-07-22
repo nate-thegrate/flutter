@@ -1687,22 +1687,16 @@ class DropdownButtonFormField<T> extends FormField<T> {
          autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
          builder: (FormFieldState<T> field) {
            final _DropdownButtonFormFieldState<T> state = field as _DropdownButtonFormFieldState<T>;
-           final InputDecoration decorationArg =  decoration ?? InputDecoration(focusColor: focusColor);
-           final InputDecoration effectiveDecoration = decorationArg.applyDefaults(
-             Theme.of(field.context).inputDecorationTheme,
-           );
 
-           final bool showSelectedItem = items != null && items.where((DropdownMenuItem<T> item) => item.value == state.value).isNotEmpty;
-           bool isHintOrDisabledHintAvailable() {
-             final bool isDropdownDisabled = onChanged == null || (items == null || items.isEmpty);
-             if (isDropdownDisabled) {
-               return hint != null || disabledHint != null;
-             } else {
-               return hint != null;
-             }
-           }
-           final bool isEmpty = !showSelectedItem && !isHintOrDisabledHintAvailable();
-           final bool hasError = effectiveDecoration.errorText != null;
+           final InputDecoration effectiveDecoration = (
+             decoration ?? InputDecoration(focusColor: focusColor)
+           ).applyDefaults(Theme.of(field.context).inputDecorationTheme);
+
+           bool matchesValue(DropdownMenuItem<T> item) => item.value == state.value;
+           final bool isEmpty = switch (items) {
+             final List<DropdownMenuItem<T>> items when items.any(matchesValue) => false,
+             _ => hint == null && (onChanged != null || disabledHint == null),
+           };
 
            // An unfocusable Focus widget so that this widget can detect if its
            // descendants have focus or not.
@@ -1710,32 +1704,14 @@ class DropdownButtonFormField<T> extends FormField<T> {
              canRequestFocus: false,
              skipTraversal: true,
              child: Builder(builder: (BuildContext context) {
-                final bool isFocused = Focus.of(context).hasFocus;
-                InputBorder? resolveInputBorder() {
-                  if (hasError) {
-                    if (isFocused) {
-                      return effectiveDecoration.focusedErrorBorder;
-                    }
-                    return effectiveDecoration.errorBorder;
-                  }
-                  if (isFocused) {
-                    return effectiveDecoration.focusedBorder;
-                  }
-                  if (effectiveDecoration.enabled) {
-                    return effectiveDecoration.enabledBorder;
-                  }
-                  return effectiveDecoration.border;
-                }
-                BorderRadius? effectiveBorderRadius() {
-                  final InputBorder? inputBorder = resolveInputBorder();
-                  if (inputBorder is OutlineInputBorder) {
-                    return inputBorder.borderRadius;
-                  }
-                  if (inputBorder is UnderlineInputBorder) {
-                    return inputBorder.borderRadius;
-                  }
-                  return null;
-                }
+               final bool isFocused = Focus.of(context).hasFocus;
+               late final InputBorder? resolvedBorder = switch (effectiveDecoration) {
+                 InputDecoration(errorText: _?) when isFocused => effectiveDecoration.focusedErrorBorder,
+                 InputDecoration(errorText: _?)   => effectiveDecoration.errorBorder,
+                 InputDecoration() when isFocused => effectiveDecoration.focusedBorder,
+                 InputDecoration(enabled: true)   => effectiveDecoration.enabledBorder,
+                 InputDecoration()                => effectiveDecoration.border,
+               };
 
                return DropdownButtonHideUnderline(
                  child: DropdownButton<T>._formField(
@@ -1762,7 +1738,11 @@ class DropdownButtonFormField<T> extends FormField<T> {
                    menuMaxHeight: menuMaxHeight,
                    enableFeedback: enableFeedback,
                    alignment: alignment,
-                   borderRadius: borderRadius ?? effectiveBorderRadius(),
+                   borderRadius: borderRadius ?? switch (resolvedBorder) {
+                     OutlineInputBorder(:final BorderRadius borderRadius) ||
+                     UnderlineInputBorder(:final BorderRadius borderRadius) => borderRadius,
+                     _ => null,
+                   },
                    inputDecoration: effectiveDecoration.copyWith(errorText: field.errorText),
                    isEmpty: isEmpty,
                    isFocused: isFocused,

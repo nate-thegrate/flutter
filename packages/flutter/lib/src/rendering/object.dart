@@ -2905,8 +2905,7 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
       return;
     }
     _needsCompositingBitsUpdate = true;
-    if (parent is RenderObject) {
-      final RenderObject parent = this.parent!;
+    if (parent case final RenderObject parent) {
       if (parent._needsCompositingBitsUpdate) {
         return;
       }
@@ -3220,8 +3219,7 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
     }
     assert(() {
       if (_needsCompositingBitsUpdate) {
-        if (parent is RenderObject) {
-          final RenderObject parent = this.parent!;
+        if (parent case final RenderObject parent) {
           bool visitedByParent = false;
           parent.visitChildren((RenderObject child) {
             if (child == this) {

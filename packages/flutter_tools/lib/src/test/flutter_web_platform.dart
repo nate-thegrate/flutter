@@ -926,9 +926,7 @@ class BrowserManager {
         case 'restart':
           _onRestartController.add(null);
         case 'resume':
-          if (_pauseCompleter != null) {
-            _pauseCompleter!.complete();
-          }
+          _pauseCompleter?.complete();
         default:
         // Unreachable.
           assert(false);
@@ -945,8 +943,8 @@ class BrowserManager {
       _timer.cancel();
       if (_pauseCompleter != null) {
         _pauseCompleter!.complete();
+        _pauseCompleter = null;
       }
-      _pauseCompleter = null;
       _controllers.clear();
       return _browser.close();
     });

@@ -493,13 +493,11 @@ class _RenderCupertinoPickerSemantics extends RenderProxyBox {
       return node.updateWith(config: config);
     }
     config.value = indexedChildren[_currentIndex]!.label;
-    final SemanticsNode? previousChild = indexedChildren[_currentIndex - 1];
-    final SemanticsNode? nextChild = indexedChildren[_currentIndex + 1];
-    if (nextChild != null) {
+    if (indexedChildren[_currentIndex + 1] case final SemanticsNode nextChild) {
       config.increasedValue = nextChild.label;
       config.onIncrease = _handleIncrease;
     }
-    if (previousChild != null) {
+    if (indexedChildren[_currentIndex - 1] case final SemanticsNode previousChild) {
       config.decreasedValue = previousChild.label;
       config.onDecrease = _handleDecrease;
     }

@@ -164,8 +164,7 @@ class CreateCommand extends CreateBase {
     FlutterProjectType? template;
     FlutterProjectType? detectedProjectType;
     final bool metadataExists = projectDir.absolute.childFile('.metadata').existsSync();
-    final String? templateArgument = stringArg('template');
-    if (templateArgument != null) {
+    if (stringArg('template') case final String templateArgument) {
       template = FlutterProjectType.fromCliName(templateArgument);
     }
     // If the project directory exists and isn't empty, then try to determine the template
@@ -192,8 +191,7 @@ class CreateCommand extends CreateBase {
 
   @override
   Future<FlutterCommandResult> runCommand() async {
-    final String? listSamples = stringArg('list-samples');
-    if (listSamples != null) {
+    if (stringArg('list-samples') case final String listSamples) {
       // _writeSamplesJson can potentially be long-lived.
       await _writeSamplesJson(listSamples);
       return FlutterCommandResult.success();
@@ -208,10 +206,9 @@ class CreateCommand extends CreateBase {
 
     validateOutputDirectoryArg();
     String? sampleCode;
-    final String? sampleArgument = stringArg('sample');
     final bool emptyArgument = boolArg('empty');
     final FlutterProjectType template = _getProjectType(projectDir);
-    if (sampleArgument != null) {
+    if (stringArg('sample') case final String sampleArgument) {
       if (template != FlutterProjectType.app) {
         throwToolExit('Cannot specify --sample with a project type other than '
           '"${FlutterProjectType.app.cliName}"');

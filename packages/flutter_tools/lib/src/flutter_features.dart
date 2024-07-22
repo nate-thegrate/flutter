@@ -70,8 +70,7 @@ class FlutterFeatureFlags implements FeatureFlags {
     }
     bool isEnabled = featureSetting.enabledByDefault;
     if (feature.configSetting != null) {
-      final bool? configOverride = _config.getValue(feature.configSetting!) as bool?;
-      if (configOverride != null) {
+      if (_config.getValue(feature.configSetting!) case final bool configOverride) {
         isEnabled = configOverride;
       }
     }

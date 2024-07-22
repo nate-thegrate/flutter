@@ -294,8 +294,7 @@ class FileExceptionHandler {
   /// Tear-off this method and pass it to the memory filesystem `opHandle` parameter.
   void opHandle(String path, FileSystemOp operation) {
     if (path.startsWith('.tmp_') || _tempDirectoryEnd.firstMatch(path) != null) {
-      final FileSystemException? exception = _tempErrors[operation];
-      if (exception != null) {
+      if (_tempErrors[operation] case final FileSystemException exception) {
         throw exception;
       }
     }

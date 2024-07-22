@@ -27,8 +27,7 @@ export 'package:test_api/fake.dart' show Fake;
 
 Declarer? _localDeclarer;
 Declarer get _declarer {
-  final Declarer? declarer = Zone.current[#test.declarer] as Declarer?;
-  if (declarer != null) {
+  if (Zone.current[#test.declarer] case final Declarer declarer) {
     return declarer;
   }
   // If no declarer is defined, this test is being run via `flutter run -t test_file.dart`.

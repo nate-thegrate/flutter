@@ -478,9 +478,8 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     final Set<MaterialState> states = <MaterialState>{
       if (isActive) MaterialState.selected else MaterialState.disabled,
     };
-    final Color? resolvedConnectorColor = widget.connectorColor?.resolve(states);
-    if (resolvedConnectorColor != null) {
-      return resolvedConnectorColor;
+    if (widget.connectorColor?.resolve(states) case final Color color) {
+      return color;
     }
     if (!_isDark()) {
       return isActive ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.38);

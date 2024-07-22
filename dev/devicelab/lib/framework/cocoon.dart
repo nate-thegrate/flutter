@@ -155,19 +155,16 @@ class Cocoon {
     // Make a copy of result data because we may alter it for validation below.
     updateRequest['ResultData'] = result.data;
 
-    final List<String> validScoreKeys = <String>[];
-    if (result.benchmarkScoreKeys != null) {
-      for (final String scoreKey in result.benchmarkScoreKeys!) {
-        final Object score = result.data![scoreKey] as Object;
-        if (score is num) {
-          // Convert all metrics to double, which provide plenty of precision
-          // without having to add support for multiple numeric types in Cocoon.
-          result.data![scoreKey] = score.toDouble();
-          validScoreKeys.add(scoreKey);
-        }
-      }
-    }
-    updateRequest['BenchmarkScoreKeys'] = validScoreKeys;
+    final Map<String, double> validScores = <String, double>{
+      if (result.benchmarkScoreKeys case final List<String> scoreKeys)
+        for (final String scoreKey in scoreKeys)
+          if (result.data![scoreKey] case final num score)
+            // Convert all metrics to double, which provide plenty of precision
+            // without having to add support for multiple numeric types in Cocoon.
+            scoreKey: score.toDouble(),
+    };
+    result.data!.addAll(validScores);
+    updateRequest['BenchmarkScoreKeys'] = validScores.keys.toList();
 
     return updateRequest;
   }

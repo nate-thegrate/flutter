@@ -2271,8 +2271,7 @@ class LayoutId extends ParentDataWidget<MultiChildLayoutParentData> {
     final MultiChildLayoutParentData parentData = renderObject.parentData! as MultiChildLayoutParentData;
     if (parentData.id != id) {
       parentData.id = id;
-      final RenderObject? targetParent = renderObject.parent;
-      if (targetParent is RenderObject) {
+      if (renderObject.parent case final RenderObject targetParent) {
         targetParent.markNeedsLayout();
       }
     }
@@ -4377,8 +4376,7 @@ class Positioned extends ParentDataWidget<StackParentData> {
     }
 
     if (needsLayout) {
-      final RenderObject? targetParent = renderObject.parent;
-      if (targetParent is RenderObject) {
+      if (renderObject.parent case final RenderObject targetParent) {
         targetParent.markNeedsLayout();
       }
     }
@@ -5246,8 +5244,7 @@ class Flexible extends ParentDataWidget<FlexParentData> {
     }
 
     if (needsLayout) {
-      final RenderObject? targetParent = renderObject.parent;
-      if (targetParent is RenderObject) {
+      if (renderObject.parent case final RenderObject targetParent) {
         targetParent.markNeedsLayout();
       }
     }

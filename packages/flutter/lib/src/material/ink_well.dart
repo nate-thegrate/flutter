@@ -905,13 +905,11 @@ class _InkResponseState extends State<_InkResponseStateWidget>
     if (widget.radius != oldWidget.radius ||
         widget.highlightShape != oldWidget.highlightShape ||
         widget.borderRadius != oldWidget.borderRadius) {
-      final InkHighlight? hoverHighlight = _highlights[_HighlightType.hover];
-      if (hoverHighlight != null) {
+      if (_highlights[_HighlightType.hover] case final InkHighlight hoverHighlight) {
         hoverHighlight.dispose();
         updateHighlight(_HighlightType.hover, value: _hovering, callOnHover: false);
       }
-      final InkHighlight? focusHighlight = _highlights[_HighlightType.focus];
-      if (focusHighlight != null) {
+      if (_highlights[_HighlightType.focus] case final InkHighlight focusHighlight) {
         focusHighlight.dispose();
         // Do not call updateFocusHighlights() here because it is called below
       }
@@ -1034,13 +1032,9 @@ class _InkResponseState extends State<_InkResponseStateWidget>
 
   void _updateHighlightsAndSplashes() {
     for (final InkHighlight? highlight in _highlights.values) {
-      if (highlight != null) {
-        highlight.customBorder = widget.customBorder;
-      }
+      highlight?.customBorder = widget.customBorder;
     }
-    if (_currentSplash != null) {
-      _currentSplash!.customBorder = widget.customBorder;
-    }
+    _currentSplash?.customBorder = widget.customBorder;
     if (_splashes != null && _splashes!.isNotEmpty) {
       for (final InteractiveInkFeature inkFeature in _splashes!) {
         inkFeature.customBorder = widget.customBorder;

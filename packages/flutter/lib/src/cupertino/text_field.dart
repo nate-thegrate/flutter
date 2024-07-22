@@ -1326,11 +1326,10 @@ class _CupertinoTextFieldState extends State<CupertinoTextField> with Restoratio
     final BoxBorder? border = widget.decoration?.border;
     Border? resolvedBorder = border as Border?;
     if (border is Border) {
-      BorderSide resolveBorderSide(BorderSide side) {
-        return side == BorderSide.none
-          ? side
-          : side.copyWith(color: CupertinoDynamicColor.resolve(side.color, context));
-      }
+      BorderSide resolveBorderSide(BorderSide side) => switch (side) {
+        BorderSide.none => side,
+        _ => side.copyWith(color: CupertinoDynamicColor.resolve(side.color, context)),
+      };
       resolvedBorder = border.runtimeType != Border
         ? border
         : Border(
@@ -1345,11 +1344,11 @@ class _CupertinoTextFieldState extends State<CupertinoTextField> with Restoratio
     final BoxDecoration? effectiveDecoration =
       widget.decoration?.copyWith(
         border: resolvedBorder,
-        color: enabled ? decorationColor
-          : (widget.decoration == _kDefaultRoundedBorderDecoration
-              ? disabledColor
-              : widget.decoration?.color
-            ),
+        color: switch (widget.decoration) {
+          _ when enabled => decorationColor,
+          _kDefaultRoundedBorderDecoration => disabledColor,
+          final BoxDecoration? decoration => decoration?.color,
+        },
       );
 
     final Color selectionColor = CupertinoDynamicColor.maybeResolve(

@@ -1522,8 +1522,7 @@ abstract class ResidentRunner extends ResidentHandlers {
       }
       if (includeDevtools) {
         if (_residentDevtoolsHandler!.printDtdUri) {
-          final Uri? dtdUri = residentDevtoolsHandler!.dtdUri;
-          if (dtdUri != null) {
+          if (residentDevtoolsHandler!.dtdUri case final Uri dtdUri) {
             globals.printStatus('The Dart Tooling Daemon is available at: $dtdUri\n');
           }
         }

@@ -674,40 +674,29 @@ List<DarwinArch> defaultIOSArchsForEnvironment(
   Artifacts artifacts,
 ) {
   // Handle single-arch local engines.
-  final LocalEngineInfo? localEngineInfo = artifacts.localEngineInfo;
-  if (localEngineInfo != null) {
-    final String localEngineName = localEngineInfo.localTargetName;
-    if (localEngineName.contains('_arm64')) {
-      return <DarwinArch>[ DarwinArch.arm64 ];
+  if (artifacts.localEngineInfo case LocalEngineInfo(:final String localTargetName)) {
+    if (localTargetName.contains('_arm64')) {
+      return <DarwinArch>[DarwinArch.arm64];
     }
-    if (localEngineName.contains('_sim')) {
-      return <DarwinArch>[ DarwinArch.x86_64 ];
+    if (localTargetName.contains('_sim')) {
+      return <DarwinArch>[DarwinArch.x86_64];
     }
-  } else if (environmentType == EnvironmentType.simulator) {
-    return <DarwinArch>[
-      DarwinArch.x86_64,
-      DarwinArch.arm64,
-    ];
   }
-  return <DarwinArch>[
-    DarwinArch.arm64,
-  ];
+  return switch (environmentType) {
+    EnvironmentType.simulator => <DarwinArch>[DarwinArch.x86_64, DarwinArch.arm64],
+    EnvironmentType.physical  => <DarwinArch>[DarwinArch.arm64],
+  };
 }
 
 /// The default set of macOS device architectures to build for.
 List<DarwinArch> defaultMacOSArchsForEnvironment(Artifacts artifacts) {
   // Handle single-arch local engines.
-  final LocalEngineInfo? localEngineInfo = artifacts.localEngineInfo;
-  if (localEngineInfo != null) {
-    if (localEngineInfo.localTargetName.contains('_arm64')) {
-      return <DarwinArch>[ DarwinArch.arm64 ];
-    }
-    return <DarwinArch>[ DarwinArch.x86_64 ];
-  }
-  return <DarwinArch>[
-    DarwinArch.x86_64,
-    DarwinArch.arm64,
-  ];
+  return switch (artifacts.localEngineInfo) {
+    LocalEngineInfo(:final String localTargetName) when localTargetName.contains('_arm64')
+         => <DarwinArch>[DarwinArch.arm64],
+    _?   => <DarwinArch>[DarwinArch.x86_64],
+    null => <DarwinArch>[DarwinArch.x86_64, DarwinArch.arm64],
+  };
 }
 
 DarwinArch getIOSArchForName(String arch) {

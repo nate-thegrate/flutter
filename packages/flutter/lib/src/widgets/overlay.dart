@@ -1563,8 +1563,7 @@ class OverlayPortalController {
   /// This method should typically not be called while the widget tree is being
   /// rebuilt.
   void show() {
-    final _OverlayPortalState? state = _attachTarget;
-    if (state != null) {
+    if (_attachTarget case final _OverlayPortalState state?) {
       state.show(_now());
     } else {
       _zOrderIndex = _now();
@@ -1580,8 +1579,7 @@ class OverlayPortalController {
   /// This method should typically not be called while the widget tree is being
   /// rebuilt.
   void hide() {
-    final _OverlayPortalState? state = _attachTarget;
-    if (state != null) {
+    if (_attachTarget case final _OverlayPortalState state) {
       state.hide();
     } else {
       assert(_zOrderIndex != null);
@@ -2118,12 +2116,10 @@ class _OverlayPortalElement extends RenderObjectElement {
 
   @override
   void visitChildren(ElementVisitor visitor) {
-    final Element? child = _child;
-    final Element? overlayChild = _overlayChild;
-    if (child != null) {
+    if (_child case final Element child) {
       visitor(child);
     }
-    if (overlayChild != null) {
+    if (_overlayChild case final Element overlayChild?) {
       visitor(overlayChild);
     }
   }
@@ -2131,8 +2127,7 @@ class _OverlayPortalElement extends RenderObjectElement {
   @override
   void activate() {
     super.activate();
-    final Element? overlayChild = _overlayChild;
-    if (overlayChild != null) {
+    if (_overlayChild case final Element overlayChild) {
       final _RenderDeferredLayoutBox? box = overlayChild.renderObject as _RenderDeferredLayoutBox?;
       if (box != null) {
         assert(!box.attached);
@@ -2147,11 +2142,10 @@ class _OverlayPortalElement extends RenderObjectElement {
 
   @override
   void deactivate() {
-    final Element? overlayChild = _overlayChild;
     // Instead of just detaching the render objects, removing them from the
     // render subtree entirely. This is a workaround for the
     // !renderObject.attached assert in the `super.deactivate()` method.
-    if (overlayChild != null) {
+    if (_overlayChild case final Element overlayChild) {
       final _RenderDeferredLayoutBox? box = overlayChild.renderObject as _RenderDeferredLayoutBox?;
       if (box != null) {
         (overlayChild.slot! as _OverlayEntryLocation)._deactivate(box);

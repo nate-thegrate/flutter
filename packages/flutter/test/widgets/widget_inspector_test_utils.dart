@@ -37,12 +37,8 @@ class DispatchedEventKey {
 }
 
 class TestWidgetInspectorService extends Object with WidgetInspectorService {
-    TestWidgetInspectorService() {
-    selection.addListener(() {
-      if (selectionChangedCallback != null) {
-        selectionChangedCallback!();
-      }
-    });
+  TestWidgetInspectorService() {
+    selection.addListener(() => selectionChangedCallback?.call());
   }
   final Map<String, ServiceExtensionCallback> extensions = <String, ServiceExtensionCallback>{};
 

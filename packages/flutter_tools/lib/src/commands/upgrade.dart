@@ -329,8 +329,7 @@ class UpgradeCommandRunner {
   Future<void> updatePackages(FlutterVersion flutterVersion) async {
     globals.printStatus('');
     globals.printStatus(flutterVersion.toString());
-    final String? projectRoot = findProjectRoot(globals.fs);
-    if (projectRoot != null) {
+    if (findProjectRoot(globals.fs) case final String projectRoot) {
       globals.printStatus('');
       await pub.get(
         context: PubContext.pubUpgrade,

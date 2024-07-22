@@ -44,16 +44,13 @@ abstract class Project {
   Future<void> setUpIn(Directory dir) async {
     this.dir = dir;
     writeFile(fileSystem.path.join(dir.path, 'pubspec.yaml'), pubspec);
-    final String? main = this.main;
-    if (main != null) {
+    if (main case final String main) {
       writeFile(fileSystem.path.join(dir.path, 'lib', 'main.dart'), main);
     }
-    final String? test = this.test;
-    if (test != null) {
+    if (test case final String test) {
       writeFile(fileSystem.path.join(dir.path, 'test', 'test.dart'), test);
     }
-    final String? generatedFile = this.generatedFile;
-    if (generatedFile != null) {
+    if (generatedFile case final String generatedFile) {
       writeFile(fileSystem.path.join(dir.path, '.dart_tool', 'flutter_gen', 'flutter_gen.dart'), generatedFile);
     }
     deferredComponents?.setUpIn(dir);

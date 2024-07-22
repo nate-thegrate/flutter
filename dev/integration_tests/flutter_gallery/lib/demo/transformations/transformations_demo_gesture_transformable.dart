@@ -481,9 +481,7 @@ class _GestureTransformableState extends State<GestureTransformable> with Ticker
     _controller.reset();
 
     // If the scale ended with velocity, animate inertial movement
-    final double velocityTotal = details.velocity.pixelsPerSecond.dx.abs()
-      + details.velocity.pixelsPerSecond.dy.abs();
-    if (velocityTotal == 0) {
+    if (details.velocity.pixelsPerSecond == Offset.zero) {
       return;
     }
 

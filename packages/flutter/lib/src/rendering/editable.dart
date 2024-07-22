@@ -174,8 +174,7 @@ class VerticalCaretMovementRun implements Iterator<TextPosition> {
   MapEntry<Offset, TextPosition> _getTextPositionForLine(int lineNumber) {
     assert(isValid);
     assert(lineNumber >= 0);
-    final MapEntry<Offset, TextPosition>? cachedPosition = _positionCache[lineNumber];
-    if (cachedPosition != null) {
+    if (_positionCache[lineNumber] case final MapEntry<Offset, TextPosition> cachedPosition) {
       return cachedPosition;
     }
     assert(lineNumber != _currentLine);
@@ -1642,26 +1641,22 @@ class RenderEditable extends RenderBox with RelayoutWhenSystemFontsChangeMixin, 
 
   @override
   void redepthChildren() {
-    final RenderObject? foregroundChild = _foregroundRenderObject;
-    final RenderObject? backgroundChild = _backgroundRenderObject;
-    if (foregroundChild != null) {
-      redepthChild(foregroundChild);
+    if (_foregroundRenderObject case final RenderObject renderObject) {
+      redepthChild(renderObject);
     }
-    if (backgroundChild != null) {
-      redepthChild(backgroundChild);
+    if (_foregroundRenderObject case final RenderObject renderObject) {
+      redepthChild(renderObject);
     }
     super.redepthChildren();
   }
 
   @override
   void visitChildren(RenderObjectVisitor visitor) {
-    final RenderObject? foregroundChild = _foregroundRenderObject;
-    final RenderObject? backgroundChild = _backgroundRenderObject;
-    if (foregroundChild != null) {
-      visitor(foregroundChild);
+    if (_foregroundRenderObject case final RenderObject renderObject) {
+      visitor(renderObject);
     }
-    if (backgroundChild != null) {
-      visitor(backgroundChild);
+    if (_backgroundRenderObject case final RenderObject renderObject) {
+      visitor(renderObject);
     }
     super.visitChildren(visitor);
   }
@@ -1861,8 +1856,7 @@ class RenderEditable extends RenderBox with RelayoutWhenSystemFontsChangeMixin, 
 
   int? _cachedLineBreakCount;
   int _countHardLineBreaks(String text) {
-    final int? cachedValue = _cachedLineBreakCount;
-    if (cachedValue != null) {
+    if (_cachedLineBreakCount case final int cachedValue?) {
       return cachedValue;
     }
     int count = 0;
@@ -2510,19 +2504,16 @@ class RenderEditable extends RenderBox with RelayoutWhenSystemFontsChangeMixin, 
       _updateSelectionExtentsVisibility(effectiveOffset);
     }
 
-    final RenderBox? foregroundChild = _foregroundRenderObject;
-    final RenderBox? backgroundChild = _backgroundRenderObject;
-
     // The painters paint in the viewport's coordinate space, since the
     // textPainter's coordinate space is not known to high level widgets.
-    if (backgroundChild != null) {
+    if (_backgroundRenderObject case final RenderBox backgroundChild?) {
       context.paintChild(backgroundChild, offset);
     }
 
     _textPainter.paint(context.canvas, effectiveOffset);
     paintInlineChildren(context, effectiveOffset);
 
-    if (foregroundChild != null) {
+    if (_foregroundRenderObject case final RenderBox foregroundChild?) {
       context.paintChild(foregroundChild, offset);
     }
   }

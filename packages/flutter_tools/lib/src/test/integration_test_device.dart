@@ -120,8 +120,7 @@ class IntegrationTestTestDevice implements TestDevice {
 
   @override
   Future<void> kill() async {
-    final ApplicationPackage? applicationPackage = _applicationPackage;
-    if (applicationPackage != null) {
+    if (_applicationPackage case final ApplicationPackage applicationPackage) {
       if (!await device.stopApp(applicationPackage, userIdentifier: userIdentifier)) {
         globals.printTrace('Could not stop the Integration Test app.');
       }

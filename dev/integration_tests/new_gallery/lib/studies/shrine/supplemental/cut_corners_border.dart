@@ -33,8 +33,7 @@ class CutCornersBorder extends OutlineInputBorder {
 
   @override
   ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
-    if (a is CutCornersBorder) {
-      final CutCornersBorder outline = a;
+    if (a case final CutCornersBorder outline) {
       return CutCornersBorder(
         borderRadius: BorderRadius.lerp(outline.borderRadius, borderRadius, t)!,
         borderSide: BorderSide.lerp(outline.borderSide, borderSide, t),
@@ -47,8 +46,7 @@ class CutCornersBorder extends OutlineInputBorder {
 
   @override
   ShapeBorder? lerpTo(ShapeBorder? b, double t) {
-    if (b is CutCornersBorder) {
-      final CutCornersBorder outline = b;
+    if (b case final CutCornersBorder outline) {
       return CutCornersBorder(
         borderRadius: BorderRadius.lerp(borderRadius, outline.borderRadius, t)!,
         borderSide: BorderSide.lerp(borderSide, outline.borderSide, t),

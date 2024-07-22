@@ -266,12 +266,11 @@ Future<XcodeBuildResult> buildXcodeProject({
     buildInfo: buildInfo,
   );
   if (project.usesSwiftPackageManager) {
-    final String? iosDeploymentTarget = buildSettings['IPHONEOS_DEPLOYMENT_TARGET'];
-    if (iosDeploymentTarget != null) {
+    if (buildSettings case {'IPHONEOS_DEPLOYMENT_TARGET': final String deploymentTarget}) {
       SwiftPackageManager.updateMinimumDeployment(
         platform: SupportedPlatform.ios,
         project: project.ios,
-        deploymentTarget: iosDeploymentTarget,
+        deploymentTarget: deploymentTarget,
       );
     }
   }
@@ -285,34 +284,24 @@ Future<XcodeBuildResult> buildXcodeProject({
     'xcodebuild',
     '-configuration',
     configuration,
-  ];
-
-  if (globals.logger.isVerbose) {
     // An environment variable to be passed to xcode_backend.sh determining
     // whether to echo back executed commands.
-    buildCommands.add('VERBOSE_SCRIPT_LOGGING=YES');
-  } else {
-    // This will print warnings and errors only.
-    buildCommands.add('-quiet');
-  }
-
-  if (autoSigningConfigs != null) {
-    for (final MapEntry<String, String> signingConfig in autoSigningConfigs.entries) {
-      buildCommands.add('${signingConfig.key}=${signingConfig.value}');
-    }
-    buildCommands.add('-allowProvisioningUpdates');
-    buildCommands.add('-allowProvisioningDeviceRegistration');
-  }
-
-  final Directory? workspacePath = app.project.xcodeWorkspace;
-  if (workspacePath != null) {
-    buildCommands.addAll(<String>[
-      '-workspace', workspacePath.basename,
+    if (globals.logger.isVerbose) 'VERBOSE_SCRIPT_LOGGING=YES'
+    // Only print warnings and errors.
+    else '-quiet',
+    if (autoSigningConfigs != null) ...<String>[
+      for (final MapEntry<String, String> signingConfig in autoSigningConfigs.entries)
+        '${signingConfig.key}=${signingConfig.value}',
+      '-allowProvisioningUpdates',
+      '-allowProvisioningDeviceRegistration',
+    ],
+    if (app.project.xcodeWorkspace?.basename case final String workspace) ...<String>[
+      '-workspace', workspace,
       '-scheme', scheme,
       if (buildAction != XcodeBuildAction.archive) // dSYM files aren't copied to the archive if BUILD_DIR is set.
         'BUILD_DIR=${globals.fs.path.absolute(getIosBuildDirectory())}',
-    ]);
-  }
+    ],
+  ];
 
   // Check if the project contains a watchOS companion app.
   final bool hasWatchCompanion = await app.project.containsWatchCompanion(
@@ -740,10 +729,9 @@ bool upgradePbxProjWithFlutterAssets(IosProject project, Logger logger) {
   final Set<String> printedStatuses = <String>{};
 
   for (final String line in lines) {
-    final Match? match = oldAssets.firstMatch(line);
-    if (match != null) {
-      if (printedStatuses.add(match.group(1)!)) {
-        logger.printStatus('Removing obsolete reference to ${match.group(1)} from ${project.xcodeProject.basename}');
+    if (oldAssets.firstMatch(line)?.group(1)! case final String status) {
+      if (printedStatuses.add(status)) {
+        logger.printStatus('Removing obsolete reference to $status from ${project.xcodeProject.basename}');
       }
     } else {
       buffer.writeln(line);
@@ -786,8 +774,7 @@ _XCResultIssueHandlingResult _handleXCResultIssue({
   } else if (message.toLowerCase().contains('provisioning profile')) {
     return _XCResultIssueHandlingResult(requiresProvisioningProfile: false, hasProvisioningProfileIssue: true);
   } else if (message.toLowerCase().contains('ineligible destinations')) {
-    final String? missingPlatform = _parseMissingPlatform(message);
-    if (missingPlatform != null) {
+    if (_parseMissingPlatform(message) case final String missingPlatform) {
       return _XCResultIssueHandlingResult(requiresProvisioningProfile: false, hasProvisioningProfileIssue: false, missingPlatform: missingPlatform);
     }
   } else if (message.toLowerCase().contains('redefinition of module')) {
@@ -809,8 +796,7 @@ _XCResultIssueHandlingResult _handleXCResultIssue({
       duplicateModule: duplicateModule,
     );
   } else if (message.toLowerCase().contains('not found')) {
-    final String? missingModule = _parseMissingModule(message);
-    if (missingModule != null) {
+    if (_parseMissingModule(message) case final String missingModule) {
       return _XCResultIssueHandlingResult(
         requiresProvisioningProfile: false,
         hasProvisioningProfileIssue: false,
@@ -991,10 +977,9 @@ void _parseIssueInStdout(XcodeBuildExecution xcodeBuildExecution, Logger logger,
   }
 
   if (stderr != null && stderr.contains('Ineligible destinations')) {
-    final String? version = _parseMissingPlatform(stderr);
-      if (version != null) {
-        logger.printError(missingPlatformInstructions(version), emphasis: true);
-      }
+    if (_parseMissingPlatform(stderr) case final String version) {
+      logger.printError(missingPlatformInstructions(version), emphasis: true);
+    }
   }
 }
 
@@ -1018,13 +1003,8 @@ String? _parseDuplicateSymbols(String message) {
   // Example: "duplicate symbol '_$s29plugin_1_name23PluginNamePluginC9setDouble3key5valueySS_SdtF' in:
   //             /Users/username/path/to/app/build/ios/Debug-iphonesimulator/plugin_1_name/plugin_1_name.framework/plugin_1_name[arm64][5](PluginNamePlugin.o)
   final RegExp pattern = RegExp(r'duplicate symbol [\s|\S]*?\/(.*)\.o');
-  final RegExpMatch? match = pattern.firstMatch(message);
-  if (match != null && match.groupCount > 0) {
-    final String? version = match.group(1);
-    if (version != null) {
-      return version.split('/').last.split('[').first.split('(').first;
-    }
-    return version;
+  if (pattern.firstMatch(message)?.group(1) case final String version) {
+    return version.split('/').last.split('[').first.split('(').first;
   }
   return null;
 }

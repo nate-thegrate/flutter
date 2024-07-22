@@ -959,7 +959,7 @@ Future<void> verifyNoBadImportsInFlutter(String workingDirectory) async {
 
   for (final String key in dependencyMap.keys) {
     for (final String dependency in dependencyMap[key]!) {
-      if (dependencyMap[dependency] != null) {
+      if (dependencyMap.containsKey(dependency)) {
         continue;
       }
       // Sanity check before performing _deepSearch, to ensure there's no rogue
@@ -974,9 +974,9 @@ Future<void> verifyNoBadImportsInFlutter(String workingDirectory) async {
   }
 
   for (final String package in dependencyMap.keys) {
-    final List<String>? loop = _deepSearch<String>(dependencyMap, package);
+    final String? loop = _deepSearch<String>(dependencyMap, package)?.join(' depends on ');
     if (loop != null) {
-      errors.add('${yellow}Dependency loop:$reset ${loop.join(' depends on ')}');
+      errors.add('${yellow}Dependency loop:$reset $loop');
     }
   }
   // Fail if any errors
@@ -1184,7 +1184,7 @@ Future<void> verifyNoTrailingSpaces(String workingDirectory, { int minimumMatche
         problems.add('${file.path}:${index + 1}: trailing U+0009 tab character');
       }
     }
-    if (lines.isNotEmpty && lines.last == '') {
+    if (lines.lastOrNull == '') {
       problems.add('${file.path}:${lines.length}: trailing blank line');
     }
   }
@@ -2092,9 +2092,7 @@ Future<void> verifyTabooDocumentation(String workingDirectory, { int minimumMatc
   await for (final File file in _allFiles(workingDirectory, 'dart', minimumMatches: minimumMatches)) {
     final List<String> lines = file.readAsLinesSync();
     for (int index = 0; index < lines.length; index += 1) {
-      final String line = lines[index];
-      final Match? match = tabooPattern.firstMatch(line);
-      if (match != null) {
+      if (tabooPattern.firstMatch(lines[index]) case final Match match) {
         errors.add('${file.path}:${index + 1}: Found use of the taboo word "${match.group(1)}" in documentation string.');
       }
     }
@@ -2309,18 +2307,11 @@ List<T>? _deepSearch<T>(Map<T, Set<T>> map, T start, [ Set<T>? seen ]) {
     if (key == start) {
       continue; // we catch these separately
     }
-    if (seen != null && seen.contains(key)) {
+    if (seen?.contains(key) ?? false) {
       return <T>[start, key];
     }
-    final List<T>? result = _deepSearch<T>(
-      map,
-      key,
-      <T>{
-        if (seen == null) start else ...seen,
-        key,
-      },
-    );
-    if (result != null) {
+    final Set<T> set = <T>{if (seen == null) start else ...seen, key};
+    if (_deepSearch<T>(map, key, set) case final List<T> result) {
       result.insert(0, start);
       // Only report the shortest chains.
       // For example a->b->a, rather than c->a->b->a.

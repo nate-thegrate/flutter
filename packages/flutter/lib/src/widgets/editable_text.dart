@@ -2101,8 +2101,7 @@ class EditableText extends StatefulWidget {
             AutofillHints.username : TextInputType.text,
           };
 
-          final TextInputType? keyboardType = iOSKeyboardType[effectiveHint];
-          if (keyboardType != null) {
+          if (iOSKeyboardType[effectiveHint] case final TextInputType keyboardType) {
             return keyboardType;
           }
         case TargetPlatform.android:
@@ -2734,7 +2733,7 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
   static SpellCheckConfiguration _inferSpellCheckConfiguration(SpellCheckConfiguration? configuration) {
     final SpellCheckService? spellCheckService = configuration?.spellCheckService;
     final bool spellCheckAutomaticallyDisabled = configuration == null || configuration == const SpellCheckConfiguration.disabled();
-    final bool spellCheckServiceIsConfigured = spellCheckService != null || spellCheckService == null && WidgetsBinding.instance.platformDispatcher.nativeSpellCheckServiceDefined;
+    final bool spellCheckServiceIsConfigured = spellCheckService != null || WidgetsBinding.instance.platformDispatcher.nativeSpellCheckServiceDefined;
     if (spellCheckAutomaticallyDisabled || !spellCheckServiceIsConfigured) {
       // Only enable spell check if a non-disabled configuration is provided
       // and if that configuration does not specify a spell check service,
@@ -2814,6 +2813,7 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
   ///   information.
   ({double startGlyphHeight, double endGlyphHeight}) getGlyphHeights() {
     final TextSelection selection = textEditingValue.selection;
+    late final double preferredHeight = renderEditable.preferredLineHeight;
 
     // Only calculate handle rects if the text in the previous frame
     // is the same as the text in the current frame. This is done because
@@ -2827,8 +2827,8 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
     final String currText = textEditingValue.text;
     if (prevText != currText || !selection.isValid || selection.isCollapsed) {
       return (
-        startGlyphHeight: renderEditable.preferredLineHeight,
-        endGlyphHeight: renderEditable.preferredLineHeight,
+        startGlyphHeight: preferredHeight,
+        endGlyphHeight: preferredHeight,
       );
     }
 
@@ -2844,8 +2844,8 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
       end: selection.end,
     ));
     return (
-      startGlyphHeight: startCharacterRect?.height ?? renderEditable.preferredLineHeight,
-      endGlyphHeight: endCharacterRect?.height ?? renderEditable.preferredLineHeight,
+      startGlyphHeight: startCharacterRect?.height ?? preferredHeight,
+      endGlyphHeight: endCharacterRect?.height ?? preferredHeight,
     );
   }
 
@@ -4472,8 +4472,7 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
         TextSelection(baseOffset: graphemeStart, extentOffset: graphemeEnd),
       );
 
-      final TextBox? box = boxes.isEmpty ? null : boxes.first;
-      if (box != null) {
+      if (boxes.firstOrNull case final ui.TextBox box) {
         final Rect paintBounds = renderEditable.paintBounds;
         // Stop early when characters are already below the bottom edge of the
         // RenderEditable, regardless of its clipBehavior.
@@ -4741,11 +4740,8 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
 
   @override
   void performSelector(String selectorName) {
-    final Intent? intent = intentForMacOSSelector(selectorName);
-
-    if (intent != null) {
-      final BuildContext? primaryContext = primaryFocus?.context;
-      if (primaryContext != null) {
+    if (intentForMacOSSelector(selectorName) case final Intent intent) {
+      if (primaryFocus?.context case final BuildContext primaryContext) {
         Actions.invoke(primaryContext, intent);
       }
     }

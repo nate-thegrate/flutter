@@ -1391,18 +1391,14 @@ class _SelectableTextContainerDelegate extends MultiSelectableSelectionContainer
 
   @override
   void didChangeSelectables() {
-    if (_lastEndEdgeUpdateGlobalPosition != null) {
+    if (_lastEndEdgeUpdateGlobalPosition case final Offset position) {
       handleSelectionEdgeUpdate(
-        SelectionEdgeUpdateEvent.forEnd(
-          globalPosition: _lastEndEdgeUpdateGlobalPosition!,
-        ),
+        SelectionEdgeUpdateEvent.forEnd(globalPosition: position),
       );
     }
-    if (_lastStartEdgeUpdateGlobalPosition != null) {
+    if (_lastStartEdgeUpdateGlobalPosition case final Offset position) {
       handleSelectionEdgeUpdate(
-        SelectionEdgeUpdateEvent.forStart(
-          globalPosition: _lastStartEdgeUpdateGlobalPosition!,
-        ),
+        SelectionEdgeUpdateEvent.forStart(globalPosition: position),
       );
     }
     final Set<Selectable> selectableSet = selectables.toSet();

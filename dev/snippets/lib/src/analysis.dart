@@ -140,12 +140,10 @@ class _SourceVisitor<T> extends RecursiveAstVisitor<T> {
   }
 
   static bool isInsideMethod(AstNode startNode) {
-    AstNode? node = startNode.parent;
-    while (node != null) {
+    for (AstNode? node = startNode.parent; node != null; node = node.parent) {
       if (node is MethodDeclaration) {
         return true;
       }
-      node = node.parent;
     }
     return false;
   }

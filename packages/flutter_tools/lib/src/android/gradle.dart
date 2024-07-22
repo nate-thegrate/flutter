@@ -369,8 +369,7 @@ class AndroidGradleBuilder implements AndroidBuilder {
     if (buildInfo.androidSkipBuildDependencyValidation) {
       command.add('-PskipDependencyChecks=true');
     }
-    final LocalEngineInfo? localEngineInfo = _artifacts.localEngineInfo;
-    if (localEngineInfo != null) {
+    if (_artifacts.localEngineInfo case final LocalEngineInfo localEngineInfo) {
       final Directory localEngineRepo = _getLocalEngineRepo(
         engineOutPath: localEngineInfo.targetOutPath,
         androidBuildInfo: androidBuildInfo,
@@ -960,8 +959,7 @@ Iterable<String> findApkFilesModule(
     if (apkFile.existsSync()) {
       return <File>[apkFile];
     }
-    final String? flavor = buildInfo.flavor;
-    if (flavor != null) {
+    if (buildInfo.flavor case final String flavor) {
       // Android Studio Gradle plugin v3 adds flavor to path.
       apkFile = apkDirectory
         .childDirectory(flavor)

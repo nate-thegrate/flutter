@@ -264,8 +264,7 @@ class OutputLines<T extends Comparable<Object>> {
   final Map<T, OutputLine<T>> lines = <T, OutputLine<T>>{};
 
   void add(T key, String line) {
-    final OutputLine<T>? existing = lines[key];
-    if (existing != null) {
+    if (lines[key] case final OutputLine<T> existing) {
       switch (behavior) {
         case DeduplicateBehavior.kWarn:
           print('Warn: Request to add $key to map "$mapName" as:\n    $line\n  but it already exists as:\n    ${existing.values[0]}');

@@ -1081,8 +1081,7 @@ class RenderListWheelViewport
   @override
   void applyPaintTransform(RenderBox child, Matrix4 transform) {
     final ListWheelParentData parentData = child.parentData! as ListWheelParentData;
-    final Matrix4? paintTransform = parentData.transform;
-    if (paintTransform != null) {
+    if (parentData.transform case final Matrix4 paintTransform) {
       transform.multiply(paintTransform);
     }
   }
@@ -1100,9 +1099,8 @@ class RenderListWheelViewport
     RenderBox? child = lastChild;
     while (child != null) {
       final ListWheelParentData childParentData = child.parentData! as ListWheelParentData;
-      final Matrix4? transform = childParentData.transform;
       // Skip not painted children
-      if (transform != null) {
+      if (childParentData.transform case final Matrix4 transform) {
         final bool isHit = result.addWithPaintTransform(
           transform: transform,
           position: position,

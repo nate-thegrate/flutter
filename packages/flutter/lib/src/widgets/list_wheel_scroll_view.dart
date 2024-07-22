@@ -731,8 +731,7 @@ class _ListWheelScrollViewState extends State<ListWheelScrollView> {
   @override
   void initState() {
     super.initState();
-    if (widget.controller is FixedExtentScrollController) {
-      final FixedExtentScrollController controller = widget.controller! as FixedExtentScrollController;
+    if (widget.controller case final FixedExtentScrollController controller) {
       _lastReportedItemIndex = controller.initialItem;
     }
   }

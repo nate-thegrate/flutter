@@ -238,20 +238,21 @@ class _AccountDetailsLayout extends MultiChildLayoutDelegate {
 
     final String? bottomLine = hasChild(accountEmail) ? accountEmail : (hasChild(accountName) ? accountName : null);
 
-    if (bottomLine != null) {
-      final Size constraintSize = iconSize == null ? size : Size(size.width - iconSize.width, size.height);
-      iconSize ??= const Size(_kAccountDetailsHeight, _kAccountDetailsHeight);
+    if (bottomLine == null) {
+      return;
+    }
+    final Size constraintSize = iconSize == null ? size : Size(size.width - iconSize.width, size.height);
+    iconSize ??= const Size(_kAccountDetailsHeight, _kAccountDetailsHeight);
 
-      // place bottom line center at same height as icon center
-      final Size bottomLineSize = layoutChild(bottomLine, BoxConstraints.loose(constraintSize));
-      final Offset bottomLineOffset = _offsetForBottomLine(size, iconSize, bottomLineSize);
-      positionChild(bottomLine, bottomLineOffset);
+    // place bottom line center at same height as icon center
+    final Size bottomLineSize = layoutChild(bottomLine, BoxConstraints.loose(constraintSize));
+    final Offset bottomLineOffset = _offsetForBottomLine(size, iconSize, bottomLineSize);
+    positionChild(bottomLine, bottomLineOffset);
 
-      // place account name above account email
-      if (bottomLine == accountEmail && hasChild(accountName)) {
-        final Size nameSize = layoutChild(accountName, BoxConstraints.loose(constraintSize));
-        positionChild(accountName, _offsetForName(size, nameSize, bottomLineOffset));
-      }
+    // place account name above account email
+    if (bottomLine == accountEmail && hasChild(accountName)) {
+      final Size nameSize = layoutChild(accountName, BoxConstraints.loose(constraintSize));
+      positionChild(accountName, _offsetForName(size, nameSize, bottomLineOffset));
     }
   }
 

@@ -103,10 +103,7 @@ class _ListDemoState extends State<ListDemo> {
                     setState(() {
                       _showAvatars = value;
                     });
-                    final StateSetter? bottomSheetSetState = _bottomSheet?.setState;
-                    if (bottomSheetSetState != null) {
-                      bottomSheetSetState(() { });
-                    }
+                    _bottomSheet?.setState?.call(() {});
                   },
                 ),
               ),
@@ -121,10 +118,7 @@ class _ListDemoState extends State<ListDemo> {
                     setState(() {
                       _showIcons = value;
                     });
-                    final StateSetter? bottomSheetSetState = _bottomSheet?.setState;
-                    if (bottomSheetSetState != null) {
-                      bottomSheetSetState(() { });
-                    }
+                    _bottomSheet?.setState?.call(() {});
                   },
                 ),
               ),
@@ -139,10 +133,7 @@ class _ListDemoState extends State<ListDemo> {
                     setState(() {
                       _showDividers = value;
                     });
-                    final StateSetter? bottomSheetSetState = _bottomSheet?.setState;
-                    if (bottomSheetSetState != null) {
-                      bottomSheetSetState(() { });
-                    }
+                    _bottomSheet?.setState?.call(() {});
                   },
                 ),
               ),
@@ -157,10 +148,7 @@ class _ListDemoState extends State<ListDemo> {
                     setState(() {
                       _dense = value;
                     });
-                    final StateSetter? bottomSheetSetState = _bottomSheet?.setState;
-                    if (bottomSheetSetState != null) {
-                      bottomSheetSetState(() { });
-                    }
+                    _bottomSheet?.setState?.call(() {});
                   },
                 ),
               ),

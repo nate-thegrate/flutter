@@ -165,12 +165,12 @@ class _DemoItem extends StatelessWidget {
   final GalleryDemo? demo;
 
   void _launchDemo(BuildContext context) {
-    if (demo != null) {
+    if (demo case GalleryDemo(:final String routeName)) {
       Timeline.instantSync('Start Transition', arguments: <String, String>{
         'from': '/',
-        'to': demo!.routeName,
+        'to': routeName,
       });
-      Navigator.pushNamed(context, demo!.routeName);
+      Navigator.pushNamed(context, routeName);
     }
   }
 

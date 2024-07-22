@@ -113,8 +113,7 @@ class RenderDiagonal extends RenderBox
 
     // Lay out the top left child and position it at offset zero.
     Size topLeftSize = Size.zero;
-    final RenderBox? topLeft = _topLeft;
-    if (topLeft != null) {
+    if (_topLeft case final RenderBox topLeft) {
       topLeft.layout(childConstraints, parentUsesSize: true);
       _positionChild(topLeft, Offset.zero);
       topLeftSize = topLeft.size;
@@ -123,8 +122,7 @@ class RenderDiagonal extends RenderBox
     // Lay out the bottom right child and position it at the bottom right corner
     // of the top left child.
     Size bottomRightSize = Size.zero;
-    final RenderBox? bottomRight = _bottomRight;
-    if (bottomRight != null) {
+    if (_bottomRight case final RenderBox bottomRight) {
       bottomRight.layout(childConstraints, parentUsesSize: true);
       _positionChild(
         bottomRight,
@@ -164,12 +162,10 @@ class RenderDiagonal extends RenderBox
     }
 
     // Paint the children at the offset calculated during layout.
-    final RenderBox? topLeft = _topLeft;
-    if (topLeft != null) {
+    if (_topLeft case final RenderBox topLeft) {
       paintChild(topLeft, context, offset);
     }
-    final RenderBox? bottomRight = _bottomRight;
-    if (bottomRight != null) {
+    if (_bottomRight case final RenderBox bottomRight) {
       paintChild(bottomRight, context, offset);
     }
 

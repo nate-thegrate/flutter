@@ -192,8 +192,7 @@ abstract class DesktopDevice extends Device {
         }
       }
 
-      final Uri? vmServiceUri = await vmServiceDiscovery.uri;
-      if (vmServiceUri != null) {
+      if (await vmServiceDiscovery.uri case final Uri vmServiceUri) {
         timer?.cancel();
         onAttached(package, buildInfo, process);
         return LaunchResult.succeeded(vmServiceUri: vmServiceUri);

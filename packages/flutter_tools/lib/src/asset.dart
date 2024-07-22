@@ -766,42 +766,31 @@ class ManifestAssetBundle implements AssetBundle {
 
   // Matches path-like strings ending in a number followed by an 'x'.
   // Example matches include "assets/animals/2.0x", "plants/3x", and "2.7x".
-  static final RegExp _extractPixelRatioFromKeyRegExp = RegExp(r'/?(\d+(\.\d*)?)x$');
+  static final RegExp _pixelRatioRegExp = RegExp(r'/?(\d+(\.\d*)?)x$');
 
   DevFSByteContent _createAssetManifestBinary(
     Map<String, List<String>> assetManifest
   ) {
     double? parseScale(String key) {
-      final Uri assetUri = Uri.parse(key);
-      String directoryPath = '';
-      if (assetUri.pathSegments.length > 1) {
-        directoryPath = assetUri.pathSegments[assetUri.pathSegments.length - 2];
-      }
-
-      final Match? match = _extractPixelRatioFromKeyRegExp.firstMatch(directoryPath);
-      if (match != null && match.groupCount > 0) {
-        return double.parse(match.group(1)!);
+      if (Uri.parse(key).pathSegments case [..., final String path, _]) {
+        if (_pixelRatioRegExp.firstMatch(path)?.group(1) case final String value) {
+          return double.parse(value);
+        }
       }
 
       return null;
     }
 
-    final Map<String, dynamic> result = <String, dynamic>{};
-
-    for (final MapEntry<String, dynamic> manifestEntry in assetManifest.entries) {
-      final List<dynamic> resultVariants = <dynamic>[];
-      final List<String> entries = (manifestEntry.value as List<dynamic>).cast<String>();
-      for (final String variant in entries) {
-        final Map<String, dynamic> resultVariant = <String, dynamic>{};
-        final double? variantDevicePixelRatio = parseScale(variant);
-        resultVariant['asset'] = variant;
-        if (variantDevicePixelRatio != null) {
-          resultVariant['dpr'] = variantDevicePixelRatio;
-        }
-        resultVariants.add(resultVariant);
-      }
-      result[manifestEntry.key] = resultVariants;
-    }
+    final Map<String, dynamic> result = <String, dynamic>{
+      for (final MapEntry<String, dynamic> manifestEntry in assetManifest.entries)
+        manifestEntry.key: <dynamic>[
+          for (final String variant in (manifestEntry.value as List<dynamic>).cast<String>())
+            <String, dynamic>{
+              'asset': variant,
+              if (parseScale(variant) case final double pixelRatio) 'dpr': pixelRatio,
+            },
+        ],
+    };
 
     final ByteData message = const StandardMessageCodec().encodeMessage(result)!;
     return DevFSByteContent(message.buffer.asUint8List(0, message.lengthInBytes));

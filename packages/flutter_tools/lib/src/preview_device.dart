@@ -218,9 +218,8 @@ class PreviewDevice extends Device {
       logger: _logger,
     );
     try {
-      final Uri? vmServiceUri = await vmServiceDiscovery.uri;
-      if (vmServiceUri != null) {
-        return LaunchResult.succeeded(vmServiceUri: vmServiceUri);
+      if (await vmServiceDiscovery.uri case final Uri uri) {
+        return LaunchResult.succeeded(vmServiceUri: uri);
       }
       _logger.printError(
         'Error waiting for a debug connection: '

@@ -814,8 +814,7 @@ class RenderCustomPaint extends RenderProxyBox {
       SemanticsNode? oldChild;
       final CustomPainterSemantics newSemantics = newChildSemantics[newChildrenTop];
       if (haveOldChildren) {
-        final Key? key = newSemantics.key;
-        if (key != null) {
+        if (newSemantics.key case final Key key) {
           oldChild = oldKeyedChildren[key];
           if (oldChild != null) {
             if (_canUpdateSemanticsChild(oldChild, newSemantics)) {

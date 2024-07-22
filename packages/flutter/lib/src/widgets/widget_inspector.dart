@@ -299,13 +299,10 @@ Rect _calculateSubtreeBoundsHelper(RenderObject object, Matrix4 transform) {
     final Matrix4 childTransform = transform.clone();
     object.applyPaintTransform(child, childTransform);
     Rect childBounds = _calculateSubtreeBoundsHelper(child, childTransform);
-    final Rect? paintClip = object.describeApproximatePaintClip(child);
-    if (paintClip != null) {
-      final Rect transformedPaintClip = MatrixUtils.transformRect(
-        transform,
-        paintClip,
+    if (object.describeApproximatePaintClip(child) case final Rect paintClip) {
+      childBounds = childBounds.intersect(
+        MatrixUtils.transformRect(transform, paintClip),
       );
-      childBounds = childBounds.intersect(transformedPaintClip);
     }
 
     if (childBounds.isFinite && !childBounds.isEmpty) {
@@ -737,11 +734,7 @@ class InspectorReferenceData {
 // Production implementation of [WidgetInspectorService].
 class _WidgetInspectorService with WidgetInspectorService {
   _WidgetInspectorService() {
-    selection.addListener(() {
-      if (selectionChangedCallback != null) {
-        selectionChangedCallback!();
-      }
-    });
+    selection.addListener(() => selectionChangedCallback?.call());
   }
 }
 
@@ -1390,9 +1383,8 @@ mixin WidgetInspectorService {
     reference.count -= 1;
     assert(reference.count >= 0);
     if (reference.count == 0) {
-      final Object? value = reference.value;
-      if (value != null) {
-          _objectToId.remove(value);
+      if (reference.value case final Object value?) {
+        _objectToId.remove(value);
       }
       _idToReferenceData.remove(reference.id);
     }
@@ -1527,14 +1519,10 @@ mixin WidgetInspectorService {
   /// or other packages.
   @protected
   void addPubRootDirectories(List<String> pubRootDirectories) {
-    pubRootDirectories = pubRootDirectories.map<String>((String directory) => Uri.parse(directory).path).toList();
-
-    final Set<String> directorySet = Set<String>.from(pubRootDirectories);
-    if (_pubRootDirectories != null) {
-      directorySet.addAll(_pubRootDirectories!);
-    }
-
-    _pubRootDirectories = directorySet.toList();
+    _pubRootDirectories = <String>{
+      for (final String directory in pubRootDirectories) Uri.parse(directory).path,
+      ...?_pubRootDirectories,
+    }.toList();
     _isLocalCreationCache.clear();
   }
 
@@ -1608,8 +1596,7 @@ mixin WidgetInspectorService {
   void _sendInspectEvent(Object? object){
     inspect(object);
 
-    final _Location? location = _getSelectedSummaryWidgetLocation(null);
-    if (location != null) {
+    if (_getSelectedSummaryWidgetLocation() case final _Location location) {
       postEvent(
         'navigate',
         <String, Object>{
@@ -1626,8 +1613,7 @@ mixin WidgetInspectorService {
   /// Returns a DevTools uri linking to a specific element on the inspector page.
   String? _devToolsInspectorUriForElement(Element element) {
     if (activeDevToolsServerAddress != null && connectedVmServiceUri != null) {
-      final String? inspectorRef = toId(element, _consoleObjectGroup);
-      if (inspectorRef != null) {
+      if (toId(element, _consoleObjectGroup) case final String inspectorRef?) {
         return devToolsInspectorUri(inspectorRef);
       }
     }
@@ -1762,13 +1748,10 @@ mixin WidgetInspectorService {
 
   /// Memoized version of [_isLocalCreationLocationImpl].
   bool _isLocalCreationLocation(String locationUri) {
-    final bool? cachedValue = _isLocalCreationCache[locationUri];
-    if (cachedValue != null) {
+    if (_isLocalCreationCache[locationUri] case final bool cachedValue?) {
       return cachedValue;
     }
-    final bool result = _isLocalCreationLocationImpl(locationUri);
-    _isLocalCreationCache[locationUri] = result;
-    return result;
+    return _isLocalCreationCache[locationUri] = _isLocalCreationLocationImpl(locationUri);
   }
 
   /// Wrapper around `json.encode` that uses a ring of cached values to prevent
@@ -2384,7 +2367,7 @@ mixin WidgetInspectorService {
     return _safeJsonEncode(_getSelectedSummaryWidget(null, groupName));
   }
 
-  _Location? _getSelectedSummaryWidgetLocation(String? previousSelectionId) {
+  _Location? _getSelectedSummaryWidgetLocation([String? previousSelectionId]) {
      return _getCreationLocation(_getSelectedSummaryDiagnosticsNode(previousSelectionId)?.value);
   }
 
@@ -3588,9 +3571,8 @@ Iterable<DiagnosticsNode> _describeRelevantUserCode(
       // we can enable deep links for more errors than just RenderFlex overflow
       // errors. See https://github.com/flutter/flutter/issues/74918.
       if (isOverflowError()) {
-        final String? devToolsInspectorUri =
-          WidgetInspectorService.instance._devToolsInspectorUriForElement(target);
-        if (devToolsInspectorUri != null) {
+        if (WidgetInspectorService.instance._devToolsInspectorUriForElement(target)
+        case final String devToolsInspectorUri) {
           devToolsDiagnostic = DevToolsDeepLinkProperty(
             'To inspect this widget in Flutter DevTools, visit: $devToolsInspectorUri',
             devToolsInspectorUri,
@@ -3643,9 +3625,8 @@ class DevToolsDeepLinkProperty extends DiagnosticsProperty<String> {
 bool debugIsLocalCreationLocation(Object object) {
   bool isLocal = false;
   assert(() {
-    final _Location? location = _getCreationLocation(object);
-    if (location != null) {
-      isLocal = WidgetInspectorService.instance._isLocalCreationLocation(location.file);
+    if (_getCreationLocation(object) case _Location(:final String file)) {
+      isLocal = WidgetInspectorService.instance._isLocalCreationLocation(file);
     }
     return true;
   }());
@@ -3788,16 +3769,13 @@ class InspectorSerializationDelegate implements DiagnosticsSerializationDelegate
 
   @override
   Map<String, Object?> additionalNodeProperties(DiagnosticsNode node) {
-    final Map<String, Object?> result = <String, Object?>{};
     final Object? value = node.value;
-    if (_interactive) {
-      result['valueId'] = service.toId(value, groupName!);
-    }
-    if (summaryTree) {
-      result['summaryTree'] = true;
-    }
-    final _Location? creationLocation = _getCreationLocation(value);
-    if (creationLocation != null) {
+    final Map<String, Object?> result = <String, Object?>{
+      if (_interactive) 'valueId': service.toId(value, groupName!),
+      if (summaryTree) 'summaryTree': true,
+    };
+
+    if (_getCreationLocation(value) case final _Location creationLocation) {
       result['locationId'] = _toLocationId(creationLocation);
       result['creationLocation'] = creationLocation.toJsonMap();
       if (service._isLocalCreationLocation(creationLocation.file)) {
@@ -3805,9 +3783,11 @@ class InspectorSerializationDelegate implements DiagnosticsSerializationDelegate
         result['createdByLocalProject'] = true;
       }
     }
-    if (addAdditionalPropertiesCallback != null) {
-      result.addAll(addAdditionalPropertiesCallback!(node, this) ?? <String, Object>{});
+    if (addAdditionalPropertiesCallback?.call(node, this)
+    case final Map<String, Object> additionalProperties) {
+      result.addAll(additionalProperties);
     }
+
     return result;
   }
 

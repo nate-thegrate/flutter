@@ -23,12 +23,10 @@ class MyDataSource extends DataTableSource {
   int get rowCount => sortedData.length;
 
   static DataCell cellFor(Object data) {
-    String value;
-    if (data is DateTime) {
-      value = '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}';
-    } else {
-      value = data.toString();
-    }
+    final String value = switch (data) {
+      DateTime() => '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}',
+      _ => data.toString(),
+    };
     return DataCell(Text(value));
   }
 
