@@ -29,37 +29,42 @@ import 'theme_data.dart';
 /// visual contrast.
 enum DynamicSchemeVariant {
   /// Default for Material theme colors. Builds pastel palettes with a low chroma.
-  tonalSpot,
+  tonalSpot('tonal spot'),
 
   /// The resulting color palettes match seed color, even if the seed color
   /// is very bright (high chroma).
-  fidelity,
+  fidelity('fidelity'),
 
   /// All colors are grayscale, no chroma.
-  monochrome,
+  monochrome('monochrome'),
 
   /// Close to grayscale, a hint of chroma.
-  neutral,
+  neutral('neutral'),
 
   /// Pastel colors, high chroma palettes. The primary palette's chroma is at
   /// maximum. Use `fidelity` instead if tokens should alter their tone to match
   /// the palette vibrancy.
-  vibrant,
+  vibrant('vibrant'),
 
   /// Pastel colors, medium chroma palettes. The primary palette's hue is
   /// different from the seed color, for variety.
-  expressive,
+  expressive('expressive'),
 
   /// Almost identical to `fidelity`. Tokens and palettes match the seed color.
   /// [ColorScheme.primaryContainer] is the seed color, adjusted to ensure
   /// contrast with surfaces. The tertiary palette is analogue of the seed color.
-  content,
+  content('content'),
 
   /// A playful theme - the seed color's hue does not appear in the theme.
-  rainbow,
+  rainbow('rainbow'),
 
   /// A playful theme - the seed color's hue does not appear in the theme.
-  fruitSalad,
+  fruitSalad('fruit salad');
+
+  const DynamicSchemeVariant(this._label);
+
+  /// Should be identical to [Variant.label].
+  final String _label;
 }
 
 /// {@template flutter.material.color_scheme.ColorScheme}
@@ -427,6 +432,103 @@ class ColorScheme with Diagnosticable {
       background: background ?? Color(MaterialDynamicColors.background.getArgb(scheme)),
       onBackground: onBackground ?? Color(MaterialDynamicColors.onBackground.getArgb(scheme)),
       surfaceVariant: surfaceVariant ?? Color(MaterialDynamicColors.surfaceVariant.getArgb(scheme)),
+    );
+  }
+
+  /// Generate a scheme based on
+  /// [multiple color sources](https://m3.material.io/styles/color/dynamic/choosing-a-source#e218977d-849b-42d7-8c6a-59d5332c22eb).
+  ///
+  /// This is similar to [ColorScheme.fromSeed], but allows specifying different
+  /// seed colors for each color role category. If a [Color] argument is null,
+  /// the result of [ColorScheme.fromSeed] using `primary` as the `seedColor`
+  /// will be used in its place.
+  ///
+  /// Instead of the [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/)'s
+  /// "Color match" checkbox, there are nine [DynamicSchemeVariant] options
+  /// to choose from.
+  ///
+  /// This constructor does not enable overriding individual color roles.
+  /// To set a role individually, consider using [copyWith].
+  factory ColorScheme.fromCoreColors({
+    Brightness brightness = Brightness.light,
+    DynamicSchemeVariant dynamicSchemeVariant = DynamicSchemeVariant.tonalSpot,
+    double contrastLevel = 0.0,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
+    Color? error,
+    Color? neutral,
+    Color? outline,
+  }) {
+    Hct? hct(Color? color) => switch (color) {
+      Color(:final int value) => Hct.fromInt(value),
+      null => null,
+    };
+
+    final DynamicScheme scheme = SchemeCoreColors(
+      isDark: brightness == Brightness.dark,
+      variant: dynamicSchemeVariant._label,
+      contrastLevel: contrastLevel,
+      primaryCore: hct(primary),
+      secondaryCore: hct(secondary),
+      tertiaryCore: hct(tertiary),
+      errorCore: hct(error),
+      neutralCore: hct(neutral),
+      outlineCore: hct(outline),
+    );
+
+    return ColorScheme(
+      primary: Color(MaterialDynamicColors.primary.getArgb(scheme)),
+      onPrimary: Color(MaterialDynamicColors.onPrimary.getArgb(scheme)),
+      primaryContainer: Color(MaterialDynamicColors.primaryContainer.getArgb(scheme)),
+      onPrimaryContainer: Color(MaterialDynamicColors.onPrimaryContainer.getArgb(scheme)),
+      primaryFixed: Color(MaterialDynamicColors.primaryFixed.getArgb(scheme)),
+      primaryFixedDim: Color(MaterialDynamicColors.primaryFixedDim.getArgb(scheme)),
+      onPrimaryFixed: Color(MaterialDynamicColors.onPrimaryFixed.getArgb(scheme)),
+      onPrimaryFixedVariant: Color(MaterialDynamicColors.onPrimaryFixedVariant.getArgb(scheme)),
+      secondary: Color(MaterialDynamicColors.secondary.getArgb(scheme)),
+      onSecondary: Color(MaterialDynamicColors.onSecondary.getArgb(scheme)),
+      secondaryContainer: Color(MaterialDynamicColors.secondaryContainer.getArgb(scheme)),
+      onSecondaryContainer: Color(MaterialDynamicColors.onSecondaryContainer.getArgb(scheme)),
+      secondaryFixed: Color(MaterialDynamicColors.secondaryFixed.getArgb(scheme)),
+      secondaryFixedDim: Color(MaterialDynamicColors.secondaryFixedDim.getArgb(scheme)),
+      onSecondaryFixed: Color(MaterialDynamicColors.onSecondaryFixed.getArgb(scheme)),
+      onSecondaryFixedVariant: Color(MaterialDynamicColors.onSecondaryFixedVariant.getArgb(scheme)),
+      tertiary: Color(MaterialDynamicColors.tertiary.getArgb(scheme)),
+      onTertiary: Color(MaterialDynamicColors.onTertiary.getArgb(scheme)),
+      tertiaryContainer: Color(MaterialDynamicColors.tertiaryContainer.getArgb(scheme)),
+      onTertiaryContainer: Color(MaterialDynamicColors.onTertiaryContainer.getArgb(scheme)),
+      tertiaryFixed: Color(MaterialDynamicColors.tertiaryFixed.getArgb(scheme)),
+      tertiaryFixedDim: Color(MaterialDynamicColors.tertiaryFixedDim.getArgb(scheme)),
+      onTertiaryFixed: Color(MaterialDynamicColors.onTertiaryFixed.getArgb(scheme)),
+      onTertiaryFixedVariant: Color(MaterialDynamicColors.onTertiaryFixedVariant.getArgb(scheme)),
+      error: Color(MaterialDynamicColors.error.getArgb(scheme)),
+      onError: Color(MaterialDynamicColors.onError.getArgb(scheme)),
+      errorContainer: Color(MaterialDynamicColors.errorContainer.getArgb(scheme)),
+      onErrorContainer: Color(MaterialDynamicColors.onErrorContainer.getArgb(scheme)),
+      outline: Color(MaterialDynamicColors.outline.getArgb(scheme)),
+      outlineVariant: Color(MaterialDynamicColors.outlineVariant.getArgb(scheme)),
+      surface: Color(MaterialDynamicColors.surface.getArgb(scheme)),
+      surfaceDim: Color(MaterialDynamicColors.surfaceDim.getArgb(scheme)),
+      surfaceBright: Color(MaterialDynamicColors.surfaceBright.getArgb(scheme)),
+      surfaceContainerLowest: Color(MaterialDynamicColors.surfaceContainerLowest.getArgb(scheme)),
+      surfaceContainerLow: Color(MaterialDynamicColors.surfaceContainerLow.getArgb(scheme)),
+      surfaceContainer: Color(MaterialDynamicColors.surfaceContainer.getArgb(scheme)),
+      surfaceContainerHigh: Color(MaterialDynamicColors.surfaceContainerHigh.getArgb(scheme)),
+      surfaceContainerHighest: Color(MaterialDynamicColors.surfaceContainerHighest.getArgb(scheme)),
+      onSurface: Color(MaterialDynamicColors.onSurface.getArgb(scheme)),
+      onSurfaceVariant: Color(MaterialDynamicColors.onSurfaceVariant.getArgb(scheme)),
+      inverseSurface: Color(MaterialDynamicColors.inverseSurface.getArgb(scheme)),
+      onInverseSurface: Color(MaterialDynamicColors.inverseOnSurface.getArgb(scheme)),
+      inversePrimary: Color(MaterialDynamicColors.inversePrimary.getArgb(scheme)),
+      shadow: Color(MaterialDynamicColors.shadow.getArgb(scheme)),
+      scrim: Color(MaterialDynamicColors.scrim.getArgb(scheme)),
+      surfaceTint: Color(MaterialDynamicColors.primary.getArgb(scheme)),
+      brightness: brightness,
+      // DEPRECATED (newest deprecations at the bottom)
+      background: Color(MaterialDynamicColors.background.getArgb(scheme)),
+      onBackground: Color(MaterialDynamicColors.onBackground.getArgb(scheme)),
+      surfaceVariant: Color(MaterialDynamicColors.surfaceVariant.getArgb(scheme)),
     );
   }
 
@@ -1906,18 +2008,11 @@ class ColorScheme with Diagnosticable {
       contrastLevel >= -1.0 && contrastLevel <= 1.0,
       'contrastLevel must be between -1.0 and 1.0 inclusive.',
     );
-    final bool isDark = brightness == Brightness.dark;
-    final Hct sourceColor =  Hct.fromInt(seedColor.value);
-    return switch (schemeVariant) {
-      DynamicSchemeVariant.tonalSpot => SchemeTonalSpot(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.fidelity => SchemeFidelity(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.content => SchemeContent(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.monochrome => SchemeMonochrome(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.neutral => SchemeNeutral(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.vibrant => SchemeVibrant(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.expressive => SchemeExpressive(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.rainbow => SchemeRainbow(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-      DynamicSchemeVariant.fruitSalad => SchemeFruitSalad(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
-    };
+    return DynamicScheme.fromVariant(
+      variant: schemeVariant._label,
+      sourceColorHct: Hct.fromInt(seedColor.value),
+      isDark: brightness == Brightness.dark,
+      contrastLevel: contrastLevel,
+    );
   }
 }
