@@ -706,19 +706,21 @@ class _AmPmButton extends StatelessWidget {
     final TextStyle? resolvedTextStyle = MaterialStateProperty.resolveAs<TextStyle?>(timePickerTheme.dayPeriodTextStyle ?? defaultTheme.dayPeriodTextStyle, states)?.copyWith(color: resolvedTextColor);
     final TextScaler buttonTextScaler = MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 2.0);
 
-    return Material(
+    return ColoredBox(
       color: resolvedBackgroundColor,
-      child: InkWell(
-        onTap: Feedback.wrapForTap(onPressed, context),
-        child: Semantics(
-          checked: selected,
-          inMutuallyExclusiveGroup: true,
-          button: true,
-          child: Center(
-            child: Text(
-              label,
-              style: resolvedTextStyle,
-              textScaler: buttonTextScaler,
+      child: SplashBox(
+        child: InkWell(
+          onTap: Feedback.wrapForTap(onPressed, context),
+          child: Semantics(
+            checked: selected,
+            inMutuallyExclusiveGroup: true,
+            button: true,
+            child: Center(
+              child: Text(
+                label,
+                style: resolvedTextStyle,
+                textScaler: buttonTextScaler,
+              ),
             ),
           ),
         ),

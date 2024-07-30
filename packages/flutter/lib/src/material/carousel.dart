@@ -12,7 +12,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import 'colors.dart';
 import 'ink_well.dart';
 import 'material.dart';
 import 'theme.dart';
@@ -412,8 +411,7 @@ class _CarouselViewState extends State<CarouselView> {
           fit: StackFit.expand,
           children: <Widget>[
             widget.children[index],
-            Material(
-              color: Colors.transparent,
+            SplashBox(
               child: InkWell(
                 onTap: () {
                   widget.onTap?.call(index);
