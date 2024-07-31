@@ -12,10 +12,12 @@
 /// @docImport 'tween_animation_builder.dart';
 library;
 
-import 'dart:ui' as ui show TextHeightBehavior;
+import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 import 'basic.dart';
@@ -563,6 +565,242 @@ abstract class AnimatedWidgetBaseState<T extends ImplicitlyAnimatedWidget> exten
   void _handleAnimationChanged() {
     setState(() { /* The animation ticked. Rebuild with new animation value */ });
   }
+}
+
+/// Function signature for linear interpolation.
+///
+/// {@template flutter.widgets.LerpCallback}
+/// For example, [Color.lerp] qualifies as a `LerpCallback<Color>`.
+///
+/// The callback should have the return type [T]; the return type
+/// is nullable for compatibility with existing "lerp" methods.
+/// {@endtemplate}
+typedef LerpCallback<T> = T? Function(T a, T b, double t);
+
+/// A widget that animates based on changes to its [value].
+///
+/// This class uses a [duration], [curve], and [lerp] callback to determine
+/// its transition from one value to another.
+///
+/// The widget will immediately animate from its [initialValue] to the [value],
+/// if an [initialValue] is specified. Otherwise, the widget is "implicitly"
+/// animated: it performs an animation when its [value] changes.
+///
+/// {@tool snippet}
+/// This example shows how to build a widget that animates its size based on
+/// an explicit `size` parameter, instead of adjusting based on its child as
+/// [AnimatedSize] does.
+///
+/// ```dart
+/// class MyAnimatedSize extends AnimatedValue<Size> {
+///   const MyAnimatedSize({
+///     super.key,
+///     required Size size,
+///     required super.duration,
+///     super.curve,
+///     super.initialValue,
+///     super.child,
+///   }) : super(size, lerp: Size.lerp);
+///
+///   @override
+///   Widget build(BuildContext context, Size value) {
+///     return SizedBox.fromSize(size: value, child: child);
+///   }
+/// }
+/// ```
+/// {@end-tool}
+///
+/// [AnimatedContainer], a subclass of [AnimatedValue], uses a [Record] as its
+/// [value] type: this allows it to [lerp] multiple properties at once.
+///
+/// Other subtypes of `AnimatedValue` include:
+///
+///  * [AnimatedAlign], which is an implicitly animated version of [Align].
+///  * [AnimatedDefaultTextStyle], which is an implicitly animated version of
+///    [DefaultTextStyle].
+///  * [AnimatedScale], which is an implicitly animated version of [Transform.scale].
+///  * [AnimatedRotation], which is an implicitly animated version of [Transform.rotate].
+///  * [AnimatedSlide], which implicitly animates the position of a widget relative to its normal position.
+///  * [AnimatedOpacity], which is an implicitly animated version of [Opacity].
+///  * [AnimatedPadding], which is an implicitly animated version of [Padding].
+///  * [AnimatedPhysicalModel], which is an implicitly animated version of
+///    [PhysicalModel].
+///  * [AnimatedPositioned], which is an implicitly animated version of
+///    [Positioned].
+///  * [AnimatedPositionedDirectional], which is an implicitly animated version
+///    of [PositionedDirectional].
+///  * [AnimatedTheme], which is an implicitly animated version of [Theme].
+///
+/// See also:
+///
+///  * [ImplicitlyAnimatedWidget], which was used to create implicit animations
+///    before [Record] types were supported in Dart.
+///  * [TweenAnimationBuilder], which is similar to [AnimatedValue.builder],
+///    but uses a [Tween] rather than a [LerpCallback] for evaluation.
+///  * [AnimatedCrossFade], which cross-fades between two given children and
+///    animates itself between their sizes.
+///  * [AnimatedSize], which automatically transitions its size over a given
+///    duration.
+///  * [AnimatedSwitcher], which fades from one widget to another.
+abstract class AnimatedValue<T extends Object> extends StatefulWidget {
+  /// Used by subclasses to initialize fields.
+  ///
+  /// For an animated value that doesn't need an additional class declaration,
+  /// consider [AnimatedValue.builder].
+  const AnimatedValue(
+    this.value, {
+    super.key,
+    this.initialValue,
+    required this.duration,
+    this.curve = Curves.linear,
+    required this.lerp,
+    this.child,
+    this.onEnd,
+  });
+
+  /// Creates an implicit animation using the provided [Duration],
+  /// [ValueWidgetBuilder], and [LerpCallback].
+  ///
+  /// See also:
+  ///
+  ///  * [TweenAnimationBuilder], which does the same,
+  ///    using a [Tween] rather than a [LerpCallback].
+  ///  * [Builder], the [StatelessWidget] equivalent.
+  const factory AnimatedValue.builder(
+    T value, {
+    Key? key,
+    T? initialValue,
+    required Duration duration,
+    Curve curve,
+    required ValueWidgetBuilder<T> builder,
+    required LerpCallback<T> lerp,
+    VoidCallback? onEnd,
+    Widget? child,
+  }) = _AnimatedValueBuilder<T>;
+
+  /// The target value of the animation.
+  ///
+  /// When this value changes, the widget will smoothly animate to the new value
+  /// using the provided [lerp] callback.
+  final T value;
+
+  /// If this is non-null, the widget will immediately start animating from this
+  /// value toward the target [value] when it is first built.
+  final T? initialValue;
+
+  /// The duration over which to animate changes to the [value].
+  final Duration duration;
+
+  /// The curve to apply when the widget animates.
+  ///
+  /// For example, using [Curves.ease] may improve the animation's visual appeal
+  /// by mitigating the linear animation's abrupt stop.
+  final Curve curve;
+
+  /// A function that defines the type [T]'s linear interpolation
+  /// from one [value] to another.
+  ///
+  /// {@macro flutter.widgets.LerpCallback}
+  ///
+  /// If the [LerpCallback] is defined as a global function or `static` method,
+  /// it can be used in a `const` constructor!
+  final LerpCallback<T> lerp;
+
+  /// Called each time the animation completes.
+  ///
+  /// This can be useful to trigger additional actions (e.g. another animation)
+  /// at the end of the current animation.
+  final VoidCallback? onEnd;
+
+  /// The widget below this widget in the tree.
+  ///
+  /// {@macro flutter.widgets.ProxyWidget.child}
+  final Widget? child;
+
+  /// Called each frame to build a widget, given the current state
+  /// of the value's animation.
+  @protected
+  Widget build(BuildContext context, T value);
+
+  @override
+  State<AnimatedValue<T>> createState() => _AnimatedValueState<T>();
+}
+
+class _AnimatedValueState<T extends Object> extends State<AnimatedValue<T>>
+    with SingleTickerProviderStateMixin {
+  late T from = widget.initialValue ?? widget.value;
+  late T target = widget.value;
+  late T value = from;
+
+  late final Ticker ticker = createTicker((Duration elapsed) {
+    if (value == target) {
+      return ticker.stop();
+    }
+
+    final double progress = elapsed.inMicroseconds / widget.duration.inMicroseconds;
+    if (progress >= 1.0) {
+      ticker.stop();
+      setState(() {
+        value = target;
+      });
+      return;
+    }
+
+    final double t = widget.curve.transform(math.max(progress, 0.0));
+    setState(() {
+      value = widget.lerp(from, target, t)!;
+    });
+  });
+
+  void _animate() {
+    final T newTarget = widget.value;
+    if (newTarget != value) {
+      ticker.stop();
+      from = value;
+      target = newTarget;
+      ticker.start();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _animate();
+  }
+
+  @override
+  void didUpdateWidget(AnimatedValue<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _animate();
+  }
+
+  @override
+  void dispose() {
+    ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.build(context, value);
+}
+
+class _AnimatedValueBuilder<T extends Object> extends AnimatedValue<T> {
+  const _AnimatedValueBuilder(
+    super.value, {
+    super.key,
+    super.initialValue,
+    required super.duration,
+    super.curve,
+    required super.lerp,
+    super.onEnd,
+    required this.builder,
+    super.child,
+  });
+
+  final ValueWidgetBuilder<T> builder;
+
+  @override
+  Widget build(BuildContext context, T value) => builder(context, value, child);
 }
 
 /// Animated version of [Container] that gradually changes its values over a period of time.
