@@ -324,5 +324,5 @@ Future<String?> _chooseSigningIdentity(
   return null;
 }
 
-/// Returns true if s is a not empty string.
-bool _isNotEmpty(String? s) => s != null && s.isNotEmpty;
+// Returns true if s is a not empty string.
+bool _isNotEmpty(String? s) => s?.isNotEmpty ?? false;

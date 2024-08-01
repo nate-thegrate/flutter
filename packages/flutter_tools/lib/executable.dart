@@ -71,10 +71,10 @@ Future<void> main(List<String> args) async {
     args[powershellHelpIndex] = '-h';
   }
 
-  final bool doctor = (args.isNotEmpty && args.first == 'doctor') ||
+  final bool doctor = (args.firstOrNull == 'doctor') ||
       (args.length == 2 && verbose && args.last == 'doctor');
   final bool help = args.contains('-h') || args.contains('--help') ||
-      (args.isNotEmpty && args.first == 'help') || (args.length == 1 && verbose);
+      (args.firstOrNull == 'help') || (args.length == 1 && verbose);
   final bool muteCommandLogging = (help || doctor) && !veryVerbose;
   final bool verboseHelp = help && verbose;
   final bool daemon = args.contains('daemon');

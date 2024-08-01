@@ -76,9 +76,7 @@ class CategoryMenuPage extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               model.setCategory(category);
-              if (onCategoryTap != null) {
-                onCategoryTap!();
-              }
+              onCategoryTap?.call();
             },
             child: model.selectedCategory == category
                 ? CustomPaint(
@@ -190,9 +188,7 @@ class CategoryMenuPage extends StatelessWidget {
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           onTap: () {
-                            if (onCategoryTap != null) {
-                              onCategoryTap!();
-                            }
+                            onCategoryTap?.call();
                             Navigator.of(context)
                                 .restorablePushNamed(ShrineApp.loginRoute);
                           },

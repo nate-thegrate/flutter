@@ -32,10 +32,12 @@ class TestBuildSystem implements BuildSystem {
   int _nextResult = 0;
 
   @override
-  Future<BuildResult> build(Target target, Environment environment, {BuildSystemConfig buildSystemConfig = const BuildSystemConfig()}) async {
-    if (_onRun != null) {
-      _onRun.call(target, environment);
-    }
+  Future<BuildResult> build(
+    Target target,
+    Environment environment, {
+    BuildSystemConfig buildSystemConfig = const BuildSystemConfig(),
+  }) async {
+    _onRun?.call(target, environment);
     if (_exception != null) {
       throw _exception;
     }

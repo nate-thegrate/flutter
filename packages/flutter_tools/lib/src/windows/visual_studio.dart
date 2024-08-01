@@ -476,10 +476,7 @@ class VisualStudio {
       ]);
       if (result.exitCode == 0) {
         final RegExp pattern = RegExp(r'InstallationFolder\s+REG_SZ\s+(.+)');
-        final RegExpMatch? match = pattern.firstMatch(result.stdout);
-        if (match != null) {
-          return match.group(1)!.trim();
-        }
+        return pattern.firstMatch(result.stdout)?.group(1)!.trim();
       }
     } on ArgumentError {
       // Thrown if reg somehow doesn't exist; ignore and return null below.

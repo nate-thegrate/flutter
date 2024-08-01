@@ -671,10 +671,7 @@ class FlutterVmService {
       'ext.flutter.debugDumpSemanticsTreeInInverseHitTestOrder',
       isolateId: isolateId,
     );
-    if (response != null) {
-      return response['data']?.toString() ?? '';
-    }
-    return '';
+    return response?['data']?.toString() ?? '';
   }
 
   Future<Map<String, Object?>?> _flutterToggle(String name, {

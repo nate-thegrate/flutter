@@ -803,9 +803,9 @@ class VersionCheckStamp {
     DateTime? updateKnownRemoteVersion,
     DateTime? updateTimeWarningWasPrinted,
   }) {
-    updateTimeVersionWasChecked = updateTimeVersionWasChecked ?? lastTimeVersionWasChecked;
-    updateKnownRemoteVersion = updateKnownRemoteVersion ?? lastKnownRemoteVersion;
-    updateTimeWarningWasPrinted = updateTimeWarningWasPrinted ?? lastTimeWarningWasPrinted;
+    updateTimeVersionWasChecked ??= lastTimeVersionWasChecked;
+    updateKnownRemoteVersion ??= lastKnownRemoteVersion;
+    updateTimeWarningWasPrinted ??= lastTimeWarningWasPrinted;
 
     final Map<String, String> jsonData = <String, String>{};
 

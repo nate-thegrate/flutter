@@ -223,9 +223,7 @@ Future<bool> shell(String command, Directory directory, { bool verbose = false, 
     return success;
   }
   if (!verbose) {
-    if (failedCallback != null) {
-      failedCallback();
-    }
+    failedCallback?.call();
     print('>> $command');
     output.forEach(printLog);
   }

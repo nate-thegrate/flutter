@@ -466,11 +466,9 @@ class LocalBenchmarkServerClient {
       xhr.overrideMimeType(mimeType);
     }
 
-    if (requestHeaders != null) {
-      requestHeaders.forEach((String header, String value) {
-        xhr.setRequestHeader(header, value);
-      });
-    }
+    requestHeaders?.forEach((String header, String value) {
+      xhr.setRequestHeader(header, value);
+    });
 
     xhr.addEventListener('load', (web.ProgressEvent e) {
       completer.complete(xhr);

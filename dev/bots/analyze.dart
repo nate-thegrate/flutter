@@ -1184,7 +1184,7 @@ Future<void> verifyNoTrailingSpaces(String workingDirectory, { int minimumMatche
         problems.add('${file.path}:${index + 1}: trailing U+0009 tab character');
       }
     }
-    if (lines.isNotEmpty && lines.last == '') {
+    if (lines.lastOrNull == '') {
       problems.add('${file.path}:${lines.length}: trailing blank line');
     }
   }
@@ -2309,7 +2309,7 @@ List<T>? _deepSearch<T>(Map<T, Set<T>> map, T start, [ Set<T>? seen ]) {
     if (key == start) {
       continue; // we catch these separately
     }
-    if (seen != null && seen.contains(key)) {
+    if (seen?.contains(key) ?? false) {
       return <T>[start, key];
     }
     final List<T>? result = _deepSearch<T>(

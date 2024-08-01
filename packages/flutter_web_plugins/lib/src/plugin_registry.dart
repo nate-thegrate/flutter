@@ -132,9 +132,7 @@ class Registrar extends BinaryMessenger {
         context: ErrorDescription('during a framework-to-plugin message'),
       ));
     } finally {
-      if (callback != null) {
-        callback(response);
-      }
+      callback?.call(response);
     }
   }
 

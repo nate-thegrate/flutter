@@ -605,9 +605,7 @@ class StdoutLogger extends Logger {
     }
     _status = AnonymousSpinnerStatus(
       onFinish: () {
-        if (onFinish != null) {
-          onFinish();
-        }
+        onFinish?.call();
         _clearStatus();
       },
       stdio: _stdio,

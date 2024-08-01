@@ -323,9 +323,7 @@ class DriveCommand extends RunCommandBase {
 
       final int testResult = await testResultFuture;
 
-      if (timeoutTimer != null) {
-        timeoutTimer!.cancel();
-      }
+      timeoutTimer?.cancel();
       _unregisterScreenshotCallbacks();
 
       if (testResult != 0 && screenshot != null) {

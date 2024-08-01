@@ -426,7 +426,7 @@ class _AnimationDemoState extends State<AnimationDemo> with TickerProviderStateM
 
   Future<void> _play(_ArcDemo demo) async {
     await demo.controller.forward();
-    if (demo.key.currentState != null && demo.key.currentState!.mounted) {
+    if (demo.key.currentState?.mounted ?? false) {
       demo.controller.reverse();
     }
   }

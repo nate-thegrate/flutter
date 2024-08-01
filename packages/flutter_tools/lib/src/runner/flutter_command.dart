@@ -1521,27 +1521,12 @@ abstract class FlutterCommand extends Command<void> {
     final String value = keyValueMatch.group(2) ?? '';
 
     // Remove wrapping quotes and trailing line comment.
-    final Match? doubleQuotedValueMatch = DotEnvRegex.doubleQuotedValue.firstMatch(value);
-    if (doubleQuotedValueMatch != null) {
-      return MapEntry<String, String>(key, doubleQuotedValueMatch.group(1)!);
-    }
+    final Match? valueMatch = DotEnvRegex.doubleQuotedValue.firstMatch(value)
+      ?? DotEnvRegex.singleQuotedValue.firstMatch(value)
+      ?? DotEnvRegex.backQuotedValue.firstMatch(value)
+      ?? DotEnvRegex.unquotedValue.firstMatch(value);
 
-    final Match? singleQuotedValueMatch = DotEnvRegex.singleQuotedValue.firstMatch(value);
-    if (singleQuotedValueMatch != null) {
-      return MapEntry<String, String>(key, singleQuotedValueMatch.group(1)!);
-    }
-
-    final Match? backQuotedValueMatch = DotEnvRegex.backQuotedValue.firstMatch(value);
-    if (backQuotedValueMatch != null) {
-      return MapEntry<String, String>(key, backQuotedValueMatch.group(1)!);
-    }
-
-    final Match? unquotedValueMatch = DotEnvRegex.unquotedValue.firstMatch(value);
-    if (unquotedValueMatch != null) {
-      return MapEntry<String, String>(key, unquotedValueMatch.group(1)!);
-    }
-
-    return MapEntry<String, String>(key, value);
+    return MapEntry<String, String>(key, valueMatch?.group(1)! ?? value);
   }
 
   /// Converts an .env file string to its equivalent JSON string.

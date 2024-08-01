@@ -535,13 +535,13 @@ void _validateFlutter(YamlMap? yaml, List<String> errors) {
           break;
         }
 
-        if (yamlValue['androidX'] != null && yamlValue['androidX'] is! bool) {
+        if (yamlValue['androidX'] is! bool?) {
           errors.add('The "androidX" value must be a bool if set.');
         }
-        if (yamlValue['androidPackage'] != null && yamlValue['androidPackage'] is! String) {
+        if (yamlValue['androidPackage'] is! String?) {
           errors.add('The "androidPackage" value must be a string if set.');
         }
-        if (yamlValue['iosBundleIdentifier'] != null && yamlValue['iosBundleIdentifier'] is! String) {
+        if (yamlValue['iosBundleIdentifier'] is! String?) {
           errors.add('The "iosBundleIdentifier" section must be a string if set.');
         }
       case 'plugin':

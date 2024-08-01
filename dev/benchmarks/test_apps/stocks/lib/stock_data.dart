@@ -21,10 +21,7 @@ class Stock {
   Stock.fromFields(List<String> fields) {
     // TODO(jackson): This class should only have static data, not lastSale, etc.
     // "Symbol","Name","LastSale","MarketCap","IPOyear","Sector","industry","Summary Quote",
-    lastSale = 0.0;
-    try {
-      lastSale = double.parse(fields[2]);
-    } catch (_) { }
+    lastSale = double.tryParse(fields[2]) ?? 0.0;
     symbol = fields[0];
     name = fields[1];
     marketCap = fields[4];
