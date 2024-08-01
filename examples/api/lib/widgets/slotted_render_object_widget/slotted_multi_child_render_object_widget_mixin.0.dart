@@ -47,20 +47,15 @@ class Diagonal extends SlottedMultiChildRenderObjectWidget<DiagonalSlot, RenderB
   // [SlottedRenderObjectElement.update].
 
   @override
-  SlottedContainerRenderObjectMixin<DiagonalSlot, RenderBox> createRenderObject(
-    BuildContext context,
-  ) {
+  RenderDiagonal createRenderObject(BuildContext context) {
     return RenderDiagonal(
       backgroundColor: backgroundColor,
     );
   }
 
   @override
-  void updateRenderObject(
-    BuildContext context,
-    SlottedContainerRenderObjectMixin<DiagonalSlot, RenderBox> renderObject,
-  ) {
-    (renderObject as RenderDiagonal).backgroundColor = backgroundColor;
+  void updateRenderObject(BuildContext context, RenderDiagonal renderObject) {
+    renderObject.backgroundColor = backgroundColor;
   }
 }
 
