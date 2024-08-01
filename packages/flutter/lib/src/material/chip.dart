@@ -1207,42 +1207,34 @@ class _RawChipState extends State<RawChip> with MaterialStateMixin, TickerProvid
   void didUpdateWidget(RawChip oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.isEnabled != widget.isEnabled) {
-      setState(() {
-        setMaterialState(MaterialState.disabled, !widget.isEnabled);
-        if (widget.isEnabled) {
-          enableController.forward();
-        } else {
-          enableController.reverse();
-        }
-      });
+      setMaterialState(MaterialState.disabled, !widget.isEnabled);
+      if (widget.isEnabled) {
+        enableController.forward();
+      } else {
+        enableController.reverse();
+      }
     }
     if (oldWidget.avatar != widget.avatar || oldWidget.selected != widget.selected) {
-      setState(() {
-        if (hasAvatar || widget.selected) {
-          avatarDrawerController.forward();
-        } else {
-          avatarDrawerController.reverse();
-        }
-      });
+      if (hasAvatar || widget.selected) {
+        avatarDrawerController.forward();
+      } else {
+        avatarDrawerController.reverse();
+      }
     }
     if (oldWidget.selected != widget.selected) {
-      setState(() {
-        setMaterialState(MaterialState.selected, widget.selected);
-        if (widget.selected) {
-          selectController.forward();
-        } else {
-          selectController.reverse();
-        }
-      });
+      setMaterialState(MaterialState.selected, widget.selected);
+      if (widget.selected) {
+        selectController.forward();
+      } else {
+        selectController.reverse();
+      }
     }
     if (oldWidget.onDeleted != widget.onDeleted) {
-      setState(() {
-        if (hasDeleteButton) {
-          deleteDrawerController.forward();
-        } else {
-          deleteDrawerController.reverse();
-        }
-      });
+      if (hasDeleteButton) {
+        deleteDrawerController.forward();
+      } else {
+        deleteDrawerController.reverse();
+      }
     }
   }
 

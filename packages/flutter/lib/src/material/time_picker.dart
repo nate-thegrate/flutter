@@ -2641,7 +2641,7 @@ class _TimePickerState extends State<_TimePicker> with RestorationMixin {
   }
 
   @override
-  void didUpdateWidget (_TimePicker oldWidget) {
+  void didUpdateWidget(_TimePicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.orientation != widget.orientation) {
       _orientation.value = widget.orientation;

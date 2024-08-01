@@ -120,7 +120,7 @@ class _AccountDetailsState extends State<_AccountDetails> with SingleTickerProvi
   }
 
   @override
-  void didUpdateWidget (_AccountDetails oldWidget) {
+  void didUpdateWidget(_AccountDetails oldWidget) {
     super.didUpdateWidget(oldWidget);
     // If the state of the arrow did not change, there is no need to trigger the animation
     if (oldWidget.isOpen == widget.isOpen) {

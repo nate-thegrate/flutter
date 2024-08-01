@@ -591,7 +591,7 @@ class _SelectableTextState extends State<SelectableText> implements TextSelectio
       _controller.removeListener(_onControllerChanged);
       _controller.dispose();
       _controller = _TextSpanEditingController(
-          textSpan: widget.textSpan ?? TextSpan(text: widget.data),
+        textSpan: widget.textSpan ?? TextSpan(text: widget.data),
       );
       _controller.addListener(_onControllerChanged);
     }

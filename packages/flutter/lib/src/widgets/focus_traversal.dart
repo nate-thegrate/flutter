@@ -1884,7 +1884,7 @@ class _FocusTraversalGroupState extends State<FocusTraversalGroup> {
   }
 
   @override
-  void didUpdateWidget (FocusTraversalGroup oldWidget) {
+  void didUpdateWidget(FocusTraversalGroup oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.policy != widget.policy) {
       focusNode.policy = widget.policy;

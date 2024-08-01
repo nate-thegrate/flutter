@@ -771,9 +771,7 @@ class _ViewContentState extends State<_ViewContent> {
   void didUpdateWidget(covariant _ViewContent oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.viewRect != oldWidget.viewRect) {
-      setState(() {
-        _viewRect = widget.viewRect;
-      });
+      _viewRect = widget.viewRect;
     }
   }
 
