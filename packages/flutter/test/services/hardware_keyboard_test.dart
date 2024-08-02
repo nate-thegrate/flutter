@@ -246,9 +246,7 @@ void main() {
         autofocus: true,
         focusNode: focusNode,
         child: Container(),
-        onKeyEvent: (KeyEvent event) {
-          events.add(event);
-        },
+        onKeyEvent: events.add,
       ),
     );
 
@@ -378,9 +376,7 @@ void main() {
       events.add(event);
       return true;
     });
-    RawKeyboard.instance.addListener((RawKeyEvent event) {
-      rawEvents.add(event);
-    });
+    RawKeyboard.instance.addListener(rawEvents.add);
     tester.binding.keyEventManager.handleKeyData(const ui.KeyData(
       type: ui.KeyEventType.down,
       timeStamp: Duration.zero,

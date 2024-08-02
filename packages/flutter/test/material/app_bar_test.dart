@@ -17,9 +17,7 @@ TextStyle? _iconStyle(WidgetTester tester, IconData icon) {
   return iconRichText.text.style;
 }
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('AppBar centers title on iOS', (WidgetTester tester) async {
     await tester.pumpWidget(

@@ -619,9 +619,7 @@ void main() {
           child: Material(
             child: Slider(
               value: 0.0,
-              onChanged: (double newValue) {
-                log.add(newValue);
-              },
+              onChanged: log.add,
             ),
           ),
         ),
@@ -640,9 +638,7 @@ void main() {
             child: Slider(
               value: 0.0,
               max: 0.0,
-              onChanged: (double newValue) {
-                log.add(newValue);
-              },
+              onChanged: log.add,
             ),
           ),
         ),

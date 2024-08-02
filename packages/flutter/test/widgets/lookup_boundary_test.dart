@@ -939,12 +939,8 @@ void main() {
 
       final BuildContext context = tester.element(find.byKey(root));
 
-      context.visitChildElements((Element element) {
-        throughBoundary.add(element);
-      });
-      LookupBoundary.visitChildElements(context, (Element element) {
-        stoppedAtBoundary.add(element);
-      });
+      context.visitChildElements(throughBoundary.add);
+      LookupBoundary.visitChildElements(context, stoppedAtBoundary.add);
 
       expect(throughBoundary, <Element>[
         tester.element(find.byKey(child1)),

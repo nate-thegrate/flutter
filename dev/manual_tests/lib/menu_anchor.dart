@@ -261,9 +261,7 @@ class _ControlsState extends State<_Controls> {
                     value: widget.extraPadding,
                     max: 40,
                     divisions: 20,
-                    onChanged: (double value) {
-                      widget.onExtraPaddingChanged(value);
-                    },
+                    onChanged: widget.onExtraPaddingChanged,
                   ),
                   _ControlSlider(
                     label: 'Horizontal Density: ${widget.density.horizontal.toStringAsFixed(1)}',

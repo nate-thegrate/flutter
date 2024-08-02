@@ -16,9 +16,7 @@ const int kMaxFrameworkAccessibilityIdentifier = (1<<16) - 1;
 void main() {
   TestRenderingFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   group('SemanticsNode', () {
     const SemanticsTag tag1 = SemanticsTag('Tag One');

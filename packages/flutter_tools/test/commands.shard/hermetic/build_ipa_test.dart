@@ -85,9 +85,7 @@ void main() {
   late Artifacts artifacts;
   late FakeAnalytics fakeAnalytics;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     fileSystem = MemoryFileSystem.test();

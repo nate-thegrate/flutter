@@ -14,15 +14,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'semantics_tester.dart';
 
 void main() {
-  group('generateTestSemanticsExpressionForCurrentSemanticsTree', () {
-    _tests();
-  });
+  group('generateTestSemanticsExpressionForCurrentSemanticsTree', _tests);
 }
 
 void _tests() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   Future<void> pumpTestWidget(WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(

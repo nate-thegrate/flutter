@@ -257,9 +257,7 @@ final RegExp _assembleTaskPattern = RegExp(r'assemble(\S+)');
 /// Handler when a flavor is undefined.
 @visibleForTesting
 final GradleHandledError flavorUndefinedHandler = GradleHandledError(
-  test: (String line) {
-    return _undefinedTaskPattern.hasMatch(line);
-  },
+  test: _undefinedTaskPattern.hasMatch,
   handler: ({
     required String line,
     required FlutterProject project,
@@ -328,9 +326,7 @@ final RegExp _minSdkVersionPattern = RegExp(r'uses-sdk:minSdkVersion ([0-9]+) ca
 /// Handler when a plugin requires a higher Android API level.
 @visibleForTesting
 final GradleHandledError minSdkVersionHandler = GradleHandledError(
-  test: (String line) {
-    return _minSdkVersionPattern.hasMatch(line);
-  },
+  test: _minSdkVersionPattern.hasMatch,
   handler: ({
     required String line,
     required FlutterProject project,
@@ -572,9 +568,7 @@ final RegExp _unsupportedClassFileMajorVersionPattern = RegExp(r'Unsupported cla
 
 @visibleForTesting
 final GradleHandledError incompatibleJavaAndGradleVersionsHandler = GradleHandledError(
-  test: (String line) {
-    return _unsupportedClassFileMajorVersionPattern.hasMatch(line);
-  },
+  test: _unsupportedClassFileMajorVersionPattern.hasMatch,
   handler: ({
     required String line,
     required FlutterProject project,

@@ -10,10 +10,7 @@ import 'semantics_tester.dart';
 
 void main() {
   group('Sliver Semantics', () {
-    setUp(() {
-      debugResetSemanticsIdCounter();
-    });
-
+    setUp(debugResetSemanticsIdCounter);
     _tests();
   });
 }

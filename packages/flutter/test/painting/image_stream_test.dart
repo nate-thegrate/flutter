@@ -166,9 +166,7 @@ void main() {
 
     imageStream.addListener(ImageStreamListener(
       (ImageInfo image, bool synchronousCall) { },
-      onChunk: (ImageChunkEvent event) {
-        chunkEvents.add(event);
-      },
+      onChunk: chunkEvents.add,
     ));
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 1, expectedTotalBytes: 3));
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 2, expectedTotalBytes: 3));
@@ -192,9 +190,7 @@ void main() {
     await tester.idle();
     imageStream.addListener(ImageStreamListener(
       (ImageInfo image, bool synchronousCall) { },
-      onChunk: (ImageChunkEvent event) {
-        chunkEvents.add(event);
-      },
+      onChunk: chunkEvents.add,
     ));
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 2, expectedTotalBytes: 3));
     await tester.idle();
@@ -216,9 +212,7 @@ void main() {
 
     imageStream.addListener(ImageStreamListener(
       (ImageInfo image, bool synchronousCall) { },
-      onChunk: (ImageChunkEvent event) {
-        chunkEvents.add(event);
-      },
+      onChunk: chunkEvents.add,
     ));
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 1, expectedTotalBytes: 3));
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 2, expectedTotalBytes: 3));
@@ -245,9 +239,7 @@ void main() {
     await tester.idle();
     imageStream.addListener(ImageStreamListener(
       (ImageInfo image, bool synchronousCall) { },
-      onChunk: (ImageChunkEvent event) {
-        chunkEvents.add(event);
-      },
+      onChunk: chunkEvents.add,
     ));
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 2, expectedTotalBytes: 3));
     await tester.idle();
@@ -269,9 +261,7 @@ void main() {
 
     imageStream.addListener(ImageStreamListener(
       (ImageInfo image, bool synchronousCall) { },
-      onChunk: (ImageChunkEvent event) {
-        chunkEvents.add(event);
-      },
+      onChunk: chunkEvents.add,
     ));
     streamController.addError(Error());
     streamController.add(const ImageChunkEvent(cumulativeBytesLoaded: 2, expectedTotalBytes: 3));

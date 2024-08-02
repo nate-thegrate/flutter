@@ -125,9 +125,7 @@ class NetworkImage
       request.open('GET', key.url, true);
       request.responseType = 'arraybuffer';
       if (containsNetworkImageHeaders) {
-        key.headers!.forEach((String header, String value) {
-          request.setRequestHeader(header, value);
-        });
+        key.headers!.forEach(request.setRequestHeader);
       }
 
       request.addEventListener('load', (web.Event e) {

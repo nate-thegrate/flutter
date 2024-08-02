@@ -686,9 +686,7 @@ void main() {
           ));
 
           final Completer<void> doneCompleter = Completer<void>();
-          xcdevice.observedDeviceEvents()!.listen(null, onDone: () {
-            doneCompleter.complete();
-          });
+          xcdevice.observedDeviceEvents()!.listen(null, onDone: doneCompleter.complete);
           await doneCompleter.future;
           expect(logger.traceText, contains('xcdevice observe --usb exited with code 0'));
           expect(logger.traceText, contains('xcdevice observe --wifi exited with code 0'));

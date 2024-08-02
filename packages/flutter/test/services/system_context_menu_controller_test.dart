@@ -14,9 +14,7 @@ void main() {
     // Create an active connection, which is required to show the system menu.
     final FakeTextInputClient client = FakeTextInputClient(const TextEditingValue(text: 'test1'));
     final TextInputConnection connection = TextInput.attach(client, client.configuration);
-    addTearDown(() {
-      connection.close();
-    });
+    addTearDown(connection.close);
 
     final List<Map<String, double>> targetRects = <Map<String, double>>[];
     int hideCount = 0;
@@ -26,9 +24,7 @@ void main() {
           case 'ContextMenu.showSystemContextMenu':
             final Map<String, dynamic> arguments = methodCall.arguments as Map<String, dynamic>;
             final Map<String, dynamic> untypedTargetRect = arguments['targetRect'] as Map<String, dynamic>;
-            final Map<String, double> lastTargetRect = untypedTargetRect.map((String key, dynamic value) {
-              return MapEntry<String, double>(key, value as double);
-            });
+            final Map<String, double> lastTargetRect = untypedTargetRect.cast<String, double>();
             targetRects.add(lastTargetRect);
           case 'ContextMenu.hideSystemContextMenu':
             hideCount += 1;
@@ -41,9 +37,7 @@ void main() {
     });
 
     final SystemContextMenuController controller = SystemContextMenuController();
-    addTearDown(() {
-      controller.dispose();
-    });
+    addTearDown(controller.dispose);
 
     expect(targetRects, isEmpty);
     expect(hideCount, 0);
@@ -94,9 +88,7 @@ void main() {
     // Create an active connection, which is required to show the system menu.
     final FakeTextInputClient client = FakeTextInputClient(const TextEditingValue(text: 'test1'));
     final TextInputConnection connection = TextInput.attach(client, client.configuration);
-    addTearDown(() {
-      connection.close();
-    });
+    addTearDown(connection.close);
 
     final List<Map<String, double>> targetRects = <Map<String, double>>[];
     int hideCount = 0;
@@ -106,9 +98,7 @@ void main() {
           case 'ContextMenu.showSystemContextMenu':
             final Map<String, dynamic> arguments = methodCall.arguments as Map<String, dynamic>;
             final Map<String, dynamic> untypedTargetRect = arguments['targetRect'] as Map<String, dynamic>;
-            final Map<String, double> lastTargetRect = untypedTargetRect.map((String key, dynamic value) {
-              return MapEntry<String, double>(key, value as double);
-            });
+            final Map<String, double> lastTargetRect = untypedTargetRect.cast<String, double>();
             targetRects.add(lastTargetRect);
           case 'ContextMenu.hideSystemContextMenu':
             hideCount += 1;
@@ -126,9 +116,7 @@ void main() {
         systemHideCount += 1;
       },
     );
-    addTearDown(() {
-      controller.dispose();
-    });
+    addTearDown(controller.dispose);
 
     expect(targetRects, isEmpty);
     expect(hideCount, 0);
@@ -164,21 +152,15 @@ void main() {
     // Create an active connection, which is required to show the system menu.
     final FakeTextInputClient client = FakeTextInputClient(const TextEditingValue(text: 'test1'));
     final TextInputConnection connection = TextInput.attach(client, client.configuration);
-    addTearDown(() {
-      connection.close();
-    });
+    addTearDown(connection.close);
 
     final SystemContextMenuController controller1 = SystemContextMenuController();
-    addTearDown(() {
-      controller1.dispose();
-    });
+    addTearDown(controller1.dispose);
     const Rect rect1 = Rect.fromLTWH(0.0, 0.0, 100.0, 100.0);
     expect(() { controller1.show(rect1); }, isNot(throwsAssertionError));
 
     final SystemContextMenuController controller2 = SystemContextMenuController();
-    addTearDown(() {
-      controller2.dispose();
-    });
+    addTearDown(controller2.dispose);
     const Rect rect2 = Rect.fromLTWH(1.0, 1.0, 200.0, 200.0);
     expect(() { controller2.show(rect2); }, throwsAssertionError);
 
@@ -189,9 +171,7 @@ void main() {
     // Create an active connection, which is required to show the system menu.
     final FakeTextInputClient client = FakeTextInputClient(const TextEditingValue(text: 'test1'));
     final TextInputConnection connection = TextInput.attach(client, client.configuration);
-    addTearDown(() {
-      connection.close();
-    });
+    addTearDown(connection.close);
 
     final List<Map<String, double>> targetRects = <Map<String, double>>[];
     int hideCount = 0;
@@ -201,9 +181,7 @@ void main() {
           case 'ContextMenu.showSystemContextMenu':
             final Map<String, dynamic> arguments = methodCall.arguments as Map<String, dynamic>;
             final Map<String, dynamic> untypedTargetRect = arguments['targetRect'] as Map<String, dynamic>;
-            final Map<String, double> lastTargetRect = untypedTargetRect.map((String key, dynamic value) {
-              return MapEntry<String, double>(key, value as double);
-            });
+            final Map<String, double> lastTargetRect = untypedTargetRect.cast<String, double>();
             targetRects.add(lastTargetRect);
           case 'ContextMenu.hideSystemContextMenu':
             hideCount += 1;
@@ -216,9 +194,7 @@ void main() {
     });
 
     final SystemContextMenuController controller1 = SystemContextMenuController();
-    addTearDown(() {
-      controller1.dispose();
-    });
+    addTearDown(controller1.dispose);
 
     expect(targetRects, isEmpty);
     expect(hideCount, 0);
@@ -235,9 +211,7 @@ void main() {
 
     // Showing a new controller calls the platform.
     final SystemContextMenuController controller2 = SystemContextMenuController();
-    addTearDown(() {
-      controller2.dispose();
-    });
+    addTearDown(controller2.dispose);
     const Rect rect2 = Rect.fromLTWH(1.0, 1.0, 200.0, 200.0);
     controller2.show(rect2);
     expect(targetRects, hasLength(2));

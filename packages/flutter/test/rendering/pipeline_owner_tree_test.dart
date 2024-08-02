@@ -224,9 +224,7 @@ void main() {
       },
     );
     final PipelineOwner root = PipelineOwner(
-      onSemanticsOwnerCreated: () {
-        rootRenderObject.scheduleInitialSemantics();
-      },
+      onSemanticsOwnerCreated: rootRenderObject.scheduleInitialSemantics,
       onSemanticsUpdate: (SemanticsUpdate update) { },
     );
     root.rootNode = rootRenderObject;
@@ -237,9 +235,7 @@ void main() {
       },
     );
     final PipelineOwner child = PipelineOwner(
-      onSemanticsOwnerCreated: () {
-        childRenderObject.scheduleInitialSemantics();
-      },
+      onSemanticsOwnerCreated: childRenderObject.scheduleInitialSemantics,
       onSemanticsUpdate: (SemanticsUpdate update) { },
     );
     child.rootNode = childRenderObject;
@@ -260,9 +256,7 @@ void main() {
 
     final TestRenderObject rootRenderObject = TestRenderObject();
     final PipelineOwner root = PipelineOwner(
-      onSemanticsOwnerCreated: () {
-        rootRenderObject.scheduleInitialSemantics();
-      },
+      onSemanticsOwnerCreated: rootRenderObject.scheduleInitialSemantics,
       onSemanticsUpdate: (SemanticsUpdate update) { },
     );
     root.rootNode = rootRenderObject;
@@ -275,9 +269,7 @@ void main() {
       },
     );
     final PipelineOwner child = PipelineOwner(
-      onSemanticsOwnerCreated: () {
-        childRenderObject.scheduleInitialSemantics();
-      },
+      onSemanticsOwnerCreated: childRenderObject.scheduleInitialSemantics,
       onSemanticsUpdate: (SemanticsUpdate update) { },
     );
     child.rootNode = childRenderObject;
@@ -801,15 +793,11 @@ void main() {
     child3.adoptChild(childOfChild3);
 
     final List<PipelineOwner> children = <PipelineOwner>[];
-    root.visitChildren((PipelineOwner child) {
-      children.add(child);
-    });
+    root.visitChildren(children.add);
     expect(children, <PipelineOwner>[child1, child2, child3]);
 
     children.clear();
-    child3.visitChildren((PipelineOwner child) {
-      children.add(child);
-    });
+    child3.visitChildren(children.add);
     expect(children.single, childOfChild3);
   });
 

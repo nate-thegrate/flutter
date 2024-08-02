@@ -36,9 +36,7 @@ import '../src/test_build_system.dart';
 import '../src/test_flutter_command_runner.dart';
 
 void main() {
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   group('analytics', () {
     late Directory tempDir;

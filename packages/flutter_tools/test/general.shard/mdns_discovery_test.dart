@@ -32,9 +32,7 @@ void main() {
       );
     });
 
-    tearDown(() {
-      resetNetworkInterfaceLister();
-    });
+    tearDown(resetNetworkInterfaceLister);
 
     group('for attach', () {
       late MDnsClient emptyClient;

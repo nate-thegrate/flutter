@@ -159,8 +159,6 @@ class TwoPanePageRoute<T> extends OverlayRoute<T> {
 
   @override
   Iterable<OverlayEntry> createOverlayEntries() sync* {
-    yield OverlayEntry(builder: (BuildContext context) {
-      return builder.call(context);
-    });
+    yield OverlayEntry(builder: builder);
   }
 }

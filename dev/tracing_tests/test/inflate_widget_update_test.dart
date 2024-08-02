@@ -17,9 +17,7 @@ void main() {
 
     debugProfileBuildsEnabled = true;
 
-    await runFrame(() {
-      TestRoot.state.updateKey();
-    });
+    await runFrame(TestRoot.state.updateKey);
 
     int buildCount = 0;
     for (final TimelineEvent event in await fetchTimelineEvents()) {

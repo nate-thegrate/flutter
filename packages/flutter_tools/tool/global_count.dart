@@ -25,10 +25,7 @@ int countGlobalImports(Directory directory) {
     if (!file.path.endsWith('.dart') || file is! File) {
       continue;
     }
-    final bool hasImport = file.readAsLinesSync().any((String line) {
-      return globalImport.hasMatch(line);
-    });
-    if (hasImport) {
+    if (file.readAsLinesSync().any(globalImport.hasMatch)) {
       count += 1;
     }
   }

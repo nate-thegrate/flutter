@@ -2080,9 +2080,7 @@ void main() {
             builder: (BuildContext context, MenuController controller, Widget? widget) {
               return IconButton(
                 icon: const Icon(Icons.smartphone_rounded),
-                onPressed: () {
-                  controller.open();
-                },
+                onPressed: controller.open,
               );
             },
           ),
@@ -2131,9 +2129,7 @@ void main() {
             builder: (BuildContext context, MenuController controller, Widget? widget) {
               return IconButton(
                 icon: const Icon(Icons.smartphone_rounded),
-                onPressed: () {
-                  controller.open();
-                },
+                onPressed: controller.open,
               );
             },
           ),

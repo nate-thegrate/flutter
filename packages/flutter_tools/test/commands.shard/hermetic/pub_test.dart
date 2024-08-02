@@ -37,9 +37,7 @@ void main() {
     pub = FakePub(fileSystem);
   });
 
-  tearDown(() {
-    Cache.enableLocking();
-  });
+  tearDown(Cache.enableLocking);
 
   testUsingContext('pub shows help', () async {
     Object? usage;

@@ -22,9 +22,7 @@ import '../../src/test_flutter_command_runner.dart';
 
 void main() {
   group('devices', () {
-    setUpAll(() {
-      Cache.disableLocking();
-    });
+    setUpAll(Cache.disableLocking);
 
     late Cache cache;
     late Platform platform;

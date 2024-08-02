@@ -403,9 +403,7 @@ FakeTerminal createFakeTerminalForAddingSshDevice({
 void main() {
   const String featureNotEnabledMessage = 'Custom devices feature must be enabled. Enable using `flutter config --enable-custom-devices`.';
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   group('linux', () {
     setUp(() {

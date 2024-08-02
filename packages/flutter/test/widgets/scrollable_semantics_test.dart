@@ -12,9 +12,7 @@ import 'semantics_tester.dart';
 void main() {
   SemanticsTester semantics;
 
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('scrollable exposes the correct semantic actions', (WidgetTester tester) async {
     semantics = SemanticsTester(tester);

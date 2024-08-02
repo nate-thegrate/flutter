@@ -87,9 +87,7 @@ void main() {
     final Completer<void> completer = Completer<void>();
 
     await Future<void>(() async {
-      flutter.stdout.listen((String line) {
-        stdout.writeln(line);
-      });
+      flutter.stdout.listen(stdout.writeln);
       await completer.future;
     }).timeout(const Duration(seconds: 5), onTimeout: () {
       // We don't expect to see any output but want to write to stdout anyway.

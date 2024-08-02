@@ -100,9 +100,7 @@ class _DatePickerExampleState extends State<DatePickerExample> with RestorationM
     return Scaffold(
       body: Center(
         child: OutlinedButton(
-          onPressed: () {
-            _restorableDateRangePickerRouteFuture.present();
-          },
+          onPressed: _restorableDateRangePickerRouteFuture.present,
           child: const Text('Open Date Range Picker'),
         ),
       ),

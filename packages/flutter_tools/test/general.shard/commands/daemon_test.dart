@@ -81,9 +81,7 @@ class FakeServerSocket extends Fake implements ServerSocket {
     bool? cancelOnError,
   }) {
     // Close the controller immediately for testing purpose.
-    scheduleMicrotask(() {
-      controller.close();
-    });
+    scheduleMicrotask(controller.close);
     return controller.stream.listen(onData,
         onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }

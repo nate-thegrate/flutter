@@ -27,9 +27,7 @@ void main() {
 
     debugProfileBuildsEnabled = true;
 
-    await runFrame(() {
-      TestRoot.state.showRow();
-    });
+    await runFrame(TestRoot.state.showRow);
     expect(
       await fetchInterestingEventNames(interestingLabels),
       <String>['TestRoot', 'Row', 'TestChildWidget', 'Container', 'TestChildWidget', 'Container'],

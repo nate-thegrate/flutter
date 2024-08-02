@@ -55,16 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Row(
                   children: <Widget>[
                     TextButton(
+                      onPressed: _undoController.undo,
                       child: Text('Undo', style: value.canUndo ? enabledStyle : disabledStyle),
-                      onPressed: () {
-                        _undoController.undo();
-                      },
                     ),
                     TextButton(
+                      onPressed: _undoController.redo,
                       child: Text('Redo', style: value.canRedo ? enabledStyle : disabledStyle),
-                      onPressed: () {
-                        _undoController.redo();
-                      },
                     ),
                   ],
                 );

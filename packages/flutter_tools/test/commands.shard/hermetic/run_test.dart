@@ -42,9 +42,7 @@ import '../../src/fakes.dart';
 import '../../src/test_flutter_command_runner.dart';
 
 void main() {
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   group('run', () {
     late BufferLogger logger;
@@ -196,9 +194,7 @@ void main() {
       late FakeAnsiTerminal fakeTerminal;
       late analytics.FakeAnalytics fakeAnalytics;
 
-      setUpAll(() {
-        Cache.disableLocking();
-      });
+      setUpAll(Cache.disableLocking);
 
       setUp(() {
         fakeTerminal = FakeAnsiTerminal();

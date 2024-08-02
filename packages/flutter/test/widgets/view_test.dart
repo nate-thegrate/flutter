@@ -109,9 +109,7 @@ void main() {
     expect(insideParent, equals(tester.renderObject(find.byType(SizedBox)).owner));
 
     final List<PipelineOwner> pipelineOwners = <PipelineOwner> [];
-    tester.binding.rootPipelineOwner.visitChildren((PipelineOwner child) {
-      pipelineOwners.add(child);
-    });
+    tester.binding.rootPipelineOwner.visitChildren(pipelineOwners.add);
     expect(pipelineOwners.single, equals(insideParent));
   });
 
@@ -208,9 +206,7 @@ void main() {
     );
     final Element viewAnchorElement = tester.element(find.byElementPredicate((Element e) => e.runtimeType.toString() == '_MultiChildComponentElement'));
     final List<Element> children = <Element>[];
-    viewAnchorElement.visitChildren((Element element) {
-      children.add(element);
-    });
+    viewAnchorElement.visitChildren(children.add);
     expect(children, hasLength(2));
 
     await tester.pumpWidget(
@@ -219,9 +215,7 @@ void main() {
       ),
     );
     children.clear();
-    viewAnchorElement.visitChildren((Element element) {
-      children.add(element);
-    });
+    viewAnchorElement.visitChildren(children.add);
     expect(children, hasLength(1));
   });
 
@@ -247,9 +241,7 @@ void main() {
     );
     final Element viewAnchorElement = tester.element(find.byElementPredicate((Element e) => e.runtimeType.toString() == '_MultiChildComponentElement'));
     final List<Element> children = <Element>[];
-    viewAnchorElement.visitChildren((Element element) {
-      children.add(element);
-    });
+    viewAnchorElement.visitChildren(children.add);
     expect(children, hasLength(3));
 
     await tester.pumpWidget(
@@ -264,9 +256,7 @@ void main() {
       ),
     );
     children.clear();
-    viewAnchorElement.visitChildren((Element element) {
-      children.add(element);
-    });
+    viewAnchorElement.visitChildren(children.add);
     expect(children, hasLength(1));
   });
 
@@ -432,9 +422,7 @@ void main() {
     expect(RendererBinding.instance.renderViews,  contains(rawView));
 
     final List<PipelineOwner> children = <PipelineOwner>[];
-    parentPipelineOwner.visitChildren((PipelineOwner child) {
-      children.add(child);
-    });
+    parentPipelineOwner.visitChildren(children.add);
     final PipelineOwner rawViewOwner = rawView.owner!;
     expect(children, contains(rawViewOwner));
 
@@ -448,9 +436,7 @@ void main() {
     expect(rawView.owner, isNull);
     expect(RendererBinding.instance.renderViews, isNot(contains(rawView)));
     children.clear();
-    parentPipelineOwner.visitChildren((PipelineOwner child) {
-      children.add(child);
-    });
+    parentPipelineOwner.visitChildren(children.add);
     expect(children, isNot(contains(rawViewOwner)));
   });
 

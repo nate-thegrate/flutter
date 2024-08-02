@@ -42,15 +42,9 @@ void main() {
     required List<PointerEvent> logEvents,
   }) {
     final TestAnnotationTarget oneAnnotation = TestAnnotationTarget(
-      onEnter: (PointerEnterEvent event) {
-        logEvents.add(event);
-      },
-      onHover: (PointerHoverEvent event) {
-        logEvents.add(event);
-      },
-      onExit: (PointerExitEvent event) {
-        logEvents.add(event);
-      },
+      onEnter: logEvents.add,
+      onHover: logEvents.add,
+      onExit: logEvents.add,
     );
     setUpMouseAnnotationFinder(
       (Offset position) sync* {

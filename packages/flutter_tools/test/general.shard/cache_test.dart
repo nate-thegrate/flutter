@@ -54,15 +54,11 @@ void main() {
   }
 
   group('Cache.checkLockAcquired', () {
-    setUp(() {
-      Cache.enableLocking();
-    });
+    setUp(Cache.enableLocking);
 
-    tearDown(() {
-      // Restore locking to prevent potential side-effects in
-      // tests outside this group (this option is globally shared).
-      Cache.enableLocking();
-    });
+    // Restore locking to prevent potential side-effects in
+    // tests outside this group (this option is globally shared).
+    tearDown(Cache.enableLocking);
 
     testWithoutContext('should throw when locking is not acquired', () {
       final Cache cache = Cache.test(processManager: FakeProcessManager.any());

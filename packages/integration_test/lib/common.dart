@@ -120,9 +120,7 @@ class Response {
 
   /// Creates a [Failure] list using a json response.
   static List<Failure> _failureDetailsFromJson(List<dynamic> list) {
-    return list.map((dynamic s) {
-      return Failure.fromJsonString(s as String);
-    }).toList();
+    return list.cast<String>().map(Failure.fromJsonString).toList();
   }
 }
 

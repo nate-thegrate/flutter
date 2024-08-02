@@ -29,9 +29,7 @@ void main() {
   late Cache cache;
   late FakeAnalytics fakeAnalytics;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     fs = MemoryFileSystem.test();

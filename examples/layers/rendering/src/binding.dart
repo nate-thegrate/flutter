@@ -55,15 +55,9 @@ class ViewRenderingFlutterBinding extends RenderingFlutterBinding {
   @override
   PipelineOwner createRootPipelineOwner() {
     return PipelineOwner(
-      onSemanticsOwnerCreated: () {
-        renderView.scheduleInitialSemantics();
-      },
-      onSemanticsUpdate: (SemanticsUpdate update) {
-        renderView.updateSemantics(update);
-      },
-      onSemanticsOwnerDisposed: () {
-        renderView.clearSemantics();
-      },
+      onSemanticsOwnerCreated: _renderView.scheduleInitialSemantics,
+      onSemanticsUpdate: _renderView.updateSemantics,
+      onSemanticsOwnerDisposed: _renderView.clearSemantics,
     );
   }
 }

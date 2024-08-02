@@ -315,9 +315,7 @@ class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
-    _hoverAnimationController.addListener(() {
-      updateScrollbarPainter();
-    });
+    _hoverAnimationController.addListener(updateScrollbarPainter);
   }
 
   @override

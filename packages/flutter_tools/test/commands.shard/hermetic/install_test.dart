@@ -21,9 +21,7 @@ import '../../src/test_flutter_command_runner.dart';
 
 void main() {
   group('install', () {
-    setUpAll(() {
-      Cache.disableLocking();
-    });
+    setUpAll(Cache.disableLocking);
 
     late FileSystem fileSystem;
     setUp(() {

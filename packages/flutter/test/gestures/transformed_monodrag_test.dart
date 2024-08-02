@@ -24,18 +24,10 @@ void main() {
             onHorizontalDragCancel: () {
               dragCancelCount++;
             },
-            onHorizontalDragDown: (DragDownDetails details) {
-              downDetails.add(details);
-            },
-            onHorizontalDragEnd: (DragEndDetails details) {
-              endDetails.add(details);
-            },
-            onHorizontalDragStart: (DragStartDetails details) {
-              startDetails.add(details);
-            },
-            onHorizontalDragUpdate: (DragUpdateDetails details) {
-              updateDetails.add(details);
-            },
+            onHorizontalDragDown: downDetails.add,
+            onHorizontalDragEnd: endDetails.add,
+            onHorizontalDragStart: startDetails.add,
+            onHorizontalDragUpdate: updateDetails.add,
             child: Container(
               key: redContainer,
               width: 100,
@@ -81,18 +73,10 @@ void main() {
               onHorizontalDragCancel: () {
                 dragCancelCount++;
               },
-              onHorizontalDragDown: (DragDownDetails details) {
-                downDetails.add(details);
-              },
-              onHorizontalDragEnd: (DragEndDetails details) {
-                endDetails.add(details);
-              },
-              onHorizontalDragStart: (DragStartDetails details) {
-                startDetails.add(details);
-              },
-              onHorizontalDragUpdate: (DragUpdateDetails details) {
-                updateDetails.add(details);
-              },
+              onHorizontalDragDown: downDetails.add,
+              onHorizontalDragEnd: endDetails.add,
+              onHorizontalDragStart: startDetails.add,
+              onHorizontalDragUpdate: updateDetails.add,
               onTap: () {
                 // Competing gesture detector.
               },
@@ -179,18 +163,10 @@ void main() {
               onHorizontalDragCancel: () {
                 dragCancelCount++;
               },
-              onHorizontalDragDown: (DragDownDetails details) {
-                downDetails.add(details);
-              },
-              onHorizontalDragEnd: (DragEndDetails details) {
-                endDetails.add(details);
-              },
-              onHorizontalDragStart: (DragStartDetails details) {
-                startDetails.add(details);
-              },
-              onHorizontalDragUpdate: (DragUpdateDetails details) {
-                updateDetails.add(details);
-              },
+              onHorizontalDragDown: downDetails.add,
+              onHorizontalDragEnd: endDetails.add,
+              onHorizontalDragStart: startDetails.add,
+              onHorizontalDragUpdate: updateDetails.add,
               onTap: () {
                 // Competing gesture detector.
               },
@@ -277,18 +253,10 @@ void main() {
               onHorizontalDragCancel: () {
                 dragCancelCount++;
               },
-              onHorizontalDragDown: (DragDownDetails details) {
-                downDetails.add(details);
-              },
-              onHorizontalDragEnd: (DragEndDetails details) {
-                endDetails.add(details);
-              },
-              onHorizontalDragStart: (DragStartDetails details) {
-                startDetails.add(details);
-              },
-              onHorizontalDragUpdate: (DragUpdateDetails details) {
-                updateDetails.add(details);
-              },
+              onHorizontalDragDown: downDetails.add,
+              onHorizontalDragEnd: endDetails.add,
+              onHorizontalDragStart: startDetails.add,
+              onHorizontalDragUpdate: updateDetails.add,
               onTap: () {
                 // Competing gesture detector.
               },
@@ -352,18 +320,10 @@ void main() {
             onVerticalDragCancel: () {
               dragCancelCount++;
             },
-            onVerticalDragDown: (DragDownDetails details) {
-              downDetails.add(details);
-            },
-            onVerticalDragEnd: (DragEndDetails details) {
-              endDetails.add(details);
-            },
-            onVerticalDragStart: (DragStartDetails details) {
-              startDetails.add(details);
-            },
-            onVerticalDragUpdate: (DragUpdateDetails details) {
-              updateDetails.add(details);
-            },
+            onVerticalDragDown: downDetails.add,
+            onVerticalDragEnd: endDetails.add,
+            onVerticalDragStart: startDetails.add,
+            onVerticalDragUpdate: updateDetails.add,
             child: Container(
               key: redContainer,
               width: 100,
@@ -409,18 +369,10 @@ void main() {
               onVerticalDragCancel: () {
                 dragCancelCount++;
               },
-              onVerticalDragDown: (DragDownDetails details) {
-                downDetails.add(details);
-              },
-              onVerticalDragEnd: (DragEndDetails details) {
-                endDetails.add(details);
-              },
-              onVerticalDragStart: (DragStartDetails details) {
-                startDetails.add(details);
-              },
-              onVerticalDragUpdate: (DragUpdateDetails details) {
-                updateDetails.add(details);
-              },
+              onVerticalDragDown: downDetails.add,
+              onVerticalDragEnd: endDetails.add,
+              onVerticalDragStart: startDetails.add,
+              onVerticalDragUpdate: updateDetails.add,
               onTap: () {
                 // Competing gesture detector.
               },
@@ -507,18 +459,10 @@ void main() {
               onVerticalDragCancel: () {
                 dragCancelCount++;
               },
-              onVerticalDragDown: (DragDownDetails details) {
-                downDetails.add(details);
-              },
-              onVerticalDragEnd: (DragEndDetails details) {
-                endDetails.add(details);
-              },
-              onVerticalDragStart: (DragStartDetails details) {
-                startDetails.add(details);
-              },
-              onVerticalDragUpdate: (DragUpdateDetails details) {
-                updateDetails.add(details);
-              },
+              onVerticalDragDown: downDetails.add,
+              onVerticalDragEnd: endDetails.add,
+              onVerticalDragStart: startDetails.add,
+              onVerticalDragUpdate: updateDetails.add,
               onTap: () {
                 // Competing gesture detector.
               },
@@ -605,18 +549,10 @@ void main() {
               onVerticalDragCancel: () {
                 dragCancelCount++;
               },
-              onVerticalDragDown: (DragDownDetails details) {
-                downDetails.add(details);
-              },
-              onVerticalDragEnd: (DragEndDetails details) {
-                endDetails.add(details);
-              },
-              onVerticalDragStart: (DragStartDetails details) {
-                startDetails.add(details);
-              },
-              onVerticalDragUpdate: (DragUpdateDetails details) {
-                updateDetails.add(details);
-              },
+              onVerticalDragDown: downDetails.add,
+              onVerticalDragEnd: endDetails.add,
+              onVerticalDragStart: startDetails.add,
+              onVerticalDragUpdate: updateDetails.add,
               onTap: () {
                 // Competing gesture detector.
               },

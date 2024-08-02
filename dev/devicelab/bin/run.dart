@@ -244,9 +244,7 @@ ArgParser createArgParser(List<String> taskNames) {
           '   Example: complex_layout__start_up\n'
           '\n'
           'This option may be repeated to specify multiple tasks.',
-      callback: (List<String> tasks) {
-        taskNames.addAll(tasks);
-      },
+      callback: taskNames.addAll,
     )
     ..addOption(
       'device-id',

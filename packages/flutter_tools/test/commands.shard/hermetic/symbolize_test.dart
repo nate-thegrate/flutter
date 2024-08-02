@@ -24,9 +24,7 @@ void main() {
   late MemoryFileSystem fileSystem;
   late FakeStdio stdio;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     fileSystem = MemoryFileSystem.test();

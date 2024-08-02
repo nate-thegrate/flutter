@@ -518,9 +518,7 @@ class _NavigationRailState extends State<NavigationRail> with TickerProviderStat
       parent: _extendedController,
       curve: Curves.easeInOut,
     );
-    _extendedController.addListener(() {
-      _rebuild();
-    });
+    _extendedController.addListener(_rebuild);
   }
 
   void _resetState() {

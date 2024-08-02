@@ -11,9 +11,7 @@ import 'package:vm_service/vm_service.dart' as vms;
 
 void main() {
   group('DartVm.connect', () {
-    tearDown(() {
-      restoreVmServiceConnectionFunction();
-    });
+    tearDown(restoreVmServiceConnectionFunction);
 
     test('disconnect closes peer', () async {
       final FakeVmService service = FakeVmService();
@@ -40,9 +38,7 @@ void main() {
       fakeService = FakeVmService();
     });
 
-    tearDown(() {
-      restoreVmServiceConnectionFunction();
-    });
+    tearDown(restoreVmServiceConnectionFunction);
 
     test('basic flutter view parsing', () async {
       final Map<String, dynamic> flutterViewCannedResponses = <String, dynamic>{

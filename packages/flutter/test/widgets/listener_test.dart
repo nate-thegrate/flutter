@@ -81,18 +81,10 @@ void main() {
       await tester.pumpWidget(
         Center(
           child: Listener(
-            onPointerDown: (PointerDownEvent event) {
-              events.add(event);
-            },
-            onPointerUp: (PointerUpEvent event) {
-              events.add(event);
-            },
-            onPointerMove: (PointerMoveEvent event) {
-              events.add(event);
-            },
-            onPointerSignal: (PointerSignalEvent event) {
-              events.add(event);
-            },
+            onPointerDown: events.add,
+            onPointerUp: events.add,
+            onPointerMove: events.add,
+            onPointerSignal: events.add,
             child: Container(
               key: key,
               color: Colors.red,
@@ -157,18 +149,10 @@ void main() {
           child: Transform(
             transform: Matrix4.identity()..scale(scaleFactor),
             child: Listener(
-              onPointerDown: (PointerDownEvent event) {
-                events.add(event);
-              },
-              onPointerUp: (PointerUpEvent event) {
-                events.add(event);
-              },
-              onPointerMove: (PointerMoveEvent event) {
-                events.add(event);
-              },
-              onPointerSignal: (PointerSignalEvent event) {
-                events.add(event);
-              },
+              onPointerDown: events.add,
+              onPointerUp: events.add,
+              onPointerMove: events.add,
+              onPointerSignal: events.add,
               child: Container(
                 key: key,
                 color: Colors.red,
@@ -233,18 +217,10 @@ void main() {
           child: Transform(
             transform: Matrix4.identity()..scale(scaleFactor),
             child: Listener(
-              onPointerDown: (PointerDownEvent event) {
-                events.add(event);
-              },
-              onPointerUp: (PointerUpEvent event) {
-                events.add(event);
-              },
-              onPointerMove: (PointerMoveEvent event) {
-                events.add(event);
-              },
-              onPointerSignal: (PointerSignalEvent event) {
-                events.add(event);
-              },
+              onPointerDown: events.add,
+              onPointerUp: events.add,
+              onPointerMove: events.add,
+              onPointerSignal: events.add,
               child: Container(
                 key: key,
                 color: Colors.red,
@@ -310,18 +286,10 @@ void main() {
             transform: Matrix4.identity()
               ..rotateZ(math.pi / 2), // 90 degrees clockwise around Container origin
             child: Listener(
-              onPointerDown: (PointerDownEvent event) {
-                events.add(event);
-              },
-              onPointerUp: (PointerUpEvent event) {
-                events.add(event);
-              },
-              onPointerMove: (PointerMoveEvent event) {
-                events.add(event);
-              },
-              onPointerSignal: (PointerSignalEvent event) {
-                events.add(event);
-              },
+              onPointerDown: events.add,
+              onPointerUp: events.add,
+              onPointerMove: events.add,
+              onPointerSignal: events.add,
               child: Container(
                 key: key,
                 color: Colors.red,

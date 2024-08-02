@@ -16,13 +16,9 @@ import '../src/testbed.dart';
 import 'runner/utils.dart';
 
 void main() {
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
-  tearDownAll(() {
-    Cache.enableLocking();
-  });
+  tearDownAll(Cache.enableLocking);
 
   test('Help for command line arguments is consistently styled and complete', () => Testbed().run(() {
     final FlutterCommandRunner runner = FlutterCommandRunner(verboseHelp: true);

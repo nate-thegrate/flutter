@@ -51,9 +51,7 @@ Widget buildSliverAppBarApp({
 }
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets(
     'SliverAppBar large & medium title respects automaticallyImplyLeading',

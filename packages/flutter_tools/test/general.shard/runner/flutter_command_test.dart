@@ -74,9 +74,7 @@ void main() {
       );
     });
 
-    tearDown(() {
-      Cache.enableLocking();
-    });
+    tearDown(Cache.enableLocking);
 
     testUsingContext('help text contains global options', () {
       final FakeDeprecatedCommand fake = FakeDeprecatedCommand();

@@ -270,9 +270,7 @@ void main() {
   });
 
   group('TextInputConfiguration', () {
-    tearDown(() {
-      TextInputConnection.debugResetId();
-    });
+    tearDown(TextInputConnection.debugResetId);
 
     test('sets expected defaults', () {
       const TextInputConfiguration configuration = TextInputConfiguration();
@@ -660,9 +658,7 @@ void main() {
   });
 
   group('Scribble interactions', () {
-    tearDown(() {
-      TextInputConnection.debugResetId();
-    });
+    tearDown(TextInputConnection.debugResetId);
 
     test('TextInputClient scribbleInteractionBegan and scribbleInteractionFinished', () async {
       // Assemble a TextInputConnection so we can verify its change in state.

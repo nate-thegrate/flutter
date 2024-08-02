@@ -72,9 +72,7 @@ class SystemContextMenu extends StatefulWidget {
           editableTextState.textEditingValue.selection,
         ),
       ),
-      onSystemHide: () {
-        editableTextState.hideToolbar();
-      },
+      onSystemHide: editableTextState.hideToolbar,
     );
   }
 

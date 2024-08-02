@@ -69,11 +69,7 @@ Widget buildFrame({
     localizationsDelegates: delegates,
     localeResolutionCallback: localeResolutionCallback,
     onGenerateRoute: (RouteSettings settings) {
-      return MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return buildContent(context);
-        }
-      );
+      return MaterialPageRoute<void>(builder: buildContent);
     },
   );
 }

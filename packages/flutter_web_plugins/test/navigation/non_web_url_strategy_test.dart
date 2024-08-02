@@ -33,9 +33,7 @@ void main() {
     });
 
     test('Can usePathUrlStrategy', () {
-      expect(() {
-        usePathUrlStrategy();
-      }, returnsNormally);
+      expect(usePathUrlStrategy, returnsNormally);
     });
   });
 }

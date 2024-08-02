@@ -21,15 +21,9 @@ void main() {
               onLongPress: () {
                 longPressCount++;
               },
-              onLongPressEnd: (LongPressEndDetails details) {
-                endDetails.add(details);
-              },
-              onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
-                moveDetails.add(details);
-              },
-              onLongPressStart: (LongPressStartDetails details) {
-                startDetails.add(details);
-              },
+              onLongPressEnd: endDetails.add,
+              onLongPressMoveUpdate: moveDetails.add,
+              onLongPressStart: startDetails.add,
               onLongPressUp: () {
                 longPressUpCount++;
               },
@@ -69,15 +63,9 @@ void main() {
                 onLongPress: () {
                   longPressCount++;
                 },
-                onLongPressEnd: (LongPressEndDetails details) {
-                  endDetails.add(details);
-                },
-                onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
-                  moveDetails.add(details);
-                },
-                onLongPressStart: (LongPressStartDetails details) {
-                  startDetails.add(details);
-                },
+                onLongPressEnd: endDetails.add,
+                onLongPressMoveUpdate: moveDetails.add,
+                onLongPressStart: startDetails.add,
                 onLongPressUp: () {
                   longPressUpCount++;
                 },
@@ -144,15 +132,9 @@ void main() {
                 onLongPress: () {
                   longPressCount++;
                 },
-                onLongPressEnd: (LongPressEndDetails details) {
-                  endDetails.add(details);
-                },
-                onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
-                  moveDetails.add(details);
-                },
-                onLongPressStart: (LongPressStartDetails details) {
-                  startDetails.add(details);
-                },
+                onLongPressEnd: endDetails.add,
+                onLongPressMoveUpdate: moveDetails.add,
+                onLongPressStart: startDetails.add,
                 onLongPressUp: () {
                   longPressUpCount++;
                 },

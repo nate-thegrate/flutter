@@ -14,12 +14,8 @@ void main() {
     await tester.pumpWidget(
       Center(
         child: GestureDetector(
-          onScaleStart: (ScaleStartDetails details) {
-            startDetails.add(details);
-          },
-          onScaleUpdate: (ScaleUpdateDetails details) {
-            updateDetails.add(details);
-          },
+          onScaleStart: startDetails.add,
+          onScaleUpdate: updateDetails.add,
           child: Container(
             key: redContainer,
             width: 100,

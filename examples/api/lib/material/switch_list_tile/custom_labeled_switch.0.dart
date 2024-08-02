@@ -62,12 +62,7 @@ class LinkedLabelSwitch extends StatelessWidget {
               ),
             ),
           ),
-          Switch(
-            value: value,
-            onChanged: (bool newValue) {
-              onChanged(newValue);
-            },
-          ),
+          Switch(value: value, onChanged: onChanged),
         ],
       ),
     );

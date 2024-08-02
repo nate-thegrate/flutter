@@ -787,9 +787,7 @@ class _CupertinoDatePickerDateTimeState extends State<CupertinoDatePicker> {
         magnification: _kMagnification,
         backgroundColor: widget.backgroundColor,
         squeeze: _kSqueeze,
-        onSelectedItemChanged: (int index) {
-          _onSelectedItemChange(index);
-        },
+        onSelectedItemChanged: _onSelectedItemChange,
         itemBuilder: (BuildContext context, int index) {
           final DateTime rangeStart = DateTime(
             initialDateTime.year,

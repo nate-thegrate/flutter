@@ -23,12 +23,8 @@ void main() {
           onTapCancel: () {
             tapCancelCount++;
           },
-          onTapDown: (TapDownDetails details) {
-            downDetails.add(details);
-          },
-          onTapUp: (TapUpDetails details) {
-            upDetails.add(details);
-          },
+          onTapDown: downDetails.add,
+          onTapUp: upDetails.add,
           child: Container(
             key: redContainer,
             width: 100,
@@ -66,12 +62,8 @@ void main() {
                 onTapCancel: () {
                   tapCancelCount++;
                 },
-                onTapDown: (TapDownDetails details) {
-                  downDetails.add(details);
-                },
-                onTapUp: (TapUpDetails details) {
-                  upDetails.add(details);
-                },
+                onTapDown: downDetails.add,
+                onTapUp: upDetails.add,
                 child: Container(
                   key: redContainer,
                   width: 100,
@@ -129,12 +121,8 @@ void main() {
                 onTapCancel: () {
                   tapCancelCount++;
                 },
-                onTapDown: (TapDownDetails details) {
-                  downDetails.add(details);
-                },
-                onTapUp: (TapUpDetails details) {
-                  upDetails.add(details);
-                },
+                onTapDown: downDetails.add,
+                onTapUp: upDetails.add,
                 child: Container(
                   key: redContainer,
                   width: 100,

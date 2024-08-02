@@ -476,9 +476,7 @@ class LocalBenchmarkServerClient {
       completer.complete(xhr);
     }.toJS);
 
-    xhr.addEventListener('error', (JSObject error) {
-        return completer.completeError(error);
-    }.toJS);
+    xhr.addEventListener('error', completer.completeError.toJS);
 
     if (sendData != null) {
       xhr.send((sendData as Object?).jsify());

@@ -3590,9 +3590,7 @@ class _TimePickerDefaultsM3 extends _TimePickerDefaults {
 
   @override
   Color get hourMinuteTextColor {
-    return MaterialStateColor.resolveWith((Set<MaterialState> states) {
-      return _hourMinuteTextColor.resolve(states);
-    });
+    return MaterialStateColor.resolveWith(_hourMinuteTextColor.resolve);
   }
 
   MaterialStateProperty<Color> get _hourMinuteTextColor {

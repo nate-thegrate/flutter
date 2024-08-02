@@ -28,9 +28,7 @@ void main() {
       platform = FakePlatform();
     });
 
-    tearDown(() {
-      Cache.enableLocking();
-    });
+    tearDown(Cache.disableLocking);
 
     testUsingContext('fail with a bad device id', () async {
       final LogsCommand command = LogsCommand(

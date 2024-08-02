@@ -876,9 +876,7 @@ class _ViewContentState extends State<_ViewContent> {
       if (_controller.text.isNotEmpty) IconButton(
         icon: const Icon(Icons.close),
         tooltip: MaterialLocalizations.of(context).clearButtonTooltip,
-        onPressed: () {
-          _controller.clear();
-        },
+        onPressed: _controller.clear,
       ),
     ];
 

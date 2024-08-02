@@ -9,9 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../widgets/semantics_tester.dart';
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('MaterialButton defaults', (WidgetTester tester) async {
     final Finder rawButtonMaterial = find.descendant(

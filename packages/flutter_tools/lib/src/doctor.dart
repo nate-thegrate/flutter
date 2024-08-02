@@ -254,9 +254,7 @@ class Doctor {
               return result;
             });
           },
-          onError: (Object exception, StackTrace stackTrace) {
-            return ValidationResult.crash(exception, stackTrace);
-          },
+          onError: ValidationResult.crash,
         ),
       ),
     ];

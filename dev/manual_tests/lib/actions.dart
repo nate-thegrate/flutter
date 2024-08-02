@@ -230,11 +230,11 @@ class UndoableFocusActionBase<T extends Intent> extends UndoableAction<T> {
   @mustCallSuper
   Memento invoke(T intent) {
     final FocusNode? previousFocus = primaryFocus;
-    return Memento(name: previousFocus!.debugLabel!, undo: () {
-      previousFocus.requestFocus();
-    }, redo: () {
-      return invoke(intent);
-    });
+    return Memento(
+      name: previousFocus!.debugLabel!,
+      undo: previousFocus.requestFocus,
+      redo: () => invoke(intent),
+    );
   }
 }
 

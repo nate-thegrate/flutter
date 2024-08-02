@@ -17,9 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../widgets/semantics_tester.dart';
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('CupertinoCheckbox semantics', (WidgetTester tester) async {
     final SemanticsHandle handle = tester.ensureSemantics();

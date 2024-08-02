@@ -595,9 +595,7 @@ abstract class TestWidgetsFlutterBinding extends BindingBase
   Future<void> idle() {
     return TestAsyncUtils.guard<void>(() {
       final Completer<void> completer = Completer<void>();
-      Timer.run(() {
-        completer.complete();
-      });
+      Timer.run(completer.complete);
       return completer.future;
     });
   }

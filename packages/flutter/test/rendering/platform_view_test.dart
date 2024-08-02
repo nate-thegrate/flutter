@@ -25,12 +25,8 @@ void main() {
       platformViewRenderBox = PlatformViewRenderBox(
         controller: fakePlatformViewController,
         hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
-          Factory<VerticalDragGestureRecognizer>(
-            () {
-              return VerticalDragGestureRecognizer();
-            },
-          ),
+        gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
+          Factory<VerticalDragGestureRecognizer>(VerticalDragGestureRecognizer.new),
         },
       );
     });

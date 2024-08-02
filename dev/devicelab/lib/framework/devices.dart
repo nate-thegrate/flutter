@@ -746,14 +746,10 @@ class AndroidDevice extends Device {
     );
     _loggingProcess!.stdout
       .transform<String>(const Utf8Decoder(allowMalformed: true))
-      .listen((String line) {
-        sink.write(line);
-      });
+      .listen(sink.write);
     _loggingProcess!.stderr
       .transform<String>(const Utf8Decoder(allowMalformed: true))
-      .listen((String line) {
-        sink.write(line);
-      });
+      .listen(sink.write);
     unawaited(_loggingProcess!.exitCode.then<void>((int exitCode) {
       if (!_abortedLogging) {
         sink.writeln('adb logcat failed with exit code $exitCode.\n');
@@ -1032,14 +1028,10 @@ class IosDevice extends Device {
     );
     _loggingProcess!.stdout
       .transform<String>(const Utf8Decoder(allowMalformed: true))
-      .listen((String line) {
-        sink.write(line);
-      });
+      .listen(sink.write);
     _loggingProcess!.stderr
       .transform<String>(const Utf8Decoder(allowMalformed: true))
-      .listen((String line) {
-        sink.write(line);
-      });
+      .listen(sink.write);
     unawaited(_loggingProcess!.exitCode.then<void>((int exitCode) {
       if (!_abortedLogging) {
         sink.writeln('idevicesyslog failed with exit code $exitCode.\n');

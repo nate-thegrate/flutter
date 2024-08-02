@@ -106,11 +106,7 @@ void main() {
       await signals.removeHandler(signalUnderTest, token);
 
       final List<Object> errList = <Object>[];
-      final StreamSubscription<Object> errSub = signals.errors.listen(
-        (Object err) {
-          errList.add(err);
-        },
-      );
+      final StreamSubscription<Object> errSub = signals.errors.listen(errList.add);
 
       fakeSignal.controller.add(fakeSignal);
 
@@ -134,11 +130,7 @@ void main() {
       await signals.removeHandler(signalUnderTest, token);
 
       final List<Object> errList = <Object>[];
-      final StreamSubscription<Object> errSub = signals.errors.listen(
-        (Object err) {
-          errList.add(err);
-        },
-      );
+      final StreamSubscription<Object> errSub = signals.errors.listen(errList.add);
 
       fakeSignal.controller.add(fakeSignal);
       await completer.future;
@@ -161,11 +153,7 @@ void main() {
       });
 
       final List<Object> errList = <Object>[];
-      final StreamSubscription<Object> errSub = signals.errors.listen(
-        (Object err) {
-          errList.add(err);
-        },
-      );
+      final StreamSubscription<Object> errSub = signals.errors.listen(errList.add);
 
       fakeSignal.controller.add(fakeSignal);
       await completer.future;

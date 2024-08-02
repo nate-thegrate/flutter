@@ -1042,9 +1042,7 @@ class MultiFrameImageStreamCompleter extends ImageStreamCompleter {
       return;
     }
     final Duration delay = _frameDuration! - (timestamp - _shownTimestamp);
-    _timer = Timer(delay * timeDilation, () {
-      _scheduleAppFrame();
-    });
+    _timer = Timer(delay * timeDilation, _scheduleAppFrame);
   }
 
   bool _isFirstFrame() {

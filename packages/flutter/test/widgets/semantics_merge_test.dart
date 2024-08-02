@@ -10,9 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'semantics_tester.dart';
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('MergeSemantics', (WidgetTester tester) async {
     final SemanticsTester semantics = SemanticsTester(tester);

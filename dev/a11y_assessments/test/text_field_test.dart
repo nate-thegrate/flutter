@@ -38,9 +38,7 @@ void main() {
         minScaleFactor: 3,
         maxScaleFactor: 3,
         child: Builder(
-          builder: (BuildContext context) {
-            return TextFieldUseCase().build(context);
-          },
+          builder: TextFieldUseCase().build,
         ),
       ),
     ));

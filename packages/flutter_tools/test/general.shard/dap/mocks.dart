@@ -49,9 +49,7 @@ class MockFlutterDebugAdapter extends FlutterDebugAdapter {
     this.supportsRestart = true,
     this.preAppStart,
   }) {
-    clientChannel.listen((ProtocolMessage message) {
-      _handleDapToClientMessage(message);
-    });
+    clientChannel.listen(_handleDapToClientMessage);
   }
 
   int _seq = 1;

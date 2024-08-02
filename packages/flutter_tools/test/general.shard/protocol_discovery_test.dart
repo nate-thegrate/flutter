@@ -224,9 +224,7 @@ void main() {
           );
 
           final List<Uri> discoveredUris = <Uri>[];
-          discoverer.uris.listen((Uri uri) {
-            discoveredUris.add(uri);
-          });
+          discoverer.uris.listen(discoveredUris.add);
 
           logReader.addLine('I/flutter : The Dart VM service is listening on http://127.0.0.1:12346/PTwjm8Ii8qg=/');
           logReader.addLine('I/flutter : The Dart VM service is listening on http://127.0.0.1:12345/PTwjm8Ii8qg=/');
@@ -259,9 +257,7 @@ void main() {
           );
 
           final List<Uri> discoveredUris = <Uri>[];
-          discoverer.uris.listen((Uri uri) {
-            discoveredUris.add(uri);
-          });
+          discoverer.uris.listen(discoveredUris.add);
 
           logReader.addLine('I/flutter : The Dart VM service is listening on http://127.0.0.1:12346/PTwjm8Ii8qg=/');
           logReader.addLine('I/flutter : The Dart VM service is listening on http://127.0.0.1:12345/PTwjm8Ii8qg=/');

@@ -24,9 +24,7 @@ void main() {
   late Directory outputDirectory;
   late FakePlatform fakePlatform;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   const String storageBaseUrl = 'https://fake.googleapis.com';
   setUp(() {

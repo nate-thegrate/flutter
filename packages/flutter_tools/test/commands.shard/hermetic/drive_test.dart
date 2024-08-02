@@ -45,13 +45,9 @@ void main() {
     signals = FakeSignals();
   });
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
-  tearDownAll(() {
-    Cache.enableLocking();
-  });
+  tearDownAll(Cache.enableLocking);
 
   testUsingContext('warns if screenshot is not supported but continues test', () async {
     final DriveCommand command = DriveCommand(

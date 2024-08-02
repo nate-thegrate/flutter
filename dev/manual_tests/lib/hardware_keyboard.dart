@@ -55,9 +55,7 @@ class _HardwareKeyboardDemoState extends State<HardwareKeyboardDemo> {
         builder: (BuildContext context, Widget? child) {
           if (!_focusNode.hasFocus) {
             return GestureDetector(
-              onTap: () {
-                _focusNode.requestFocus();
-              },
+              onTap: _focusNode.requestFocus,
               child: Text('Tap to focus', style: textTheme.headlineMedium),
             );
           }

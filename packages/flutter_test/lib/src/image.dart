@@ -57,9 +57,7 @@ Future<ui.Image> _createImage(int width, int height) async {
     width,
     height,
     ui.PixelFormat.rgba8888,
-    (ui.Image image) {
-      completer.complete(image);
-    },
+    completer.complete,
   );
   return completer.future;
 }

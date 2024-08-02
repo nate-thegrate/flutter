@@ -289,9 +289,7 @@ void main() {
     final FakeDesktopDevice device = setUpDesktopDevice(
       processManager: processManager,
     );
-    unawaited(Future<void>(() {
-      exitCompleter.complete();
-    }));
+    unawaited(Future<void>(exitCompleter.complete));
 
     // Start looking for 'Oops' in the stream before starting the app.
     expect(device.getLogReader().logLines, emits('Oops'));

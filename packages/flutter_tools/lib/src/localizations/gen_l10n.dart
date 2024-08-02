@@ -836,9 +836,7 @@ class LocalizationsGenerator {
     if (inputLocales == null || inputLocales.isEmpty) {
       return const <LocaleInfo>[];
     }
-    return inputLocales.map((String localeString) {
-      return LocaleInfo.fromString(localeString);
-    }).toList();
+    return inputLocales.map(LocaleInfo.fromString).toList();
   }
 
   static String headerFromFile(String? headerString, String? headerFile, Directory inputDirectory) {

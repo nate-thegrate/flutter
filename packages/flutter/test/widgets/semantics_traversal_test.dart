@@ -16,9 +16,7 @@ typedef TraversalTestFunction = Future<void> Function(TraversalTester tester);
 const Size tenByTen = Size(10.0, 10.0);
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   void testTraversal(String description, TraversalTestFunction testFunction) {
     testWidgets(description, (WidgetTester tester) async {

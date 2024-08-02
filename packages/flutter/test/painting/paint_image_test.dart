@@ -26,9 +26,7 @@ void main() {
     image300x200 = await createTestImage(width: 300, height: 200, cache: false);
   });
 
-  setUp(() {
-    debugFlushLastFrameImageSizeInfo();
-  });
+  setUp(debugFlushLastFrameImageSizeInfo);
 
   test('Cover and align', () async {
     final TestCanvas canvas = TestCanvas();

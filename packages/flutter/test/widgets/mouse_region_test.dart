@@ -809,15 +809,9 @@ void main() {
           child: Transform.scale(
             scale: scaleFactor,
             child: MouseRegion(
-              onEnter: (PointerEnterEvent event) {
-                events.add(event);
-              },
-              onHover: (PointerHoverEvent event) {
-                events.add(event);
-              },
-              onExit: (PointerExitEvent event) {
-                events.add(event);
-              },
+              onEnter: events.add,
+              onHover: events.add,
+              onExit: events.add,
               child: Container(
                 key: key,
                 color: Colors.blue,

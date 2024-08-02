@@ -197,9 +197,7 @@ class SelectableTravelDestinationItem extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 shape: shape,
                 child: InkWell(
-                  onLongPress: () {
-                    onSelected();
-                  },
+                  onLongPress: onSelected,
                   // Generally, material cards use onSurface with 12% opacity for the pressed state.
                   splashColor: colorScheme.onSurface.withOpacity(0.12),
                   // Generally, material cards do not have a highlight overlay.

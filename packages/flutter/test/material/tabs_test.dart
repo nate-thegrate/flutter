@@ -124,9 +124,7 @@ Widget buildLeftRightApp({required List<String> tabs, required String value, boo
 }
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('indicatorPadding update test', (WidgetTester tester) async {
     // Regressing test for https://github.com/flutter/flutter/issues/108102

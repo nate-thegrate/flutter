@@ -288,9 +288,7 @@ class _OptionsState extends State<Options> {
             ],
           ),
           ElevatedButton(
-            onPressed: () {
-              widget.model.reset();
-            },
+            onPressed: widget.model.reset,
             child: const Text('Reset'),
           ),
         ],

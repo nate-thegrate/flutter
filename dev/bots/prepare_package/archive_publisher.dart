@@ -53,9 +53,7 @@ class ArchivePublisher {
     final ByteConversionSink sink = sha256.startChunkedConversion(digestSink);
 
     final Stream<List<int>> stream = archiveFile.openRead();
-    await stream.forEach((List<int> chunk) {
-      sink.add(chunk);
-    });
+    await stream.forEach(sink.add);
     sink.close();
     return digestSink.events.single.toString();
   }

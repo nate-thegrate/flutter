@@ -64,13 +64,11 @@ class DaemonInputStreamConverter {
   DaemonInputStreamConverter(this.inputStream) {
     // Lazily listen to the input stream.
     _controller.onListen = () {
-      final StreamSubscription<List<int>> subscription = inputStream.listen((List<int> chunk) {
-        _processChunk(chunk);
-      }, onError: (Object error, StackTrace stackTrace) {
-        _controller.addError(error, stackTrace);
-      }, onDone: () {
-        unawaited(_controller.close());
-      });
+      final StreamSubscription<List<int>> subscription = inputStream.listen(
+        _processChunk,
+        onError: _controller.addError,
+        onDone: _controller.close,
+      );
 
       _controller.onCancel = subscription.cancel;
       // We should not handle onPause or onResume. When the stream is paused, we

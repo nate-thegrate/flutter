@@ -47,9 +47,7 @@ void main() {
     )..appPid = appPid;
     final Completer<void> onDone = Completer<void>.sync();
     final List<String> emittedLines = <String>[];
-    logReader.logLines.listen((String line) {
-        emittedLines.add(line);
-    }, onDone: onDone.complete);
+    logReader.logLines.listen(emittedLines.add, onDone: onDone.complete);
     await null;
     logReader.dispose();
     await onDone.future;

@@ -516,13 +516,9 @@ void main() {
     ));
   }
 
-  test('RenderFittedBox reuses ClipRectLayer', () {
-    testFittedBoxWithClipRectLayer();
-  });
+  test('RenderFittedBox reuses ClipRectLayer', testFittedBoxWithClipRectLayer);
 
-  test('RenderFittedBox reuses TransformLayer', () {
-    testFittedBoxWithTransformLayer();
-  });
+  test('RenderFittedBox reuses TransformLayer', testFittedBoxWithTransformLayer);
 
   test('RenderFittedBox switches between ClipRectLayer and TransformLayer, and reuses them', () {
     testFittedBoxWithClipRectLayer();

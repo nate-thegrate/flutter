@@ -25,9 +25,7 @@ class PictureCacheComplexityScoringPage extends StatelessWidget {
         ),
         body: TabBarView(
           key: const Key('tabbar_view_complexity'), // this key is used by the driver test
-          children: kTabNames.map((String name) {
-            return _buildComplexityScoringWidgets(name);
-          }).toList(),
+          children: kTabNames.map(_buildComplexityScoringWidgets).toList(),
         ),
       ),
     );

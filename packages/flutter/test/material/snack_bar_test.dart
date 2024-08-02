@@ -3907,9 +3907,7 @@ testWidgets('SnackBarAction backgroundColor works as a Color', (WidgetTester tes
                   child: const Text(buttonText),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    completer.complete();
-                  },
+                  onPressed: completer.complete,
                   child: const Text(buttonText2),
                 ),
               ],
@@ -3964,9 +3962,7 @@ testWidgets('SnackBarAction backgroundColor works as a Color', (WidgetTester tes
                   child: const Text(buttonText),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    completer.complete();
-                  },
+                  onPressed: completer.complete,
                   child: const Text(buttonText2),
                 ),
               ],
@@ -4021,9 +4017,7 @@ testWidgets('SnackBarAction backgroundColor works as a Color', (WidgetTester tes
                   child: const Text(buttonText),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    completer.complete();
-                  },
+                  onPressed: completer.complete,
                   child: const Text(buttonText2),
                 ),
               ],
@@ -4114,9 +4108,7 @@ testWidgets('SnackBarAction backgroundColor works as a Color', (WidgetTester tes
                   child: const Text(buttonText),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    completer.complete();
-                  },
+                  onPressed: completer.complete,
                   child: const Text(buttonText2),
                 ),
               ],

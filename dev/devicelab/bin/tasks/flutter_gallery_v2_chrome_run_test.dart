@@ -75,18 +75,14 @@ class NewGalleryChromeRunTest {
           success = false;
         }
         print('stdout: $line');
-      }, onDone: () {
-        stdoutDone.complete();
-      });
+      }, onDone: stdoutDone.complete);
 
       process.stderr
           .transform<String>(utf8.decoder)
           .transform<String>(const LineSplitter())
           .listen((String line) {
         print('stderr: $line');
-      }, onDone: () {
-        stderrDone.complete();
-      });
+      }, onDone: stderrDone.complete);
 
       await Future.wait<void>(<Future<void>>[
         stdoutDone.future,

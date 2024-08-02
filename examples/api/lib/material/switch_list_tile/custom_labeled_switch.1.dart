@@ -50,12 +50,7 @@ class LabeledSwitch extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(child: Text(label)),
-            Switch(
-              value: value,
-              onChanged: (bool newValue) {
-                onChanged(newValue);
-              },
-            ),
+            Switch(value: value, onChanged: onChanged),
           ],
         ),
       ),

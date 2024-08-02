@@ -1042,9 +1042,7 @@ void main() {
     final AnimationController controller = AnimationController(
       vsync: const TestVSync(),
       duration: const Duration(seconds: 1),
-    )..addStatusListener((AnimationStatus status) {
-      statuses.add(status);
-    });
+    )..addStatusListener(statuses.add);
 
     controller.animateWith(TestSimulation());
     tick(Duration.zero);
@@ -1058,9 +1056,7 @@ void main() {
     final AnimationController controller = AnimationController(
       vsync: const TestVSync(),
       duration: const Duration(seconds: 1),
-    )..addStatusListener((AnimationStatus status) {
-      statuses.add(status);
-    });
+    )..addStatusListener(statuses.add);
     controller.reverse(from: 1.0);
     tick(Duration.zero);
     tick(const Duration(seconds: 2));
@@ -1079,9 +1075,7 @@ void main() {
     final AnimationController controller = AnimationController(
       vsync: const TestVSync(),
       duration: const Duration(seconds: 1),
-    )..addStatusListener((AnimationStatus status) {
-      statuses.add(status);
-    });
+    )..addStatusListener(statuses.add);
 
     controller.repeat(reverse: true);
     tick(Duration.zero);
@@ -1098,9 +1092,7 @@ void main() {
     final AnimationController controller = AnimationController(
       reverseDuration: const Duration(seconds: 2),
       vsync: const TestVSync(),
-    )..addStatusListener((AnimationStatus status) {
-      statuses.add(status);
-    });
+    )..addStatusListener(statuses.add);
 
     controller.animateBack(0.8);
 

@@ -145,9 +145,7 @@ class _CupertinoScrollbarState extends RawScrollbarState<CupertinoScrollbar> {
       vsync: this,
       duration: _kScrollbarResizeDuration,
     );
-    _thicknessAnimationController.addListener(() {
-      updateScrollbarPainter();
-    });
+    _thicknessAnimationController.addListener(updateScrollbarPainter);
   }
 
   @override

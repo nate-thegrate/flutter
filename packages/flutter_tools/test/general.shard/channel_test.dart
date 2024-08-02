@@ -24,9 +24,7 @@ void main() {
       fakeProcessManager = FakeProcessManager.empty();
     });
 
-    setUpAll(() {
-      Cache.disableLocking();
-    });
+    setUpAll(Cache.disableLocking);
 
     Future<void> simpleChannelTest(List<String> args) async {
       fakeProcessManager.addCommands(const <FakeCommand>[

@@ -104,9 +104,7 @@ void main() {
       }
     }
 
-    setUpAll(() {
-      Cache.disableLocking();
-    });
+    setUpAll(Cache.disableLocking);
 
     setUp(() {
       tempDir = globals.fs.systemTempDirectory.createTempSync('flutter_tools_ide_config_test.');

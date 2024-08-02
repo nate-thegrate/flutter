@@ -16,9 +16,7 @@ import '../widgets/semantics_tester.dart';
 
 void main() {
   final ThemeData theme = ThemeData();
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('Checkbox size is configurable by ThemeData.materialTapTargetSize', (WidgetTester tester) async {
     await tester.pumpWidget(

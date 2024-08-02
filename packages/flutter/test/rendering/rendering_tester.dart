@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:ui' show SemanticsUpdate;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -72,15 +71,9 @@ class TestRenderingFlutterBinding extends BindingBase with SchedulerBinding, Ser
   @override
   PipelineOwner createRootPipelineOwner() {
     return PipelineOwner(
-      onSemanticsOwnerCreated: () {
-        renderView.scheduleInitialSemantics();
-      },
-      onSemanticsUpdate: (SemanticsUpdate update) {
-        renderView.updateSemantics(update);
-      },
-      onSemanticsOwnerDisposed: () {
-        renderView.clearSemantics();
-      },
+      onSemanticsOwnerCreated: _renderView.scheduleInitialSemantics,
+      onSemanticsUpdate: _renderView.updateSemantics,
+      onSemanticsOwnerDisposed: _renderView.clearSemantics,
     );
   }
 

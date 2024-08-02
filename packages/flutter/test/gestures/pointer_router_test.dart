@@ -167,13 +167,9 @@ void main() {
     final PointerRouter router = PointerRouter();
     final Matrix4 transform = (Matrix4.identity()..scale(1 / 2.0, 1 / 2.0, 1.0)).multiplied(Matrix4.translationValues(-10, -30, 0));
 
-    router.addRoute(1, (PointerEvent event) {
-      events.add(event);
-    }, transform);
+    router.addRoute(1, events.add, transform);
 
-    router.addGlobalRoute((PointerEvent event) {
-      globalEvents.add(event);
-    }, transform);
+    router.addGlobalRoute(globalEvents.add, transform);
 
     final TestPointer pointer1 = TestPointer();
     const Offset firstPosition = Offset(16, 36);

@@ -55,9 +55,7 @@ void main() {
     late AnalyzeCommand command;
     late CommandRunner<void> runner;
 
-    setUpAll(() {
-      Cache.disableLocking();
-    });
+    setUpAll(Cache.disableLocking);
 
     setUp(() {
       fileSystem = MemoryFileSystem.test();

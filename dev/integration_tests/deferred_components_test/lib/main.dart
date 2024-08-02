@@ -48,9 +48,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     // Automatically trigger load for release test without driver.
-    Future<void>.delayed(const Duration(milliseconds: 3000), () {
-      _pressHandler();
-    });
+    Future<void>.delayed(const Duration(milliseconds: 3000), _pressHandler);
     super.initState();
   }
 

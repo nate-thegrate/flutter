@@ -1115,9 +1115,7 @@ mixin WidgetInspectorService {
 
       _registerSignalServiceExtension(
         name: WidgetInspectorServiceExtensions.widgetLocationIdMap.name,
-        callback: () {
-          return _locationIdMapToJson();
-        },
+        callback: _locationIdMapToJson,
         registerExtension: registerExtension,
       );
 

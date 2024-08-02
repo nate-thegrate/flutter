@@ -12,9 +12,7 @@ import 'package:web/web.dart' as web;
 import '../image_data.dart';
 import '_test_http_request.dart';
 void runTests() {
-  tearDown(() {
-    debugRestoreHttpRequestFactory();
-  });
+  tearDown(debugRestoreHttpRequestFactory);
 
   testWidgets('loads an image from the network with headers',
       (WidgetTester tester) async {

@@ -199,9 +199,7 @@ class AndroidValidator extends DoctorValidator {
 
     if (validationResult.isNotEmpty) {
       // Android SDK is not functional.
-      messages.addAll(validationResult.map<ValidationMessage>((String message) {
-        return ValidationMessage.error(message);
-      }));
+      messages.addAll(validationResult.map<ValidationMessage>(ValidationMessage.error));
       messages.add(ValidationMessage(_userMessages.androidSdkInstallHelp(_platform)));
       return ValidationResult(ValidationType.partial, messages, statusInfo: sdkVersionText);
     }

@@ -104,13 +104,11 @@ class MenuAcceleratorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
-      home: Shortcuts(
+      home: const Shortcuts(
         shortcuts: <ShortcutActivator, Intent>{
-          const SingleActivator(LogicalKeyboardKey.keyT, control: true): VoidCallbackIntent(() {
-            debugDumpApp();
-          }),
+          SingleActivator(LogicalKeyboardKey.keyT, control: true): VoidCallbackIntent(debugDumpApp),
         },
-        child: const Scaffold(body: SafeArea(child: MyMenuBar())),
+        child: Scaffold(body: SafeArea(child: MyMenuBar())),
       ),
     );
   }

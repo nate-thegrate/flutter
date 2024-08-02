@@ -103,9 +103,7 @@ class NetworkImage extends image_provider.ImageProvider<image_provider.NetworkIm
 
       final HttpClientRequest request = await _httpClient.getUrl(resolved);
 
-      headers?.forEach((String name, String value) {
-        request.headers.add(name, value);
-      });
+      headers?.forEach(request.headers.add);
       final HttpClientResponse response = await request.close();
       if (response.statusCode != HttpStatus.ok) {
         // The network may be only temporarily unavailable, or the file will be

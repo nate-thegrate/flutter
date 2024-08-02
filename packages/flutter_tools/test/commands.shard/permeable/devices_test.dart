@@ -21,9 +21,7 @@ void main() {
   late FakeDeviceManager deviceManager;
   late BufferLogger logger;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     deviceManager = FakeDeviceManager();

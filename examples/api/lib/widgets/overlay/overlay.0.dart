@@ -200,9 +200,7 @@ class _OverlayExampleState extends State<OverlayExample> {
           ),
           const SizedBox(height: 10.0),
           ElevatedButton(
-            onPressed: () {
-              removeHighlightOverlay();
-            },
+            onPressed: removeHighlightOverlay,
             child: const Text('Remove Overlay'),
           ),
         ],

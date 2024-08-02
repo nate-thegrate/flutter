@@ -95,9 +95,7 @@ void main() {
     expect(anotherTransformedEvent.original, same(originalEvent));
 
     final List<PointerSignalEvent> events = <PointerSignalEvent>[];
-    resolver.register(transformedEvent, (PointerSignalEvent event) {
-      events.add(event);
-    });
+    resolver.register(transformedEvent, events.add);
 
     // Registering a second transformed event should not throw an assertion.
     expect(() {

@@ -22,9 +22,7 @@ import '../../src/fake_devices.dart';
 import '../../src/test_flutter_command_runner.dart';
 
 void main() {
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   group('Validate screenshot options', () {
     testUsingContext('rasterizer and skia screenshots do not require a device', () async {

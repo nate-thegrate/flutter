@@ -11,9 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'semantics_tester.dart';
 
 void main() {
-  setUp(() {
-    debugResetSemanticsIdCounter();
-  });
+  setUp(debugResetSemanticsIdCounter);
 
   testWidgets('Semantics shutdown and restart', (WidgetTester tester) async {
     SemanticsTester? semantics = SemanticsTester(tester);

@@ -361,9 +361,7 @@ void main() {
   });
 
   group('Process pods', () {
-    setUp(() {
-      podsIsInHomeDir();
-    });
+    setUp(podsIsInHomeDir);
 
     testUsingContext('throwsToolExit if CocoaPods is not installed', () async {
       final FlutterProject projectUnderTest = setupProjectUnderTest();

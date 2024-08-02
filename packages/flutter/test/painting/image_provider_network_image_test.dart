@@ -181,12 +181,8 @@ void main() {
       (ImageInfo image, bool synchronousCall) {
         imageAvailable.complete();
       },
-      onChunk: (ImageChunkEvent event) {
-        events.add(event);
-      },
-      onError: (dynamic error, StackTrace? stackTrace) {
-        imageAvailable.completeError(error as Object, stackTrace);
-      },
+      onChunk: events.add,
+      onError: imageAvailable.completeError,
     ));
     await imageAvailable.future;
     expect(events.length, chunks.length);

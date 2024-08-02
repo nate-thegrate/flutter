@@ -11,9 +11,7 @@ import '../../src/common.dart';
 import '../../src/context.dart';
 
 void main() {
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   testUsingContext('flutter command can receive `!`, avoiding expansion by cmd.exe', () async {
     final String flutterBin = globals.fs.path.join(getFlutterRoot(), 'bin', 'flutter.bat');

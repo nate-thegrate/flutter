@@ -394,12 +394,8 @@ void main() {
               children: <InlineSpan>[
                 TextSpan(
                   text: 'yyyyy',
-                  onEnter: (PointerEnterEvent event) {
-                    logEvents.add(event);
-                  },
-                  onExit: (PointerExitEvent event) {
-                    logEvents.add(event);
-                  },
+                  onEnter: logEvents.add,
+                  onExit: logEvents.add,
                 ),
                 const TextSpan(
                   text: 'xxxxx',

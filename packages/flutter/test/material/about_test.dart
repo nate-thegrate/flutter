@@ -12,9 +12,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  tearDown(() {
-    LicenseRegistry.reset();
-  });
+  tearDown(LicenseRegistry.reset);
 
   testWidgets('Material3 has sentence case labels', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(

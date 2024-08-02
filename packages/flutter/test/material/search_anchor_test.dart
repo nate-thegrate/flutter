@@ -869,9 +869,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.ac_unit),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -1251,9 +1249,10 @@ void main() {
           child: SearchAnchor(
             searchController: controller,
             builder: (BuildContext context, SearchController controller) {
-              return IconButton(icon: const Icon(Icons.search), onPressed: () {
-                controller.openView();
-              },);
+              return IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: controller.openView,
+              );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
               return <Widget>[];
@@ -1357,9 +1356,10 @@ void main() {
           child: SearchAnchor(
             viewBuilder: viewBuilder,
             builder: (BuildContext context, SearchController controller) {
-              return IconButton(icon: const Icon(Icons.search), onPressed: () {
-                controller.openView();
-              },);
+              return IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: controller.openView,
+              );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
               return <Widget>[];
@@ -1392,9 +1392,10 @@ void main() {
           child: SearchAnchor(
             viewLeading: viewLeading,
             builder: (BuildContext context, SearchController controller) {
-              return IconButton(icon: const Icon(Icons.search), onPressed: () {
-                controller.openView();
-              },);
+              return IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: controller.openView,
+              );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
               return <Widget>[];
@@ -1425,9 +1426,10 @@ void main() {
           child: SearchAnchor(
             viewTrailing: viewTrailing,
             builder: (BuildContext context, SearchController controller) {
-              return IconButton(icon: const Icon(Icons.search), onPressed: () {
-                controller.openView();
-              },);
+              return IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: controller.openView,
+              );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
               return <Widget>[];
@@ -1459,9 +1461,10 @@ void main() {
         child: SearchAnchor(
           viewHintText: 'hint text',
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1480,9 +1483,10 @@ void main() {
         child: SearchAnchor(
           viewBackgroundColor: Colors.purple,
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1502,9 +1506,10 @@ void main() {
         child: SearchAnchor(
           viewElevation: 3.0,
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1524,9 +1529,10 @@ void main() {
         child: SearchAnchor(
           viewSurfaceTintColor: Colors.purple,
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1548,9 +1554,10 @@ void main() {
           isFullScreen: false,
           viewSide: side,
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1574,9 +1581,10 @@ void main() {
           isFullScreen: false,
           viewShape: shape,
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1596,9 +1604,10 @@ void main() {
         child: SearchAnchor(
           headerTextStyle: theme.textTheme.bodyLarge?.copyWith(color: Colors.red),
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1623,9 +1632,10 @@ void main() {
           viewHintText: 'hint text',
           headerHintStyle: theme.textTheme.bodyLarge?.copyWith(color: Colors.orange),
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1647,9 +1657,10 @@ void main() {
         child: SearchAnchor(
           dividerColor: Colors.red,
           builder: (BuildContext context, SearchController controller) {
-            return IconButton(icon: const Icon(Icons.search), onPressed: () {
-              controller.openView();
-            },);
+            return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
           },
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             return <Widget>[];
@@ -1675,9 +1686,10 @@ void main() {
             isFullScreen: false,
             viewConstraints: BoxConstraints.tight(const Size(280.0, 390.0)),
             builder: (BuildContext context, SearchController controller) {
-              return IconButton(icon: const Icon(Icons.search), onPressed: () {
-                controller.openView();
-              },);
+              return IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: controller.openView,
+            );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
               return <Widget>[];
@@ -2028,9 +2040,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2069,9 +2079,7 @@ void main() {
                 builder: (BuildContext context, SearchController controller) {
                   return IconButton(
                     icon: const Icon(Icons.search),
-                    onPressed: () {
-                      controller.openView();
-                    },
+                    onPressed: controller.openView,
                   );
                 },
                 suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2112,9 +2120,7 @@ void main() {
                   alignment: Alignment.bottomRight,
                   child: IconButton(
                     icon: const Icon(Icons.search),
-                    onPressed: () {
-                      controller.openView();
-                    },
+                    onPressed: controller.openView,
                   ),
                 );
               },
@@ -2172,9 +2178,7 @@ void main() {
                 alignment: Alignment.bottomRight,
                 child: IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 ),
               );
             },
@@ -2213,9 +2217,7 @@ void main() {
                 alignment: Alignment.bottomRight,
                 child: IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 ),
               );
             },
@@ -2249,9 +2251,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2300,9 +2300,7 @@ void main() {
             builder: (BuildContext context, SearchController controller) {
               return IconButton(
                 icon: const Icon(Icons.search),
-                onPressed: () {
-                  controller.openView();
-                },
+                onPressed: controller.openView,
               );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2345,9 +2343,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2662,9 +2658,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.ac_unit),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2796,9 +2790,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.ac_unit),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -2888,9 +2880,7 @@ void main() {
               builder: (BuildContext context, SearchController controller) {
                 return IconButton(
                   icon: const Icon(Icons.ac_unit),
-                  onPressed: () {
-                    controller.openView();
-                  },
+                  onPressed: controller.openView,
                 );
               },
               suggestionsBuilder: (BuildContext context, SearchController controller) {
@@ -3072,9 +3062,7 @@ void main() {
               builder: (BuildContext context, SearchController controller){
                 return SearchBar(
                   controller: controller,
-                  onTap: () {
-                    controller.openView();
-                  },
+                  onTap: controller.openView,
                   onTapOutside: (PointerDownEvent event) {
                     focusNode.unfocus();
                   },

@@ -13,9 +13,7 @@ void main() {
 
   tearDown(() {
     final List<PipelineOwner> children = <PipelineOwner>[];
-    RendererBinding.instance.rootPipelineOwner.visitChildren((PipelineOwner child) {
-      children.add(child);
-    });
+    RendererBinding.instance.rootPipelineOwner.visitChildren(children.add);
     children.forEach(RendererBinding.instance.rootPipelineOwner.dropChild);
   });
 

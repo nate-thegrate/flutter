@@ -76,9 +76,7 @@ void main() {
   late ProcessUtils processUtils;
   late Artifacts artifacts;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     fileSystem = MemoryFileSystem.test();

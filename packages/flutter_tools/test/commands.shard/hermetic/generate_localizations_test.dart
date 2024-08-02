@@ -24,9 +24,7 @@ void main() {
   late Artifacts artifacts;
   late FakeProcessManager processManager;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     fileSystem = MemoryFileSystem.test();

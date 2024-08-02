@@ -24,13 +24,9 @@ void main() {
   late ProcessManager processManager;
   late FakeStdio stdio;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
-  tearDownAll(() {
-    Cache.enableLocking();
-  });
+  tearDownAll(Cache.enableLocking);
 
   setUp(() {
     stdio = FakeStdio();

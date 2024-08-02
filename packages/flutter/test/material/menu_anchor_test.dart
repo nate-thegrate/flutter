@@ -1060,9 +1060,7 @@ void main() {
                 ],
                 builder: (BuildContext context, MenuController controller, Widget? child) {
                   return FilledButton(
-                    onPressed: () {
-                      controller.open();
-                    },
+                    onPressed: controller.open,
                     child: const Text('Tap me'),
                   );
                 },
@@ -1091,9 +1089,7 @@ void main() {
                 ],
                 builder: (BuildContext context, MenuController controller, Widget? child) {
                   return FilledButton(
-                    onPressed: () {
-                      controller.open();
-                    },
+                    onPressed: controller.open,
                     child: const Text('Tap me'),
                   );
                 },
@@ -2479,9 +2475,7 @@ void main() {
               ],
               builder: (BuildContext context, MenuController controller, Widget? child) {
                 return FilledButton(
-                  onPressed: () {
-                    controller.open();
-                  },
+                  onPressed: controller.open,
                   child: const Text('Tap me'),
                 );
               },
@@ -2515,9 +2509,7 @@ void main() {
               ],
               builder: (BuildContext context, MenuController controller, Widget? child) {
                 return FilledButton(
-                  onPressed: () {
-                    controller.open();
-                  },
+                  onPressed: controller.open,
                   child: const Text('Tap me'),
                 );
               },

@@ -1047,9 +1047,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
       const String directoryB = '/d/e/f';
       const String directoryC = '/g/h/i';
 
-      setUp(() {
-        service.resetPubRootDirectories();
-      });
+      setUp(service.resetPubRootDirectories);
 
       group('addPubRootDirectories', () {
         test('can add multiple directories', () async {
@@ -1587,9 +1585,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
         });
 
         group('createdByLocalProject', () {
-          setUp(() {
-            service.resetPubRootDirectories();
-          });
+          setUp(service.resetPubRootDirectories);
 
           testWidgets(
             'reacts to add and removing pubRootDirectories',
@@ -2804,9 +2800,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
           pubRootTest = generateTestPubRootDirectory(service);
         });
 
-        setUp(() {
-          service.resetPubRootDirectories();
-        });
+        setUp(service.resetPubRootDirectories);
 
         testWidgets(
           'has createdByLocalProject when the widget is in the pubRootDirectory',
@@ -3013,9 +3007,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
           pubRootTest = generateTestPubRootDirectory(service);
         });
 
-        setUp(() {
-          service.resetPubRootDirectories();
-        });
+        setUp(service.resetPubRootDirectories);
 
         testWidgets(
           'has createdByLocalProject when the widget is in the pubRootDirectory',
@@ -3150,9 +3142,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
         pubRootTest = generateTestPubRootDirectory(service);
       });
 
-      setUp(() {
-        service.resetPubRootDirectories();
-      });
+      setUp(service.resetPubRootDirectories);
 
       testWidgets(
         'reacts to add and removing pubRootDirectories',
@@ -3396,9 +3386,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
         pubRootTest = generateTestPubRootDirectory(service);
       });
 
-      setUp(() {
-        service.resetPubRootDirectories();
-      });
+      setUp(service.resetPubRootDirectories);
 
       testWidgets(
         'reacts to add and removing pubRootDirectories',
@@ -4519,9 +4507,7 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
     group('layout explorer', () {
       const String group = 'test-group';
 
-      tearDown(() {
-        service.disposeAllGroups();
-      });
+      tearDown(service.disposeAllGroups);
 
       Future<void> pumpWidgetForLayoutExplorer(WidgetTester tester) async {
         const Widget widget = Directionality(

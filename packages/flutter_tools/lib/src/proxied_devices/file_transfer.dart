@@ -86,9 +86,7 @@ Stream<Uint8List> convertToChunks(Stream<Uint8List> source, int chunkSize) {
       }
       controller.close();
     }
-  }, onError: (Object error, StackTrace stackTrace) {
-    controller.addError(error, stackTrace);
-  });
+  }, onError: controller.addError);
 
   controller.onCancel = subscription.cancel;
   controller.onPause = subscription.pause;

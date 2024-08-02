@@ -44,9 +44,7 @@ final Platform notLinuxPlatform = FakePlatform(
 );
 
 void main() {
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   late MemoryFileSystem fileSystem;
   late FakeProcessManager processManager;

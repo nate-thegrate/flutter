@@ -33,9 +33,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
                 builder: (BuildContext context, SearchController controller) {
                   return IconButton(
                     icon: const Icon(Icons.search),
-                    onPressed: () {
-                      controller.openView();
-                    },
+                    onPressed: controller.openView,
                   );
                 },
                 suggestionsBuilder: (BuildContext context, SearchController controller) {

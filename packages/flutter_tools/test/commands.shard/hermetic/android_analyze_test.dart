@@ -34,9 +34,7 @@ void main() {
     late Directory tempDir;
     late FakeAndroidBuilder builder;
 
-    setUpAll(() {
-      Cache.disableLocking();
-    });
+    setUpAll(Cache.disableLocking);
 
     setUp(() async {
       fileSystem = MemoryFileSystem.test();

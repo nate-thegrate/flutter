@@ -33,9 +33,7 @@ void main() {
   late TestUsage testUsage;
   late FakeAnalytics fakeAnalytics;
 
-  setUpAll(() {
-    Cache.disableLocking();
-  });
+  setUpAll(Cache.disableLocking);
 
   setUp(() {
     fakeJava = fakes.FakeJava();

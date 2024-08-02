@@ -130,9 +130,7 @@ class _SaveableFormState extends State<_SaveableForm> {
               children: <Widget>[
                 TextFormField(
                   controller: _controller,
-                  onFieldSubmitted: (String? value) {
-                    _save(value);
-                  },
+                  onFieldSubmitted: _save,
                 ),
                 TextButton(
                   onPressed: () {

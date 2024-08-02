@@ -567,9 +567,7 @@ void main() {
       expect(deviceNotifier, isNotNull);
 
       final List<Device> devicesAdded = <Device>[];
-      deviceNotifier.onAdded.listen((Device device) {
-        devicesAdded.add(device);
-      });
+      deviceNotifier.onAdded.listen(devicesAdded.add);
 
       final DaemonMessage message = await serverDaemonConnection.incomingCommands.first;
       expect(message.data['id'], isNotNull);
