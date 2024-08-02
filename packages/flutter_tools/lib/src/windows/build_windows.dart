@@ -326,9 +326,8 @@ void _fixBrokenCmakeGeneration(Directory buildDirectory) {
     // vcxproj files contain a BOM, which readAsLinesSync drops; re-add it.
     newProjectContents.writeCharCode(unicodeBomCharacterRune);
     for (final String line in assembleProject.readAsLinesSync()) {
-      final RegExpMatch? commandMatch = commandRegex.firstMatch(line);
-      if (commandMatch != null) {
-        lastCommandConditionConfig = commandMatch.group(1);
+      if (commandRegex.firstMatch(line) case final Match match) {
+        lastCommandConditionConfig = match.group(1);
       } else if (lastCommandConditionConfig != null) {
         final RegExpMatch? assembleCallMatch = assembleCallRegex.firstMatch(line);
         if (assembleCallMatch != null) {
@@ -337,7 +336,7 @@ void _fixBrokenCmakeGeneration(Directory buildDirectory) {
             // The config is the end of the line; make sure to replace that one,
             // in case config-matching strings appear anywhere else in the line
             // (e.g., the project path).
-            final int badConfigIndex = line.lastIndexOf(assembleCallMatch.group(1)!);
+            final int badConfigIndex = line.lastIndexOf(callConfig);
             final String correctedLine = line.replaceFirst(
               callConfig, lastCommandConditionConfig, badConfigIndex);
             newProjectContents.writeln('$correctedLine\r');

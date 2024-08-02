@@ -213,8 +213,7 @@ Key? _firstNonUniqueKey(Iterable<Widget> widgets) {
 /// Does nothing if asserts are disabled. Always returns false.
 bool debugChildrenHaveDuplicateKeys(Widget parent, Iterable<Widget> children, { String? message }) {
   assert(() {
-    final Key? nonUniqueKey = _firstNonUniqueKey(children);
-    if (nonUniqueKey != null) {
+    if (_firstNonUniqueKey(children) case final Key nonUniqueKey) {
       throw FlutterError(
         "${message ?? 'Duplicate keys found.\n'
                       'If multiple keyed widgets exist as children of another widget, they must have unique keys.'}"
@@ -240,8 +239,7 @@ bool debugChildrenHaveDuplicateKeys(Widget parent, Iterable<Widget> children, { 
 /// Does nothing if asserts are disabled. Always returns false.
 bool debugItemsHaveDuplicateKeys(Iterable<Widget> items) {
   assert(() {
-    final Key? nonUniqueKey = _firstNonUniqueKey(items);
-    if (nonUniqueKey != null) {
+    if (_firstNonUniqueKey(items) case final Key nonUniqueKey) {
       throw FlutterError('Duplicate key found: $nonUniqueKey.');
     }
     return true;

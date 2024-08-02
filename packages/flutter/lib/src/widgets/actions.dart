@@ -246,13 +246,10 @@ abstract class Action<T extends Intent> with Diagnosticable {
   /// [ContextAction] instead of [Action].
   bool isEnabled(T intent) => isActionEnabled;
 
-  bool _isEnabled(T intent, BuildContext? context) {
-    final Action<T> self = this;
-    if (self is ContextAction<T>) {
-      return self.isEnabled(intent, context);
-    }
-    return self.isEnabled(intent);
-  }
+  bool _isEnabled(T intent, BuildContext? context) => switch (this) {
+    final ContextAction<T> action => action.isEnabled(intent, context),
+    _ => isEnabled(intent),
+  };
 
   /// Whether this [Action] is inherently enabled.
   ///
@@ -338,13 +335,10 @@ abstract class Action<T extends Intent> with Diagnosticable {
   @protected
   Object? invoke(T intent);
 
-  Object? _invoke(T intent, BuildContext? context) {
-    final Action<T> self = this;
-    if (self is ContextAction<T>) {
-      return self.invoke(intent, context);
-    }
-    return self.invoke(intent);
-  }
+  Object? _invoke(T intent, BuildContext? context) => switch (this) {
+    final ContextAction<T> action => action.invoke(intent, context),
+    _ => invoke(intent),
+  };
 
   /// Register a callback to listen for changes to the state of this action.
   ///
@@ -882,8 +876,7 @@ class Actions extends StatefulWidget {
 
     _visitActionsAncestors(context, (InheritedElement element) {
       final _ActionsScope actions = element.widget as _ActionsScope;
-      final Action<T>? result = _castAction(actions, intent: intent);
-      if (result != null) {
+      if (_castAction(actions, intent: intent) case final Action<T> result) {
         context.dependOnInheritedElement(element);
         action = result;
         return true;
@@ -911,8 +904,7 @@ class Actions extends StatefulWidget {
 
     _visitActionsAncestors(context, (InheritedElement element) {
       final _ActionsScope actions = element.widget as _ActionsScope;
-      final Action<T>? result = _castAction(actions, intent: intent);
-      if (result != null) {
+      if (_castAction(actions, intent: intent) case final Action<T> result) {
         action = result;
         return true;
       }

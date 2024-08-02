@@ -44,11 +44,10 @@ class EventPrinter extends TestWatcher {
   }
 
   void _sendEvent(String name, [ dynamic params ]) {
-    final Map<String, dynamic> map = <String, dynamic>{'event': name};
-    if (params != null) {
-      map['params'] = params;
-    }
-    _send(map);
+    _send(<String, dynamic>{
+      'event': name,
+      if (params != null) 'params': params,
+    });
   }
 
   void _send(Map<String, dynamic> command) {

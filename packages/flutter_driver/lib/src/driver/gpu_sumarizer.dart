@@ -8,22 +8,18 @@ import 'timeline.dart';
 /// Summarizes [GpuSumarizer]s corresponding to GPU start and end events.
 class GpuSumarizer {
   /// Creates a RasterCacheSummarizer given the timeline events.
-  GpuSumarizer(List<TimelineEvent> gpuEvents) {
-    for (final TimelineEvent event in gpuEvents) {
-      final Object? value = event.arguments!['FrameTimeMS'];
-      if (value is String) {
-        final double? parsedValue = double.tryParse(value);
-        if (parsedValue != null) {
-          _frameTimes.add(parsedValue);
-        }
-      }
-    }
-  }
+  GpuSumarizer(List<TimelineEvent> gpuEvents)
+      : _frameTimes = <double>[
+        for (final TimelineEvent event in gpuEvents)
+          if (event.arguments case {'FrameTimeMS': final String value})
+            if (double.tryParse(value) case final double parsedValue)
+              parsedValue,
+      ];
 
   /// Whether or not this event is a GPU event.
   static const Set<String> kGpuEvents = <String>{'GPUTracer'};
 
-  final List<double> _frameTimes = <double>[];
+  final List<double> _frameTimes;
 
   /// Computes the average GPU time recorded.
   double computeAverageGPUTime() => _computeAverage(_frameTimes);

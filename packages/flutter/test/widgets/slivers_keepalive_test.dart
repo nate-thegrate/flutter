@@ -421,8 +421,7 @@ class _SwitchingChildBuilderTest extends State<SwitchingChildBuilderTest> {
     children = widget.children;
     _mapKeyToIndex = <Key, int>{};
     for (int index = 0; index < children.length; index += 1) {
-      final Key? key = children[index].key;
-      if (key != null) {
+      if (children[index].key case final Key key) {
         _mapKeyToIndex[key] = index;
       }
     }
@@ -435,8 +434,7 @@ class _SwitchingChildBuilderTest extends State<SwitchingChildBuilderTest> {
       children = widget.children;
       _mapKeyToIndex = <Key, int>{};
       for (int index = 0; index < children.length; index += 1) {
-        final Key? key = children[index].key;
-        if (key != null) {
+        if (children[index].key case final Key key) {
           _mapKeyToIndex[key] = index;
         }
       }

@@ -397,8 +397,7 @@ class WindowsPlugin extends PluginPlatform
         'win32': PluginPlatformVariant.win32,
       };
       for (final String variantName in variantList.cast<String>()) {
-        final PluginPlatformVariant? variant = variantByName[variantName];
-        if (variant != null) {
+        if (variantByName[variantName] case final PluginPlatformVariant variant) {
           variants.add(variant);
         }
         // Ignore unrecognized variants to make adding new variants in the

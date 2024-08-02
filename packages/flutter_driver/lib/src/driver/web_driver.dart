@@ -200,26 +200,22 @@ class WebFlutterDriver extends FlutterDriver {
     _checkBrowserSupportsTimeline();
 
     final List<Map<String, dynamic>> events = <Map<String, dynamic>>[];
-    for (final async_io.LogEntry entry in await _connection.logs.toList()) {
-      if (_startTime.isBefore(entry.timestamp)) {
-        final Map<String, dynamic> data = (jsonDecode(entry.message!) as Map<String, dynamic>)['message'] as Map<String, dynamic>;
-        if (data['method'] == 'Tracing.dataCollected') {
-          // 'ts' data collected from Chrome is in double format, conversion needed
-          try {
-            final Map<String, dynamic> params = data['params'] as Map<String, dynamic>;
-            params['ts'] = double.parse(params['ts'].toString()).toInt();
-          } on FormatException catch (_) {
-            // data is corrupted, skip
-            continue;
-          }
-          events.add(data['params']! as Map<String, dynamic>);
+    await for (final async_io.LogEntry entry in _connection.logs) {
+      if (!_startTime.isBefore(entry.timestamp)) {
+        continue;
+      }
+      if (jsonDecode(entry.message!) case {
+        'message': {'method': 'Tracing.dataCollected'},
+        'params': final Map<String, dynamic> params,
+      } when params.containsKey('ts')) {
+        // 'ts' data collected from Chrome is in double format, conversion needed
+        if (double.tryParse(params['ts'].toString()) case final double ts) {
+          params['ts'] = ts.toInt();
+          events.add(params);
         }
       }
     }
-    final Map<String, dynamic> json = <String, dynamic>{
-      'traceEvents': events,
-    };
-    return Timeline.fromJson(json);
+    return Timeline.fromJson(<String, dynamic>{'traceEvents': events});
   }
 
   @override

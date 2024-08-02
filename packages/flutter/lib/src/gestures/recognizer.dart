@@ -457,8 +457,7 @@ abstract class OneSequenceGestureRecognizer extends GestureRecognizer {
   @protected
   @mustCallSuper
   void resolvePointer(int pointer, GestureDisposition disposition) {
-    final GestureArenaEntry? entry = _entries[pointer];
-    if (entry != null) {
+    if (_entries[pointer] case final GestureArenaEntry entry) {
       _entries.remove(pointer);
       entry.resolve(disposition);
     }
@@ -796,15 +795,19 @@ class OffsetPair {
 
   /// Creates a [OffsetPair] from [PointerEvent.localPosition] and
   /// [PointerEvent.position].
-  OffsetPair.fromEventPosition(PointerEvent event)
-      : local = event.localPosition,
-        global = event.position;
+  const factory OffsetPair.fromEventPosition(PointerEvent event) = _PositionPair;
 
   /// Creates a [OffsetPair] from [PointerEvent.localDelta] and
   /// [PointerEvent.delta].
-  OffsetPair.fromEventDelta(PointerEvent event)
-      : local = event.localDelta,
-        global = event.delta;
+  const factory OffsetPair.fromEventDelta(PointerEvent event) = _DeltaPair;
+
+  /// Creates a [OffsetPair] from [PointerPanZoomUpdateEvent.localPan] and
+  /// [PointerPanZoomUpdateEvent.pan].
+  const factory OffsetPair.fromEventPan(PointerPanZoomUpdateEvent event) = _PanPair;
+
+  /// Creates a [OffsetPair] from [PointerPanZoomUpdateEvent.localPanDelta] and
+  /// [PointerPanZoomUpdateEvent.panDelta].
+  const factory OffsetPair.fromEventPanDelta(PointerPanZoomUpdateEvent event) = _PanDeltaPair;
 
   /// A [OffsetPair] where both [Offset]s are [Offset.zero].
   static const OffsetPair zero = OffsetPair(local: Offset.zero, global: Offset.zero);
@@ -834,4 +837,69 @@ class OffsetPair {
 
   @override
   String toString() => '${objectRuntimeType(this, 'OffsetPair')}(local: $local, global: $global)';
+}
+
+abstract class _PointerEventOffsetPair implements OffsetPair {
+  const _PointerEventOffsetPair(this.event);
+
+  final PointerEvent event;
+
+  @override
+  Offset get global;
+  @override
+  Offset get local;
+
+  @override
+  OffsetPair operator +(OffsetPair other) {
+    return OffsetPair(
+      local: local + other.local,
+      global: global + other.global,
+    );
+  }
+
+  @override
+  OffsetPair operator -(OffsetPair other) {
+    return OffsetPair(
+      local: local - other.local,
+      global: global - other.global,
+    );
+  }
+}
+
+class _PositionPair extends _PointerEventOffsetPair {
+  const _PositionPair(super.event);
+
+  @override
+  Offset get global => event.position;
+  @override
+  Offset get local => event.localPosition;
+}
+
+class _DeltaPair extends _PointerEventOffsetPair {
+  const _DeltaPair(super.event);
+
+  @override
+  Offset get global => event.delta;
+  @override
+  Offset get local => event.localDelta;
+}
+
+class _PanPair extends _PointerEventOffsetPair {
+  const _PanPair(PointerPanZoomUpdateEvent super.event);
+
+  PointerPanZoomUpdateEvent get _panEvent => event as PointerPanZoomUpdateEvent;
+
+  @override
+  Offset get global => _panEvent.pan;
+  @override
+  Offset get local => _panEvent.localPan;
+}
+
+class _PanDeltaPair extends _PanPair {
+  const _PanDeltaPair(super.event);
+
+  @override
+  Offset get global => _panEvent.panDelta;
+  @override
+  Offset get local => _panEvent.localPanDelta;
 }

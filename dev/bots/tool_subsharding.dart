@@ -67,7 +67,7 @@ class TestFileReporterResults {
       } else if (entry.containsKey('error')) {
         final String stackTrace = entry.containsKey('stackTrace') ? entry['stackTrace']! as String : '';
         errors.add('${entry['error']}\n $stackTrace');
-      } else if (entry.containsKey('success') && entry['success'] == true) {
+      } else if (entry case {'success': true}) {
         hasFailedTests = false;
       }
     }
@@ -93,9 +93,8 @@ class TestFileReporterResults {
   }
 
   static bool isMetricDone(Map<String, Object?> entry, Map<int, TestSpecs> allTestSpecs) {
-    if (entry.containsKey('group') && entry['type']! as String == 'group') {
-      final Map<String, Object?> group = entry['group']! as Map<String, Object?>;
-      return allTestSpecs.containsKey(group['suiteID']! as int);
+    if (entry case {'type': 'group', 'group': {'suiteID': final int id}}) {
+      return allTestSpecs.containsKey(id);
     }
     return false;
   }

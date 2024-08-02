@@ -150,8 +150,7 @@ class BuildIOSArchiveCommand extends _BuildIOSSubCommand {
 
   @override
   Future<void> validateCommand() async {
-    final String? exportOptions = exportOptionsPlist;
-    if (exportOptions != null) {
+    if (exportOptionsPlist case final String exportOptions) {
       if (argResults?.wasParsed('export-method') ?? false) {
         throwToolExit(
           '"--export-options-plist" is not compatible with "--export-method". Either use "--export-options-plist" and '
@@ -589,19 +588,14 @@ class BuildIOSArchiveCommand extends _BuildIOSSubCommand {
   // are now deprecated. The new equivalents are 'app-store-connect', 'release-testing',
   // and 'debugging'.
   String _getVersionAppropriateExportMethod(String method) {
-    final Version? currVersion = globals.xcode!.currentVersion;
-    if (currVersion != null) {
+    if (globals.xcode!.currentVersion case final Version currVersion) {
       if (currVersion >= Version(15, 4, 0)) {
-        switch (method) {
-          case 'app-store':
-            return 'app-store-connect';
-          case 'ad-hoc':
-            return 'release-testing';
-          case 'development':
-            return 'debugging';
-          default:
-            throwToolExit('Encountered invalid export-method input.');
-        }
+        return switch (method) {
+          'app-store'   => 'app-store-connect',
+          'ad-hoc'      => 'release-testing',
+          'development' => 'debugging',
+          _ => throwToolExit('Encountered invalid export-method input.'),
+        };
       }
       return method;
     }

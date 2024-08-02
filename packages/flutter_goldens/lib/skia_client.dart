@@ -488,21 +488,18 @@ class SkiaGoldClient {
   /// image was rendered on, and for web tests, the browser the image was
   /// rendered on.
   String _getKeysJSON() {
-    final String? webRenderer = _webRendererValue;
-    final Map<String, dynamic> keys = <String, dynamic>{
-      'Platform' : platform.operatingSystem,
+    final String operatingSystem = platform.operatingSystem;
+
+    return json.encode(<String, dynamic>{
+      'Platform' : operatingSystem,
       'CI' : 'luci',
-      if (_isImpeller)
-        'impeller': 'swiftshader',
-    };
-    if (_isBrowserTest) {
-      keys['Browser'] = _browserKey;
-      keys['Platform'] = '${keys['Platform']}-browser';
-      if (webRenderer != null) {
-        keys['WebRenderer'] = webRenderer;
-      }
-    }
-    return json.encode(keys);
+      if (_isImpeller) 'impeller': 'swiftshader',
+      if (_isBrowserTest) ...<String, dynamic>{
+        'Browser': _browserKey,
+        'Platform': '$operatingSystem-browser',
+        if (_webRendererValue case final String renderer) 'WebRenderer': renderer,
+      },
+    });
   }
 
   /// Removes the file extension from the [fileName] to represent the test name

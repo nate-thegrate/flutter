@@ -384,8 +384,7 @@ class OutlineInputBorder extends InputBorder {
 
   @override
   ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
-    if (a is OutlineInputBorder) {
-      final OutlineInputBorder outline = a;
+    if (a case final OutlineInputBorder outline) {
       return OutlineInputBorder(
         borderRadius: BorderRadius.lerp(outline.borderRadius, borderRadius, t)!,
         borderSide: BorderSide.lerp(outline.borderSide, borderSide, t),
@@ -397,8 +396,7 @@ class OutlineInputBorder extends InputBorder {
 
   @override
   ShapeBorder? lerpTo(ShapeBorder? b, double t) {
-    if (b is OutlineInputBorder) {
-      final OutlineInputBorder outline = b;
+    if (b case final OutlineInputBorder outline) {
       return OutlineInputBorder(
         borderRadius: BorderRadius.lerp(borderRadius, outline.borderRadius, t)!,
         borderSide: BorderSide.lerp(borderSide, outline.borderSide, t),

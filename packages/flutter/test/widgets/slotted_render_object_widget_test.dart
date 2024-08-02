@@ -331,8 +331,7 @@ class _RenderDiagonal extends RenderBox with SlottedContainerRenderObjectMixin<_
     }
 
     Size nullSlotSize = Size.zero;
-    final RenderBox? nullSlot = _nullSlot;
-    if (nullSlot != null) {
+    if (_nullSlot case final RenderBox nullSlot) {
       nullSlot.layout(childConstraints, parentUsesSize: true);
       _positionChild(nullSlot, Offset.zero);
       nullSlotSize = nullSlot.size;

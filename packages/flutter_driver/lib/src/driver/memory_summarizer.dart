@@ -8,22 +8,18 @@ import 'timeline.dart';
 /// Summarizes GPU/Device Memory allocations performed by Impeller.
 class GPUMemorySumarizer {
   /// Creates a RasterCacheSummarizer given the timeline events.
-  GPUMemorySumarizer(List<TimelineEvent> gpuEvents) {
-    for (final TimelineEvent event in gpuEvents) {
-      final Object? value = event.arguments!['MemoryBudgetUsageMB'];
-      if (value is String) {
-        final double? parsedValue = double.tryParse(value);
-        if (parsedValue != null) {
-          _memoryMB.add(parsedValue);
-        }
-      }
-    }
-  }
+  GPUMemorySumarizer(List<TimelineEvent> gpuEvents)
+      : _memoryMB = <double>[
+        for (final TimelineEvent event in gpuEvents)
+          if (event.arguments case {'MemoryBudgetUsageMB': final String value})
+            if (double.tryParse(value) case final double parsedValue)
+              parsedValue,
+      ];
 
   /// Whether or not this event is a GPU allocation event.
   static const Set<String> kMemoryEvents = <String>{'AllocatorVK', 'AllocatorMTL'};
 
-  final List<double> _memoryMB = <double>[];
+  final List<double> _memoryMB;
 
   /// Computes the average GPU memory allocated.
   double computeAverageMemoryUsage() => _computeAverage(_memoryMB);

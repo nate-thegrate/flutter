@@ -167,25 +167,26 @@ class Options extends StatefulWidget {
 }
 
 class _OptionsState extends State<Options> {
+  OptionModel get _model => widget.model;
   @override
   void initState() {
     super.initState();
-    widget.model.addListener(_modelChanged);
+    _model.addListener(_modelChanged);
   }
 
   @override
   void didUpdateWidget(Options oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.model != oldWidget.model) {
+    if (_model != oldWidget.model) {
       oldWidget.model.removeListener(_modelChanged);
-      widget.model.addListener(_modelChanged);
+      _model.addListener(_modelChanged);
     }
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.model.removeListener(_modelChanged);
+    _model.removeListener(_modelChanged);
   }
 
   void _modelChanged() {
@@ -204,18 +205,18 @@ class _OptionsState extends State<Options> {
               Expanded(
                 child: ControlSlider(
                   label: 'Point Rounding',
-                  value: widget.model.pointRounding,
+                  value: _model.pointRounding,
                   onChanged: (double value) {
-                    widget.model.pointRounding = value;
+                    _model.pointRounding = value;
                   },
                 ),
               ),
               Expanded(
                 child: ControlSlider(
                   label: 'Valley Rounding',
-                  value: widget.model.valleyRounding,
+                  value: _model.valleyRounding,
                   onChanged: (double value) {
-                    widget.model.valleyRounding = value;
+                    _model.valleyRounding = value;
                   },
                 ),
               ),
@@ -226,19 +227,19 @@ class _OptionsState extends State<Options> {
               Expanded(
                 child: ControlSlider(
                   label: 'Squash',
-                  value: widget.model.squash,
+                  value: _model.squash,
                   onChanged: (double value) {
-                    widget.model.squash = value;
+                    _model.squash = value;
                   },
                 ),
               ),
               Expanded(
                 child: ControlSlider(
                   label: 'Rotation',
-                  value: widget.model.rotation,
+                  value: _model.rotation,
                   max: 360,
                   onChanged: (double value) {
-                    widget.model.rotation = value;
+                    _model.rotation = value;
                   },
                 ),
               ),
@@ -252,12 +253,12 @@ class _OptionsState extends State<Options> {
                     Expanded(
                       child: ControlSlider(
                         label: 'Points',
-                        value: widget.model.points,
+                        value: _model.points,
                         min: 3,
                         max: 20,
                         precision: 1,
                         onChanged: (double value) {
-                          widget.model.points = value;
+                          _model.points = value;
                         },
                       ),
                     ),
@@ -268,7 +269,7 @@ class _OptionsState extends State<Options> {
                         child: OutlinedButton(
                           child: const Text('Nearest'),
                           onPressed: () {
-                            widget.model.points = widget.model.points.roundToDouble();
+                            _model.points = _model.points.roundToDouble();
                           },
                         ),
                       ),
@@ -279,18 +280,16 @@ class _OptionsState extends State<Options> {
               Expanded(
                 child: ControlSlider(
                   label: 'Inner Radius',
-                  value: widget.model.innerRadiusRatio,
+                  value: _model.innerRadiusRatio,
                   onChanged: (double value) {
-                    widget.model.innerRadiusRatio = value;
+                    _model.innerRadiusRatio = value;
                   },
                 ),
               ),
             ],
           ),
           ElevatedButton(
-            onPressed: () {
-              widget.model.reset();
-            },
+            onPressed: _model.reset,
             child: const Text('Reset'),
           ),
         ],

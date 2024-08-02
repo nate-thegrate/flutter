@@ -605,9 +605,7 @@ class StdoutLogger extends Logger {
     }
     _status = AnonymousSpinnerStatus(
       onFinish: () {
-        if (onFinish != null) {
-          onFinish();
-        }
+        onFinish?.call();
         _clearStatus();
       },
       stdio: _stdio,
@@ -1375,15 +1373,11 @@ class AnonymousSpinnerStatus extends Status {
           _clear(_currentLineLength - _lastAnimationFrameLength);
         }
       }
-      final SlowWarningCallback? callback = slowWarningCallback;
-      if (_slowWarning.isEmpty && callback != null) {
-        final TerminalColor? color = warningColor;
-        if (color != null) {
-          _slowWarning = _terminal.color(callback(), color);
-        } else {
-          _slowWarning = callback();
-        }
-
+      if (slowWarningCallback case final SlowWarningCallback callback when _slowWarning.isEmpty) {
+        _slowWarning = switch (warningColor) {
+          final TerminalColor color => _terminal.color(callback(), color),
+          null => callback(),
+        };
         _writeToStdOut(_slowWarning);
       }
     }

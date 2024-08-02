@@ -47,16 +47,12 @@ typedef GestureMultiTapCancelCallback = void Function(int pointer);
 /// creation, honoring [Zone].
 class _CountdownZoned {
   _CountdownZoned({ required Duration duration }) {
-    Timer(duration, _onTimeout);
+    Future<void>.delayed(duration, () => _timeout = true);
   }
 
   bool _timeout = false;
 
   bool get timeout => _timeout;
-
-  void _onTimeout() {
-    _timeout = true;
-  }
 }
 
 /// TapTracker helps track individual tap sequences as part of a

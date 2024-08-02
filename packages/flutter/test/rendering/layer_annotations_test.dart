@@ -747,15 +747,11 @@ class _Layers {
     _assigned = true;
     if (children != null) {
       for (final Object child in children!) {
-        late Layer layer;
-        if (child is Layer) {
-          layer = child;
-        } else if (child is _Layers) {
-          layer = child.build();
-        } else {
-          assert(false, 'Element of _Layers.children must be instance of Layer or _Layers');
-        }
-        root.append(layer);
+        root.append(switch (child) {
+          Layer()   => child,
+          _Layers() => child.build(),
+          _ => throw Exception('Element of _Layers.children must be instance of Layer or _Layers'),
+        });
       }
     }
     return root;

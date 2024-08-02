@@ -377,11 +377,10 @@ class VisualStudio {
   }
 
   String? _findMsvcVersion(List<Map<String, dynamic>> installations) {
-    final String? installationPath = installations[0]['installationPath'] as String?;
     String? msvcVersion;
-    if (installationPath != null) {
-      final Directory installationDir = _fileSystem.directory(installationPath);
-      final Directory msvcDir = installationDir
+    if (installations[0] case {'installationPath': final String installationPath}) {
+      final Directory msvcDir = _fileSystem
+          .directory(installationPath)
           .childDirectory('VC')
           .childDirectory('Tools')
           .childDirectory('MSVC');
@@ -476,8 +475,7 @@ class VisualStudio {
       ]);
       if (result.exitCode == 0) {
         final RegExp pattern = RegExp(r'InstallationFolder\s+REG_SZ\s+(.+)');
-        final RegExpMatch? match = pattern.firstMatch(result.stdout);
-        if (match != null) {
+        if (pattern.firstMatch(result.stdout) case final Match match) {
           return match.group(1)!.trim();
         }
       }

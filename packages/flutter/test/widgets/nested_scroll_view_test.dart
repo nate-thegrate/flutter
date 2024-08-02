@@ -1111,8 +1111,7 @@ void main() {
       final List<RenderObject> children = <RenderObject>[];
       object.visitChildren(children.add);
       for (final RenderObject child in children) {
-        final Object? result = dfsFindPhysicalLayer(child);
-        if (result != null) {
+        if (dfsFindPhysicalLayer(child) case final Object result) {
           return result;
         }
       }

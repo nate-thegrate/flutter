@@ -951,8 +951,7 @@ class _RefreshProgressIndicatorState extends _CircularProgressIndicatorState {
   // When value is null the arrow animation starting from wherever we left it.
   @override
   Widget build(BuildContext context) {
-    final double? value = widget.value;
-    if (value != null) {
+    if (widget.value case final double value) {
       _lastValue = value;
       _controller.value = _convertTween.transform(value)
         * (1333 / 2 / _kIndeterminateCircularDuration);

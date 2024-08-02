@@ -519,17 +519,14 @@ abstract class ImageProvider<T extends Object> {
     }
     final ImageStreamCompleter? completer = PaintingBinding.instance.imageCache.putIfAbsent(
       key,
-      () {
-        ImageStreamCompleter result = loadImage(key, PaintingBinding.instance.instantiateImageCodecWithSize);
+      () => switch (loadImage(key, PaintingBinding.instance.instantiateImageCodecWithSize)) {
         // This check exists as a fallback for backwards compatibility until the
         // deprecated `loadBuffer()` method is removed. Until then, ImageProvider
         // subclasses may have only overridden `loadBuffer()`, in which case the
         // base implementation of `loadWithSize()` will return a sentinel value
         // of type `_AbstractImageStreamCompleter`.
-        if (result is _AbstractImageStreamCompleter) {
-          result = loadBuffer(key, PaintingBinding.instance.instantiateImageCodecFromBuffer);
-        }
-        return result;
+        _AbstractImageStreamCompleter() => loadBuffer(key, PaintingBinding.instance.instantiateImageCodecFromBuffer),
+        final ImageStreamCompleter result => result,
       },
       onError: handleError,
     );

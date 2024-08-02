@@ -200,21 +200,9 @@ String? _findJavaHome({
   required AndroidStudio? androidStudio,
   required Platform platform,
 }) {
-  final Object? configured = config.getValue('jdk-dir');
-  if (configured != null) {
-    return configured as String;
-  }
-
-  final String? androidStudioJavaPath = androidStudio?.javaPath;
-  if (androidStudioJavaPath != null) {
-    return androidStudioJavaPath;
-  }
-
-  final String? javaHomeEnv = platform.environment[Java.javaHomeEnvironmentVariable];
-  if (javaHomeEnv != null) {
-    return javaHomeEnv;
-  }
-  return null;
+  return config.getValue('jdk-dir') as String?
+    ?? androidStudio?.javaPath
+    ?? platform.environment[Java.javaHomeEnvironmentVariable];
 }
 
 String? _findJavaBinary({

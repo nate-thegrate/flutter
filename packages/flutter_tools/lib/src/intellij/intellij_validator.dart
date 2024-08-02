@@ -537,8 +537,7 @@ class IntelliJValidatorOnMac extends IntelliJValidator {
       .getValueFromFile<String>(plistFile, 'JetBrainsToolboxApp');
 
     if (altLocation != null) {
-      _pluginsPath = '$altLocation.plugins';
-      return _pluginsPath!;
+      return _pluginsPath = '$altLocation.plugins';
     }
 
     final List<String> split = version.split('.');
@@ -548,8 +547,7 @@ class IntelliJValidatorOnMac extends IntelliJValidator {
     final String major = split[0];
     final String minor = split[1];
 
-    final String? homeDirPath = _homeDirPath;
-    if (homeDirPath != null) {
+    if (_homeDirPath case final String homeDirPath) {
       String pluginsPath = _fileSystem.path.join(
         homeDirPath,
         'Library',

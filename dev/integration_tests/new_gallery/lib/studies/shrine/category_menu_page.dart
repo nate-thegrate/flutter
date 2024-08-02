@@ -76,9 +76,7 @@ class CategoryMenuPage extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               model.setCategory(category);
-              if (onCategoryTap != null) {
-                onCategoryTap!();
-              }
+              onCategoryTap?.call();
             },
             child: model.selectedCategory == category
                 ? CustomPaint(
@@ -98,6 +96,11 @@ class CategoryMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PageStatus(
+      :AnimationController cartController,
+      :AnimationController menuController,
+    ) = PageStatus.of(context)!;
+
     final bool isDesktop = isDisplayDesktop(context);
 
     final TextStyle logoutTextStyle = Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -107,7 +110,7 @@ class CategoryMenuPage extends StatelessWidget {
 
     if (isDesktop) {
       return AnimatedBuilder(
-        animation: PageStatus.of(context)!.cartController,
+        animation: cartController,
         builder: (BuildContext context, Widget? child) => ExcludeSemantics(
           excluding: !menuPageIsVisible(context),
           child: Material(
@@ -165,52 +168,45 @@ class CategoryMenuPage extends StatelessWidget {
           ),
         ),
       );
-    } else {
-      return AnimatedBuilder(
-        animation: PageStatus.of(context)!.cartController,
-        builder: (BuildContext context, Widget? child) => AnimatedBuilder(
-          animation: PageStatus.of(context)!.menuController,
-          builder: (BuildContext context, Widget? child) => ExcludeSemantics(
-            excluding: !menuPageIsVisible(context),
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.only(top: 40),
-                color: shrinePink100,
-                child: ListView(
-                  children: <Widget>[
-                    for (final Category category in categories)
-                      _buildCategory(category, context),
-                    Center(
-                      child: _divider(context: context),
-                    ),
-                    Semantics(
-                      button: true,
-                      enabled: true,
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (onCategoryTap != null) {
-                              onCategoryTap!();
-                            }
-                            Navigator.of(context)
-                                .restorablePushNamed(ShrineApp.loginRoute);
-                          },
-                          child: _buttonText(
-                            GalleryLocalizations.of(context)!
-                                .shrineLogoutButtonCaption,
-                            logoutTextStyle,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+    }
+
+    return AnimatedBuilder(
+      animation: Listenable.merge(<Listenable>{cartController, menuController}),
+      builder: (BuildContext context, Widget? child) {
+        final List<Widget> children = <Widget>[
+          for (final Category category in categories)
+            _buildCategory(category, context),
+          Center(child: _divider(context: context)),
+          Semantics(
+            button: true,
+            enabled: true,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  onCategoryTap?.call();
+                  Navigator.of(context).restorablePushNamed(ShrineApp.loginRoute);
+                },
+                child: _buttonText(
+                  GalleryLocalizations.of(context)!.shrineLogoutButtonCaption,
+                  logoutTextStyle,
                 ),
               ),
             ),
           ),
-        ),
-      );
-    }
+        ];
+
+        return ExcludeSemantics(
+          excluding: !menuPageIsVisible(context),
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.only(top: 40),
+              color: shrinePink100,
+              child: ListView(children: children),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

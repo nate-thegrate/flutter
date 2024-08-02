@@ -147,12 +147,10 @@ mixin SlottedContainerRenderObjectMixin<SlotType, ChildType extends RenderObject
   /// The default implementation calls [EnumName.name] on `slot` if it is an
   /// [Enum] value and `toString` if it is not.
   @protected
-  String debugNameForSlot(SlotType slot) {
-    if (slot is Enum) {
-      return slot.name;
-    }
-    return slot.toString();
-  }
+  String debugNameForSlot(SlotType slot) => switch (slot) {
+    Enum(:final String name) => name,
+    _ => '$slot',
+  };
 
   @override
   void attach(PipelineOwner owner) {

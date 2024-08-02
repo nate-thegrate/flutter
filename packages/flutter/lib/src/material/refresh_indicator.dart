@@ -394,12 +394,10 @@ class RefreshIndicatorState extends State<RefreshIndicator> with TickerProviderS
       }
     } else if (notification is ScrollEndNotification) {
       switch (_mode) {
+        case _RefreshIndicatorMode.armed when _positionController.value < 1.0:
+          _dismiss(_RefreshIndicatorMode.canceled);
         case _RefreshIndicatorMode.armed:
-          if (_positionController.value < 1.0) {
-            _dismiss(_RefreshIndicatorMode.canceled);
-          } else {
-            _show();
-          }
+          _show();
         case _RefreshIndicatorMode.drag:
           _dismiss(_RefreshIndicatorMode.canceled);
         case _RefreshIndicatorMode.canceled:

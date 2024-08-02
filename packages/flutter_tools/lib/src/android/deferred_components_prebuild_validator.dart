@@ -255,8 +255,7 @@ class _DeferredComponentAndroidFiles {
   // generates default build.gradle and AndroidManifest.xml for the deferred component.
   Future<List<File>> _setupComponentFiles(Directory outputDir) async {
     Template template;
-    final Directory? templatesDir = _templatesDir;
-    if (templatesDir != null) {
+    if (_templatesDir case final Directory templatesDir) {
       final Directory templateComponentDir = templatesDir.childDirectory('module${globals.fs.path.separator}android${globals.fs.path.separator}deferred_component');
       template = Template(templateComponentDir, templateComponentDir,
         fileSystem: globals.fs,

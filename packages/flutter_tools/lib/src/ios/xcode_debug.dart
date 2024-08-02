@@ -193,8 +193,7 @@ class XcodeDebug {
 
     if (force) {
       await _forceExitXcode();
-      if (currentDebuggingProject != null) {
-        final XcodeDebugProject project = currentDebuggingProject!;
+      if (currentDebuggingProject case final XcodeDebugProject project) {
         if (project.isTemporaryProject) {
           // Only delete if it exists. This is to prevent crashes when racing
           // with shutdown hooks to delete temporary files.
@@ -207,8 +206,7 @@ class XcodeDebug {
       }
     }
 
-    if (currentDebuggingProject != null) {
-      final XcodeDebugProject project = currentDebuggingProject!;
+    if (currentDebuggingProject case final XcodeDebugProject project) {
       await stopDebuggingApp(
         project: project,
         closeXcode: project.isTemporaryProject,
@@ -468,10 +466,8 @@ class XcodeAutomationScriptResponse {
 
   factory XcodeAutomationScriptResponse.fromJson(Map<String, Object?> data) {
     XcodeAutomationScriptDebugResult? debugResult;
-    if (data['debugResult'] != null && data['debugResult'] is Map<String, Object?>) {
-      debugResult = XcodeAutomationScriptDebugResult.fromJson(
-        data['debugResult']! as Map<String, Object?>,
-      );
+    if (data case {'debugResult': final Map<String, Object?> resultData}) {
+      debugResult = XcodeAutomationScriptDebugResult.fromJson(resultData);
     }
     return XcodeAutomationScriptResponse._(
       status: data['status'] is bool? ? data['status'] as bool? : null,

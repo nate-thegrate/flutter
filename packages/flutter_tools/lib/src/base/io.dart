@@ -483,7 +483,7 @@ Future<List<NetworkInterface>> listNetworkInterfaces({
   io.InternetAddressType type = io.InternetAddressType.any,
 }) async {
   if (_networkInterfaceListerOverride != null) {
-    return _networkInterfaceListerOverride!.call(
+    return _networkInterfaceListerOverride!(
       includeLoopback: includeLoopback,
       includeLinkLocal: includeLinkLocal,
       type: type,

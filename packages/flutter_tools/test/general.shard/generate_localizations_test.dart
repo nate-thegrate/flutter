@@ -106,9 +106,7 @@ void main() {
       l10nDirectory.childFile('app_$locale.arb')
         .writeAsStringSync(localeToArbFile[locale]!);
     }
-    if (setup != null) {
-      setup(l10nDirectory);
-    }
+    setup?.call(l10nDirectory);
     return LocalizationsGenerator(
       fileSystem: fs,
       inputPathString: l10nDirectory.path,

@@ -333,11 +333,9 @@ class LogicalKeyData {
         final String? keyLabel = printable[entry.constantName];
         if (keyLabel != null && !entry.constantName.startsWith('numpad')) {
           return toPlane(keyLabel.codeUnitAt(0), kUnicodePlane.value);
-        } else {
-          final PhysicalKeyEntry? physicalEntry = physicalData.tryEntryByName(entry.name);
-          if (physicalEntry != null) {
-            return toPlane(physicalEntry.usbHidCode, kFuchsiaPlane.value);
-          }
+        }
+        if (physicalData.tryEntryByName(entry.name) case final PhysicalKeyEntry physicalEntry) {
+          return toPlane(physicalEntry.usbHidCode, kFuchsiaPlane.value);
         }
       })();
       if (value != null) {
@@ -368,32 +366,22 @@ class LogicalKeyData {
       final String value = match.namedGroup('value')!;
       replaced[name] = int.tryParse(value) ?? value.replaceAll('GLFW_KEY_', '');
     }
-    final Map<String, int> glfwNameToKeyCode = <String, int>{};
-    replaced.forEach((String key, dynamic value) {
-      // Some definition values point to other definitions (e.g #define GLFW_KEY_LAST GLFW_KEY_MENU).
-      if (value is String) {
-        glfwNameToKeyCode[key] = replaced[value] as int;
-      } else {
-        glfwNameToKeyCode[key] = value as int;
-      }
-    });
+    final Map<String, int> glfwNameToKeyCode = <String, int>{
+      for (final MapEntry<String, dynamic>(:String key, :dynamic value) in replaced.entries)
+        key: (value is int) ? value : replaced[value] as int,
+    };
 
     glfwNameToKeyCode.forEach((String glfwName, int value) {
       final String? name = nameToFlutterName[glfwName];
       if (name == null) {
         return;
       }
-      final LogicalKeyEntry? entry = data[nameToFlutterName[glfwName]];
-      if (entry == null) {
+      if (data[name] case final LogicalKeyEntry entry) {
+        addNameValue(entry.glfwNames, entry.glfwValues, glfwName, value);
+      } else {
         print('Invalid logical entry by name $name (from GLFW $glfwName)');
         return;
       }
-      addNameValue(
-        entry.glfwNames,
-        entry.glfwValues,
-        glfwName,
-        value,
-      );
     });
   }
 

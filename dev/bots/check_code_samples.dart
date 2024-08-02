@@ -203,22 +203,11 @@ class SampleChecker {
     return path.relative(file.absolute.path, from: root.absolute.path);
   }
 
-  List<File> getFiles(Directory directory, [Pattern? filenamePattern]) {
-    final List<File> filenames = directory
-        .listSync(recursive: true)
-        .map((FileSystemEntity entity) {
-          if (entity is File) {
-            return entity;
-          } else {
-            return null;
-          }
-        })
-        .where((File? filename) =>
-            filename != null && (filenamePattern == null || filename.absolute.path.contains(filenamePattern)))
-        .map<File>((File? s) => s!)
-        .toList();
-    return filenames;
-  }
+  List<File> getFiles(Directory directory, [Pattern? filenamePattern]) => <File>[
+    for (final FileSystemEntity entity in directory.listSync(recursive: true))
+      if (entity is File && (filenamePattern == null || entity.absolute.path.contains(filenamePattern)))
+        entity,
+  ];
 
   List<File> getExampleFilenames(Directory directory) {
     return getFiles(
@@ -243,13 +232,10 @@ class SampleChecker {
       int count = 0;
       for (final String line in lines) {
         count += 1;
-        final RegExpMatch? validMatch = validExampleRe.firstMatch(line);
-        if (validMatch != null) {
+        if (validExampleRe.firstMatch(line) case final RegExpMatch validMatch) {
           searchStrings.add(validMatch.namedGroup('path')!);
-        }
-        final RegExpMatch? malformedMatch = malformedLinkRe.firstMatch(line);
-        // It's only malformed if it doesn't match the valid RegExp.
-        if (malformedMatch != null && validMatch == null) {
+        } else if (malformedLinkRe.firstMatch(line) case final RegExpMatch malformedMatch) {
+          // It's only malformed if it doesn't match the valid RegExp.
           malformedStrings.add(LinkInfo(malformedMatch.namedGroup('malformed')!, file, count));
         }
       }

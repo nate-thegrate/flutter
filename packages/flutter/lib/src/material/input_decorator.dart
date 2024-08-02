@@ -884,12 +884,8 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
     if (label != null) {
       visitor(label!);
     }
-    if (hint != null) {
-      if (isFocused) {
-        visitor(hint!);
-      } else if (label == null) {
-        visitor(hint!);
-      }
+    if (hint != null && (isFocused || label == null)) {
+      visitor(hint!);
     }
 
     if (input != null) {
@@ -931,16 +927,10 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
     required ChildLayouter layoutChild,
     required _ChildBaselineGetter getBaseline,
   }) {
-    final RenderBox? counter = this.counter;
-    Size counterSize;
-    final double counterAscent;
-    if (counter != null) {
-      counterSize = layoutChild(counter, constraints);
-      counterAscent = getBaseline(counter, constraints);
-    } else {
-      counterSize = Size.zero;
-      counterAscent = 0.0;
-    }
+    final (Size counterSize, double counterAscent) = switch (counter) {
+      final RenderBox box => (layoutChild(box, constraints), getBaseline(box, constraints)),
+      null => (Size.zero, 0.0),
+    };
 
     final BoxConstraints helperErrorConstraints = constraints.deflate(EdgeInsets.only(left: counterSize.width));
     final double helperErrorHeight = layoutChild(helperError, helperErrorConstraints).height;
@@ -1008,9 +998,8 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
     );
 
     final double inputWidth = math.max(0.0, constraints.maxWidth - accessoryHorizontalInsets.horizontal);
-    final RenderBox? label = this.label;
     final double topHeight;
-    if (label != null) {
+    if (label case final RenderBox label) {
       final double suffixIconSpace = decoration.border.isOutline
         ? lerpDouble(suffixIconSize.width, 0.0, decoration.floatingLabelProgress)!
         : suffixIconSize.width;
@@ -1315,8 +1304,7 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
 
     final double overallWidth = layout.size.width;
 
-    final RenderBox? container = this.container;
-    if (container != null) {
+    if (container case final RenderBox container) {
       final BoxConstraints containerConstraints = BoxConstraints.tightFor(
         height: layout.containerHeight,
         width: overallWidth - _boxSize(icon).width,

@@ -730,10 +730,7 @@ class TestTarget extends Target {
 
   @override
   bool canSkip(Environment environment) {
-    if (_canSkip != null) {
-      return _canSkip(environment);
-    }
-    return super.canSkip(environment);
+    return _canSkip?.call(environment) ?? super.canSkip(environment);
   }
 
   @override

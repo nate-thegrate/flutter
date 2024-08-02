@@ -118,7 +118,7 @@ class ScrollableDetails {
 
     void addIfNonNull(String prefix, Object? value) {
       if (value != null) {
-        description.add(prefix + value.toString());
+        description.add('$prefix$value');
       }
     }
     addIfNonNull('scroll controller: ', controller);

@@ -86,9 +86,8 @@ class EmulatorsCommand extends FlutterCommand {
       globals.printStatus("Emulator '${createResult.emulatorName}' created successfully.");
     } else {
       globals.printStatus("Failed to create emulator '${createResult.emulatorName}'.\n");
-      final String? error = createResult.error;
-      if (error != null) {
-        globals.printStatus(error.trim());
+      if (createResult.error?.trim() case final String error) {
+        globals.printStatus(error);
       }
       _printAdditionalInfo();
     }

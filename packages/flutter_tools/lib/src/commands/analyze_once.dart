@@ -43,10 +43,8 @@ class AnalyzeOnce extends AnalyzeBase {
       if (argResults.wasParsed('current-package') && (argResults['current-package'] as bool)) {
         items.add(currentDirectory);
       }
-    } else {
-      if ((argResults['current-package'] as bool) && items.isEmpty) {
-        items.add(currentDirectory);
-      }
+    } else if ((argResults['current-package'] as bool) && items.isEmpty) {
+      items.add(currentDirectory);
     }
 
     if (items.isEmpty) {

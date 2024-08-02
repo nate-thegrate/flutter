@@ -277,27 +277,20 @@ final GradleHandledError flavorUndefinedHandler = GradleHandledError(
       environment: globals.java?.environment,
     );
     // Extract build types and product flavors.
-    final Set<String> variants = <String>{};
-    for (final String task in tasksRunResult.stdout.split('\n')) {
-      final Match? match = _assembleTaskPattern.matchAsPrefix(task);
-      if (match != null) {
-        final String variant = match.group(1)!.toLowerCase();
-        if (!variant.endsWith('test')) {
-          variants.add(variant);
-        }
-      }
-    }
-    final Set<String> productFlavors = <String>{};
-    for (final String variant1 in variants) {
-      for (final String variant2 in variants) {
-        if (variant2.startsWith(variant1) && variant2 != variant1) {
-          final String buildType = variant2.substring(variant1.length);
-          if (variants.contains(buildType)) {
-            productFlavors.add(variant1);
-          }
-        }
-      }
-    }
+    final Set<String> variants = <String>{
+      for (final String task in tasksRunResult.stdout.split('\n'))
+        if (_assembleTaskPattern.matchAsPrefix(task)?.group(1)!.toLowerCase()
+        case final String variant when !variant.endsWith('test'))
+            variant,
+    };
+    final Set<String> productFlavors = <String>{
+      for (final String variant1 in variants)
+        for (final String variant2 in variants)
+          if (variant2.startsWith(variant1) && variant2 != variant1)
+            if (variant2.substring(variant1.length) case final String buildType
+            when variants.contains(buildType))
+              variant1,
+    };
     final String errorMessage = '${globals.logger.terminal.warningMark}  Gradle project does not define a task suitable for the requested build.';
     final File buildGradle = project.directory.childDirectory('android').childDirectory('app').childFile('build.gradle');
     if (productFlavors.isEmpty) {

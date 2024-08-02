@@ -161,18 +161,12 @@ class _SnackBarActionState extends State<SnackBarAction> {
     final SnackBarThemeData snackBarTheme = Theme.of(context).snackBarTheme;
 
     MaterialStateColor resolveForegroundColor() {
-      if (widget.textColor != null) {
-        if (widget.textColor is MaterialStateColor) {
-          return widget.textColor! as MaterialStateColor;
-        }
-      } else if (snackBarTheme.actionTextColor != null) {
-        if (snackBarTheme.actionTextColor is MaterialStateColor) {
-          return snackBarTheme.actionTextColor! as MaterialStateColor;
-        }
-      } else if (defaults.actionTextColor != null) {
-        if (defaults.actionTextColor is MaterialStateColor) {
-          return defaults.actionTextColor! as MaterialStateColor;
-        }
+      if (widget.textColor case final MaterialStateColor color) {
+        return color;
+      } else if (snackBarTheme.actionTextColor case final MaterialStateColor color) {
+        return color;
+      } else if (defaults.actionTextColor case final MaterialStateColor color) {
+        return color;
       }
 
       return MaterialStateColor.resolveWith((Set<MaterialState> states) {
@@ -188,11 +182,11 @@ class _SnackBarActionState extends State<SnackBarAction> {
     }
 
     MaterialStateColor? resolveBackgroundColor() {
-      if (widget.backgroundColor is MaterialStateColor) {
-        return widget.backgroundColor! as MaterialStateColor;
+      if (widget.backgroundColor case final MaterialStateColor color) {
+        return color;
       }
-      if (snackBarTheme.actionBackgroundColor is MaterialStateColor) {
-        return snackBarTheme.actionBackgroundColor! as MaterialStateColor;
+      if (snackBarTheme.actionBackgroundColor case final MaterialStateColor color) {
+        return color;
       }
       return MaterialStateColor.resolveWith((Set<MaterialState> states) {
         if (states.contains(MaterialState.disabled)) {

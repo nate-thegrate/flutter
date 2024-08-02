@@ -737,9 +737,8 @@ class IOSDevice extends Device {
       maxWaitForCI = Timer(const Duration(minutes: 10), () async {
         _logger.printError('Failed to find Dart VM after 10 minutes.');
         await _xcodeDebug.exit();
-        final String? homePath = _platform.environment['HOME'];
         Directory? derivedData;
-        if (homePath != null) {
+        if (_platform.environment case {'HOME': final String homePath}) {
           derivedData = _fileSystem.directory(
             _fileSystem.path.join(homePath, 'Library', 'Developer', 'Xcode', 'DerivedData'),
           );
@@ -1504,9 +1503,7 @@ class IOSDeviceLogReader extends DeviceLogReader {
         printing = false;
       }
 
-      final Match? match = _runnerLineRegex.firstMatch(line);
-
-      if (match != null) {
+      if (_runnerLineRegex.firstMatch(line) case final Match match) {
         final String logLine = line.substring(match.end);
         // Only display the log line after the initial device and executable information.
         addToLinesController(decodeSyslog(logLine), IOSDeviceLogSource.idevicesyslog);

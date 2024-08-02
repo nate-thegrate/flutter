@@ -1455,11 +1455,9 @@ class SelectionOverlay {
   /// Destroys the handles by removing them from overlay.
   /// {@endtemplate}
   void hideHandles() {
-    if (_handles != null) {
-      _handles!.start.remove();
-      _handles!.start.dispose();
-      _handles!.end.remove();
-      _handles!.end.dispose();
+    if (_handles case (:final OverlayEntry start, :final OverlayEntry end)) {
+      start..remove()..dispose();
+      end..remove()..dispose();
       _handles = null;
     }
   }
@@ -2703,11 +2701,13 @@ class TextSelectionGestureDetectorBuilder {
   // the end of the text, returns the previous text boundary's location.
   TextRange _moveToTextBoundary(TextPosition extent, TextBoundary textBoundary) {
     assert(extent.offset >= 0);
+    final int textLength = editableText.textEditingValue.text.length;
     // Use extent.offset - 1 when `extent` is at the end of the text to retrieve
     // the previous text boundary's location.
-    final int start = textBoundary.getLeadingTextBoundaryAt(extent.offset == editableText.textEditingValue.text.length ? extent.offset - 1 : extent.offset) ?? 0;
-    final int end = textBoundary.getTrailingTextBoundaryAt(extent.offset) ?? editableText.textEditingValue.text.length;
-    return TextRange(start: start, end: end);
+    return TextRange(
+      start: textBoundary.getLeadingTextBoundaryAt(extent.offset == textLength ? extent.offset - 1 : extent.offset) ?? 0,
+      end: textBoundary.getTrailingTextBoundaryAt(extent.offset) ?? textLength,
+    );
   }
 
   // Selects the set of text boundaries in a document that intersect a given

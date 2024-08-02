@@ -158,7 +158,7 @@ Future<void> downloadStartupTrace(FlutterVmService vmService, {
         matchedEvent = event;
       }
     }
-    return matchedEvent == null ? null : (matchedEvent['ts'] as int?);
+    return matchedEvent?['ts'] as int?;
   }
 
   String message = 'No useful metrics were gathered.';

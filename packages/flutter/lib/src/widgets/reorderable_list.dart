@@ -1136,8 +1136,8 @@ class _ReorderableItemState extends State<_ReorderableItem> {
   }
 
   Offset get offset {
-    if (_offsetAnimation != null) {
-      final double animValue = Curves.easeInOut.transform(_offsetAnimation!.value);
+    if (_offsetAnimation case AnimationController(value: final double t)) {
+      final double animValue = Curves.easeInOut.transform(t);
       return Offset.lerp(_startOffset, _targetOffset, animValue)!;
     }
     return _targetOffset;
@@ -1471,14 +1471,17 @@ class _DragItemProxy extends StatelessWidget {
       child: AnimatedBuilder(
         animation: animation,
         builder: (BuildContext context, Widget? child) {
-          Offset effectivePosition = position;
-          final Offset? dropPosition = listState._finalDropPosition;
-          if (dropPosition != null) {
-            effectivePosition = Offset.lerp(dropPosition - overlayOrigin, effectivePosition, Curves.easeOut.transform(animation.value))!;
-          }
+          final Offset position = switch (listState._finalDropPosition) {
+            null => this.position,
+            final Offset dropPosition => Offset.lerp(
+              dropPosition - overlayOrigin,
+              this.position,
+              Curves.easeOut.transform(animation.value),
+            )!
+          };
           return Positioned(
-            left: effectivePosition.dx,
-            top: effectivePosition.dy,
+            left: position.dx,
+            top: position.dy,
             child: SizedBox(
               width: size.width,
               height: size.height,

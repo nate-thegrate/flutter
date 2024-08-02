@@ -405,12 +405,12 @@ class DaemonDomain extends Domain {
   /// --web-allow-expose-url switch. The client may return the same URL back if
   /// tunnelling is not required for a given URL.
   Future<String> exposeUrl(String url) async {
-    final Object? res = await daemon.connection.sendRequest('app.exposeUrl', <String, String>{'url': url});
-    if (res is Map<String, Object?> && res['url'] is String) {
-      return res['url']! as String;
-    } else {
-      globals.printError('Invalid response to exposeUrl - params should include a String url field');
-      return url;
+    switch (await daemon.connection.sendRequest('app.exposeUrl', <String, String>{'url': url})) {
+      case {'url': final String result}:
+        return result;
+      default:
+        globals.printError('Invalid response to exposeUrl - params should include a String url field');
+        return url;
     }
   }
 
@@ -1287,18 +1287,12 @@ class DeviceDomain extends Domain {
 
   /// Return the connected device matching the deviceId field in the args.
   Future<Device?> _getDevice(String? deviceId) async {
+    final DeviceDiscoveryFilter filter = DeviceDiscoveryFilter();
     for (final PollingDeviceDiscovery discoverer in _discoverers) {
-      final List<Device> devices = await discoverer.devices(
-        filter: DeviceDiscoveryFilter(),
-      );
-      Device? device;
-      for (final Device localDevice in devices) {
-        if (localDevice.id == deviceId) {
-          device = localDevice;
+      for (final Device device in await discoverer.devices(filter: filter)) {
+        if (device.id == deviceId) {
+          return device;
         }
-      }
-      if (device != null) {
-        return device;
       }
     }
     return null;

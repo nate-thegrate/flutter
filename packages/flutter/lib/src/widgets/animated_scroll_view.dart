@@ -805,9 +805,8 @@ abstract class _AnimatedScrollViewState<T extends _AnimatedScrollView> extends S
 
   Widget _wrap(Widget sliver, Axis direction) {
     EdgeInsetsGeometry? effectivePadding = widget.padding;
-    if (widget.padding == null) {
-      final MediaQueryData? mediaQuery = MediaQuery.maybeOf(context);
-      if (mediaQuery != null) {
+    if (effectivePadding == null) {
+      if (MediaQuery.maybeOf(context) case final MediaQueryData mediaQuery) {
         // Automatically pad sliver with padding from MediaQuery.
         final EdgeInsets mediaQueryHorizontalPadding =
             mediaQuery.padding.copyWith(top: 0.0, bottom: 0.0);

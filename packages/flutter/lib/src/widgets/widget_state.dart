@@ -716,8 +716,7 @@ abstract class WidgetStateProperty<T> {
   /// [WidgetStateProperty]. For example, [InkWell.mouseCursor] can be a
   /// [MouseCursor] or a [WidgetStateProperty<MouseCursor>].
   static T resolveAs<T>(T value, Set<WidgetState> states) {
-    if (value is WidgetStateProperty<T>) {
-      final WidgetStateProperty<T> property = value;
+    if (value case final WidgetStateProperty<T> property) {
       return property.resolve(states);
     }
     return value;

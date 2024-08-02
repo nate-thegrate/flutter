@@ -70,11 +70,10 @@ class _SliverAnimatedGridSampleState extends State<SliverAnimatedGridSample> {
 
   // Remove the selected item from the list model.
   void _remove() {
-    if (_selectedItem != null) {
-      _list.removeAt(_list.indexOf(_selectedItem!));
-    } else {
-      _list.removeAt(_list.length - 1);
-    }
+    _list.removeAt(switch (_selectedItem) {
+      final int selected => _list.indexOf(selected),
+      null => _list.length - 1,
+    });
     setState(() {
       _selectedItem = null;
     });

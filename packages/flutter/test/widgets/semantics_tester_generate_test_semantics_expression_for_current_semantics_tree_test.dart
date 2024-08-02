@@ -63,14 +63,15 @@ void _tests() {
       .trim();
 
     File? findThisTestFile(Directory directory) {
+      const String filename = 'semantics_tester_generate_test_semantics_expression_for_current_semantics_tree_test.dart';
       for (final FileSystemEntity entity in directory.listSync()) {
-        if (entity is Directory) {
-          final File? childSearch = findThisTestFile(entity);
-          if (childSearch != null) {
-            return childSearch;
-          }
-        } else if (entity is File && entity.path.endsWith('semantics_tester_generate_test_semantics_expression_for_current_semantics_tree_test.dart')) {
-          return entity;
+        switch (entity) {
+          case Directory():
+            if (findThisTestFile(entity) case final File childSearch) {
+              return childSearch;
+            }
+          case File(:final String path) when path.endsWith(filename):
+            return entity;
         }
       }
       return null;

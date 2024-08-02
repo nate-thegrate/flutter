@@ -17,8 +17,7 @@ String? getCmakeExecutableName(CmakeBasedProject project) {
   }
   final RegExp nameSetPattern = RegExp(r'^\s*set\(BINARY_NAME\s*"(.*)"\s*\)\s*$');
   for (final String line in project.cmakeFile.readAsLinesSync()) {
-    final RegExpMatch? match = nameSetPattern.firstMatch(line);
-    if (match != null) {
+    if (nameSetPattern.firstMatch(line) case final RegExpMatch match) {
       return match.group(1);
     }
   }

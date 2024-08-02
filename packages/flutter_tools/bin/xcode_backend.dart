@@ -428,14 +428,10 @@ class Context {
     String buildMode,
     bool verbose,
   ) {
-    String targetPath = 'lib/main.dart';
-    if (environment['FLUTTER_TARGET'] != null) {
-      targetPath = environment['FLUTTER_TARGET']!;
-    }
+    final String targetPath = environment['FLUTTER_TARGET'] ?? 'lib/main.dart';
 
     // Warn the user if not archiving (ACTION=install) in release mode.
-    final String? action = environment['ACTION'];
-    if (action == 'install' && buildMode != 'release') {
+    if (environment['ACTION'] == 'install' && buildMode != 'release') {
       echo(
         'warning: Flutter archive not built in Release mode. Ensure '
         'FLUTTER_BUILD_MODE is set to release or run "flutter build ios '
@@ -443,48 +439,35 @@ class Context {
       );
     }
 
-    final List<String> flutterArgs = <String>[];
-
-    if (verbose) {
-      flutterArgs.add('--verbose');
-    }
-
-    if (environment['FLUTTER_ENGINE'] != null && environment['FLUTTER_ENGINE']!.isNotEmpty) {
-      flutterArgs.add('--local-engine-src-path=${environment['FLUTTER_ENGINE']}');
-    }
-
-    if (environment['LOCAL_ENGINE'] != null && environment['LOCAL_ENGINE']!.isNotEmpty) {
-      flutterArgs.add('--local-engine=${environment['LOCAL_ENGINE']}');
-    }
-
-    if (environment['LOCAL_ENGINE_HOST'] != null && environment['LOCAL_ENGINE_HOST']!.isNotEmpty) {
-      flutterArgs.add('--local-engine-host=${environment['LOCAL_ENGINE_HOST']}');
-    }
-
     String architectures = environment['ARCHS'] ?? '';
-    if (command == 'prepare') {
-      // The "prepare" command runs in a pre-action script, which doesn't always
-      // filter the "ARCHS" build setting to only the active arch. To workaround,
-      // if "ONLY_ACTIVE_ARCH" is true and the "NATIVE_ARCH" is arm, assume the
-      // active arch is also arm to improve caching. If this assumption is
-      // incorrect, it will later be corrected by the "build" command.
-      if (environment['ONLY_ACTIVE_ARCH'] == 'YES' && environment['NATIVE_ARCH'] != null) {
-        if (environment['NATIVE_ARCH']!.contains('arm')) {
-          architectures = 'arm64';
-        } else {
-          architectures = 'x86_64';
-        }
-      }
+    // The "prepare" command runs in a pre-action script, which doesn't always
+    // filter the "ARCHS" build setting to only the active arch. To workaround,
+    // if "ONLY_ACTIVE_ARCH" is true and the "NATIVE_ARCH" is arm, assume the
+    // active arch is also arm to improve caching. If this assumption is
+    // incorrect, it will later be corrected by the "build" command.
+    if ((command, environment) case (
+      'prepare',
+      {'ONLY_ACTIVE_ARCH': 'YES', 'NATIVE_ARCH': final String nativeArch},
+    )) {
+      architectures = nativeArch.contains('arm') ? 'arm64' : 'x86_64';
     }
 
-    flutterArgs.addAll(<String>[
+    return <String>[
+      if (verbose) '--verbose',
+      if (environment case {'FLUTTER_ENGINE': final String engine} when engine.isNotEmpty)
+        '--local-engine-src-path=$engine',
+      if (environment case {'LOCAL_ENGINE': final String engine} when engine.isNotEmpty)
+        '--local-engine=$engine',
+      if (environment case {'LOCAL_ENGINE_HOST': final String host} when host.isNotEmpty)
+        '--local-engine-host=$host',
       'assemble',
       '--no-version-check',
       '--output=${environment['BUILT_PRODUCTS_DIR'] ?? ''}/',
       '-dTargetPlatform=ios',
       '-dTargetFile=$targetPath',
       '-dBuildMode=$buildMode',
-      if (environment['FLAVOR'] != null) '-dFlavor=${environment['FLAVOR']}',
+      if (environment case {'FLAVOR': final String flavor})
+        '-dFlavor=$flavor',
       '-dIosArchs=$architectures',
       '-dSdkRoot=${environment['SDKROOT'] ?? ''}',
       '-dSplitDebugInfo=${environment['SPLIT_DEBUG_INFO'] ?? ''}',
@@ -496,33 +479,23 @@ class Context {
       '--ExtraGenSnapshotOptions=${environment['EXTRA_GEN_SNAPSHOT_OPTIONS'] ?? ''}',
       '--DartDefines=${environment['DART_DEFINES'] ?? ''}',
       '--ExtraFrontEndOptions=${environment['EXTRA_FRONT_END_OPTIONS'] ?? ''}',
-    ]);
-
-    if (command == 'prepare') {
-      // Use the PreBuildAction define flag to force the tool to use a different
-      // filecache file for the "prepare" command. This will make the environment
-      // buildPrefix for the "prepare" command unique from the "build" command.
-      // This will improve caching since the "build" command has more target dependencies.
-      flutterArgs.add('-dPreBuildAction=PrepareFramework');
-    }
-
-    if (environment['PERFORMANCE_MEASUREMENT_FILE'] != null && environment['PERFORMANCE_MEASUREMENT_FILE']!.isNotEmpty) {
-      flutterArgs.add('--performance-measurement-file=${environment['PERFORMANCE_MEASUREMENT_FILE']}');
-    }
-
-    final String? expandedCodeSignIdentity = environment['EXPANDED_CODE_SIGN_IDENTITY'];
-    if (expandedCodeSignIdentity != null && expandedCodeSignIdentity.isNotEmpty && environment['CODE_SIGNING_REQUIRED'] != 'NO') {
-      flutterArgs.add('-dCodesignIdentity=$expandedCodeSignIdentity');
-    }
-
-    if (environment['BUNDLE_SKSL_PATH'] != null && environment['BUNDLE_SKSL_PATH']!.isNotEmpty) {
-      flutterArgs.add('-dBundleSkSLPath=${environment['BUNDLE_SKSL_PATH']}');
-    }
-
-    if (environment['CODE_SIZE_DIRECTORY'] != null && environment['CODE_SIZE_DIRECTORY']!.isNotEmpty) {
-      flutterArgs.add('-dCodeSizeDirectory=${environment['CODE_SIZE_DIRECTORY']}');
-    }
-
-    return flutterArgs;
+      if (command == 'prepare')
+        // Use the PreBuildAction define flag to force the tool to use a different
+        // filecache file for the "prepare" command. This will make the environment
+        // buildPrefix for the "prepare" command unique from the "build" command.
+        // This will improve caching since the "build" command has more target dependencies.
+        '-dPreBuildAction=PrepareFramework',
+      if (environment case {'PERFORMANCE_MEASUREMENT_FILE': final String file} when file.isNotEmpty)
+        '--performance-measurement-file=$file',
+      if (environment case {
+        'EXPANDED_CODE_SIGN_IDENTITY': final String id,
+        'CODE_SIGNING_REQUIRED': != 'NO',
+      } when id.isNotEmpty)
+        '-dCodesignIdentity=$id',
+      if (environment case {'BUNDLE_SKSL_PATH': final String path} when path.isNotEmpty)
+        '-dBundleSkSLPath=$path',
+      if (environment case {'CODE_SIZE_DIRECTORY': final String codeSize} when codeSize.isNotEmpty)
+        '-dCodeSizeDirectory=$codeSize',
+    ];
   }
 }

@@ -1450,9 +1450,10 @@ Future<ReassembleResult> _defaultReassembleHelper(
     }
   }
   if (pausedIsolatesFound > 0) {
-    if (onSlow != null) {
-      onSlow('${_describePausedIsolates(pausedIsolatesFound, serviceEventKind!)}; interface might not update.');
-    }
+    onSlow?.call(
+      '${_describePausedIsolates(pausedIsolatesFound, serviceEventKind!)}; '
+      'interface might not update.',
+    );
     if (reassembleViews.isEmpty) {
       globals.printTrace('Skipping reassemble because all isolates are paused.');
       return ReassembleResult(reassembleViews, failedReassemble, shouldReportReloadTime);
@@ -1492,9 +1493,11 @@ Future<ReassembleResult> _defaultReassembleHelper(
         return;
       }
       shouldReportReloadTime = false;
-      if (onSlow != null) {
-        onSlow('${_describePausedIsolates(postReloadPausedIsolatesFound, serviceEventKind!)}.');
-      }
+      late final String pausedIsolates = _describePausedIsolates(
+        postReloadPausedIsolatesFound,
+        serviceEventKind!,
+      );
+      onSlow?.call('$pausedIsolates.');
       return;
     },
   );

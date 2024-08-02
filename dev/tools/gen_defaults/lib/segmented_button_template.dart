@@ -15,8 +15,7 @@ class SegmentedButtonTemplate extends TokenTemplate {
     if (tokenAvailable(layerToken)) {
       final String layerValue = getToken(layerToken) as String;
       if (tokenAvailable(layerValue)) {
-        final String? opacityValue = opacity(layerValue);
-        if (opacityValue != null) {
+        if (opacity(layerValue) case final String opacityValue) {
           return '.withOpacity($opacityValue)';
         }
       }

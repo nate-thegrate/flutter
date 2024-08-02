@@ -207,8 +207,8 @@ class Viewport extends MultiChildRenderObjectWidget {
     properties.add(DiagnosticsProperty<ViewportOffset>('offset', offset));
     if (center != null) {
       properties.add(DiagnosticsProperty<Key>('center', center));
-    } else if (children.isNotEmpty && children.first.key != null) {
-      properties.add(DiagnosticsProperty<Key>('center', children.first.key, tooltip: 'implicit'));
+    } else if (children.firstOrNull?.key case final Key key) {
+      properties.add(DiagnosticsProperty<Key>('center', key, tooltip: 'implicit'));
     }
     properties.add(DiagnosticsProperty<double>('cacheExtent', cacheExtent));
     properties.add(DiagnosticsProperty<CacheExtentStyle>('cacheExtentStyle', cacheExtentStyle));

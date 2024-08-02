@@ -212,9 +212,9 @@ void main() {
       onRun: (_) {
         // exportOptionsPlist will be cleaned up within the command.
         // Save it somewhere else so test expectations can be run on it.
-        if (cachePlist != null) {
-          cachePlist.writeAsStringSync(fileSystem.file(_exportOptionsPlist).readAsStringSync());
-        }
+        cachePlist?.writeAsStringSync(
+          fileSystem.file(_exportOptionsPlist).readAsStringSync(),
+        );
         if (deleteExportOptionsPlist) {
           fileSystem.file(_exportOptionsPlist).deleteSync();
         }

@@ -263,15 +263,13 @@ abstract class RenderTextFlow extends RenderBox
   double computeMinIntrinsicHeight(double width) {
     String? previousCategory;
     double height = 0.0;
-    RenderBox? child = firstChild;
-    while (child != null) {
+    for (RenderBox? child = firstChild; child != null; child = childAfter(child)) {
       final String category = (child.parentData! as TextFlowParentData).category;
       if (previousCategory != null) {
         height += spacingBetween(previousCategory, category);
       }
       height += child.getMinIntrinsicHeight(width);
       previousCategory = category;
-      child = childAfter(child);
     }
     return height;
   }
@@ -280,15 +278,13 @@ abstract class RenderTextFlow extends RenderBox
   double computeMaxIntrinsicHeight(double width) {
     String? previousCategory;
     double height = 0.0;
-    RenderBox? child = firstChild;
-    while (child != null) {
+    for (RenderBox? child = firstChild; child != null; child = childAfter(child)) {
       final String category = (child.parentData! as TextFlowParentData).category;
       if (previousCategory != null) {
         height += spacingBetween(previousCategory, category);
       }
       height += child.getMaxIntrinsicHeight(width);
       previousCategory = category;
-      child = childAfter(child);
     }
     return height;
   }
@@ -310,8 +306,7 @@ abstract class RenderTextFlow extends RenderBox
     final BoxConstraints innerConstraints = BoxConstraints.tightFor(width: constraints.maxWidth);
     String? previousCategory;
     double y = 0.0;
-    RenderBox? child = firstChild;
-    while (child != null) {
+    for (RenderBox? child = firstChild; child != null; child = childAfter(child)) {
       final String category = (child.parentData! as TextFlowParentData).category;
       if (previousCategory != null) {
         y += spacingBetween(previousCategory, category);
@@ -319,7 +314,6 @@ abstract class RenderTextFlow extends RenderBox
       final Size childSize = child.getDryLayout(innerConstraints);
       y += childSize.height;
       previousCategory = category;
-      child = childAfter(child);
     }
     return constraints.constrain(Size(constraints.maxWidth, y));
   }
@@ -334,8 +328,7 @@ abstract class RenderTextFlow extends RenderBox
     final BoxConstraints innerConstraints = BoxConstraints.tightFor(width: constraints.maxWidth);
     String? previousCategory;
     double y = 0.0;
-    RenderBox? child = firstChild;
-    while (child != null) {
+    for (RenderBox? child = firstChild; child != null; child = childAfter(child)) {
       final String category = (child.parentData! as TextFlowParentData).category;
       if (previousCategory != null) {
         // This is where we call the function that computes the spacing between
@@ -347,7 +340,6 @@ abstract class RenderTextFlow extends RenderBox
       (child.parentData! as TextFlowParentData).offset = Offset(0.0, y);
       y += child.size.height;
       previousCategory = category;
-      child = childAfter(child);
     }
     size = constraints.constrain(Size(constraints.maxWidth, y));
   }

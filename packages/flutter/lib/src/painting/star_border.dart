@@ -205,31 +205,29 @@ class StarBorder extends OutlinedBorder {
     if (t == 1.0) {
       return this;
     }
-    if (a is StarBorder) {
-      return StarBorder(
-        side: BorderSide.lerp(a.side, side, t),
-        points: ui.lerpDouble(a.points, points, t)!,
-        rotation: ui.lerpDouble(a._rotationRadians, _rotationRadians, t)! * _kRadToDeg,
-        innerRadiusRatio: ui.lerpDouble(a.innerRadiusRatio, innerRadiusRatio, t)!,
-        pointRounding: ui.lerpDouble(a.pointRounding, pointRounding, t)!,
-        valleyRounding: ui.lerpDouble(a.valleyRounding, valleyRounding, t)!,
-        squash: ui.lerpDouble(a.squash, squash, t)!,
-      );
-    }
-
-    if (a is CircleBorder) {
-      if (points >= 2.5) {
-        final double lerpedPoints = ui.lerpDouble(points.round(), points, t)!;
+    switch (a) {
+      case StarBorder():
         return StarBorder(
           side: BorderSide.lerp(a.side, side, t),
-          points: lerpedPoints,
-          squash: ui.lerpDouble(a.eccentricity, squash, t)!,
-          rotation: rotation,
-          innerRadiusRatio: ui.lerpDouble(math.cos(math.pi / lerpedPoints), innerRadiusRatio, t)!,
-          pointRounding: ui.lerpDouble(1.0, pointRounding, t)!,
-          valleyRounding: ui.lerpDouble(0.0, valleyRounding, t)!,
+          points: ui.lerpDouble(a.points, points, t)!,
+          rotation: ui.lerpDouble(a._rotationRadians, _rotationRadians, t)! * _kRadToDeg,
+          innerRadiusRatio: ui.lerpDouble(a.innerRadiusRatio, innerRadiusRatio, t)!,
+          pointRounding: ui.lerpDouble(a.pointRounding, pointRounding, t)!,
+          valleyRounding: ui.lerpDouble(a.valleyRounding, valleyRounding, t)!,
+          squash: ui.lerpDouble(a.squash, squash, t)!,
         );
-      } else {
+      case CircleBorder() when points >= 2.5:
+        final double lerpedPoints = ui.lerpDouble(points.round(), points, t)!;
+          return StarBorder(
+            side: BorderSide.lerp(a.side, side, t),
+            points: lerpedPoints,
+            squash: ui.lerpDouble(a.eccentricity, squash, t)!,
+            rotation: rotation,
+            innerRadiusRatio: ui.lerpDouble(math.cos(math.pi / lerpedPoints), innerRadiusRatio, t)!,
+            pointRounding: ui.lerpDouble(1.0, pointRounding, t)!,
+            valleyRounding: ui.lerpDouble(0.0, valleyRounding, t)!,
+          );
+      case CircleBorder():
         // Have a slightly different lerp for two-pointed stars, since they get
         // kind of squirrelly with near-zero innerRadiusRatios.
         final double lerpedPoints = ui.lerpDouble(points, 2, t)!;
@@ -242,40 +240,33 @@ class StarBorder extends OutlinedBorder {
           pointRounding: ui.lerpDouble(0.5, pointRounding, t)!,
           valleyRounding: ui.lerpDouble(0.5, valleyRounding, t)!,
         );
-      }
-    }
-
-    if (a is StadiumBorder) {
-      // Lerp from a stadium to a circle first, and from there to a star.
-      final BorderSide lerpedSide = BorderSide.lerp(a.side, side, t);
-      return _twoPhaseLerp(
-        t,
-        0.5,
-        (double t) => a.lerpTo(CircleBorder(side: lerpedSide), t),
-        (double t) => lerpFrom(CircleBorder(side: lerpedSide), t),
-      );
-    }
-    if (a is RoundedRectangleBorder) {
-      // Lerp from a rectangle to a stadium, then from a Stadium to a circle,
-      // then from a circle to a star.
-      final BorderSide lerpedSide = BorderSide.lerp(a.side, side, t);
-      return _twoPhaseLerp(
-        t,
-        1 / 3,
-        (double t) {
-          return StadiumBorder(side: lerpedSide).lerpFrom(a, t);
-        },
-        (double t) {
-          return _twoPhaseLerp(
+      case StadiumBorder():
+        // Lerp from a stadium to a circle first, and from there to a star.
+        final BorderSide lerpedSide = BorderSide.lerp(a.side, side, t);
+        return _twoPhaseLerp(
+          t,
+          0.5,
+          (double t) => a.lerpTo(CircleBorder(side: lerpedSide), t),
+          (double t) => lerpFrom(CircleBorder(side: lerpedSide), t),
+        );
+      case RoundedRectangleBorder():
+        // Lerp from a rectangle to a stadium, then from a Stadium to a circle,
+        // then from a circle to a star.
+        final BorderSide lerpedSide = BorderSide.lerp(a.side, side, t);
+        return _twoPhaseLerp(
+          t,
+          1 / 3,
+          (double t) => StadiumBorder(side: lerpedSide).lerpFrom(a, t),
+          (double t) => _twoPhaseLerp(
             t,
             0.5,
             (double t) => StadiumBorder(side: lerpedSide).lerpTo(CircleBorder(side: lerpedSide), t),
             (double t) => lerpFrom(CircleBorder(side: lerpedSide), t),
-          );
-        },
-      );
+          ),
+        );
+      default:
+        return super.lerpFrom(a, t);
     }
-    return super.lerpFrom(a, t);
   }
 
   @override
@@ -286,21 +277,18 @@ class StarBorder extends OutlinedBorder {
     if (t == 1.0) {
       return b;
     }
-    if (b is StarBorder) {
-      return StarBorder(
-        side: BorderSide.lerp(side, b.side, t),
-        points: ui.lerpDouble(points, b.points, t)!,
-        rotation: ui.lerpDouble(_rotationRadians, b._rotationRadians, t)! * _kRadToDeg,
-        innerRadiusRatio: ui.lerpDouble(innerRadiusRatio, b.innerRadiusRatio, t)!,
-        pointRounding: ui.lerpDouble(pointRounding, b.pointRounding, t)!,
-        valleyRounding: ui.lerpDouble(valleyRounding, b.valleyRounding, t)!,
-        squash: ui.lerpDouble(squash, b.squash, t)!,
-      );
-    }
-    if (b is CircleBorder) {
-      // Have a slightly different lerp for two-pointed stars, since they get
-      // kind of squirrelly with near-zero innerRadiusRatios.
-      if (points >= 2.5) {
+    switch (b) {
+      case StarBorder():
+        return StarBorder(
+          side: BorderSide.lerp(side, b.side, t),
+          points: ui.lerpDouble(points, b.points, t)!,
+          rotation: ui.lerpDouble(_rotationRadians, b._rotationRadians, t)! * _kRadToDeg,
+          innerRadiusRatio: ui.lerpDouble(innerRadiusRatio, b.innerRadiusRatio, t)!,
+          pointRounding: ui.lerpDouble(pointRounding, b.pointRounding, t)!,
+          valleyRounding: ui.lerpDouble(valleyRounding, b.valleyRounding, t)!,
+          squash: ui.lerpDouble(squash, b.squash, t)!,
+        );
+      case CircleBorder() when points >= 2.5:
         final double lerpedPoints = ui.lerpDouble(points, points.round(), t)!;
         return StarBorder(
           side: BorderSide.lerp(side, b.side, t),
@@ -311,7 +299,9 @@ class StarBorder extends OutlinedBorder {
           pointRounding: ui.lerpDouble(pointRounding, 1.0, t)!,
           valleyRounding: ui.lerpDouble(valleyRounding, 0.0, t)!,
         );
-      } else {
+      case CircleBorder():
+        // Have a slightly different lerp for two-pointed stars, since they get
+        // kind of squirrelly with near-zero innerRadiusRatios.
         final double lerpedPoints = ui.lerpDouble(points, 2, t)!;
         return StarBorder(
           side: BorderSide.lerp(side, b.side, t),
@@ -322,38 +312,32 @@ class StarBorder extends OutlinedBorder {
           pointRounding: ui.lerpDouble(pointRounding, 0.5, t)!,
           valleyRounding: ui.lerpDouble(valleyRounding, 0.5, t)!,
         );
-      }
-    }
-    if (b is StadiumBorder) {
-      // Lerp to a circle first, then to a stadium.
-      final BorderSide lerpedSide = BorderSide.lerp(side, b.side, t);
-      return _twoPhaseLerp(
-        t,
-        0.5,
-        (double t) => lerpTo(CircleBorder(side: lerpedSide), t),
-        (double t) => b.lerpFrom(CircleBorder(side: lerpedSide), t),
-      );
-    }
-    if (b is RoundedRectangleBorder) {
-      // Lerp to a circle, and then to a stadium, then to a rounded rect.
-      final BorderSide lerpedSide = BorderSide.lerp(side, b.side, t);
-      return _twoPhaseLerp(
-        t,
-        2 / 3,
-        (double t) {
-          return _twoPhaseLerp(
+      case StadiumBorder():
+        // Lerp to a circle first, then to a stadium.
+        final BorderSide lerpedSide = BorderSide.lerp(side, b.side, t);
+        return _twoPhaseLerp(
+          t,
+          0.5,
+          (double t) => lerpTo(CircleBorder(side: lerpedSide), t),
+          (double t) => b.lerpFrom(CircleBorder(side: lerpedSide), t),
+        );
+      case RoundedRectangleBorder():
+        // Lerp to a circle, and then to a stadium, then to a rounded rect.
+        final BorderSide lerpedSide = BorderSide.lerp(side, b.side, t);
+        return _twoPhaseLerp(
+          t,
+          2 / 3,
+          (double t) => _twoPhaseLerp(
             t,
             0.5,
             (double t) => lerpTo(CircleBorder(side: lerpedSide), t),
             (double t) => StadiumBorder(side: lerpedSide).lerpFrom(CircleBorder(side: lerpedSide), t),
-          );
-        },
-        (double t) {
-          return StadiumBorder(side: lerpedSide).lerpTo(b, t);
-        },
-      );
+          ),
+          (double t) => StadiumBorder(side: lerpedSide).lerpTo(b, t),
+        );
+      default:
+        return super.lerpTo(b, t);
     }
-    return super.lerpTo(b, t);
   }
 
   @override

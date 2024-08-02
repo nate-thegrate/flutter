@@ -243,9 +243,7 @@ Future<String> runCommand(
     exitCode = processExitCode;
   }
 
-  if (output != null) {
-    output.addAll(utf8.decode(combinedOutput).split('\n'));
-  }
+  output?.addAll(utf8.decode(combinedOutput).split('\n'));
 
   return utf8.decode(stdoutOutput);
 }

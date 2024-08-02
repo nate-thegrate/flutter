@@ -148,10 +148,9 @@ class SizeAnalyzer {
     final Archive archive = ZipDecoder().decodeBytes(zipFile.readAsBytesSync());
     final Map<List<String>, int> pathsToSize = <List<String>, int>{};
 
-    for (final ArchiveFile archiveFile in archive.files) {
-      final InputStreamBase? rawContent = archiveFile.rawContent;
+    for (final ArchiveFile(:String name, :InputStreamBase? rawContent) in archive.files) {
       if (rawContent != null) {
-        pathsToSize[_fileSystem.path.split(archiveFile.name)] = rawContent.length;
+        pathsToSize[_fileSystem.path.split(name)] = rawContent.length;
       }
     }
     return _buildSymbolTree(pathsToSize);

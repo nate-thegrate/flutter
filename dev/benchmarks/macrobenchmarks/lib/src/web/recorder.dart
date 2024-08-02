@@ -1349,8 +1349,5 @@ void stopListeningToEngineBenchmarkValues(String name) {
 //
 // If there are no listeners registered for [name], ignores the value.
 void _dispatchEngineBenchmarkValue(String name, double value) {
-  final EngineBenchmarkValueListener? listener = _engineBenchmarkListeners[name];
-  if (listener != null) {
-    listener(value);
-  }
+  _engineBenchmarkListeners[name]?.call(value);
 }

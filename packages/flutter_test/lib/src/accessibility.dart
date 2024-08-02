@@ -165,8 +165,7 @@ class MinimumTapTargetGuideline extends AccessibilityGuideline {
     SemanticsNode? current = node;
 
     while (current != null) {
-      final Matrix4? transform = current.transform;
-      if (transform != null) {
+      if (current.transform case final Matrix4 transform) {
         paintBounds = MatrixUtils.transformRect(transform, paintBounds);
       }
       // skip node if it is touching the edge scrollable, since it might
@@ -419,8 +418,7 @@ class MinimumTextContrastGuideline extends AccessibilityGuideline {
     Rect nodeBounds = node.rect;
     SemanticsNode? current = node;
     while (current != null) {
-      final Matrix4? transform = current.transform;
-      if (transform != null) {
+      if (current.transform case final Matrix4 transform) {
         nodeBounds = MatrixUtils.transformRect(transform, nodeBounds);
       }
       current = current.parent;

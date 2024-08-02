@@ -81,8 +81,7 @@ Future<void> run(List<String> args) async {
   final String outputMan = argResults[_kOptionAssetManifestOut] as String;
   await writeFuchsiaManifest(assets, argResults[_kOptionAsset] as String, outputMan, argResults[_kOptionComponentName] as String);
 
-  final String? depfilePath = argResults[_kOptionDepfile] as String?;
-  if (depfilePath != null) {
+  if (argResults[_kOptionDepfile] case final String depfilePath) {
     await writeDepfile(assets, outputMan, depfilePath);
   }
 }
