@@ -124,18 +124,12 @@ abstract class SpellCheckService {
 ///    overridden for use by [EditableText].
 ///  * [EditableText], which may use this service to fetch results.
 class DefaultSpellCheckService implements SpellCheckService {
-  /// Creates service to spell check text input by default via communication
-  /// over the spell check [MethodChannel].
-  DefaultSpellCheckService() {
-    spellCheckChannel = SystemChannels.spellCheck;
-  }
-
   /// The last received results from the shell side.
   SpellCheckResults? lastSavedResults;
 
   /// The channel used to communicate with the shell side to complete spell
   /// check requests.
-  late MethodChannel spellCheckChannel;
+  MethodChannel spellCheckChannel = SystemChannels.spellCheck;
 
   /// Merges two lists of spell check [SuggestionSpan]s.
   ///

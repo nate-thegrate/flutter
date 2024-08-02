@@ -141,27 +141,24 @@ class LocalEngineLocator {
     // determine the engineSourcePath by sky_engine setting. A typical engine Uri
     // looks like:
     // file://flutter-engine-local-path/src/out/host_debug_unopt/gen/dart-pkg/sky_engine/lib/
-    String? engineSourcePath;
     final String? engineUriPath = engineUri?.path;
-    if (engineUriPath != null) {
-      engineSourcePath = _fileSystem.directory(engineUriPath)
-        .parent
-        .parent
-        .parent
-        .parent
-        .parent
-        .parent
-        .path;
-      if (engineSourcePath == _fileSystem.path.dirname(engineSourcePath) || engineSourcePath.isEmpty) {
-        engineSourcePath = null;
-        throwToolExit(
-          _userMessages.runnerNoEngineSrcDir(
-            kFlutterEnginePackageName,
-            kFlutterEngineEnvironmentVariableName,
-          ),
-          exitCode: 2,
-        );
-      }
+    if (engineUriPath == null) {
+      return null;
+    }
+
+    Directory engineSource = _fileSystem.directory(engineUriPath);
+    for (int i = 0; i < 6; i++) {
+      engineSource = engineSource.parent;
+    }
+    final String engineSourcePath = engineSource.path;
+    if (engineSourcePath == _fileSystem.path.dirname(engineSourcePath) || engineSourcePath.isEmpty) {
+      throwToolExit(
+        _userMessages.runnerNoEngineSrcDir(
+          kFlutterEnginePackageName,
+          kFlutterEngineEnvironmentVariableName,
+        ),
+        exitCode: 2,
+      );
     }
     return engineSourcePath;
   }

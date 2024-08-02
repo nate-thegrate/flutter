@@ -1231,13 +1231,10 @@ class _CirclePaintPredicate extends _DrawCommandPaintPredicate {
     super.debugFillDescription(description);
     if (x != null && y != null) {
       description.add('point ${Offset(x!, y!)}');
-    } else {
-      if (x != null) {
-        description.add('x-coordinate ${x!.toStringAsFixed(1)}');
-      }
-      if (y != null) {
-        description.add('y-coordinate ${y!.toStringAsFixed(1)}');
-      }
+    } else if (x != null) {
+      description.add('x-coordinate ${x!.toStringAsFixed(1)}');
+    } else if (y != null) {
+      description.add('y-coordinate ${y!.toStringAsFixed(1)}');
     }
     if (radius != null) {
       description.add('radius ${radius!.toStringAsFixed(1)}');

@@ -105,8 +105,7 @@ class _ImportOrganizer {
         hasLibraryDirective = true;
       }
       if (directive is UriBasedDirective) {
-        final _DirectivePriority? priority = getDirectivePriority(directive);
-        if (priority != null) {
+        if (getDirectivePriority(directive) case final _DirectivePriority priority) {
           int offset = directive.offset;
           int end = directive.end;
 

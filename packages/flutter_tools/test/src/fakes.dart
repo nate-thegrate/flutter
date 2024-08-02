@@ -274,9 +274,7 @@ class FakeStdin extends Fake implements Stdin {
   @override
   set echoMode(bool mode) {
     _echoMode = mode;
-    if (echoModeCallback != null) {
-      echoModeCallback!(mode);
-    }
+    echoModeCallback?.call(mode);
   }
 
   @override

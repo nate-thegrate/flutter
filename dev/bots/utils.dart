@@ -315,14 +315,12 @@ String get shuffleSeed {
     return _shuffleSeed!;
   }
   // Attempt to load from the command-line argument
-  final String? seedArg = Platform.environment['--test-randomize-ordering-seed'];
-  if (seedArg != null) {
-    return seedArg;
+  if (Platform.environment case {'--test-randomize-ordering-seed': final String seed}) {
+    return seed;
   }
   // Fallback to the original time-based seed generation
   final DateTime seedTime = DateTime.now().toUtc().subtract(const Duration(hours: 7));
-  _shuffleSeed = '${seedTime.year * 10000 + seedTime.month * 100 + seedTime.day}';
-  return _shuffleSeed!;
+  return _shuffleSeed = '${seedTime.year * 10000 + seedTime.month * 100 + seedTime.day}';
 }
 
 // TODO(sigmund): includeLocalEngineEnv should default to true. Currently we
@@ -343,8 +341,8 @@ Future<void> runDartTest(String workingDirectory, {
   bool collectMetrics = false,
 }) async {
   int? cpus;
-  final String? cpuVariable = Platform.environment['CPU']; // CPU is set in cirrus.yml
-  if (cpuVariable != null) {
+  // CPU is set in cirrus.yml
+  if (Platform.environment case {'CPU': final String cpuVariable}) {
     cpus = int.tryParse(cpuVariable, radix: 10);
     if (cpus == null) {
       foundError(<String>[
@@ -450,7 +448,7 @@ Future<void> runFlutterTest(String workingDirectory, {
   final List<String> tags = <String>[];
   // Recipe-configured reduced test shards will only execute tests with the
   // appropriate tag.
-  if (Platform.environment['REDUCED_TEST_SET'] == 'True') {
+  if (Platform.environment case {'REDUCED_TEST_SET': 'True'}) {
     tags.addAll(<String>['-t', 'reduced-test-set']);
   }
 
@@ -504,8 +502,7 @@ Future<void> runFlutterTest(String workingDirectory, {
   metricFile.deleteSync();
 
   if (outputChecker != null) {
-    final String? message = outputChecker(result);
-    if (message != null) {
+    if (outputChecker(result) case final String message) {
       foundError(<String>[message]);
     }
   }

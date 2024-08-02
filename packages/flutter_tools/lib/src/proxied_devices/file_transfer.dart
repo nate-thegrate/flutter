@@ -313,7 +313,7 @@ class FileTransfer {
           start = size;
 
           // Try to extend the previous entry.
-          if (blocks.isNotEmpty && blocks.last.copyFromDestination) {
+          if (blocks.lastOrNull?.copyFromDestination ?? false) {
             final int lastBlockIndex = (blocks.last.start + blocks.last.size) ~/ blockSize;
             if (hashes.md5[lastBlockIndex] == md5Hash) {
               // We can extend the previous entry.

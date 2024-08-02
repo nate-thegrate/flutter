@@ -55,11 +55,10 @@ mixin CreateFinderFactory {
 
   Finder _createByTooltipMessageFinder(ByTooltipMessage arguments) {
     return find.byElementPredicate((Element element) {
-      final Widget widget = element.widget;
-      if (widget is Tooltip) {
-        return widget.message == arguments.text;
-      }
-      return false;
+      return switch (element.widget) {
+        Tooltip(:final String? message) => message == arguments.text,
+        _ => false,
+      };
     }, description: 'widget with text tooltip "${arguments.text}"');
   }
 
@@ -95,14 +94,11 @@ mixin CreateFinderFactory {
 
   Finder _createPageBackFinder() {
     return find.byElementPredicate((Element element) {
-      final Widget widget = element.widget;
-      if (widget is Tooltip) {
-        return widget.message == 'Back';
-      }
-      if (widget is CupertinoNavigationBarBackButton) {
-        return true;
-      }
-      return false;
+      return switch (element.widget) {
+        Tooltip(message: 'Back') => true,
+        CupertinoNavigationBarBackButton() => true,
+        _ => false,
+      };
     }, description: 'Material or Cupertino back button');
   }
 

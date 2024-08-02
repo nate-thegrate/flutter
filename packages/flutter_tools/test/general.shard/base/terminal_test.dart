@@ -303,9 +303,7 @@ class TestTerminal extends AnsiTerminal {
   @override
   set singleCharMode(bool newMode) {
     _singleCharMode = newMode;
-    if (_singleCharModeCallback != null) {
-      _singleCharModeCallback!(newMode);
-    }
+    _singleCharModeCallback?.call(newMode);
   }
 
   @override

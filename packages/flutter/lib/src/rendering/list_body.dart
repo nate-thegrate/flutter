@@ -87,9 +87,8 @@ class RenderListBody extends RenderBox
     final BoxConstraints childConstraints = BoxConstraints.tightFor(width: constraints.maxWidth);
     double mainAxisExtent = 0.0;
     for (; child != null; child = nextChild(child)) {
-      final double? childBaseline = child.getDryBaseline(childConstraints, baseline);
-      if (childBaseline != null) {
-        return childBaseline + mainAxisExtent;
+      if (child.getDryBaseline(childConstraints, baseline) case final double baseline) {
+        return baseline + mainAxisExtent;
       }
       mainAxisExtent += child.getDryLayout(childConstraints).height;
     }

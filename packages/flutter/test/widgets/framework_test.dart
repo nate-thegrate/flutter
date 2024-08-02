@@ -2400,8 +2400,7 @@ class _CustomBuildScopeElement extends Element {
 
   @override
   void visitChildren(ElementVisitor visitor) {
-    final Element? child = _child;
-    if (child != null) {
+    if (_child case final Element child) {
       visitor(child);
     }
   }

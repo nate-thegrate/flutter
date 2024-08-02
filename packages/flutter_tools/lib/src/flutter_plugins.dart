@@ -208,10 +208,9 @@ bool _writeFlutterPluginsList(
 
   // Only notify if the plugins list has changed. [date_created] will always be different,
   // [version] is not relevant for this check.
-  final String? oldPluginsFileStringContent = _readFileContent(pluginsFile);
   bool pluginsChanged = true;
-  if (oldPluginsFileStringContent != null) {
-    pluginsChanged = oldPluginsFileStringContent.contains(pluginsMap.toString());
+  if (_readFileContent(pluginsFile) case final String oldPlugins) {
+    pluginsChanged = oldPlugins.contains(pluginsMap.toString());
   }
   final String pluginFileContent = json.encode(result);
   pluginsFile.writeAsStringSync(pluginFileContent, flush: true);
@@ -1383,10 +1382,8 @@ String? _getDefaultImplPlugin(
   String platformKey, {
   _PluginResolutionType pluginResolutionType = _PluginResolutionType.nativeOrDart,
 }) {
-  final String? defaultImplPluginName =
-      plugin.defaultPackagePlatforms[platformKey];
-  if (defaultImplPluginName != null) {
-    return defaultImplPluginName;
+  if (plugin.defaultPackagePlatforms[platformKey] case final String defaultName) {
+    return defaultName;
   }
 
   if (_hasPluginInlineImpl(plugin, platformKey, pluginResolutionType: pluginResolutionType) &&

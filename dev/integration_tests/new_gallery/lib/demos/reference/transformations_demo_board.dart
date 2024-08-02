@@ -83,27 +83,19 @@ class Board extends Object with IterableMixin<BoardPoint?> {
   // Get the BoardPoint that comes after the given BoardPoint. If given null,
   // returns the origin BoardPoint. If given BoardPoint is the last, returns
   // null.
-  BoardPoint? _getNextBoardPoint(BoardPoint? boardPoint) {
-    // If before the first element.
-    if (boardPoint == null) {
-      return BoardPoint(-boardRadius, 0);
-    }
+  BoardPoint? _getNextBoardPoint(BoardPoint? boardPoint) => switch (boardPoint) {
+    // Before the first element.
+    null => BoardPoint(-boardRadius, 0),
 
-    final _Range rRange = _getRRangeForQ(boardPoint.q);
+    // We're just incrementing r.
+    BoardPoint(:final int q, :final int r) when r < _getRRangeForQ(q).max => BoardPoint(q, r + 1),
 
-    // If at or after the last element.
-    if (boardPoint.q >= boardRadius && boardPoint.r >= rRange.max) {
-      return null;
-    }
+    // Wrapping from one q to the next.
+    BoardPoint(:final int q) when q < boardRadius => BoardPoint(q + 1, _getRRangeForQ(q + 1).min),
 
-    // If wrapping from one q to the next.
-    if (boardPoint.r >= rRange.max) {
-      return BoardPoint(boardPoint.q + 1, _getRRangeForQ(boardPoint.q + 1).min);
-    }
-
-    // Otherwise we're just incrementing r.
-    return BoardPoint(boardPoint.q, boardPoint.r + 1);
-  }
+    // At (or after) the last element.
+    _ => null,
+  };
 
   // Check if the board point is actually on the board.
   bool _validateBoardPoint(BoardPoint boardPoint) {

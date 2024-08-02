@@ -135,8 +135,7 @@ class LocalSignals implements Signals {
   }
 
   Future<void> _handleSignal(ProcessSignal s) async {
-    final List<SignalHandler>? handlers = _handlersList[s];
-    if (handlers != null) {
+    if (_handlersList[s] case final List<SignalHandler> handlers) {
       final List<SignalHandler> handlersCopy = handlers.toList();
       for (final SignalHandler handler in handlersCopy) {
         try {

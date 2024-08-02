@@ -289,8 +289,7 @@ class FlutterDriverService extends DriverService {
       await sharedSkSlWriter(_device!, result, outputFile: writeSkslOnExit, logger: _logger);
     }
     // If the application package is available, stop and uninstall.
-    final ApplicationPackage? package = _applicationPackage;
-    if (package != null) {
+    if (_applicationPackage case final ApplicationPackage package) {
       if (!await _device!.stopApp(package, userIdentifier: userIdentifier)) {
         _logger.printError('Failed to stop app');
       }

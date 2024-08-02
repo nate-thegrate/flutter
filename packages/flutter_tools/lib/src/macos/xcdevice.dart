@@ -803,8 +803,7 @@ class XCDevice {
       errorMessage.write(' $recoverySuggestion');
     }
 
-    final int? code = _errorCode(errorProperties);
-    if (code != null) {
+    if (_errorCode(errorProperties) case final int code) {
       errorMessage.write(' (code $code)');
     }
 

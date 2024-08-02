@@ -464,8 +464,7 @@ class AndroidDevice extends Device {
     // Some versions of adb exit with exit code 0 even on failure :(
     // Parsing the output to check for failures.
     final RegExp failureExp = RegExp(r'^Failure.*$', multiLine: true);
-    final String? failure = failureExp.stringMatch(installResult.stdout);
-    if (failure != null) {
+    if (failureExp.stringMatch(installResult.stdout) case final String failure) {
       _logger.printError('Package install error: $failure');
       return false;
     }
@@ -1169,17 +1168,14 @@ class AdbLogReader extends DeviceLogReader {
     }
     // Chop off the time.
     line = line.substring(timeMatch.end + 1);
-    final Match? logMatch = _logFormat.firstMatch(line);
-    if (logMatch != null) {
+    if (_logFormat.firstMatch(line) case final Match logMatch) {
       bool acceptLine = false;
 
       if (_fatalCrash) {
         // While a fatal crash is going on, only accept lines from the crash
         // Otherwise the crash log in the console may get interrupted
 
-        final Match? fatalMatch = _tombstoneLine.firstMatch(line);
-
-        if (fatalMatch != null) {
+        if (_tombstoneLine.firstMatch(line) case final Match fatalMatch) {
           acceptLine = true;
 
           line = fatalMatch[1]!;

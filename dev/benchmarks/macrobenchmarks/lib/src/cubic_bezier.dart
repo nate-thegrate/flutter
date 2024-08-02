@@ -361,23 +361,23 @@ class BezierPainter extends CustomPainter {
     paint.color = color;
     canvas.scale(0.5, 0.5);
 
-    for (int i = 0; i < path.length; i++) {
-      if (path[i].translate != null) {
-        canvas.translate(path[i].translate![0], path[i].translate![1]);
+    for (final PathDetail detail in path) {
+      if (detail.translate case [final double dx, final double dy, ..._]) {
+        canvas.translate(dx, dy);
       }
 
-      if (path[i].rotation != null) {
-        canvas.rotate(path[i].rotation!);
+      if (detail.rotation != null) {
+        canvas.rotate(detail.rotation!);
       }
 
       if (blur > 0) {
         final MaskFilter blur = MaskFilter.blur(BlurStyle.normal, this.blur);
         paint.maskFilter = blur;
-        canvas.drawPath(path[i].path, paint);
+        canvas.drawPath(detail.path, paint);
       }
 
       paint.maskFilter = null;
-      canvas.drawPath(path[i].path, paint);
+      canvas.drawPath(detail.path, paint);
     }
   }
 

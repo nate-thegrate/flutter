@@ -326,13 +326,7 @@ class WebTestsSuite {
         'FLUTTER_WEB': 'true',
       },
       removeLine: (String line) {
-        if (!silenceBrowserOutput) {
-          return false;
-        }
-        if (line.trim().startsWith('[INFO]')) {
-          return true;
-        }
-        return false;
+        return silenceBrowserOutput && line.trim().startsWith('[INFO]');
       },
     );
     if (expectWriteResponseFile) {

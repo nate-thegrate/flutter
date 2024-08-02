@@ -634,16 +634,10 @@ class FlutterErrorDetails with Diagnosticable {
     return longMessage;
   }
 
-  Diagnosticable? _exceptionToDiagnosticable() {
-    final Object exception = this.exception;
-    if (exception is FlutterError) {
-      return exception;
-    }
-    if (exception is AssertionError && exception.message is FlutterError) {
-      return exception.message! as FlutterError;
-    }
-    return null;
-  }
+  Diagnosticable? _exceptionToDiagnosticable() => switch (exception) {
+    final FlutterError e || AssertionError(message: final FlutterError e) => e,
+    _ => null,
+  };
 
   /// Returns a short (one line) description of the problem that was detected.
   ///
@@ -658,9 +652,8 @@ class FlutterErrorDetails with Diagnosticable {
     if (kReleaseMode) {
       return DiagnosticsNode.message(formatException());
     }
-    final Diagnosticable? diagnosticable = _exceptionToDiagnosticable();
     DiagnosticsNode? summary;
-    if (diagnosticable != null) {
+    if (_exceptionToDiagnosticable() != null) {
       final DiagnosticPropertiesBuilder builder = DiagnosticPropertiesBuilder();
       debugFillProperties(builder);
       summary = builder.properties.cast<DiagnosticsNode?>().firstWhere((DiagnosticsNode? node) => node!.level == DiagnosticLevel.summary, orElse: () => null);
@@ -676,16 +669,12 @@ class FlutterErrorDetails with Diagnosticable {
     if (exception is num) {
       properties.add(ErrorDescription('The number $exception was $verb.'));
     } else {
-      final DiagnosticsNode errorName;
-      if (exception is AssertionError) {
-        errorName = ErrorDescription('assertion');
-      } else if (exception is String) {
-        errorName = ErrorDescription('message');
-      } else if (exception is Error || exception is Exception) {
-        errorName = ErrorDescription('${exception.runtimeType}');
-      } else {
-        errorName = ErrorDescription('${exception.runtimeType} object');
-      }
+      final DiagnosticsNode errorName = ErrorDescription(switch (exception) {
+        AssertionError()       => 'assertion',
+        String()               => 'message',
+        Error() || Exception() => '${exception.runtimeType}',
+        _                      => '${exception.runtimeType} object',
+      });
       properties.add(ErrorDescription('The following $errorName was $verb:'));
       if (diagnosticable != null) {
         diagnosticable.debugFillProperties(properties);

@@ -424,9 +424,11 @@ class CocoaPods {
         emphasis: true,
       );
     } else if (stdout.contains('required a higher minimum deployment target')) {
-      final ({String failingPod, String sourcePlugin, String podPluginSubdir})?
-          podInfo = _parseMinDeploymentFailureInfo(stdout);
-      if (podInfo != null) {
+      if (_parseMinDeploymentFailureInfo(stdout) case (
+        :final String failingPod,
+        :final String sourcePlugin,
+        :final String podPluginSubdir,
+      )) {
         final Directory symlinksDir;
         final String podPlatformString;
         final String platformName;
@@ -445,18 +447,17 @@ class CocoaPods {
           return;
         }
 
-        final String sourcePlugin = podInfo.sourcePlugin;
         // If the plugin's podfile has set its own minimum version correctly
         // based on the requirements of its dependencies the failing pod should
         // be the plugin itself, but if not they may be different (e.g., if
         // a plugin says its minimum iOS version is 11, but depends on a pod
         // with a minimum version of 12, then building for 11 will report that
         // pod as failing.)
-        if (podInfo.failingPod == podInfo.sourcePlugin) {
+        if (failingPod == sourcePlugin) {
           final File podspec = symlinksDir
               .childDirectory('plugins')
               .childDirectory(sourcePlugin)
-              .childDirectory(podInfo.podPluginSubdir)
+              .childDirectory(podPluginSubdir)
               .childFile('$sourcePlugin.podspec');
           final String? minDeploymentVersion = _findPodspecMinDeploymentVersion(
             podspec,
@@ -493,7 +494,7 @@ class CocoaPods {
           // create, so this just provides the actionable step of following up
           // with the plugin developer.
           _logger.printError(
-            'Error: The pod "${podInfo.failingPod}" required by the plugin '
+            'Error: The pod "$failingPod" required by the plugin '
             '"$sourcePlugin" requires a higher minimum $platformName deployment '
             "version than the plugin's reported minimum version.\n"
             'To build, remove the plugin "$sourcePlugin", or contact the plugin\'s '

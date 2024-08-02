@@ -2273,49 +2273,47 @@ abstract class RenderBox extends RenderObject {
   Size debugAdoptSize(Size value) {
     Size result = value;
     assert(() {
-      if (value is _DebugSize) {
-        if (value._owner != this) {
-          if (value._owner.parent != this) {
-            throw FlutterError.fromParts(<DiagnosticsNode>[
-              ErrorSummary('The size property was assigned a size inappropriately.'),
-              describeForError('The following render object'),
-              value._owner.describeForError('...was assigned a size obtained from'),
-              ErrorDescription(
-                'However, this second render object is not, or is no longer, a '
-                'child of the first, and it is therefore a violation of the '
-                'RenderBox layout protocol to use that size in the layout of the '
-                'first render object.',
-              ),
-              ErrorHint(
-                'If the size was obtained at a time where it was valid to read '
-                'the size (because the second render object above was a child '
-                'of the first at the time), then it should be adopted using '
-                'debugAdoptSize at that time.',
-              ),
-              ErrorHint(
-                'If the size comes from a grandchild or a render object from an '
-                'entirely different part of the render tree, then there is no '
-                'way to be notified when the size changes and therefore attempts '
-                'to read that size are almost certainly a source of bugs. A different '
-                'approach should be used.',
-              ),
-            ]);
-          }
-          if (!value._canBeUsedByParent) {
-            throw FlutterError.fromParts(<DiagnosticsNode>[
-              ErrorSummary("A child's size was used without setting parentUsesSize."),
-              describeForError('The following render object'),
-              value._owner.describeForError('...was assigned a size obtained from its child'),
-              ErrorDescription(
-                'However, when the child was laid out, the parentUsesSize argument '
-                'was not set or set to false. Subsequently this transpired to be '
-                'inaccurate: the size was nonetheless used by the parent.\n'
-                'It is important to tell the framework if the size will be used or not '
-                'as several important performance optimizations can be made if the '
-                'size will not be used by the parent.',
-              ),
-            ]);
-          }
+      if (value is _DebugSize && value._owner != this) {
+        if (value._owner.parent != this) {
+          throw FlutterError.fromParts(<DiagnosticsNode>[
+            ErrorSummary('The size property was assigned a size inappropriately.'),
+            describeForError('The following render object'),
+            value._owner.describeForError('...was assigned a size obtained from'),
+            ErrorDescription(
+              'However, this second render object is not, or is no longer, a '
+              'child of the first, and it is therefore a violation of the '
+              'RenderBox layout protocol to use that size in the layout of the '
+              'first render object.',
+            ),
+            ErrorHint(
+              'If the size was obtained at a time where it was valid to read '
+              'the size (because the second render object above was a child '
+              'of the first at the time), then it should be adopted using '
+              'debugAdoptSize at that time.',
+            ),
+            ErrorHint(
+              'If the size comes from a grandchild or a render object from an '
+              'entirely different part of the render tree, then there is no '
+              'way to be notified when the size changes and therefore attempts '
+              'to read that size are almost certainly a source of bugs. A different '
+              'approach should be used.',
+            ),
+          ]);
+        }
+        if (!value._canBeUsedByParent) {
+          throw FlutterError.fromParts(<DiagnosticsNode>[
+            ErrorSummary("A child's size was used without setting parentUsesSize."),
+            describeForError('The following render object'),
+            value._owner.describeForError('...was assigned a size obtained from its child'),
+            ErrorDescription(
+              'However, when the child was laid out, the parentUsesSize argument '
+              'was not set or set to false. Subsequently this transpired to be '
+              'inaccurate: the size was nonetheless used by the parent.\n'
+              'It is important to tell the framework if the size will be used or not '
+              'as several important performance optimizations can be made if the '
+              'size will not be used by the parent.',
+            ),
+          ]);
         }
       }
       result = _DebugSize(value, this, debugCanParentUseSize);

@@ -519,9 +519,8 @@ void main() {
           maxHeight: size.height,
           child: pageView,
         );
-      } else {
-        return pageView;
       }
+      return pageView;
     }
 
     await tester.pumpWidget(build(controller));

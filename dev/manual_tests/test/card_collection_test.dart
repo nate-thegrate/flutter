@@ -18,10 +18,7 @@ void main() {
       await tester.pump(); // triggers a frame
 
       final Finder navigationMenu = find.byWidgetPredicate((Widget widget) {
-        if (widget is Tooltip) {
-          return widget.message == 'Open navigation menu';
-        }
-        return false;
+        return widget is Tooltip && widget.message == 'Open navigation menu';
       });
 
       expect(navigationMenu, findsOneWidget);

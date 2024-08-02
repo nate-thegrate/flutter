@@ -398,15 +398,11 @@ class Doctor {
       }
       if (sendEvent) {
         if (validator is GroupedValidator) {
-          for (int i = 0; i < validator.subValidators.length; i++) {
-            final DoctorValidator subValidator = validator.subValidators[i];
-
+          for (final (int i, DoctorValidator subValidator) in validator.subValidators.indexed) {
             // Ensure that all of the subvalidators in the group have
             // a corresponding subresult in case a validator crashed
-            final ValidationResult subResult;
-            try {
-              subResult = validator.subResults[i];
-            } on RangeError {
+            final ValidationResult? subResult = validator.subResults.elementAtOrNull(i);
+            if (subResult == null) {
               continue;
             }
 
@@ -553,12 +549,10 @@ class FlutterValidator extends DoctorValidator {
       messages.add(ValidationMessage(_userMessages.engineRevision(version.engineRevisionShort)));
       messages.add(ValidationMessage(_userMessages.dartRevision(version.dartSdkVersion)));
       messages.add(ValidationMessage(_userMessages.devToolsVersion(_devToolsVersion())));
-      final String? pubUrl = _platform.environment[kPubDevOverride];
-      if (pubUrl != null) {
+      if (_platform.environment case {kPubDevOverride: final String pubUrl}) {
         messages.add(ValidationMessage(_userMessages.pubMirrorURL(pubUrl)));
       }
-      final String? storageBaseUrl = _platform.environment[kFlutterStorageBaseUrl];
-      if (storageBaseUrl != null) {
+      if (_platform.environment case {kFlutterStorageBaseUrl: final String storageBaseUrl}) {
         messages.add(ValidationMessage(_userMessages.flutterMirrorURL(storageBaseUrl)));
       }
     } on VersionCheckError catch (e) {

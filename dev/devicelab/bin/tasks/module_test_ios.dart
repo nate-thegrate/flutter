@@ -571,12 +571,13 @@ end
         );
 
         if (testResultExit != 0) {
-          final Directory? dumpDirectory = hostAgent.dumpDirectory;
-          if (dumpDirectory != null) {
+          if (hostAgent.dumpDirectory?.path case final String dumpPath) {
             // Zip the test results to the artifacts directory for upload.
             await inDirectory(resultBundleTemp, () {
-              final String zipPath = path.join(dumpDirectory.path,
-                  'module_test_ios-objc-${DateTime.now().toLocal().toIso8601String()}.zip');
+              final String zipPath = path.join(
+                dumpPath,
+                'module_test_ios-objc-${DateTime.now().toLocal().toIso8601String()}.zip',
+              );
               return exec(
                 'zip',
                 <String>[

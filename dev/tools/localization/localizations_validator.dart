@@ -63,10 +63,8 @@ void validateEnglishLocalizations(File file) {
       continue;
     }
 
-    final dynamic atResourceValue = bundle[atResourceId];
-    final Map<String, dynamic>? atResource =
-        atResourceValue is Map<String, dynamic> ? atResourceValue : null;
-    if (atResource == null) {
+    final dynamic atResource = bundle[atResourceId];
+    if (atResource is! Map<String, dynamic>) {
       errorMessages.writeln('A map value was not specified for $atResourceId');
       continue;
     }
@@ -77,17 +75,14 @@ void validateEnglishLocalizations(File file) {
       errorMessages.writeln('No description specified for $atResourceId');
     }
 
-    final String? plural = atResource['plural'] as String?;
     final String resourceId = atResourceId.substring(1);
-    if (plural != null) {
+    if (atResource.containsKey('plural')) {
       final String resourceIdOther = '${resourceId}Other';
       if (!bundle.containsKey(resourceIdOther)) {
         errorMessages.writeln('Default plural resource $resourceIdOther undefined');
       }
-    } else {
-      if (!optional && !bundle.containsKey(resourceId)) {
-        errorMessages.writeln('No matching $resourceId defined for $atResourceId');
-      }
+    } else if (!optional && !bundle.containsKey(resourceId)) {
+      errorMessages.writeln('No matching $resourceId defined for $atResourceId');
     }
   }
 

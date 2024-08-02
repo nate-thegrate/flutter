@@ -242,8 +242,7 @@ class IOSCoreDeviceControl {
       final String stringOutput = output.readAsStringSync();
 
       try {
-        final Object? decodeResult = (json.decode(stringOutput) as Map<String, Object?>)['info'];
-        if (decodeResult is Map<String, Object?> && decodeResult['outcome'] == 'success') {
+        if (json.decode(stringOutput) case {'info': {'outcome': 'success'}}) {
           return true;
         }
         _logger.printError('devicectl returned unexpected JSON response: $stringOutput');
@@ -294,8 +293,7 @@ class IOSCoreDeviceControl {
       final String stringOutput = output.readAsStringSync();
 
       try {
-        final Object? decodeResult = (json.decode(stringOutput) as Map<String, Object?>)['info'];
-        if (decodeResult is Map<String, Object?> && decodeResult['outcome'] == 'success') {
+        if (json.decode(stringOutput) case {'info': {'outcome': 'success'}}) {
           return true;
         }
         _logger.printError('devicectl returned unexpected JSON response: $stringOutput');
@@ -346,8 +344,7 @@ class IOSCoreDeviceControl {
       final String stringOutput = output.readAsStringSync();
 
       try {
-        final Object? decodeResult = (json.decode(stringOutput) as Map<String, Object?>)['info'];
-        if (decodeResult is Map<String, Object?> && decodeResult['outcome'] == 'success') {
+        if (json.decode(stringOutput) case {'info': {'outcome': 'success'}}) {
           return true;
         }
         _logger.printError('devicectl returned unexpected JSON response: $stringOutput');
@@ -396,15 +393,14 @@ class IOSCoreDevice {
     required Logger logger,
   }) {
     final List<_IOSCoreDeviceCapability> capabilitiesList = <_IOSCoreDeviceCapability>[
-      if (data['capabilities'] case final List<Object?> capabilitiesData)
+      if (data case {'capabilities': final List<Object?> capabilitiesData})
         for (final Object? capabilityData in capabilitiesData)
           if (capabilityData != null && capabilityData is Map<String, Object?>)
             _IOSCoreDeviceCapability.fromBetaJson(capabilityData),
     ];
 
     _IOSCoreDeviceConnectionProperties? connectionProperties;
-    if (data['connectionProperties'] is Map<String, Object?>) {
-      final Map<String, Object?> connectionPropertiesData = data['connectionProperties']! as Map<String, Object?>;
+    if (data case {'connectionProperties': final Map<String, Object?> connectionPropertiesData}) {
       connectionProperties = _IOSCoreDeviceConnectionProperties.fromBetaJson(
         connectionPropertiesData,
         logger: logger,
@@ -412,14 +408,12 @@ class IOSCoreDevice {
     }
 
     IOSCoreDeviceProperties? deviceProperties;
-    if (data['deviceProperties'] is Map<String, Object?>) {
-      final Map<String, Object?> devicePropertiesData = data['deviceProperties']! as Map<String, Object?>;
+    if (data case {'deviceProperties': final Map<String, Object?> devicePropertiesData}) {
       deviceProperties = IOSCoreDeviceProperties.fromBetaJson(devicePropertiesData);
     }
 
     _IOSCoreDeviceHardwareProperties? hardwareProperties;
-    if (data['hardwareProperties'] is Map<String, Object?>) {
-      final Map<String, Object?> hardwarePropertiesData = data['hardwareProperties']! as Map<String, Object?>;
+    if (data case {'hardwareProperties': final Map<String, Object?> hardwarePropertiesData}) {
       hardwareProperties = _IOSCoreDeviceHardwareProperties.fromBetaJson(
         hardwarePropertiesData,
         logger: logger,
@@ -535,8 +529,7 @@ class _IOSCoreDeviceConnectionProperties {
     required Logger logger,
   }) {
     List<String>? localHostnames;
-    if (data['localHostnames'] is List<Object?>) {
-      final List<Object?> values = data['localHostnames']! as List<Object?>;
+    if (data case {'localHostnames': final List<Object?> values}) {
       try {
         localHostnames = List<String>.from(values);
       } on TypeError {
@@ -545,8 +538,7 @@ class _IOSCoreDeviceConnectionProperties {
     }
 
     List<String>? potentialHostnames;
-    if (data['potentialHostnames'] is List<Object?>) {
-      final List<Object?> values = data['potentialHostnames']! as List<Object?>;
+    if (data case {'potentialHostnames': final List<Object?> values}) {
       try {
         potentialHostnames = List<String>.from(values);
       } on TypeError {
@@ -700,12 +692,12 @@ class _IOSCoreDeviceHardwareProperties {
     required Logger logger,
   }) {
     _IOSCoreDeviceCPUType? cpuType;
-    if (data['cpuType'] case final Map<String, Object?> betaJson) {
+    if (data case {'cpuType': final Map<String, Object?> betaJson}) {
       cpuType = _IOSCoreDeviceCPUType.fromBetaJson(betaJson);
     }
 
     List<_IOSCoreDeviceCPUType>? supportedCPUTypes;
-    if (data['supportedCPUTypes'] case final List<Object?> values) {
+    if (data case {'supportedCPUTypes': final List<Object?> values}) {
       supportedCPUTypes = <_IOSCoreDeviceCPUType>[
         for (final Object? cpuTypeData in values)
           if (cpuTypeData is Map<String, Object?>)
@@ -714,8 +706,7 @@ class _IOSCoreDeviceHardwareProperties {
     }
 
     List<int>? supportedDeviceFamilies;
-    if (data['supportedDeviceFamilies'] is List<Object?>) {
-      final List<Object?> values = data['supportedDeviceFamilies']! as List<Object?>;
+    if (data case {'supportedDeviceFamilies': final List<Object?> values}) {
       try {
         supportedDeviceFamilies = List<int>.from(values);
       } on TypeError {

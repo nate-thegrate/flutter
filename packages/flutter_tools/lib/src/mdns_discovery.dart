@@ -568,10 +568,7 @@ Future<Uri> buildVMServiceUri(
   String? authCode,
   bool useDeviceIPAsHost = false,
 ]) async {
-  String path = '/';
-  if (authCode != null) {
-    path = authCode;
-  }
+  String path = authCode ?? '/';
   // Not having a trailing slash can cause problems in some situations.
   // Ensure that there's one present.
   if (!path.endsWith('/')) {

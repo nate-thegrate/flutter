@@ -367,8 +367,7 @@ class ImageStream with Diagnosticable {
   void setCompleter(ImageStreamCompleter value) {
     assert(_completer == null);
     _completer = value;
-    if (_listeners != null) {
-      final List<ImageStreamListener> initialListeners = _listeners!;
+    if (_listeners case final List<ImageStreamListener> initialListeners) {
       _listeners = null;
       _completer!._addingInitialListeners = true;
       initialListeners.forEach(_completer!.addListener);

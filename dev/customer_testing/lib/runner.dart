@@ -140,12 +140,12 @@ Future<bool> runTests({
           if (verbose) {
             print('Running tests...');
           }
-          if (instructions.iterations != null && instructions.iterations! < repeat) {
+          if (instructions.iterations case final int iterations when iterations < repeat) {
             if (verbose) {
-              final String s = instructions.iterations == 1 ? '' : 's';
-              print('Limiting to ${instructions.iterations} round$s rather than $repeat rounds because of "iterations" directive.');
+              final String s = iterations == 1 ? '' : 's';
+              print('Limiting to $iterations round$s rather than $repeat rounds because of "iterations" directive.');
             }
-            repeat = instructions.iterations!;
+            repeat = iterations;
           }
           final Stopwatch stopwatch = Stopwatch()..start();
           for (int iteration = 0; iteration < repeat; iteration += 1) {
@@ -214,9 +214,7 @@ Future<bool> shell(String command, Directory directory, { bool verbose = false, 
     return success;
   }
   if (!verbose) {
-    if (failedCallback != null) {
-      failedCallback();
-    }
+    failedCallback?.call();
     print('>> $command');
     output.forEach(printLog);
   }

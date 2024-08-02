@@ -147,9 +147,8 @@ class FlutterProject {
       // used during create as best-effort, use the
       // default target bundle identifier.
       try {
-        final String? bundleIdentifier = await ios.productBundleIdentifier(null);
-        if (bundleIdentifier != null) {
-          candidates.add(bundleIdentifier);
+        if (await ios.productBundleIdentifier(null) case final String id) {
+          candidates.add(id);
         }
       } on ToolExit {
         // It's possible that while parsing the build info for the ios project
@@ -169,15 +168,13 @@ class FlutterProject {
       ]);
     }
     if (example.android.existsSync()) {
-      final String? applicationId = example.android.applicationId;
-      if (applicationId != null) {
-        candidates.add(applicationId);
+      if (example.android.applicationId case final String id) {
+        candidates.add(id);
       }
     }
     if (example.ios.existsSync()) {
-      final String? bundleIdentifier = await example.ios.productBundleIdentifier(null);
-      if (bundleIdentifier != null) {
-        candidates.add(bundleIdentifier);
+      if (await example.ios.productBundleIdentifier(null) case final String id) {
+        candidates.add(id);
       }
     }
     return Set<String>.of(candidates.map<String?>(_organizationNameFromPackageName).whereType<String>());

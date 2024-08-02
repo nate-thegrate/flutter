@@ -81,19 +81,17 @@ String? getValueFromEnvOrArgs(
   bool allowNull = false,
 }) {
   final String envName = fromArgToEnvName(name);
-  if (env[envName] != null) {
-    return env[envName];
-  }
-  final String? argValue = argResults[name] as String?;
-  if (argValue != null) {
-    return argValue;
+  if (env[envName] ?? argResults[name] case final String value) {
+    return value;
   }
 
   if (allowNull) {
     return null;
   }
-  throw ConductorException('Expected either the CLI arg --$name or the environment variable $envName '
-      'to be provided!');
+  throw ConductorException(
+    'Expected either the CLI arg --$name '
+    'or the environment variable $envName to be provided!',
+  );
 }
 
 bool getBoolFromEnvOrArgs(
@@ -101,9 +99,8 @@ bool getBoolFromEnvOrArgs(
   ArgResults argResults,
   Map<String, String> env,
 ) {
-  final String envName = fromArgToEnvName(name);
-  if (env[envName] != null) {
-    return env[envName]?.toUpperCase() == 'TRUE';
+  if (env[fromArgToEnvName(name)] case final String flag) {
+    return flag.toUpperCase() == 'TRUE';
   }
   return argResults[name] as bool;
 }
@@ -123,11 +120,10 @@ List<String> getValuesFromEnvOrArgs(
   Map<String, String> env,
 ) {
   final String envName = fromArgToEnvName(name);
-  if (env[envName] != null && env[envName] != '') {
+  if (env[envName]?.isNotEmpty ?? false) {
     return env[envName]!.split(',');
   }
-  final List<String>? argValues = argResults[name] as List<String>?;
-  if (argValues != null) {
+  if (argResults[name] case final List<String> argValues) {
     return argValues;
   }
 

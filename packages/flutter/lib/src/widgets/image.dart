@@ -1286,12 +1286,12 @@ class _ImageState extends State<Image> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (_lastException != null) {
-      if (widget.errorBuilder != null) {
-        return widget.errorBuilder!(context, _lastException!, _lastStack);
+    if (_lastException case final Object exception) {
+      if (widget.errorBuilder case final ImageErrorWidgetBuilder errorBuilder) {
+        return errorBuilder(context, exception, _lastStack);
       }
       if (kDebugMode) {
-        return _debugBuildErrorWidget(context, _lastException!);
+        return _debugBuildErrorWidget(context, exception);
       }
     }
 

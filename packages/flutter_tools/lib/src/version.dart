@@ -781,22 +781,19 @@ class VersionCheckStamp {
     DateTime? newTimeWarningWasPrinted,
     Cache? cache,
   }) async {
-    final Map<String, String> jsonData = toJson();
-
-    if (newTimeVersionWasChecked != null) {
-      jsonData['lastTimeVersionWasChecked'] = '$newTimeVersionWasChecked';
-    }
-
-    if (newKnownRemoteVersion != null) {
-      jsonData['lastKnownRemoteVersion'] = '$newKnownRemoteVersion';
-    }
-
-    if (newTimeWarningWasPrinted != null) {
-      jsonData['lastTimeWarningWasPrinted'] = '$newTimeWarningWasPrinted';
-    }
-
-    const JsonEncoder prettyJsonEncoder = JsonEncoder.withIndent('  ');
-    (cache ?? globals.cache).setStampFor(flutterVersionCheckStampFile, prettyJsonEncoder.convert(jsonData));
+    (cache ?? globals.cache).setStampFor(
+      flutterVersionCheckStampFile,
+      const JsonEncoder.withIndent('  ').convert(toJson()..addAll(
+        <String, String>{
+          if (newTimeVersionWasChecked != null)
+            'lastTimeVersionWasChecked': '$newTimeVersionWasChecked',
+          if (newKnownRemoteVersion != null)
+            'lastKnownRemoteVersion': '$newKnownRemoteVersion',
+          if (newTimeWarningWasPrinted != null)
+            'lastTimeWarningWasPrinted': '$newTimeWarningWasPrinted',
+        },
+      )),
+    );
   }
 
   Map<String, String> toJson({
@@ -804,25 +801,18 @@ class VersionCheckStamp {
     DateTime? updateKnownRemoteVersion,
     DateTime? updateTimeWarningWasPrinted,
   }) {
-    updateTimeVersionWasChecked = updateTimeVersionWasChecked ?? lastTimeVersionWasChecked;
-    updateKnownRemoteVersion = updateKnownRemoteVersion ?? lastKnownRemoteVersion;
-    updateTimeWarningWasPrinted = updateTimeWarningWasPrinted ?? lastTimeWarningWasPrinted;
+    updateTimeVersionWasChecked ??= lastTimeVersionWasChecked;
+    updateKnownRemoteVersion ??= lastKnownRemoteVersion;
+    updateTimeWarningWasPrinted ??= lastTimeWarningWasPrinted;
 
-    final Map<String, String> jsonData = <String, String>{};
-
-    if (updateTimeVersionWasChecked != null) {
-      jsonData['lastTimeVersionWasChecked'] = '$updateTimeVersionWasChecked';
-    }
-
-    if (updateKnownRemoteVersion != null) {
-      jsonData['lastKnownRemoteVersion'] = '$updateKnownRemoteVersion';
-    }
-
-    if (updateTimeWarningWasPrinted != null) {
-      jsonData['lastTimeWarningWasPrinted'] = '$updateTimeWarningWasPrinted';
-    }
-
-    return jsonData;
+    return <String, String>{
+      if (updateTimeVersionWasChecked != null)
+        'lastTimeVersionWasChecked': '$updateTimeVersionWasChecked',
+      if (updateKnownRemoteVersion != null)
+        'lastKnownRemoteVersion': '$updateKnownRemoteVersion',
+      if (updateTimeWarningWasPrinted != null)
+        'lastTimeWarningWasPrinted': '$updateTimeWarningWasPrinted',
+    };
   }
 }
 

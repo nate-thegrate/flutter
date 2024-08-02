@@ -32,42 +32,30 @@ void checkEncodeDecode<T>(MessageCodec<T> codec, T message) {
 }
 
 bool deepEquals(dynamic valueA, dynamic valueB) {
-  if (valueA is TypedData) {
-    return valueB is TypedData && deepEqualsTypedData(valueA, valueB);
-  }
-  if (valueA is List) {
-    return valueB is List && deepEqualsList(valueA, valueB);
-  }
-  if (valueA is Map) {
-    return valueB is Map && deepEqualsMap(valueA, valueB);
-  }
-  if (valueA is double && valueA.isNaN) {
-    return valueB is double && valueB.isNaN;
-  }
-  return valueA == valueB;
+  return switch (valueA) {
+    TypedData() => valueB is TypedData && deepEqualsTypedData(valueA, valueB),
+    List<dynamic>() => valueB is List && deepEqualsList(valueA, valueB),
+    Map<dynamic, dynamic>() => valueB is Map && deepEqualsMap(valueA, valueB),
+    double(isNaN: true) => valueB is double && valueB.isNaN,
+    _ => valueA == valueB,
+  };
 }
 
 bool deepEqualsTypedData(TypedData valueA, TypedData valueB) {
   if (valueA is ByteData) {
-    return valueB is ByteData
-        && deepEqualsList(valueA.buffer.asUint8List(), valueB.buffer.asUint8List());
+    return valueB is ByteData && deepEqualsList(
+      valueA.buffer.asUint8List(),
+      valueB.buffer.asUint8List(),
+    );
   }
-  if (valueA is Uint8List) {
-    return valueB is Uint8List && deepEqualsList(valueA, valueB);
-  }
-  if (valueA is Int32List) {
-    return valueB is Int32List && deepEqualsList(valueA, valueB);
-  }
-  if (valueA is Int64List) {
-    return valueB is Int64List && deepEqualsList(valueA, valueB);
-  }
-  if (valueA is Float32List) {
-    return valueB is Float32List && deepEqualsList(valueA, valueB);
-  }
-  if (valueA is Float64List) {
-    return valueB is Float64List && deepEqualsList(valueA, valueB);
-  }
-  throw 'Unexpected typed data: $valueA';
+  return switch (valueA) {
+    Uint8List()   => valueB is Uint8List   && deepEqualsList(valueA, valueB),
+    Int32List()   => valueB is Int32List   && deepEqualsList(valueA, valueB),
+    Int64List()   => valueB is Int64List   && deepEqualsList(valueA, valueB),
+    Float32List() => valueB is Float32List && deepEqualsList(valueA, valueB),
+    Float64List() => valueB is Float64List && deepEqualsList(valueA, valueB),
+    _ => throw 'Unexpected typed data: $valueA',
+  };
 }
 
 bool deepEqualsList(List<dynamic> valueA, List<dynamic> valueB) {

@@ -33,9 +33,7 @@ class TestBuildSystem implements BuildSystem {
 
   @override
   Future<BuildResult> build(Target target, Environment environment, {BuildSystemConfig buildSystemConfig = const BuildSystemConfig()}) async {
-    if (_onRun != null) {
-      _onRun.call(target, environment);
-    }
+    _onRun?.call(target, environment);
     if (_exception != null) {
       throw _exception;
     }

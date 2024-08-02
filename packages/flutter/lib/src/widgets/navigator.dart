@@ -2804,21 +2804,8 @@ class Navigator extends StatefulWidget {
   /// a [FlutterError] in debug mode, and an exception in release mode.
   ///
   /// This method can be expensive (it walks the element tree).
-  static NavigatorState of(
-    BuildContext context, {
-    bool rootNavigator = false,
-  }) {
-    // Handles the case where the input context is a navigator element.
-    NavigatorState? navigator;
-    if (context is StatefulElement && context.state is NavigatorState) {
-      navigator = context.state as NavigatorState;
-    }
-    if (rootNavigator) {
-      navigator = context.findRootAncestorStateOfType<NavigatorState>() ?? navigator;
-    } else {
-      navigator = navigator ?? context.findAncestorStateOfType<NavigatorState>();
-    }
-
+  static NavigatorState of(BuildContext context, {bool rootNavigator = false}) {
+    final NavigatorState? navigator = maybeOf(context, rootNavigator: rootNavigator);
     assert(() {
       if (navigator == null) {
         throw FlutterError(
@@ -2854,21 +2841,15 @@ class Navigator extends StatefulWidget {
   /// Will return null if there is no ancestor [Navigator] in the `context`.
   ///
   /// This method can be expensive (it walks the element tree).
-  static NavigatorState? maybeOf(
-    BuildContext context, {
-    bool rootNavigator = false,
-  }) {
+  static NavigatorState? maybeOf(BuildContext context, {bool rootNavigator = false}) {
     // Handles the case where the input context is a navigator element.
-    NavigatorState? navigator;
-    if (context is StatefulElement && context.state is NavigatorState) {
-      navigator = context.state as NavigatorState;
-    }
-    if (rootNavigator) {
-      navigator = context.findRootAncestorStateOfType<NavigatorState>() ?? navigator;
-    } else {
-      navigator = navigator ?? context.findAncestorStateOfType<NavigatorState>();
-    }
-    return navigator;
+    final NavigatorState? navigator = switch (context) {
+      StatefulElement(:final NavigatorState state) => state,
+      _ => null,
+    };
+    return rootNavigator
+        ? context.findRootAncestorStateOfType<NavigatorState>() ?? navigator
+        : navigator ?? context.findAncestorStateOfType<NavigatorState>();
   }
 
   /// Turn a route name into a set of [Route] objects.
@@ -3957,8 +3938,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
   void _debugCheckDuplicatedPageKeys() {
     assert(() {
       final Set<Key> keyReservation = <Key>{};
-      for (final Page<dynamic> page in widget.pages) {
-        final LocalKey? key = page.key;
+      for (final Page<dynamic>(:Key? key) in widget.pages) {
         if (key != null) {
           assert(!keyReservation.contains(key));
           keyReservation.add(key);
@@ -4949,6 +4929,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
     _afterNavigation(entry.route);
   }
 
+  static String _toEncodable(Object? object) => '$object';
   void _afterNavigation(Route<dynamic>? route) {
     if (!kReleaseMode) {
       // Among other uses, performance tools use this event to ensure that perf
@@ -4956,29 +4937,15 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
       // occurred, ensuring that stats only reflect the current page.
 
       Map<String, dynamic>? routeJsonable;
-      if (route != null) {
-        routeJsonable = <String, dynamic>{};
-
-        final String description;
-        if (route is TransitionRoute<dynamic>) {
-          final TransitionRoute<dynamic> transitionRoute = route;
-          description = transitionRoute.debugLabel;
-        } else {
-          description = '$route';
-        }
-        routeJsonable['description'] = description;
-
-        final RouteSettings settings = route.settings;
-        final Map<String, dynamic> settingsJsonable = <String, dynamic> {
-          'name': settings.name,
+      if (route case RouteSettings(:final String? name, :final Object? arguments)) {
+        routeJsonable = <String, dynamic>{
+          'description': route is TransitionRoute ? route.debugLabel : '$route',
+          'settings': <String, dynamic>{
+            'name': name,
+            if (arguments != null)
+              'arguments': jsonEncode(arguments, toEncodable: _toEncodable),
+          },
         };
-        if (settings.arguments != null) {
-          settingsJsonable['arguments'] = jsonEncode(
-            settings.arguments,
-            toEncodable: (Object? object) => '$object',
-          );
-        }
-        routeJsonable['settings'] = settingsJsonable;
       }
 
       developer.postEvent('Flutter.Navigation', <String, dynamic>{

@@ -189,8 +189,8 @@ class SimControl {
     return <BootedSimDevice>[
       for (final String deviceCategory in devicesSection.keys)
         if (devicesSection[deviceCategory] case final List<Object?> devicesData)
-          for (final Object? data in devicesData.map<Map<String, Object?>?>(castStringKeyedMap))
-            if (data is Map<String, Object?>) BootedSimDevice(deviceCategory, data),
+          for (final Map<String, Object?>? data in devicesData.map(castStringKeyedMap))
+            if (data != null) BootedSimDevice(deviceCategory, data),
     ];
   }
 
@@ -537,9 +537,8 @@ class IOSSimulator extends Device {
     globals.printTrace('Waiting for VM Service port to be available...');
 
     try {
-      final Uri? deviceUri = await vmServiceDiscovery?.uri;
-      if (deviceUri != null) {
-        return LaunchResult.succeeded(vmServiceUri: deviceUri);
+      if (await vmServiceDiscovery?.uri case final Uri uri) {
+        return LaunchResult.succeeded(vmServiceUri: uri);
       }
       globals.printError(
         'Error waiting for a debug connection: '
@@ -891,8 +890,7 @@ class _IOSSimulatorLogReader extends DeviceLogReader {
   bool _lastLineMatched = false;
 
   String? _filterDeviceLine(String string) {
-    final Match? match = _mapRegex.matchAsPrefix(string);
-    if (match != null) {
+    if (_mapRegex.matchAsPrefix(string) case final Match match) {
 
       // The category contains the text between the date and the PID. Depending on which version of iOS being run,
       // it can contain "hostname App Name" or just "App Name".
@@ -984,8 +982,7 @@ class _IOSSimulatorLogReader extends DeviceLogReader {
   void _onUnifiedLoggingLine(String line) {
     // The log command predicate handles filtering, so every log eventMessage should be decoded and added.
     final Match? eventMessageMatch = _unifiedLoggingEventMessageRegex.firstMatch(line);
-    if (eventMessageMatch != null) {
-      final String message = eventMessageMatch.group(1)!;
+    if (eventMessageMatch?.group(1) case final String message) {
       try {
         final Object? decodedJson = jsonDecode(message);
         if (decodedJson is String) {

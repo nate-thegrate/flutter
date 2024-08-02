@@ -329,9 +329,7 @@ class DriveCommand extends RunCommandBase {
 
       final int testResult = await testResultFuture;
 
-      if (timeoutTimer != null) {
-        timeoutTimer!.cancel();
-      }
+      timeoutTimer?.cancel();
       _unregisterScreenshotCallbacks();
 
       if (testResult != 0 && screenshot != null) {
@@ -393,8 +391,7 @@ class DriveCommand extends RunCommandBase {
     }
     screenshotTokens = tokens;
 
-    final int? timeoutSeconds = _timeoutSeconds;
-    if (timeoutSeconds != null) {
+    if (_timeoutSeconds case final int timeoutSeconds) {
       timeoutTimer = Timer(
         Duration(seconds: timeoutSeconds),
         () {

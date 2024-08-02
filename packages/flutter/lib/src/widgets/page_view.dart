@@ -926,8 +926,7 @@ class _PageViewState extends State<PageView> {
 
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
-        if (notification.depth == 0 && widget.onPageChanged != null && notification is ScrollUpdateNotification) {
-          final PageMetrics metrics = notification.metrics as PageMetrics;
+        if (notification case ScrollUpdateNotification(depth: 0, :final PageMetrics metrics) when widget.onPageChanged != null) {
           final int currentPage = metrics.page!.round();
           if (currentPage != _lastReportedPage) {
             _lastReportedPage = currentPage;

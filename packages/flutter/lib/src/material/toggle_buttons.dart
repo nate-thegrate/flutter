@@ -695,12 +695,10 @@ class ToggleButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(
-      () {
-        if (focusNodes != null) {
-          return focusNodes!.length == children.length;
-        }
-        return true;
-      }(),
+      (() => switch (focusNodes) {
+        final List<FocusNode> nodes => nodes.length == children.length,
+        null => true,
+      })(),
       'focusNodes.length must match children.length.\n'
       'There are ${focusNodes!.length} focus nodes, while '
       'there are ${children.length} children.',

@@ -18,7 +18,6 @@ import '../build_info.dart';
 import '../cache.dart';
 import '../globals.dart' as globals;
 import '../project.dart';
-import 'android_sdk.dart';
 
 // These are the versions used in the project templates.
 //
@@ -768,9 +767,8 @@ void updateLocalProperties({
     changed = true;
   }
 
-  final AndroidSdk? androidSdk = globals.androidSdk;
-  if (androidSdk != null) {
-    changeIfNecessary('sdk.dir', globals.fsUtils.escapePath(androidSdk.directory.path));
+  if (globals.androidSdk?.directory.path case final String path) {
+    changeIfNecessary('sdk.dir', globals.fsUtils.escapePath(path));
   }
 
   changeIfNecessary('flutter.sdk', globals.fsUtils.escapePath(Cache.flutterRoot!));
@@ -800,9 +798,8 @@ void updateLocalProperties({
 /// Writes the path to the Android SDK, if known.
 void writeLocalProperties(File properties) {
   final SettingsFile settings = SettingsFile();
-  final AndroidSdk? androidSdk = globals.androidSdk;
-  if (androidSdk != null) {
-    settings.values['sdk.dir'] = globals.fsUtils.escapePath(androidSdk.directory.path);
+  if (globals.androidSdk?.directory.path case final String path) {
+    settings.values['sdk.dir'] = globals.fsUtils.escapePath(path);
   }
   settings.writeContents(properties);
 }

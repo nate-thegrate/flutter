@@ -188,13 +188,13 @@ SourceStats getStatsFor(Directory dir, [SourceStats? stats]) {
 }
 
 int _lineCount(File file) {
-  return file.readAsLinesSync().where((String line) {
-    line = line.trim();
-    if (line.isEmpty || line.startsWith('//')) {
-      return false;
-    }
-    return true;
-  }).length;
+  return file.readAsLinesSync().fold(
+    0,
+    (int total, String line) => switch (line.trim()) {
+      final String s when s.isEmpty || s.startsWith('//') => total,
+      _ => total + 1,
+    },
+  );
 }
 
 String _comma(int count) {

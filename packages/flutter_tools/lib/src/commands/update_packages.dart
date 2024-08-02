@@ -800,8 +800,7 @@ class PubspecYaml {
       if (lastDependency == null) {
         // First we look to see if we're transitioning to a new top-level section.
         // The PubspecHeader.parse static method can recognize those headers.
-        final PubspecHeader? header = PubspecHeader.parse(line); // See if it's a header.
-        if (header != null) { // It is!
+        if (PubspecHeader.parse(line) case final PubspecHeader header) {
           section = header.section; // The parser determined what kind of section it is.
           if (section == Section.header) {
             if (header.name == 'name') {

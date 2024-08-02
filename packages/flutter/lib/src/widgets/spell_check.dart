@@ -253,44 +253,37 @@ List<TextSpan> _buildSubtreesWithoutComposingRegion(
   final List<TextSpan> textSpanTreeChildren = <TextSpan>[];
 
   int textPointer = 0;
-  int currentSpanPointer = 0;
-  int endIndex;
   final String text = value.text;
-  final TextStyle misspelledJointStyle =
-      style?.merge(misspelledStyle) ?? misspelledStyle;
-  bool cursorInCurrentSpan = false;
 
   // Add text interwoven with any misspelled words to the tree.
   if (spellCheckSuggestions != null) {
-    while (textPointer < text.length &&
-      currentSpanPointer < spellCheckSuggestions.length) {
+    misspelledStyle = style?.merge(misspelledStyle) ?? misspelledStyle;
+    int endIndex;
+    int currentSpanPointer = 0;
+    for (textPointer = 0; textPointer < text.length; textPointer = endIndex) {
+      if (currentSpanPointer >= spellCheckSuggestions.length) {
+        break;
+      }
       final SuggestionSpan currentSpan = spellCheckSuggestions[currentSpanPointer];
 
       if (currentSpan.range.start > textPointer) {
-        endIndex = currentSpan.range.start < text.length
-            ? currentSpan.range.start
-            : text.length;
+        endIndex = math.min(currentSpan.range.start, text.length);
         textSpanTreeChildren.add(
           TextSpan(
             style: style,
             text: text.substring(textPointer, endIndex),
           )
         );
-        textPointer = endIndex;
       } else {
-        endIndex =
-            currentSpan.range.end < text.length ? currentSpan.range.end : text.length;
-        cursorInCurrentSpan = currentSpan.range.start <= cursorIndex && currentSpan.range.end >= cursorIndex;
+        endIndex = math.min(currentSpan.range.end, text.length);
+        final bool cursorInCurrentSpan = currentSpan.range.start <= cursorIndex
+                                      && currentSpan.range.end >= cursorIndex;
         textSpanTreeChildren.add(
           TextSpan(
-            style: cursorInCurrentSpan
-                ? style
-                : misspelledJointStyle,
+            style: cursorInCurrentSpan ? style : misspelledStyle,
             text: text.substring(currentSpan.range.start, endIndex),
           )
         );
-
-        textPointer = endIndex;
         currentSpanPointer++;
       }
     }
@@ -320,35 +313,29 @@ List<TextSpan> _buildSubtreesWithComposingRegion(
   final List<TextSpan> textSpanTreeChildren = <TextSpan>[];
 
   int textPointer = 0;
-  int currentSpanPointer = 0;
-  int endIndex;
-  SuggestionSpan currentSpan;
   final String text = value.text;
   final TextRange composingRegion = value.composing;
   final TextStyle composingTextStyle =
       style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
           const TextStyle(decoration: TextDecoration.underline);
-  final TextStyle misspelledJointStyle =
-      style?.merge(misspelledStyle) ?? misspelledStyle;
-  bool textPointerWithinComposingRegion = false;
-  bool currentSpanIsComposingRegion = false;
 
   // Add text interwoven with any misspelled words to the tree.
   if (spellCheckSuggestions != null) {
-    while (textPointer < text.length &&
-      currentSpanPointer < spellCheckSuggestions.length) {
-      currentSpan = spellCheckSuggestions[currentSpanPointer];
+    int currentSpanPointer = 0;
+    int endIndex;
+    misspelledStyle = style?.merge(misspelledStyle) ?? misspelledStyle;
+    for (textPointer = 0; textPointer < text.length; textPointer = endIndex) {
+      if (currentSpanPointer >= spellCheckSuggestions.length) {
+        break;
+      }
+      final SuggestionSpan currentSpan = spellCheckSuggestions[currentSpanPointer];
 
       if (currentSpan.range.start > textPointer) {
-        endIndex = currentSpan.range.start < text.length
-            ? currentSpan.range.start
-            : text.length;
-        textPointerWithinComposingRegion =
-            composingRegion.start >= textPointer &&
-                composingRegion.end <= endIndex &&
-                !composingWithinCurrentTextRange;
+        endIndex = math.min(currentSpan.range.start, text.length);
 
-        if (textPointerWithinComposingRegion) {
+        if (composingRegion.start >= textPointer
+            && composingRegion.end <= endIndex
+            && !composingWithinCurrentTextRange) {
           _addComposingRegionTextSpans(textSpanTreeChildren, text, textPointer,
               composingRegion, style, composingTextStyle);
           textSpanTreeChildren.add(
@@ -365,24 +352,17 @@ List<TextSpan> _buildSubtreesWithComposingRegion(
             )
           );
         }
-
-        textPointer = endIndex;
       } else {
-        endIndex =
-            currentSpan.range.end < text.length ? currentSpan.range.end : text.length;
-        currentSpanIsComposingRegion = textPointer >= composingRegion.start &&
-            endIndex <= composingRegion.end &&
-            !composingWithinCurrentTextRange;
+        endIndex = math.min(currentSpan.range.end, text.length);
+        final bool isComposingRegion = textPointer >= composingRegion.start
+                                    && endIndex <= composingRegion.end
+                                    && !composingWithinCurrentTextRange;
         textSpanTreeChildren.add(
           TextSpan(
-            style: currentSpanIsComposingRegion
-                ? composingTextStyle
-                : misspelledJointStyle,
+            style: isComposingRegion ? composingTextStyle : misspelledStyle,
             text: text.substring(currentSpan.range.start, endIndex),
           )
         );
-
-        textPointer = endIndex;
         currentSpanPointer++;
       }
     }

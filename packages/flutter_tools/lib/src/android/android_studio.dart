@@ -52,12 +52,11 @@ class AndroidStudio {
       return null;
     }
 
-    final String? versionString = plistValues[PlistParser.kCFBundleShortVersionStringKey] as String?;
-
-    Version? version;
-    if (versionString != null) {
-      version = Version.parse(versionString);
-    }
+    const String versionKey = PlistParser.kCFBundleShortVersionStringKey;
+    final Version? version = switch (plistValues) {
+      {versionKey: final String value} => Version.parse(value),
+      _ => null,
+    };
 
     String? pathsSelectorValue;
     final Map<String, dynamic>? jvmOptions = castStringKeyedMap(plistValues['JVMOptions']);
@@ -236,22 +235,19 @@ class AndroidStudio {
   /// Android Studio found at that location is always returned, even if it is
   /// invalid.
   static AndroidStudio? latestValid() {
-    final Directory? configuredStudioDir = _configuredDir();
-
     // Find all available Studio installations.
     final List<AndroidStudio> studios = allInstalled();
     if (studios.isEmpty) {
       return null;
     }
 
-    final AndroidStudio? manuallyConfigured = studios
-      .where((AndroidStudio studio) => studio.configuredPath != null &&
-        configuredStudioDir != null &&
-        _pathsAreEqual(studio.configuredPath!, configuredStudioDir.path))
-      .firstOrNull;
-
-    if (manuallyConfigured != null) {
-      return manuallyConfigured;
+    if (_configuredDir()?.path case final String configuredPath) {
+      for (final AndroidStudio studio in studios) {
+        final String? path = studio.configuredPath;
+        if (path != null && _pathsAreEqual(path, configuredPath)) {
+          return studio;
+        }
+      }
     }
 
     AndroidStudio? newest;
@@ -306,8 +302,7 @@ class AndroidStudio {
     }
 
     checkForStudio('/Applications');
-    final String? homeDirPath = globals.fsUtils.homeDirPath;
-    if (homeDirPath != null) {
+    if (globals.fsUtils.homeDirPath case final String homeDirPath) {
       checkForStudio(globals.fs.path.join(
         homeDirPath,
         'Applications',

@@ -1163,8 +1163,7 @@ abstract class SemanticsFinder extends FinderBase<SemanticsNode> {
   static Iterable<SemanticsNode> get _allRoots {
     final List<SemanticsNode> roots = <SemanticsNode>[];
     void collectSemanticsRoots(PipelineOwner owner) {
-      final SemanticsNode? root = owner.semanticsOwner?.rootSemanticsNode;
-      if (root != null) {
+      if (owner.semanticsOwner?.rootSemanticsNode case final SemanticsNode root?) {
         roots.add(root);
       }
       owner.visitChildren(collectSemanticsRoots);

@@ -475,8 +475,7 @@ class _DismissibleState extends State<Dismissible> with TickerProviderStateMixin
       // center and into and out the other side.
       return _FlingGestureKind.none;
     }
-    final double vx = velocity.pixelsPerSecond.dx;
-    final double vy = velocity.pixelsPerSecond.dy;
+    final Offset(dx: double vx, dy: double vy) = velocity.pixelsPerSecond;
     DismissDirection flingDirection;
     // Verify that the fling is in the generally right direction and fast enough.
     if (_directionIsXAxis) {

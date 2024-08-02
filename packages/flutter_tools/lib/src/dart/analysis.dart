@@ -139,36 +139,26 @@ class AnalysisServer {
     _logs.add('[stdout] $line');
     _logger.printTrace('<== $line');
 
-    final dynamic response = json.decode(line);
-
-    if (response is Map<String, dynamic>) {
-      if (response['event'] != null) {
-        final String event = response['event'] as String;
-        final dynamic params = response['params'];
-        Map<String, dynamic>? paramsMap;
-        if (params is Map<String, dynamic>) {
-          paramsMap = castStringKeyedMap(params);
-        }
-
-        if (paramsMap != null) {
-          switch (event) {
-            case 'server.status':
-              _handleStatus(paramsMap);
-            case 'analysis.errors':
-              _handleAnalysisIssues(paramsMap);
-            case 'server.error':
-              _handleServerError(paramsMap);
-          }
-        }
-      } else if (response['error'] != null) {
+    switch (json.decode(line)) {
+      case {
+        'event': final String event,
+        'params': final Map<String, dynamic> params,
+      }:
+        return switch (event) {
+          'server.status'   => _handleStatus(params),
+          'analysis.errors' => _handleAnalysisIssues(params),
+          'server.error'    => _handleServerError(params),
+          _ => null,
+        };
+      case {'error': final Object errorObject}:
         // Fields are 'code', 'message', and 'stackTrace'.
-        final Map<String, dynamic> error = castStringKeyedMap(response['error'])!;
+        final Map<String, dynamic> error = castStringKeyedMap(errorObject)!;
         _logger.printError(
-            'Error response from the server: ${error['code']} ${error['message']}');
-        if (error['stackTrace'] != null) {
-          _logger.printError(error['stackTrace'] as String);
+          'Error response from the server: ${error['code']} ${error['message']}',
+        );
+        if (error case {'stackTrace': final String stackTrace}) {
+          _logger.printError(stackTrace);
         }
-      }
     }
   }
 

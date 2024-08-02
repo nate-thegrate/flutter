@@ -174,35 +174,32 @@ Future<void> main(List<String> arguments) async {
   }
 
   final bool includeDartUi = parsedArguments.wasParsed('dart-ui-location') || parsedArguments['include-dart-ui'] as bool;
-  late Directory dartUiLocation;
-  if (((parsedArguments['dart-ui-location'] ?? '') as String).isNotEmpty) {
-    dartUiLocation = Directory(
-        path.absolute(parsedArguments['dart-ui-location'] as String));
-  } else {
-    dartUiLocation = Directory(_defaultDartUiLocation);
-  }
+  final Directory dartUiLocation = Directory(switch (parsedArguments['dart-ui-location']) {
+    final String location when location.isNotEmpty => path.absolute(location),
+    _ => _defaultDartUiLocation,
+  });
   if (!dartUiLocation.existsSync()) {
     stderr.writeln('Unable to find dart:ui directory ${dartUiLocation.path}');
     exit(1);
   }
 
-  if (parsedArguments['interactive'] != null) {
+  late final _SnippetChecker snippetChecker = _SnippetChecker(
+    flutterPackages,
+    tempDirectory: parsedArguments['temp'] as String?,
+    verbose: parsedArguments['verbose'] as bool,
+    dartUiLocation: includeDartUi ? dartUiLocation : null,
+  );
+
+  if (parsedArguments['interactive'] case final String filePath) {
     await _runInteractive(
       flutterPackages: flutterPackages,
       tempDirectory: parsedArguments['temp'] as String?,
-      filePath: parsedArguments['interactive'] as String,
+      filePath: filePath,
       dartUiLocation: includeDartUi ? dartUiLocation : null,
     );
-  } else {
-    if (await _SnippetChecker(
-        flutterPackages,
-        tempDirectory: parsedArguments['temp'] as String?,
-        verbose: parsedArguments['verbose'] as bool,
-        dartUiLocation: includeDartUi ? dartUiLocation : null,
-      ).checkSnippets()) {
-      stderr.writeln('See the documentation at the top of dev/bots/analyze_snippet_code.dart for details.');
-      exit(1);
-    }
+  } else if (await snippetChecker.checkSnippets()) {
+    stderr.writeln('See the documentation at the top of dev/bots/analyze_snippet_code.dart for details.');
+    exit(1);
   }
 }
 
@@ -253,36 +250,23 @@ class _ErrorBase implements Comparable<Object> {
 
   @override
   int compareTo(Object other) {
+    (Comparable<Object>?, Comparable<Object>?)? comparison;
+
     if (other is _ErrorBase) {
       if (other.file != file) {
-        if (other.file == null) {
-          return -1;
-        }
-        if (file == null) {
-          return 1;
-        }
-        return file!.compareTo(other.file!);
-      }
-      if (other.line != line) {
-        if (other.line == null) {
-          return -1;
-        }
-        if (line == null) {
-          return 1;
-        }
-        return line!.compareTo(other.line!);
-      }
-      if (other.column != column) {
-        if (other.column == null) {
-          return -1;
-        }
-        if (column == null) {
-          return 1;
-        }
-        return column!.compareTo(other.column!);
+        comparison = (file, other.file);
+      } else if (other.line != line) {
+        comparison = (line, other.line);
+      } else if (other.column != column) {
+        comparison = (column, other.column);
       }
     }
-    return toString().compareTo(other.toString());
+    return switch (comparison) {
+      (_, null) => -1,
+      (null, _) => 1,
+      null => toString().compareTo(other.toString()),
+      _ => comparison.$1!.compareTo(comparison.$2!),
+    };
   }
 }
 
@@ -534,20 +518,24 @@ class _SnippetChecker {
   }
 
   static Directory _createTempDirectory(String? tempArg) {
-    if (tempArg != null) {
-      final Directory tempDirectory = Directory(path.join(Directory.systemTemp.absolute.path, path.basename(tempArg)));
-      if (path.basename(tempArg) != tempArg) {
-        stderr.writeln('Supplied temporary directory name should be a name, not a path. Using ${tempDirectory.absolute.path} instead.');
-      }
-      print('Leaving temporary output in ${tempDirectory.absolute.path}.');
-      // Make sure that any directory left around from a previous run is cleared out.
-      if (tempDirectory.existsSync()) {
-        tempDirectory.deleteSync(recursive: true);
-      }
-      tempDirectory.createSync();
-      return tempDirectory;
+    if (tempArg == null) {
+      return Directory.systemTemp.createTempSync('flutter_analyze_snippet_code.');
     }
-    return Directory.systemTemp.createTempSync('flutter_analyze_snippet_code.');
+    final Directory tempDirectory = Directory(
+      path.join(Directory.systemTemp.absolute.path, path.basename(tempArg)),
+    );
+    if (path.basename(tempArg) != tempArg) {
+      stderr.writeln(
+        'Supplied temporary directory name should be a name, not a path. '
+        'Using ${tempDirectory.absolute.path} instead.',
+      );
+    }
+    print('Leaving temporary output in ${tempDirectory.absolute.path}.');
+    // Make sure that any directory left around from a previous run is cleared out.
+    if (tempDirectory.existsSync()) {
+      tempDirectory.deleteSync(recursive: true);
+    }
+    return tempDirectory..createSync();
   }
 
   void recreateTempDirectory() {
@@ -627,8 +615,7 @@ class _SnippetChecker {
             }
             inToolSection = false;
           } else if (inDartSection) {
-            final RegExpMatch? snippetMatch = _dartDocSnippetBeginRegex.firstMatch(trimmedLine);
-            if (snippetMatch != null) {
+            if (_dartDocSnippetBeginRegex.hasMatch(trimmedLine)) {
               throw _SnippetCheckerException('{@tool} found inside Dart section', file: relativeFilePath, line: lineNumber);
             }
             if (trimmedLine.startsWith(_codeBlockEndRegex)) {
@@ -691,8 +678,7 @@ class _SnippetChecker {
               );
             }
           } else if (!inToolSection) {
-            final RegExpMatch? snippetMatch = _dartDocSnippetBeginRegex.firstMatch(trimmedLine);
-            if (snippetMatch != null) {
+            if (_dartDocSnippetBeginRegex.hasMatch(trimmedLine)) {
               inToolSection = true;
             } else if (line == '// Examples can assume:') {
               if (inToolSection || inDartSection) {
@@ -722,9 +708,8 @@ class _SnippetChecker {
       throw _SnippetCheckerException('${startingLine.asLocation(filename, 0)}: Empty ```dart block in snippet code.');
     }
     bool hasEllipsis = false;
-    for (int index = 0; index < block.length; index += 1) {
-      final Match? match = _ellipsisRegExp.matchAsPrefix(block[index]);
-      if (match != null) {
+    for (final String line in block) {
+      if (_ellipsisRegExp.matchAsPrefix(line) != null) {
         hasEllipsis = true; // in case the "..." is implying some overridden members, add an ignore to silence relevant warnings
         break;
       }
@@ -860,19 +845,17 @@ class _SnippetChecker {
         // ```
         //
         // This section removes the label.
-        for (int index = 0; index < block.length; index += 1) {
-          final Match? prefix = _namedArgumentRegExp.matchAsPrefix(block[index]);
-          if (prefix != null) {
-            block[index] = block[index].substring(prefix.group(0)!.length);
+        for (final (int index, String line) in block.indexed) {
+          if (_namedArgumentRegExp.matchAsPrefix(line) case final Match prefix) {
+            block[index] = line.substring(prefix.group(0)!.length);
             break;
           }
         }
       }
       // strip trailing comma, if any
-      for (int index = block.length - 1; index >= 0; index -= 1) {
-        if (!block[index].startsWith(_nonCodeRegExp)) {
-          final Match? lastLine = _trailingCommaRegExp.matchAsPrefix(block[index]);
-          if (lastLine != null) {
+      for (final (int index, String line) in block.indexed) {
+        if (!line.startsWith(_nonCodeRegExp)) {
+          if (_trailingCommaRegExp.matchAsPrefix(line) case final Match lastLine) {
             block[index] = lastLine.group(1)! + lastLine.group(2)!;
           }
           break;
@@ -977,46 +960,48 @@ class _SnippetChecker {
         ));
         continue;
       }
-      if (fileContents.length != snippet.code.length) {
+      final List<_Line> code = snippet.code;
+      if (fileContents.length != code.length) {
         errors.add(_SnippetCheckerException(
-          'Unexpected file contents for ${file.path}. File has ${fileContents.length} lines but we generated ${snippet.code.length} lines:\n${snippet.code.join("\n")}',
+          'Unexpected file contents for ${file.path}. File has ${fileContents.length} lines '
+          'but we generated ${code.length} lines:\n${snippet.code.join("\n")}',
           file: file.path,
           line: lineNumber,
         ));
         continue;
       }
 
-      late final _Line actualSource;
-      late final int actualLine;
-      late final int actualColumn;
-      late final String actualMessage;
-      int delta = 0;
-      while (true) {
-        // find the nearest non-generated line to the error
-        if ((lineNumber - delta > 0) && (lineNumber - delta <= snippet.code.length) && !snippet.code[lineNumber - delta - 1].generated) {
-          actualSource = snippet.code[lineNumber - delta - 1];
-          actualLine = actualSource.line;
-          actualColumn = delta == 0 ? columnNumber : actualSource.code.length + 1;
-          actualMessage = delta == 0 ? message : '$message -- in later generated code';
-          break;
+      late final _Line source;
+      ({int line, int column, String message})? errorData;
+
+      // find the nearest non-generated line to the error
+      for (int delta = 0; errorData == null; delta += 1) {
+        final int before = lineNumber - delta - 1;
+        final int after = lineNumber + delta;
+        assert(before >= 0 || after < code.length);
+        if (before >= 0 && before < code.length && !code[before].generated) {
+          source = code[before];
+          errorData = (
+            line: source.line,
+            column: delta == 0 ? columnNumber : source.code.length + 1,
+            message: delta == 0 ? message : '$message -- in later generated code',
+          );
+        } else if (after >= 0 && after < code.length && !code[after].generated) {
+          source = code[after];
+          errorData = (
+            line: source.line,
+            column: 1,
+            message: '$message -- in earlier generated code',
+          );
         }
-        if ((lineNumber + delta < snippet.code.length) && (lineNumber + delta >= 0) && !snippet.code[lineNumber + delta].generated) {
-          actualSource = snippet.code[lineNumber + delta];
-          actualLine = actualSource.line;
-          actualColumn = 1;
-          actualMessage = '$message -- in earlier generated code';
-          break;
-        }
-        delta += 1;
-        assert((lineNumber - delta > 0) || (lineNumber + delta < snippet.code.length));
       }
       errors.add(_AnalysisError(
         snippet.filename,
-        actualLine,
-        actualColumn,
-        '$actualMessage (${snippet.generatorComment})',
+        errorData.line,
+        errorData.column,
+        '${errorData.message} (${snippet.generatorComment})',
         errorCode,
-        actualSource,
+        source,
       ));
     }
     return errors;
@@ -1046,19 +1031,19 @@ class _SnippetChecker {
           || line.startsWith('Flutter assets will be downloaded from ');
     });
     // Check out the stderr to see if the analyzer had it's own issues.
-    if (stderr.isNotEmpty && stderr.first.contains(RegExp(r' issues? found\. \(ran in '))) {
+    if (stderr.firstOrNull?.contains(RegExp(r' issues? found\. \(ran in ')) ?? false) {
       stderr.removeAt(0);
-      if (stderr.isNotEmpty && stderr.last.isEmpty) {
+      if (stderr.lastOrNull?.isEmpty ?? false) {
         stderr.removeLast();
       }
     }
     if (stderr.isNotEmpty && stderr.any((String line) => line.isNotEmpty)) {
       throw _SnippetCheckerException('Cannot analyze dartdocs; unexpected error output:\n$stderr');
     }
-    if (stdout.isNotEmpty && stdout.first == 'Building flutter tool...') {
+    if (stdout.firstOrNull == 'Building flutter tool...') {
       stdout.removeAt(0);
     }
-    if (stdout.isNotEmpty && stdout.first.isEmpty) {
+    if (stdout.firstOrNull?.isEmpty ?? false) {
       stdout.removeAt(0);
     }
     return stdout;
@@ -1077,7 +1062,7 @@ class _SnippetFile {
     String generatorComment,
     String filename,
   ) {
-    while (code.isNotEmpty && code.last.code.isEmpty) {
+    while (code.lastOrNull?.code.isEmpty ?? false) {
       code.removeLast();
     }
     assert(code.isNotEmpty);

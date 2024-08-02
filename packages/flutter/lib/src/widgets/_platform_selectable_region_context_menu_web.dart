@@ -82,8 +82,7 @@ class PlatformSelectableRegionContextMenu extends StatelessWidget {
   static void _register() {
     assert(_registeredViewType == null);
     _registeredViewType = _registerWebSelectionCallback((web.HTMLElement element, web.MouseEvent event) {
-      final SelectionContainerDelegate? client = _activeClient;
-      if (client != null) {
+      if (_activeClient case final SelectionContainerDelegate client) {
         // Converts the html right click event to flutter coordinate.
         final Offset localOffset = Offset(event.offsetX.toDouble(), event.offsetY.toDouble());
         final Matrix4 transform = client.getTransformTo(null);

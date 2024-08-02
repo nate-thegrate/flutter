@@ -483,12 +483,10 @@ class RefreshIndicatorState extends State<RefreshIndicator>
       }
     } else if (notification is ScrollEndNotification) {
       switch (_status) {
+        case RefreshIndicatorStatus.armed when _positionController.value < 1.0:
+          _dismiss(RefreshIndicatorStatus.canceled);
         case RefreshIndicatorStatus.armed:
-          if (_positionController.value < 1.0) {
-            _dismiss(RefreshIndicatorStatus.canceled);
-          } else {
-            _show();
-          }
+          _show();
         case RefreshIndicatorStatus.drag:
           _dismiss(RefreshIndicatorStatus.canceled);
         case RefreshIndicatorStatus.canceled:

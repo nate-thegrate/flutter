@@ -18,11 +18,7 @@ class ForwardedPort {
   String toString() => 'ForwardedPort HOST:$hostPort to DEVICE:$devicePort';
 
   /// Kill subprocess (if present) used in forwarding.
-  void dispose() {
-    if (context != null) {
-      context!.kill();
-    }
-  }
+  void dispose() => context?.kill();
 }
 
 /// Forward ports from the host machine to the device.

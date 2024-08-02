@@ -126,8 +126,7 @@ class _SemanticsDebuggerState extends State<SemanticsDebugger> with WidgetsBindi
   }
 
   void _handlePanEnd(DragEndDetails details) {
-    final double vx = details.velocity.pixelsPerSecond.dx;
-    final double vy = details.velocity.pixelsPerSecond.dy;
+    final Offset(dx: double vx, dy: double vy) = details.velocity.pixelsPerSecond;
     if (vx.abs() == vy.abs()) {
       return;
     }

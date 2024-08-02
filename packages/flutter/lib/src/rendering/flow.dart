@@ -195,9 +195,8 @@ class RenderFlow extends RenderBox
 
   @override
   void setupParentData(RenderBox child) {
-    final ParentData? childParentData = child.parentData;
-    if (childParentData is FlowParentData) {
-      childParentData._transform = null;
+    if (child.parentData case final FlowParentData flowParentData) {
+      flowParentData._transform = null;
     } else {
       child.parentData = FlowParentData();
     }

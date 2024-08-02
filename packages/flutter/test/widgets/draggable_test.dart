@@ -336,9 +336,8 @@ void main() {
               return const SizedBox(height: 100.0, child: Text('Target 1'));
             },
             onMove: (DragTargetDetails<dynamic> details) {
-              if (details.data is int) {
-                targetMoveCount['Target 1'] =
-                    targetMoveCount['Target 1']! + (details.data as int);
+              if (details.data case final int data) {
+                targetMoveCount['Target 1'] = targetMoveCount['Target 1']! + data;
               }
             },
           ),
@@ -347,9 +346,8 @@ void main() {
               return const SizedBox(height: 100.0, child: Text('Target 2'));
             },
             onMove: (DragTargetDetails<dynamic> details) {
-              if (details.data is int) {
-                targetMoveCount['Target 2'] =
-                    targetMoveCount['Target 2']! + (details.data as int);
+              if (details.data case final int data) {
+                targetMoveCount['Target 2'] = targetMoveCount['Target 2']! + data;
               }
             },
           ),

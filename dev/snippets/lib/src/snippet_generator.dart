@@ -18,17 +18,15 @@ import 'util.dart';
 /// Generates the snippet HTML, as well as saving the output snippet main to
 /// the output directory.
 class SnippetGenerator {
-  SnippetGenerator(
-      {SnippetConfiguration? configuration,
-      FileSystem filesystem = const LocalFileSystem(),
-      Directory? flutterRoot})
-      : flutterRoot =
-            flutterRoot ?? FlutterInformation.instance.getFlutterRoot(),
-        configuration = configuration ??
-            FlutterRepoSnippetConfiguration(
-                filesystem: filesystem,
-                flutterRoot: flutterRoot ??
-                    FlutterInformation.instance.getFlutterRoot());
+  SnippetGenerator({
+    SnippetConfiguration? configuration,
+    FileSystem filesystem = const LocalFileSystem(),
+    Directory? flutterRoot,
+  }) : flutterRoot = flutterRoot ?? FlutterInformation.instance.getFlutterRoot(),
+       configuration = configuration ?? FlutterRepoSnippetConfiguration(
+         filesystem: filesystem,
+         flutterRoot: flutterRoot ?? FlutterInformation.instance.getFlutterRoot(),
+       );
 
   final Directory flutterRoot;
 
@@ -176,10 +174,10 @@ class SnippetGenerator {
       int blocks = 0;
       SourceLine? subLine;
       final List<SourceLine> subsections = <SourceLine>[];
-      for (int index = 0; index < block.length; index += 1) {
+      for (final SourceLine line in block) {
         // Each section of the dart code that is either split by a blank line, or with
         // '// ...' is treated as a separate code block.
-        if (block[index].text.trim().isEmpty || block[index].text == '// ...') {
+        if (line.text.trim().isEmpty || line.text == '// ...') {
           if (subLine == null) {
             continue;
           }
@@ -188,15 +186,15 @@ class SnippetGenerator {
           buffer.clear();
           assert(buffer.isEmpty);
           subLine = null;
-        } else if (block[index].text.startsWith('// ')) {
+        } else if (line.text.startsWith('// ')) {
           if (buffer.length > 1) {
             // don't include leading comments
             // so that it doesn't start with "// " and get caught in this again
-            buffer.add(SourceLine('/${block[index].text}'));
+            buffer.add(SourceLine('/${line.text}'));
           }
         } else {
-          subLine ??= block[index];
-          buffer.add(block[index]);
+          subLine ??= line;
+          buffer.add(line);
         }
       }
       if (blocks > 0) {
@@ -221,8 +219,7 @@ class SnippetGenerator {
     final RegExp codeStartEnd =
         RegExp(r'^\s*```(?<language>[-\w]+|[-\w]+ (?<section>[-\w]+))?\s*$');
     for (final SourceLine line in sample.input) {
-      final RegExpMatch? match = codeStartEnd.firstMatch(line.text);
-      if (match != null) {
+      if (codeStartEnd.firstMatch(line.text) case final RegExpMatch match) {
         // If we saw the start or end of a code block
         inCodeBlock = !inCodeBlock;
         if (match.namedGroup('language') != null) {

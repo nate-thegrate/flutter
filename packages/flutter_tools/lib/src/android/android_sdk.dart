@@ -575,19 +575,10 @@ class AndroidSdkVersion implements Comparable<AndroidSdkVersion> {
   ///   * [AndroidApk.fromApk], which depends on this to determine application identifiers.
   String get aaptPath => getBuildToolsPath('aapt');
 
-  List<String> validateSdkWellFormed() {
-    final String? existsAndroidJarPath = _exists(androidJarPath);
-    if (existsAndroidJarPath != null) {
-      return <String>[existsAndroidJarPath];
-    }
-
-    final String? canRunAaptPath = _canRun(aaptPath);
-    if (canRunAaptPath != null) {
-      return <String>[canRunAaptPath];
-    }
-
-    return <String>[];
-  }
+  List<String> validateSdkWellFormed() => <String>[
+    if (_exists(androidJarPath) case final String exists) exists
+    else if (_canRun(aaptPath) case final String canRun) canRun,
+  ];
 
   String getPlatformsPath(String itemName) {
     return sdk.directory.childDirectory('platforms').childDirectory(platformName).childFile(itemName).path;

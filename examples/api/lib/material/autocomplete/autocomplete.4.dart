@@ -72,11 +72,9 @@ class _AsyncAutocompleteState extends State<_AsyncAutocomplete > {
     try {
       options = await _FakeAPI.search(_currentQuery!, _networkEnabled);
     } on _NetworkException {
-      if (mounted) {
-        setState(() {
-          _networkError = true;
-        });
-      }
+      setState(() {
+        _networkError = true;
+      });
       return <String>[];
     }
 

@@ -451,9 +451,8 @@ class FlutterView {
   });
 
   factory FlutterView.parse(Map<String, Object?> json) {
-    final Map<String, Object?>? rawIsolate = json['isolate'] as Map<String, Object?>?;
     vm_service.IsolateRef? isolate;
-    if (rawIsolate != null) {
+    if (json case {'isolate': final Map<String, Object?> rawIsolate}) {
       rawIsolate['number'] = rawIsolate['number']?.toString();
       isolate = vm_service.IsolateRef.parse(rawIsolate);
     }
@@ -671,10 +670,7 @@ class FlutterVmService {
       'ext.flutter.debugDumpSemanticsTreeInInverseHitTestOrder',
       isolateId: isolateId,
     );
-    if (response != null) {
-      return response['data']?.toString() ?? '';
-    }
-    return '';
+    return response?['data']?.toString() ?? '';
   }
 
   Future<Map<String, Object?>?> _flutterToggle(String name, {
@@ -835,8 +831,8 @@ class FlutterVmService {
         ? <String, Object>{'value': platform}
         : <String, String>{},
     );
-    if (result != null && result['value'] is String) {
-      return result['value']! as String;
+    if (result?['value'] case final String value) {
+      return value;
     }
     return 'unknown';
   }
@@ -857,12 +853,11 @@ class FlutterVmService {
         ? <String, String>{'value': brightness.toString()}
         : <String, String>{},
     );
-    if (result != null && result['value'] is String) {
-      return result['value'] == 'Brightness.light'
-        ? Brightness.light
-        : Brightness.dark;
-    }
-    return null;
+    return switch (result?['value']) {
+      'Brightness.light' => Brightness.light,
+      String()           => Brightness.dark,
+      _                  => null,
+    };
   }
 
   Future<vm_service.Response?> _checkedCallServiceExtension(

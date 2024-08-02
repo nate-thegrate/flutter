@@ -164,23 +164,23 @@ class AndroidValidator extends DoctorValidator {
     }
 
     String? sdkVersionText;
-    final AndroidSdkVersion? androidSdkLatestVersion = androidSdk.latestVersion;
-    if (androidSdkLatestVersion != null) {
-      if (androidSdkLatestVersion.sdkLevel < kAndroidSdkMinVersion || androidSdkLatestVersion.buildToolsVersion < kAndroidSdkBuildToolsMinVersion) {
+    if (androidSdk.latestVersion case final AndroidSdkVersion latest) {
+      if (latest.sdkLevel < kAndroidSdkMinVersion || latest.buildToolsVersion < kAndroidSdkBuildToolsMinVersion) {
         messages.add(ValidationMessage.error(
           _userMessages.androidSdkBuildToolsOutdated(
             kAndroidSdkMinVersion,
             kAndroidSdkBuildToolsMinVersion.toString(),
             _platform,
-          )),
-        );
+          ),
+        ));
         return ValidationResult(ValidationType.missing, messages);
       }
-      sdkVersionText = _userMessages.androidStatusInfo(androidSdkLatestVersion.buildToolsVersionName);
+      sdkVersionText = _userMessages.androidStatusInfo(latest.buildToolsVersionName);
 
       messages.add(ValidationMessage(_userMessages.androidSdkPlatformToolsVersion(
-        androidSdkLatestVersion.platformName,
-        androidSdkLatestVersion.buildToolsVersionName)));
+        latest.platformName,
+        latest.buildToolsVersionName,
+      )));
     } else {
       messages.add(ValidationMessage.error(_userMessages.androidMissingSdkInstructions(_platform)));
     }

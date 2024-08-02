@@ -464,8 +464,7 @@ mixin class ChangeNotifier implements Listenable {
 
         int newIndex = 0;
         for (int i = 0; i < _count; i++) {
-          final VoidCallback? listener = _listeners[i];
-          if (listener != null) {
+          if (_listeners[i] case final VoidCallback listener) {
             newListeners[newIndex++] = listener;
           }
         }

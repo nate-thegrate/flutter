@@ -829,8 +829,7 @@ abstract class BoxScrollView extends ScrollView {
     Widget sliver = buildChildLayout(context);
     EdgeInsetsGeometry? effectivePadding = padding;
     if (padding == null) {
-      final MediaQueryData? mediaQuery = MediaQuery.maybeOf(context);
-      if (mediaQuery != null) {
+      if (MediaQuery.maybeOf(context) case final MediaQueryData mediaQuery) {
         // Automatically pad sliver with padding from MediaQuery.
         final EdgeInsets mediaQueryHorizontalPadding =
             mediaQuery.padding.copyWith(top: 0.0, bottom: 0.0);
@@ -1573,23 +1572,17 @@ class ListView extends BoxScrollView {
 
   @override
   Widget buildChildLayout(BuildContext context) {
-    if (itemExtent != null) {
-      return SliverFixedExtentList(
-        delegate: childrenDelegate,
-        itemExtent: itemExtent!,
-      );
-    } else if (itemExtentBuilder != null) {
-      return SliverVariedExtentList(
-        delegate: childrenDelegate,
-        itemExtentBuilder: itemExtentBuilder!,
-      );
-    } else if (prototypeItem != null) {
-      return SliverPrototypeExtentList(
-        delegate: childrenDelegate,
-        prototypeItem: prototypeItem!,
-      );
+    final SliverChildDelegate delegate = childrenDelegate;
+    if (itemExtent case final double extent) {
+      return SliverFixedExtentList(delegate: delegate, itemExtent: extent);
     }
-    return SliverList(delegate: childrenDelegate);
+    if (itemExtentBuilder case final ItemExtentBuilder builder) {
+      return SliverVariedExtentList(delegate: delegate, itemExtentBuilder: builder);
+    }
+    if (prototypeItem case final Widget item) {
+      return SliverPrototypeExtentList(delegate: delegate, prototypeItem: item);
+    }
+    return SliverList(delegate: delegate);
   }
 
   @override

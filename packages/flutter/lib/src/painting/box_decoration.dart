@@ -249,24 +249,20 @@ class BoxDecoration extends Decoration {
 
   @override
   BoxDecoration? lerpFrom(Decoration? a, double t) {
-    if (a == null) {
-      return scale(t);
-    }
-    if (a is BoxDecoration) {
-      return BoxDecoration.lerp(a, this, t);
-    }
-    return super.lerpFrom(a, t) as BoxDecoration?;
+    return switch (a) {
+      null => scale(t),
+      BoxDecoration() => BoxDecoration.lerp(a, this, t),
+      _ => super.lerpFrom(a, t) as BoxDecoration?
+    };
   }
 
   @override
   BoxDecoration? lerpTo(Decoration? b, double t) {
-    if (b == null) {
-      return scale(1.0 - t);
-    }
-    if (b is BoxDecoration) {
-      return BoxDecoration.lerp(this, b, t);
-    }
-    return super.lerpTo(b, t) as BoxDecoration?;
+    return switch (b) {
+      null => scale(1.0 - t),
+      BoxDecoration() => BoxDecoration.lerp(this, b, t),
+      _ => super.lerpTo(b, t) as BoxDecoration?
+    };
   }
 
   /// Linearly interpolate between two box decorations.
