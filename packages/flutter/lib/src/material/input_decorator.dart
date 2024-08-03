@@ -884,12 +884,8 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
     if (label != null) {
       visitor(label!);
     }
-    if (hint != null) {
-      if (isFocused) {
-        visitor(hint!);
-      } else if (label == null) {
-        visitor(hint!);
-      }
+    if (hint != null && (isFocused || label == null)) {
+      visitor(hint!);
     }
 
     if (input != null) {

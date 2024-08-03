@@ -1527,14 +1527,10 @@ mixin WidgetInspectorService {
   /// or other packages.
   @protected
   void addPubRootDirectories(List<String> pubRootDirectories) {
-    pubRootDirectories = pubRootDirectories.map<String>((String directory) => Uri.parse(directory).path).toList();
-
-    final Set<String> directorySet = Set<String>.from(pubRootDirectories);
-    if (_pubRootDirectories != null) {
-      directorySet.addAll(_pubRootDirectories!);
-    }
-
-    _pubRootDirectories = directorySet.toList();
+    _pubRootDirectories = <String>{
+      for (final String directory in pubRootDirectories) Uri.parse(directory).path,
+      ...?_pubRootDirectories,
+    }.toList();
     _isLocalCreationCache.clear();
   }
 

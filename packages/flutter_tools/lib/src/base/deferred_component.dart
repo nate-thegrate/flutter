@@ -153,23 +153,13 @@ class LoadingUnit {
   static List<LoadingUnit> parseGeneratedLoadingUnits(Directory outputDir, Logger logger, {List<String>? abis}) {
     final List<LoadingUnit> loadingUnits = <LoadingUnit>[];
     final List<FileSystemEntity> files = outputDir.listSync(recursive: true);
-    for (final FileSystemEntity fileEntity in files) {
-      if (fileEntity is File) {
-        final File file = fileEntity;
+    for (final FileSystemEntity entity in files) {
+      if (entity is File) {
         // Determine if the abi is one we build.
-        bool matchingAbi = abis == null;
-        if (abis != null) {
-          for (final String abi in abis) {
-            if (file.parent.path.endsWith(abi)) {
-              matchingAbi = true;
-              break;
-            }
-          }
+        final bool matchingAbi = abis?.any(entity.parent.path.endsWith) ?? true;
+        if (matchingAbi && entity.path.endsWith('manifest.json')) {
+          loadingUnits.addAll(parseLoadingUnitManifest(entity, logger));
         }
-        if (!file.path.endsWith('manifest.json') || !matchingAbi) {
-          continue;
-        }
-        loadingUnits.addAll(parseLoadingUnitManifest(file, logger));
       }
     }
     return loadingUnits;

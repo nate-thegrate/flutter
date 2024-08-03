@@ -1297,18 +1297,12 @@ class DeviceDomain extends Domain {
 
   /// Return the connected device matching the deviceId field in the args.
   Future<Device?> _getDevice(String? deviceId) async {
+    final DeviceDiscoveryFilter filter = DeviceDiscoveryFilter();
     for (final PollingDeviceDiscovery discoverer in _discoverers) {
-      final List<Device> devices = await discoverer.devices(
-        filter: DeviceDiscoveryFilter(),
-      );
-      Device? device;
-      for (final Device localDevice in devices) {
-        if (localDevice.id == deviceId) {
-          device = localDevice;
+      for (final Device device in await discoverer.devices(filter: filter)) {
+        if (device.id == deviceId) {
+          return device;
         }
-      }
-      if (device != null) {
-        return device;
       }
     }
     return null;

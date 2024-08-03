@@ -63,17 +63,11 @@ class EmulatorManager {
         emulator.id.toLowerCase().startsWith(searchText) ||
         emulator.name.toLowerCase().startsWith(searchText);
 
-    Emulator? exactMatch;
     for (final Emulator emulator in emulators) {
       if (exactlyMatchesEmulatorId(emulator)) {
-        exactMatch = emulator;
-        break;
+        return <Emulator>[emulator];
       }
     }
-    if (exactMatch != null) {
-      return <Emulator>[exactMatch];
-    }
-
     // Match on a id or name starting with [emulatorId].
     return emulators.where(startsWithEmulatorId).toList();
   }

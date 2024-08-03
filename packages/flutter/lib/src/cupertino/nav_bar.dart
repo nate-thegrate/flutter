@@ -1355,7 +1355,7 @@ class _NavigationBarStaticComponents {
     ) {
       leadingContent = CupertinoButton(
         padding: EdgeInsets.zero,
-        onPressed: () { route.navigator!.maybePop(); },
+        onPressed: route.navigator!.maybePop,
         child: const Text('Close'),
       );
     }

@@ -398,15 +398,11 @@ class Doctor {
       }
       if (sendEvent) {
         if (validator is GroupedValidator) {
-          for (int i = 0; i < validator.subValidators.length; i++) {
-            final DoctorValidator subValidator = validator.subValidators[i];
-
+          for (final (int i, DoctorValidator subValidator) in validator.subValidators.indexed) {
             // Ensure that all of the subvalidators in the group have
             // a corresponding subresult in case a validator crashed
-            final ValidationResult subResult;
-            try {
-              subResult = validator.subResults[i];
-            } on RangeError {
+            final ValidationResult? subResult = validator.subResults.elementAtOrNull(i);
+            if (subResult == null) {
               continue;
             }
 

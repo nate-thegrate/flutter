@@ -959,7 +959,7 @@ Future<void> verifyNoBadImportsInFlutter(String workingDirectory) async {
 
   for (final String key in dependencyMap.keys) {
     for (final String dependency in dependencyMap[key]!) {
-      if (dependencyMap[dependency] != null) {
+      if (dependencyMap.containsKey(dependency)) {
         continue;
       }
       // Sanity check before performing _deepSearch, to ensure there's no rogue

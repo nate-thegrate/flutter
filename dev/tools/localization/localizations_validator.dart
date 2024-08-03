@@ -77,17 +77,14 @@ void validateEnglishLocalizations(File file) {
       errorMessages.writeln('No description specified for $atResourceId');
     }
 
-    final String? plural = atResource['plural'] as String?;
     final String resourceId = atResourceId.substring(1);
-    if (plural != null) {
+    if (atResource['plural'] != null) {
       final String resourceIdOther = '${resourceId}Other';
       if (!bundle.containsKey(resourceIdOther)) {
         errorMessages.writeln('Default plural resource $resourceIdOther undefined');
       }
-    } else {
-      if (!optional && !bundle.containsKey(resourceId)) {
-        errorMessages.writeln('No matching $resourceId defined for $atResourceId');
-      }
+    } else if (!optional && !bundle.containsKey(resourceId)) {
+      errorMessages.writeln('No matching $resourceId defined for $atResourceId');
     }
   }
 

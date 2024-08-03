@@ -2319,10 +2319,8 @@ class ObjectFlagProperty<T> extends DiagnosticsProperty<T> {
       if (ifPresent != null) {
         return ifPresent!;
       }
-    } else {
-      if (ifNull != null) {
-        return ifNull!;
-      }
+    } else if (ifNull != null) {
+      return ifNull!;
     }
     return super.valueToString(parentConfiguration: parentConfiguration);
   }

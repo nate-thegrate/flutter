@@ -223,12 +223,10 @@ class ChipsInputState<T> extends State<ChipsInput<T>> {
       if (currentNumber < previousNumber && currentNumber != values.length) {
         if (cursorStart == cursorEnd) {
           values.removeRange(cursorStart - 1, cursorEnd);
+        } else if (cursorStart > cursorEnd) {
+          values.removeRange(cursorEnd, cursorStart);
         } else {
-          if (cursorStart > cursorEnd) {
-            values.removeRange(cursorEnd, cursorStart);
-          } else {
-            values.removeRange(cursorStart, cursorEnd);
-          }
+          values.removeRange(cursorStart, cursorEnd);
         }
         widget.onChanged(values);
       }

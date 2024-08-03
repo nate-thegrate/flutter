@@ -191,13 +191,7 @@ class WindowsRunOutputTest extends DesktopRunOutputTest {
     final String buildMode = release ? 'Release' : 'Debug';
     _findNextMatcherInList(
       stdout,
-      (String line) {
-        if (!_builtOutput.hasMatch(line) || !line.contains(buildMode)) {
-          return false;
-        }
-
-        return true;
-      },
+      (String line) => _builtOutput.hasMatch(line) && line.contains(buildMode),
       '√ Built build\\windows\\$arch\\runner\\$buildMode\\ui.exe',
     );
   }
