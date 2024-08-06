@@ -28,6 +28,7 @@ const String _flutterAnimationLibrary = 'package:flutter/animation.dart';
 
 // Examples can assume:
 // late AnimationController _controller, fadeAnimationController, sizeAnimationController;
+// late ValueAnimation<dynamic> _animation;
 // late bool dismissed;
 // void setState(VoidCallback fn) { }
 
@@ -1041,11 +1042,14 @@ typedef LerpCallback<T> = T? Function(T a, T b, double t);
 
 class ValueAnimation<T extends Object> extends Animation<T>
   with AnimationEagerListenerMixin, AnimationLocalListenersMixin, AnimationLocalStatusListenersMixin {
+  /// Creates an animation
+  ///
+  /// {@macro flutter.animation.ValueAnimation.value_setter}
   ValueAnimation({
     required TickerProvider tickerProvider,
     required T initialValue,
     required this.duration,
-    required this.curve,
+    this.curve = Curves.linear,
     required this.lerp,
   }) : _from = initialValue,
        _target = initialValue,
@@ -1060,18 +1064,55 @@ class ValueAnimation<T extends Object> extends Animation<T>
     _ticker = tickerProvider.createTicker(_tick);
   }
 
+  /// The length of time this animation should last.
+  ///
+  /// The duration can be adjusted at any time, but modifying it
+  /// during an active animation might result in sudden visual changes.
   Duration duration;
+
+  /// Determines how quickly the animation speeds up and slows down.
+  ///
+  /// For instance, if this is set to [Curves.easeOutExpo], the majority of
+  /// the change to the [value] happens right away, whereas [Curves.easeIn]
+  /// would start slowly and then pick up speed toward the end.
   Curve curve;
-  LerpCallback<T> lerp;
+
+  /// A function to use for linear interpolation between [value]s.
+  ///
+  /// {@tool snippet}
+  /// Rather than creating a [LerpCallback] for each animation, consider
+  /// using the predefined function for that type. For example, [Color.lerp]
+  /// can be used for a `ValueAnimation<Color>`.
+  ///
+  /// ```dart
+  /// class _MyState extends State<StatefulWidget> with SingleTickerProviderMixin {
+  ///   late final ValueAnimation<Color> colorAnimation = ValueAnimation<Color>(
+  ///     tickerProvider: this,
+  ///     initialValue: Colors.black,
+  ///     duration: Durations.medium1,
+  ///     lerp: Color.lerp,
+  ///   );
+  ///
+  ///   // ...
+  /// }
+  /// ```
+  /// {@end-tool}
+  final LerpCallback<T> lerp;
 
   Ticker? _ticker;
 
   T _from;
   T _target;
+  T _value;
 
   @override
   T get value => _value;
-  T _value;
+
+  /// {@template flutter.animation.ValueAnimation.value_setter}
+  /// Rather than updating immediately, changes to the [value] will *animate*
+  /// each time a new target is set, using the provided [duration], [curve],
+  /// and [lerp] callback.
+  /// {@endtemplate}
   set value(T newTarget) {
     assert (
       _ticker != null,
@@ -1083,13 +1124,43 @@ class ValueAnimation<T extends Object> extends Animation<T>
       if (duration == Duration.zero) {
         value = newTarget;
         _statusUpdate(AnimationStatus.completed);
+        _ticker!.stop();
       } else {
         _from = value;
         _target = newTarget;
         _value = lerp(_from, _target, 0)!;
         _statusUpdate(AnimationStatus.forward);
+        _ticker!.start();
       }
     }
+  }
+
+  /// Configures a new animation, and returns a [TickerFuture] that completes
+  /// when it finishes.
+  ///
+  /// ```dart
+  /// // using the .animate() method
+  /// _animation.animate(
+  ///   target: newValue,
+  ///   duration: Durations.medium1,
+  ///   curve: Curves.ease,
+  /// );
+  ///
+  /// // equivalent to:
+  /// _animation
+  ///   ..duration = Durations.medium1
+  ///   ..curve = Curves.ease
+  ///   ..value = newValue;
+  /// ```
+  TickerFuture animate({required T target, Duration? duration, Curve? curve}) {
+    if (duration != null) {
+      this.duration = duration;
+    }
+    if (curve != null) {
+      this.curve = curve;
+    }
+    value = target;
+    return _ticker!.start();
   }
 
   void _tick(Duration elapsed) {
@@ -1105,34 +1176,23 @@ class ValueAnimation<T extends Object> extends Animation<T>
     notifyListeners();
   }
 
-  /// Recreates the [Ticker] with the new [TickerProvider].
-  void resync(TickerProvider tickerProvider) {
-    final Ticker oldTicker = _ticker!;
-    _ticker = tickerProvider.createTicker(_tick)..absorbTicker(oldTicker);
-  }
-
   /// The current status of the value's animation.
   ///
   /// Possible status values:
   ///
-  ///  * [AnimationStatus.dismissed] when the animation is first created,
-  ///    and just before it's disposed of.
+  ///  * [AnimationStatus.dismissed] when the [ValueAnimation] is created,
+  ///    before its first animation starts.
   ///  * [AnimationStatus.forward] when an animation is in progress.
-  ///  * [AnimationStatus.completed] when the animation is finished.
+  ///  * [AnimationStatus.completed] once an animation completes.
   ///
   /// [AnimationStatus.reverse] is used in [AnimationController]
   /// but does not apply to a [ValueAnimation].
   @override
-  AnimationStatus get status => throw UnimplementedError();
+  AnimationStatus get status => _lastReportedStatus;
   AnimationStatus _lastReportedStatus = AnimationStatus.dismissed;
   void _statusUpdate(AnimationStatus newStatus) {
     if (newStatus == _lastReportedStatus) {
       return;
-    }
-    if (status.isAnimating) {
-      _ticker!.start();
-    } else {
-      _ticker!.stop(canceled: newStatus.isDismissed);
     }
     _lastReportedStatus = newStatus;
     notifyStatusListeners(newStatus);
@@ -1157,8 +1217,7 @@ class ValueAnimation<T extends Object> extends Animation<T>
     if (kFlutterMemoryAllocationsEnabled) {
       FlutterMemoryAllocations.instance.dispatchObjectDisposed(object: this);
     }
-    _statusUpdate(AnimationStatus.dismissed);
-    _ticker!.dispose();
+    _ticker!..stop(canceled: true)..dispose();
     _ticker = null;
     clearStatusListeners();
     clearListeners();
