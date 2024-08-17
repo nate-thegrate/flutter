@@ -108,22 +108,14 @@ class _Segment<T> extends StatefulWidget {
 }
 
 class _SegmentState<T> extends State<_Segment<T>> with TickerProviderStateMixin<_Segment<T>> {
-  late final AnimationController highlightPressScaleController;
-  late Animation<double> highlightPressScaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    highlightPressScaleController = AnimationController(
-      duration: _kOpacityAnimationDuration,
-      value: widget.shouldScaleContent ? 1 : 0,
-      vsync: this,
-    );
-
-    highlightPressScaleAnimation = highlightPressScaleController.drive(
-      Tween<double>(begin: 1.0, end: _kMinThumbScale),
-    );
-  }
+  late final AnimationController highlightPressScaleController = AnimationController(
+    duration: _kOpacityAnimationDuration,
+    value: widget.shouldScaleContent ? 1 : 0,
+    vsync: this,
+  );
+  late Animation<double> highlightPressScaleAnimation = highlightPressScaleController.drive(
+    Tween<double>(begin: 1.0, end: _kMinThumbScale),
+  );
 
   @override
   void didUpdateWidget(_Segment<T> oldWidget) {
@@ -201,19 +193,12 @@ class _SegmentSeparator extends StatefulWidget {
   _SegmentSeparatorState createState() => _SegmentSeparatorState();
 }
 
-class _SegmentSeparatorState extends State<_SegmentSeparator> with TickerProviderStateMixin<_SegmentSeparator> {
-  late final AnimationController separatorOpacityController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    separatorOpacityController = AnimationController(
-      duration: _kSpringAnimationDuration,
-      value: widget.highlighted ? 0 : 1,
-      vsync: this,
-    );
-  }
+class _SegmentSeparatorState extends State<_SegmentSeparator> with SingleTickerProviderStateMixin {
+  late final AnimationController separatorOpacityController = AnimationController(
+    duration: _kSpringAnimationDuration,
+    value: widget.highlighted ? 0 : 1,
+    vsync: this,
+  );
 
   @override
   void didUpdateWidget(_SegmentSeparator oldWidget) {

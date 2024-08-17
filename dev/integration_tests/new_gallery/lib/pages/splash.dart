@@ -44,8 +44,12 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late int _effect;
+  late final AnimationController _controller = AnimationController(
+    duration: splashPageAnimationDuration,
+    vsync: this,
+  )..addListener(() => setState(() {}));
+  // If the number of included effects changes, this number should be changed.
+  late final int _effect = _random.nextInt(_effectDurations.length) + 1;
   final Random _random = Random();
 
   // A map of the effect index to its duration. This duration is used to
@@ -68,20 +72,6 @@ class _SplashPageState extends State<SplashPage>
   bool get _isSplashVisible {
     return _controller.status == AnimationStatus.completed ||
         _controller.status == AnimationStatus.forward;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    // If the number of included effects changes, this number should be changed.
-    _effect = _random.nextInt(_effectDurations.length) + 1;
-
-    _controller =
-        AnimationController(duration: splashPageAnimationDuration, vsync: this)
-          ..addListener(() {
-            setState(() {});
-          });
   }
 
   @override

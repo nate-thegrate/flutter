@@ -475,9 +475,10 @@ class _PlatformMenuBarState extends State<PlatformMenuBar> {
   void initState() {
     super.initState();
     assert(
-        WidgetsBinding.instance.platformMenuDelegate.debugLockDelegate(context),
-        'More than one active $PlatformMenuBar detected. Only one active '
-        'platform-rendered menu bar is allowed at a time.');
+      WidgetsBinding.instance.platformMenuDelegate.debugLockDelegate(context),
+      'More than one active $PlatformMenuBar detected. Only one active '
+      'platform-rendered menu bar is allowed at a time.',
+    );
     WidgetsBinding.instance.platformMenuDelegate.clearMenus();
     _updateMenu();
   }

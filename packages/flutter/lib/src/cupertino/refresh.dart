@@ -433,9 +433,11 @@ class _CupertinoSliverRefreshControlState extends State<CupertinoSliverRefreshCo
   // original `refreshTriggerPullDistance` is left.
   static const double _inactiveResetOverscrollFraction = 0.1;
 
-  late RefreshIndicatorMode refreshState;
+  late RefreshIndicatorMode refreshState = RefreshIndicatorMode.inactive;
+
   // [Future] returned by the widget's `onRefresh`.
   Future<void>? refreshTask;
+
   // The amount of space available from the inner indicator box's perspective.
   //
   // The value is the sum of the sliver's layout extent and the overscroll
@@ -445,13 +447,8 @@ class _CupertinoSliverRefreshControlState extends State<CupertinoSliverRefreshCo
   // The value of latestIndicatorBoxExtent doesn't change when the sliver scrolls
   // away without retracting; it is independent from the sliver's scrollOffset.
   double latestIndicatorBoxExtent = 0.0;
-  bool hasSliverLayoutExtent = false;
 
-  @override
-  void initState() {
-    super.initState();
-    refreshState = RefreshIndicatorMode.inactive;
-  }
+  bool hasSliverLayoutExtent = false;
 
   // A state machine transition calculator. Multiple states can be transitioned
   // through per single call.

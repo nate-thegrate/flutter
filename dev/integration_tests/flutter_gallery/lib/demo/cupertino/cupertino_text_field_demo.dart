@@ -16,15 +16,9 @@ class CupertinoTextFieldDemo extends StatefulWidget {
 }
 
 class _CupertinoTextFieldDemoState extends State<CupertinoTextFieldDemo> {
-  TextEditingController? _chatTextController;
-  TextEditingController? _locationTextController;
+  final TextEditingController _chatTextController = TextEditingController();
+  final TextEditingController _locationTextController = TextEditingController(text: 'Montreal, Canada');
 
-  @override
-  void initState() {
-    super.initState();
-    _chatTextController = TextEditingController();
-    _locationTextController = TextEditingController(text: 'Montreal, Canada');
-  }
 
   Widget _buildChatTextField() {
     return CupertinoTextField(
@@ -46,7 +40,7 @@ class _CupertinoTextFieldDemoState extends State<CupertinoTextFieldDemo> {
         child: CupertinoButton(
           minSize: 0.0,
           padding: const EdgeInsets.only(bottom: 4),
-          onPressed: () => setState(() => _chatTextController!.clear()),
+          onPressed: () => setState(() => _chatTextController.clear()),
           child: const Icon(
             CupertinoIcons.arrow_up_circle_fill,
             size: 28.0,
@@ -56,7 +50,7 @@ class _CupertinoTextFieldDemoState extends State<CupertinoTextFieldDemo> {
       ),
       autofocus: true,
       suffixMode: OverlayVisibilityMode.editing,
-      onSubmitted: (String text)=> setState(()=> _chatTextController!.clear()),
+      onSubmitted: (String text)=> setState(() => _chatTextController.clear()),
     );
   }
 

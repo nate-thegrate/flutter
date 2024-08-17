@@ -46,13 +46,7 @@ class HighlightFocus extends StatefulWidget {
 }
 
 class _HighlightFocusState extends State<HighlightFocus> {
-  late bool isFocused;
-
-  @override
-  void initState() {
-    isFocused = false;
-    super.initState();
-  }
+  bool isFocused = false;
 
   @override
   Widget build(BuildContext context) {

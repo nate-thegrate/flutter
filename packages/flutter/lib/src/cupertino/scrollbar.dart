@@ -128,7 +128,10 @@ class CupertinoScrollbar extends RawScrollbar {
 }
 
 class _CupertinoScrollbarState extends RawScrollbarState<CupertinoScrollbar> {
-  late AnimationController _thicknessAnimationController;
+  late final AnimationController _thicknessAnimationController = AnimationController(
+    vsync: this,
+    duration: _kScrollbarResizeDuration,
+  )..addListener(updateScrollbarPainter);
 
   double get _thickness {
     return widget.thickness! + _thicknessAnimationController.value * (widget.thicknessWhileDragging - widget.thickness!);
@@ -136,18 +139,6 @@ class _CupertinoScrollbarState extends RawScrollbarState<CupertinoScrollbar> {
 
   Radius get _radius {
     return Radius.lerp(widget.radius, widget.radiusWhileDragging, _thicknessAnimationController.value)!;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _thicknessAnimationController = AnimationController(
-      vsync: this,
-      duration: _kScrollbarResizeDuration,
-    );
-    _thicknessAnimationController.addListener(() {
-      updateScrollbarPainter();
-    });
   }
 
   @override

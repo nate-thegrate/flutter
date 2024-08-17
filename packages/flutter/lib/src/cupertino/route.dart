@@ -659,17 +659,11 @@ class _CupertinoBackGestureDetector<T> extends StatefulWidget {
 class _CupertinoBackGestureDetectorState<T> extends State<_CupertinoBackGestureDetector<T>> {
   _CupertinoBackGestureController<T>? _backGestureController;
 
-  late HorizontalDragGestureRecognizer _recognizer;
-
-  @override
-  void initState() {
-    super.initState();
-    _recognizer = HorizontalDragGestureRecognizer(debugOwner: this)
-      ..onStart = _handleDragStart
-      ..onUpdate = _handleDragUpdate
-      ..onEnd = _handleDragEnd
-      ..onCancel = _handleDragCancel;
-  }
+  late final GestureRecognizer _recognizer = HorizontalDragGestureRecognizer(debugOwner: this)
+    ..onStart = _handleDragStart
+    ..onUpdate = _handleDragUpdate
+    ..onEnd = _handleDragEnd
+    ..onCancel = _handleDragCancel;
 
   @override
   void dispose() {

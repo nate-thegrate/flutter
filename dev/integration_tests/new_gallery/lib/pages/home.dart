@@ -850,16 +850,8 @@ class _DesktopCarousel extends StatefulWidget {
 }
 
 class _DesktopCarouselState extends State<_DesktopCarousel> {
-  late ScrollController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = ScrollController();
-    _controller.addListener(() {
-      setState(() {});
-    });
-  }
+  late final ScrollController _controller = ScrollController()
+    ..addListener(() => setState(() {}));
 
   @override
   void dispose() {

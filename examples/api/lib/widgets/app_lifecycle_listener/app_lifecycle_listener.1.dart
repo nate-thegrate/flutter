@@ -32,17 +32,11 @@ class ApplicationExitControl extends StatefulWidget {
 }
 
 class _ApplicationExitControlState extends State<ApplicationExitControl> {
-  late final AppLifecycleListener _listener;
+  late final AppLifecycleListener _listener = AppLifecycleListener(
+    onExitRequested: _handleExitRequest,
+  );
   bool _shouldExit = false;
   String _lastExitResponse = 'No exit requested yet';
-
-  @override
-  void initState() {
-    super.initState();
-    _listener = AppLifecycleListener(
-      onExitRequested: _handleExitRequest,
-    );
-  }
 
   @override
   void dispose() {

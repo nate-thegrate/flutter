@@ -528,9 +528,15 @@ class _CupertinoTextSelectionToolbarContent extends StatefulWidget {
   _CupertinoTextSelectionToolbarContentState createState() => _CupertinoTextSelectionToolbarContentState();
 }
 
-class _CupertinoTextSelectionToolbarContentState extends State<_CupertinoTextSelectionToolbarContent> with TickerProviderStateMixin {
+class _CupertinoTextSelectionToolbarContentState extends State<_CupertinoTextSelectionToolbarContent>
+    with SingleTickerProviderStateMixin {
   // Controls the fading of the buttons within the menu during page transitions.
-  late AnimationController _controller;
+  late final AnimationController _controller = AnimationController(
+    value: 1.0,
+    vsync: this,
+    // This was eyeballed on a physical iOS device running iOS 13.
+    duration: _kToolbarTransitionDuration,
+  );
   int? _nextPage;
   int _page = 0;
 
@@ -581,17 +587,6 @@ class _CupertinoTextSelectionToolbarContentState extends State<_CupertinoTextSel
     });
     _controller.forward();
     _controller.removeStatusListener(_statusListener);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      value: 1.0,
-      vsync: this,
-      // This was eyeballed on a physical iOS device running iOS 13.
-      duration: _kToolbarTransitionDuration,
-    );
   }
 
   @override

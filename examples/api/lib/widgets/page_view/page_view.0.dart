@@ -30,17 +30,10 @@ class PageViewExample extends StatefulWidget {
   State<PageViewExample> createState() => _PageViewExampleState();
 }
 
-class _PageViewExampleState extends State<PageViewExample> with TickerProviderStateMixin {
-  late PageController _pageViewController;
-  late TabController _tabController;
+class _PageViewExampleState extends State<PageViewExample> with SingleTickerProviderStateMixin {
+  final PageController _pageViewController = PageController();
+  late final TabController _tabController = TabController(length: 3, vsync: this);
   int _currentPageIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageViewController = PageController();
-    _tabController = TabController(length: 3, vsync: this);
-  }
 
   @override
   void dispose() {

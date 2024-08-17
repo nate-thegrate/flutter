@@ -372,29 +372,21 @@ class _CupertinoContextMenuState extends State<CupertinoContextMenu> with Ticker
   final GlobalKey _childGlobalKey = GlobalKey();
   bool _childHidden = false;
   // Animates the child while it's opening.
-  late AnimationController _openController;
+  late final AnimationController _openController = AnimationController(
+    duration: _previewLongPressTimeout,
+    vsync: this,
+    upperBound: CupertinoContextMenu.animationOpensAt,
+  )..addStatusListener(_onDecoyAnimationStatusChange);
   Rect? _decoyChildEndRect;
   late double _scaleFactor;
   OverlayEntry? _lastOverlayEntry;
   _ContextMenuRoute<void>? _route;
   final double _midpoint = CupertinoContextMenu.animationOpensAt / 2;
-  late final TapGestureRecognizer _tapGestureRecognizer;
-
-  @override
-  void initState() {
-    super.initState();
-    _openController = AnimationController(
-      duration: _previewLongPressTimeout,
-      vsync: this,
-      upperBound: CupertinoContextMenu.animationOpensAt,
-    );
-    _openController.addStatusListener(_onDecoyAnimationStatusChange);
-    _tapGestureRecognizer = TapGestureRecognizer()
-      ..onTapCancel = _onTapCancel
-      ..onTapDown = _onTapDown
-      ..onTapUp = _onTapUp
-      ..onTap = _onTap;
-  }
+  late final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer()
+    ..onTapCancel = _onTapCancel
+    ..onTapDown = _onTapDown
+    ..onTapUp = _onTapUp
+    ..onTap = _onTap;
 
   void _listenerCallback() {
     if (_openController.status != AnimationStatus.reverse &&

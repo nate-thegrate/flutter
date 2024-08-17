@@ -215,30 +215,24 @@ class Backdrop extends StatefulWidget {
 
 class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
-  AnimationController? _controller;
+  late final AnimationController _controller = widget.controller;
   late Animation<RelativeRect> _layerAnimation;
 
   @override
-  void initState() {
-    super.initState();
-    _controller = widget.controller;
-  }
-
-  @override
   void dispose() {
-    _controller!.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   bool get _frontLayerVisible {
-    final AnimationStatus status = _controller!.status;
+    final AnimationStatus status = _controller.status;
     return status == AnimationStatus.completed || status == AnimationStatus.forward;
   }
 
   void _toggleBackdropLayerVisibility() {
     // Call setState here to update layerAnimation if that's necessary
     setState(() {
-      _frontLayerVisible ? _controller!.reverse() : _controller!.forward();
+      _frontLayerVisible ? _controller.reverse() : _controller.forward();
     });
   }
 
@@ -258,7 +252,7 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
       firstWeight = _kPeakVelocityTime;
       secondWeight = 1.0 - _kPeakVelocityTime;
       animation = CurvedAnimation(
-        parent: _controller!.view,
+        parent: _controller.view,
         curve: const Interval(0.0, 0.78),
       );
     } else {
@@ -267,7 +261,7 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
       secondCurve = _kAccelerateCurve.flipped;
       firstWeight = 1.0 - _kPeakVelocityTime;
       secondWeight = _kPeakVelocityTime;
-      animation = _controller!.view;
+      animation = _controller.view;
     }
 
     return TweenSequence<RelativeRect>(
@@ -341,7 +335,7 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
       elevation: 0.0,
       titleSpacing: 0.0,
       title: _BackdropTitle(
-        listenable: _controller!.view,
+        listenable: _controller.view,
         onPress: _toggleBackdropLayerVisibility,
         frontTitle: widget.frontTitle,
         backTitle: widget.backTitle,

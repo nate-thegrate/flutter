@@ -35,24 +35,16 @@ class _DrawerDemoState extends State<DrawerDemo> with TickerProviderStateMixin {
     curve: Curves.fastOutSlowIn,
   ));
 
-  late AnimationController _controller;
-  late Animation<double> _drawerContentsOpacity;
-  late Animation<Offset> _drawerDetailsPosition;
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 200),
+  );
+  late final Animation<double> _drawerContentsOpacity = CurvedAnimation(
+    parent: ReverseAnimation(_controller),
+    curve: Curves.fastOutSlowIn,
+  );
+  late final Animation<Offset> _drawerDetailsPosition = _controller.drive(_drawerDetailsTween);
   bool _showDrawerContents = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
-    _drawerContentsOpacity = CurvedAnimation(
-      parent: ReverseAnimation(_controller),
-      curve: Curves.fastOutSlowIn,
-    );
-    _drawerDetailsPosition = _controller.drive(_drawerDetailsTween);
-  }
 
   @override
   void dispose() {

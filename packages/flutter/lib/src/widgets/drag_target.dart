@@ -441,24 +441,6 @@ class LongPressDraggable<T extends Object> extends Draggable<T> {
 }
 
 class _DraggableState<T extends Object> extends State<Draggable<T>> {
-  @override
-  void initState() {
-    super.initState();
-    _recognizer = widget.createRecognizer(_startDrag);
-  }
-
-  @override
-  void dispose() {
-    _disposeRecognizerIfInactive();
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _recognizer!.gestureSettings = MediaQuery.maybeGestureSettingsOf(context);
-    super.didChangeDependencies();
-  }
-
   // This gesture recognizer has an unusual lifetime. We want to support the use
   // case of removing the Draggable from the tree in the middle of a drag. That
   // means we need to keep this recognizer alive after this state object has
@@ -468,22 +450,33 @@ class _DraggableState<T extends Object> extends State<Draggable<T>> {
   // We achieve that by keeping count of the number of active drags and only
   // disposing the gesture recognizer after (a) this state object has been
   // disposed and (b) there are no more active drags.
-  GestureRecognizer? _recognizer;
+  late final GestureRecognizer _recognizer = widget.createRecognizer(_startDrag);
   int _activeCount = 0;
+
+  @override
+  void dispose() {
+    _disposeRecognizerIfInactive();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _recognizer.gestureSettings = MediaQuery.maybeGestureSettingsOf(context);
+    super.didChangeDependencies();
+  }
 
   void _disposeRecognizerIfInactive() {
     if (_activeCount > 0) {
       return;
     }
-    _recognizer!.dispose();
-    _recognizer = null;
+    _recognizer.dispose();
   }
 
   void _routePointer(PointerDownEvent event) {
     if (widget.maxSimultaneousDrags != null && _activeCount >= widget.maxSimultaneousDrags!) {
       return;
     }
-    _recognizer!.addPointer(event);
+    _recognizer.addPointer(event);
   }
 
   _DragAvatar<T>? _startDrag(Offset position) {

@@ -19,20 +19,13 @@ class _SliverAnimatedListSampleState extends State<SliverAnimatedListSample> {
   final GlobalKey<SliverAnimatedListState> _listKey = GlobalKey<SliverAnimatedListState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
-  late ListModel<int> _list;
+  late final ListModel<int> _list = ListModel<int>(
+    listKey: _listKey,
+    initialItems: <int>[0, 1, 2],
+    removedItemBuilder: _buildRemovedItem,
+  );
   int? _selectedItem;
-  late int _nextItem; // The next item inserted when the user presses the '+' button.
-
-  @override
-  void initState() {
-    super.initState();
-    _list = ListModel<int>(
-      listKey: _listKey,
-      initialItems: <int>[0, 1, 2],
-      removedItemBuilder: _buildRemovedItem,
-    );
-    _nextItem = 3;
-  }
+  late int _nextItem = 3; // The next item inserted when the user presses the '+' button.
 
   // Used to build list items that haven't been removed.
   Widget _buildItem(BuildContext context, int index, Animation<double> animation) {

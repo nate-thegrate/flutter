@@ -223,14 +223,8 @@ class ModelBinding extends StatefulWidget {
 }
 
 class _ModelBindingState extends State<ModelBinding> {
-  late GalleryOptions currentModel;
+  late GalleryOptions currentModel = widget.initialModel;
   Timer? _timeDilationTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    currentModel = widget.initialModel;
-  }
 
   @override
   void dispose() {

@@ -62,19 +62,13 @@ class _GridTitleText extends StatelessWidget {
 }
 
 class _GridPhotoViewerState extends State<GridPhotoViewer> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  late final AnimationController _controller = AnimationController(vsync: this)
+      ..addListener(_handleFlingAnimation);
   late Animation<Offset> _flingAnimation;
   Offset _offset = Offset.zero;
   double _scale = 1.0;
   late Offset _normalizedOffset;
   late double _previousScale;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this)
-      ..addListener(_handleFlingAnimation);
-  }
 
   @override
   void dispose() {

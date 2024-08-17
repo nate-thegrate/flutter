@@ -136,15 +136,8 @@ class _PersistentBottomSheetDemo extends StatefulWidget {
       _PersistentBottomSheetDemoState();
 }
 
-class _PersistentBottomSheetDemoState
-    extends State<_PersistentBottomSheetDemo> {
-  VoidCallback? _showBottomSheetCallback;
-
-  @override
-  void initState() {
-    super.initState();
-    _showBottomSheetCallback = _showPersistentBottomSheet;
-  }
+class _PersistentBottomSheetDemoState extends State<_PersistentBottomSheetDemo> {
+  late VoidCallback? _showBottomSheetCallback = _showPersistentBottomSheet;
 
   void _showPersistentBottomSheet() {
     setState(() {

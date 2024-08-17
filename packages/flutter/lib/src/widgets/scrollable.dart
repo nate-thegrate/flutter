@@ -1096,16 +1096,8 @@ class _ScrollableSelectionHandler extends StatefulWidget {
 }
 
 class _ScrollableSelectionHandlerState extends State<_ScrollableSelectionHandler> {
-  late _ScrollableSelectionContainerDelegate _selectionDelegate;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectionDelegate = _ScrollableSelectionContainerDelegate(
-      state: widget.state,
-      position: widget.position,
-    );
-  }
+  late final _ScrollableSelectionContainerDelegate _selectionDelegate =
+      _ScrollableSelectionContainerDelegate(state: widget.state, position: widget.position);
 
   @override
   void didUpdateWidget(_ScrollableSelectionHandler oldWidget) {

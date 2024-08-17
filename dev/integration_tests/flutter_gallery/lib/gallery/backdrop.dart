@@ -198,34 +198,27 @@ class Backdrop extends StatefulWidget {
 
 class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
-  AnimationController? _controller;
-  late Animation<double> _frontOpacity;
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 300),
+    value: 1.0,
+    vsync: this,
+  )..addStatusListener((AnimationStatus status) {
+    setState(() {
+      // This is intentionally left empty. The state change itself takes
+      // place inside the AnimationController, so there's nothing to update.
+      // All we want is for the widget to rebuild and read the new animation
+      // state from the AnimationController.
+    });
+  });
+  late final Animation<double> _frontOpacity = _controller.drive(_frontOpacityTween);
 
   static final Animatable<double> _frontOpacityTween = Tween<double>(begin: 0.2, end: 1.0)
     .chain(CurveTween(curve: const Interval(0.0, 0.4, curve: Curves.easeInOut)));
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      value: 1.0,
-      vsync: this,
-    );
-    _controller!.addStatusListener((AnimationStatus status) {
-      setState(() {
-        // This is intentionally left empty. The state change itself takes
-        // place inside the AnimationController, so there's nothing to update.
-        // All we want is for the widget to rebuild and read the new animation
-        // state from the AnimationController.
-      });
-    });
-    _frontOpacity = _controller!.drive(_frontOpacityTween);
-  }
 
   @override
   void dispose() {
-    _controller!.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -237,28 +230,28 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
-    _controller!.value -= details.primaryDelta! / _backdropHeight;
+    _controller.value -= details.primaryDelta! / _backdropHeight;
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    if (!_controller!.isDismissed) {
+    if (!_controller.isDismissed) {
       return;
     }
 
     final double flingVelocity = details.velocity.pixelsPerSecond.dy / _backdropHeight;
-    _controller!.fling(velocity: switch (flingVelocity) {
+    _controller.fling(velocity: switch (flingVelocity) {
       < 0.0 => math.max(2.0, -flingVelocity),
       > 0.0 => math.min(-2.0, -flingVelocity),
-      _ => _controller!.value < 0.5 ? -2.0 : 2.0,
+      _ => _controller.value < 0.5 ? -2.0 : 2.0,
     });
   }
 
   void _toggleFrontLayer() {
-    _controller!.fling(velocity: _controller!.isForwardOrCompleted ? -2.0 : 2.0);
+    _controller.fling(velocity: _controller.isForwardOrCompleted ? -2.0 : 2.0);
   }
 
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
-    final Animation<RelativeRect> frontRelativeRect = _controller!.drive(RelativeRectTween(
+    final Animation<RelativeRect> frontRelativeRect = _controller.drive(RelativeRectTween(
       begin: RelativeRect.fromLTRB(0.0, constraints.biggest.height - _kFrontClosedHeight, 0.0, 0.0),
       end: const RelativeRect.fromLTRB(0.0, _kBackAppBarHeight, 0.0, 0.0),
     ));
@@ -272,7 +265,7 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
             _BackAppBar(
               leading: widget.frontAction!,
               title: _CrossFadeTransition(
-                progress: _controller!,
+                progress: _controller,
                 alignment: AlignmentDirectional.centerStart,
                 child0: Semantics(namesRoute: true, child: widget.frontTitle),
                 child1: Semantics(namesRoute: true, child: widget.backTitle),
@@ -282,7 +275,7 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
                 tooltip: 'Toggle options page',
                 icon: AnimatedIcon(
                   icon: AnimatedIcons.close_menu,
-                  progress: _controller!,
+                  progress: _controller,
                 ),
               ),
             ),
@@ -291,7 +284,7 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
                 AnimationStatus.dismissed,
                 controller: _controller,
                 child: Visibility(
-                  visible: !_controller!.isCompleted,
+                  visible: !_controller.isCompleted,
                   maintainState: true,
                   child: widget.backLayer!,
                 ),
@@ -303,14 +296,14 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
         PositionedTransition(
           rect: frontRelativeRect,
           child: AnimatedBuilder(
-            animation: _controller!,
+            animation: _controller,
             builder: (BuildContext context, Widget? child) {
               return PhysicalShape(
                 elevation: 12.0,
                 color: Theme.of(context).canvasColor,
                 clipper: ShapeBorderClipper(
                   shape: BeveledRectangleBorder(
-                    borderRadius: _kFrontHeadingBevelRadius.transform(_controller!.value)!,
+                    borderRadius: _kFrontHeadingBevelRadius.transform(_controller.value)!,
                   ),
                 ),
                 clipBehavior: Clip.antiAlias,

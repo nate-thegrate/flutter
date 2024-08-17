@@ -280,7 +280,11 @@ class GalleryHome extends StatefulWidget {
 
 class _GalleryHomeState extends State<GalleryHome> with SingleTickerProviderStateMixin {
   static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late AnimationController _controller;
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 600),
+    debugLabel: 'preview banner',
+    vsync: this,
+  )..forward();
   GalleryDemoCategory? _category;
 
   static Widget _topHomeLayout(Widget? currentChild, List<Widget> previousChildren) {
@@ -294,16 +298,6 @@ class _GalleryHomeState extends State<GalleryHome> with SingleTickerProviderStat
   }
 
   static const AnimatedSwitcherLayoutBuilder _centerHomeLayout = AnimatedSwitcher.defaultLayoutBuilder;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      debugLabel: 'preview banner',
-      vsync: this,
-    )..forward();
-  }
 
   @override
   void dispose() {

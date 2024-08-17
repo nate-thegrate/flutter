@@ -118,22 +118,15 @@ class ExpandIcon extends StatefulWidget {
 }
 
 class _ExpandIconState extends State<ExpandIcon> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _iconTurns;
+  late final AnimationController _controller = AnimationController(
+    value: widget.isExpanded ? math.pi : null,
+    duration: kThemeAnimationDuration,
+    vsync: this,
+  );
+  late final Animation<double> _iconTurns = _controller.drive(_iconTurnTween);
 
   static final Animatable<double> _iconTurnTween = Tween<double>(begin: 0.0, end: 0.5)
     .chain(CurveTween(curve: Curves.fastOutSlowIn));
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(duration: kThemeAnimationDuration, vsync: this);
-    _iconTurns = _controller.drive(_iconTurnTween);
-    // If the widget is initially expanded, rotate the icon without animating it.
-    if (widget.isExpanded) {
-      _controller.value = math.pi;
-    }
-  }
 
   @override
   void dispose() {

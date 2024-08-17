@@ -335,17 +335,10 @@ class FocusDemo extends StatefulWidget {
 
 class _FocusDemoState extends State<FocusDemo> {
   final FocusNode outlineFocus = FocusNode(debugLabel: 'Demo Focus Node');
-  late final UndoableActionDispatcher dispatcher = UndoableActionDispatcher();
-  bool canUndo = false;
-  bool canRedo = false;
-
-  @override
-  void initState() {
-    super.initState();
-    canUndo = dispatcher.canUndo;
-    canRedo = dispatcher.canRedo;
-    dispatcher.addListener(_handleUndoStateChange);
-  }
+  late final UndoableActionDispatcher dispatcher = UndoableActionDispatcher()
+    ..addListener(_handleUndoStateChange);
+  late bool canUndo = dispatcher.canUndo;
+  late bool canRedo = dispatcher.canRedo;
 
   void _handleUndoStateChange() {
     if (dispatcher.canUndo != canUndo) {

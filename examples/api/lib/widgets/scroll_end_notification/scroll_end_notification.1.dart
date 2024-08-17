@@ -28,14 +28,8 @@ class SliverAutoScrollExample extends StatefulWidget {
 
 class _SliverAutoScrollExampleState extends State<SliverAutoScrollExample> {
   final GlobalKey alignedItemKey = GlobalKey();
-  late final ScrollController scrollController;
+  final ScrollController scrollController = ScrollController();
   late double lastScrollOffset;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = ScrollController();
-  }
 
   @override
   void dispose() {

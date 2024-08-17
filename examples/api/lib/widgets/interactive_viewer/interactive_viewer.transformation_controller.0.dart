@@ -32,7 +32,10 @@ class _TransformationControllerExampleState extends State<TransformationControll
     with TickerProviderStateMixin {
   final TransformationController _transformationController = TransformationController();
   Animation<Matrix4>? _animationReset;
-  late final AnimationController _controllerReset;
+  late final AnimationController _controllerReset = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 400),
+  );
 
   void _onAnimateReset() {
     _transformationController.value = _animationReset!.value;
@@ -67,15 +70,6 @@ class _TransformationControllerExampleState extends State<TransformationControll
     if (_controllerReset.status == AnimationStatus.forward) {
       _animateResetStop();
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controllerReset = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
   }
 
   @override

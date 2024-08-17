@@ -89,7 +89,10 @@ class _GalleryDemoPageState extends State<GalleryDemoPage>
 
   bool? _isDesktop;
 
-  late AnimationController _codeBackgroundColorController;
+  late final AnimationController _codeBackgroundColorController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 300),
+  );
 
   @override
   String get restorationId => widget.restorationId;
@@ -105,15 +108,6 @@ class _GalleryDemoPageState extends State<GalleryDemoPage>
   }
 
   bool get _hasOptions => widget.demo.configurations.length > 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _codeBackgroundColorController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-  }
 
   @override
   void dispose() {

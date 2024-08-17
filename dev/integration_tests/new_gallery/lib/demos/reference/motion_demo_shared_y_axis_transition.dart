@@ -20,16 +20,10 @@ class SharedYAxisTransitionDemo extends StatefulWidget {
 class _SharedYAxisTransitionDemoState extends State<SharedYAxisTransitionDemo>
     with SingleTickerProviderStateMixin {
   bool _isAlphabetical = false;
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-  }
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 300),
+    vsync: this,
+  );
 
   final ListView _recentList = ListView(
     // Adding [UniqueKey] to make sure the widget rebuilds when transitioning.

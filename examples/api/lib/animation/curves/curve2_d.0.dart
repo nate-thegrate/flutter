@@ -58,20 +58,15 @@ class FollowCurve2D extends StatefulWidget {
 
 class _FollowCurve2DState extends State<FollowCurve2D> with TickerProviderStateMixin {
   // The animation controller for this animation.
-  late AnimationController controller;
-  // The animation that will be used to apply the widget's animation curve.
-  late Animation<double> animation;
+  late AnimationController controller = AnimationController(
+    duration: widget.duration,
+    vsync: this,
+  )..addListener(() => setState(() {}))
+   ..repeat(); // This controller will repeat indefinitely.
+               // To make it "bounce" back and forth, set the reverse parameter to true.
 
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(duration: widget.duration, vsync: this);
-    animation = CurvedAnimation(parent: controller, curve: widget.curve);
-    // Have the controller repeat indefinitely. If you want it to "bounce" back
-    // and forth, set the reverse parameter to true.
-    controller.repeat();
-    controller.addListener(() => setState(() {}));
-  }
+  // The animation that will be used to apply the widget's animation curve.
+  late Animation<double> animation = CurvedAnimation(parent: controller, curve: widget.curve);
 
   @override
   void dispose() {

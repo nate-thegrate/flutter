@@ -45,19 +45,13 @@ class ScrollableTabsDemo extends StatefulWidget {
 }
 
 class ScrollableTabsDemoState extends State<ScrollableTabsDemo> with SingleTickerProviderStateMixin {
-  TabController? _controller;
+  late final TabController _controller = TabController(vsync: this, length: _allPages.length);
   TabsDemoStyle _demoStyle = TabsDemoStyle.iconsAndText;
   bool _customIndicator = false;
 
   @override
-  void initState() {
-    super.initState();
-    _controller = TabController(vsync: this, length: _allPages.length);
-  }
-
-  @override
   void dispose() {
-    _controller!.dispose();
+    _controller.dispose();
     super.dispose();
   }
 

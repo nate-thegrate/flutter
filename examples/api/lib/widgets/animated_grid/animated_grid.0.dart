@@ -19,20 +19,13 @@ class AnimatedGridSample extends StatefulWidget {
 
 class _AnimatedGridSampleState extends State<AnimatedGridSample> {
   final GlobalKey<AnimatedGridState> _gridKey = GlobalKey<AnimatedGridState>();
-  late ListModel<int> _list;
+  late final ListModel<int> _list = ListModel<int>(
+    listKey: _gridKey,
+    initialItems: <int>[0, 1, 2, 3, 4, 5],
+    removedItemBuilder: _buildRemovedItem,
+  );
   int? _selectedItem;
-  late int _nextItem; // The next item inserted when the user presses the '+' button.
-
-  @override
-  void initState() {
-    super.initState();
-    _list = ListModel<int>(
-      listKey: _gridKey,
-      initialItems: <int>[0, 1, 2, 3, 4, 5],
-      removedItemBuilder: _buildRemovedItem,
-    );
-    _nextItem = 6;
-  }
+  int _nextItem = 6; // The next item inserted when the user presses the '+' button.
 
   // Used to build list items that haven't been removed.
   Widget _buildItem(BuildContext context, int index, Animation<double> animation) {

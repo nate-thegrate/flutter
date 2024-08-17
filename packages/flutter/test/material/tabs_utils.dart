@@ -71,17 +71,11 @@ class TabControllerFrame extends StatefulWidget {
 }
 
 class TabControllerFrameState extends State<TabControllerFrame> with SingleTickerProviderStateMixin {
-  late TabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(
-      vsync: this,
-      length: widget.length,
-      initialIndex: widget.initialIndex,
-    );
-  }
+  late final TabController _controller = TabController(
+    vsync: this,
+    length: widget.length,
+    initialIndex: widget.initialIndex,
+  );
 
   @override
   void dispose() {

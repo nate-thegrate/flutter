@@ -35,33 +35,21 @@ class Backdrop extends StatefulWidget {
 }
 
 class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
-  late AnimationController _settingsPanelController;
-  late AnimationController _iconController;
-  late FocusNode _settingsPageFocusNode;
-  late ValueNotifier<bool> _isSettingsOpenNotifier;
-  late Widget _settingsPage;
-  late Widget _homePage;
-
-  @override
-  void initState() {
-    super.initState();
-    _settingsPanelController = AnimationController(
-        vsync: this,
-        duration: widget.isDesktop
-            ? settingsPanelMobileAnimationDuration
-            : settingsPanelDesktopAnimationDuration);
-    _iconController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-    _settingsPageFocusNode = FocusNode();
-    _isSettingsOpenNotifier = ValueNotifier<bool>(false);
-    _settingsPage = widget.settingsPage ??
-        SettingsPage(
-          animationController: _settingsPanelController,
-        );
-    _homePage = widget.homePage ?? const HomePage();
-  }
+  late final AnimationController _settingsPanelController = AnimationController(
+    vsync: this,
+    duration: widget.isDesktop
+        ? settingsPanelMobileAnimationDuration
+        : settingsPanelDesktopAnimationDuration,
+  );
+  late final AnimationController _iconController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+  final FocusNode _settingsPageFocusNode = FocusNode();
+  final ValueNotifier<bool> _isSettingsOpenNotifier = ValueNotifier<bool>(false);
+  late final Widget _settingsPage = widget.settingsPage
+    ?? SettingsPage(animationController: _settingsPanelController);
+  late final Widget _homePage = widget.homePage ?? const HomePage();
 
   @override
   void dispose() {

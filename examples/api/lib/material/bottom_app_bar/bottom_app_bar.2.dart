@@ -32,7 +32,7 @@ class _BottomAppBarDemoState extends State<BottomAppBarDemo> {
     (int index) => Container(color: colors[index], height: 150.0),
   ).reversed.toList();
 
-  late ScrollController _controller;
+  late final ScrollController _controller = ScrollController()..addListener(_listen);
   bool _showFab = true;
   bool _isElevated = true;
   bool _isVisible = true;
@@ -85,15 +85,7 @@ class _BottomAppBarDemoState extends State<BottomAppBarDemo> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _controller = ScrollController();
-    _controller.addListener(_listen);
-  }
-
-  @override
   void dispose() {
-    _controller.removeListener(_listen);
     _controller.dispose();
     super.dispose();
   }

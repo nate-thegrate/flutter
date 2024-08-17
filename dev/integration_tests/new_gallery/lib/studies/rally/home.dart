@@ -281,27 +281,15 @@ class _RallyTab extends StatefulWidget {
   _RallyTabState createState() => _RallyTabState();
 }
 
-class _RallyTabState extends State<_RallyTab>
-    with SingleTickerProviderStateMixin {
-  late Animation<double> _titleSizeAnimation;
-  late Animation<double> _titleFadeAnimation;
-  late Animation<double> _iconFadeAnimation;
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _titleSizeAnimation = _controller.view;
-    _titleFadeAnimation = _controller.drive(CurveTween(curve: Curves.easeOut));
-    _iconFadeAnimation = _controller.drive(Tween<double>(begin: 0.6, end: 1));
-    if (widget.isExpanded) {
-      _controller.value = 1;
-    }
-  }
+class _RallyTabState extends State<_RallyTab> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+    value: widget.isExpanded ? 1.0 : 0.0,
+  );
+  late final Animation<double> _titleSizeAnimation = _controller.view;
+  late final Animation<double> _titleFadeAnimation = _controller.drive(CurveTween(curve: Curves.easeOut));
+  late final Animation<double> _iconFadeAnimation = _controller.drive(Tween<double>(begin: 0.6, end: 1));
 
   @override
   void didUpdateWidget(_RallyTab oldWidget) {

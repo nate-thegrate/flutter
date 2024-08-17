@@ -455,7 +455,7 @@ class CupertinoNavigationBar extends StatefulWidget implements ObstructingPrefer
 // don't change when rebuilding the nav bar, causing the sub-components to
 // lose their own states.
 class _CupertinoNavigationBarState extends State<CupertinoNavigationBar> {
-  late _NavigationBarStaticComponentsKeys keys;
+  late final _NavigationBarStaticComponentsKeys keys = _NavigationBarStaticComponentsKeys();
 
   ScrollNotificationObserverState? _scrollNotificationObserver;
   double _scrollAnimationValue = 0.0;
@@ -475,12 +475,6 @@ class _CupertinoNavigationBarState extends State<CupertinoNavigationBar> {
       _scrollNotificationObserver = null;
     }
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    keys = _NavigationBarStaticComponentsKeys();
   }
 
   void _handleScrollNotification(ScrollNotification notification) {
@@ -798,13 +792,7 @@ class CupertinoSliverNavigationBar extends StatefulWidget {
 // don't change when rebuilding the nav bar, causing the sub-components to
 // lose their own states.
 class _CupertinoSliverNavigationBarState extends State<CupertinoSliverNavigationBar> {
-  late _NavigationBarStaticComponentsKeys keys;
-
-  @override
-  void initState() {
-    super.initState();
-    keys = _NavigationBarStaticComponentsKeys();
-  }
+  late final _NavigationBarStaticComponentsKeys keys = _NavigationBarStaticComponentsKeys();
 
   @override
   Widget build(BuildContext context) {

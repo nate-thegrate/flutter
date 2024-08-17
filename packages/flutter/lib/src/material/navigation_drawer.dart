@@ -644,15 +644,11 @@ class _SelectableAnimatedBuilder extends StatefulWidget {
 /// [_SelectableAnimatedBuilder.builder].
 class _SelectableAnimatedBuilderState extends State<_SelectableAnimatedBuilder>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-    _controller.duration = widget.duration;
-    _controller.value = widget.isSelected ? 1.0 : 0.0;
-  }
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: widget.duration,
+    value: widget.isSelected ? 1.0 : 0.0,
+  );
 
   @override
   void didUpdateWidget(_SelectableAnimatedBuilder oldWidget) {

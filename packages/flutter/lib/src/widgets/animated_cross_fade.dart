@@ -252,30 +252,23 @@ class AnimatedCrossFade extends StatefulWidget {
 }
 
 class _AnimatedCrossFadeState extends State<AnimatedCrossFade> with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _firstAnimation;
-  late Animation<double> _secondAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      reverseDuration: widget.reverseDuration,
-      vsync: this,
-    );
-    if (widget.crossFadeState == CrossFadeState.showSecond) {
-      _controller.value = 1.0;
-    }
-    _firstAnimation = _initAnimation(widget.firstCurve, true);
-    _secondAnimation = _initAnimation(widget.secondCurve, false);
-    _controller.addStatusListener((AnimationStatus status) {
+  late final AnimationController _controller = AnimationController(
+    duration: widget.duration,
+    reverseDuration: widget.reverseDuration,
+    vsync: this,
+    value: switch (widget.crossFadeState) {
+      CrossFadeState.showFirst  => 0.0,
+      CrossFadeState.showSecond => 1.0,
+    },
+  )..addStatusListener((AnimationStatus status) {
       setState(() {
         // Trigger a rebuild because it depends on _isTransitioning, which
         // changes its value together with animation status.
       });
     });
-  }
+
+  late Animation<double> _firstAnimation = _initAnimation(widget.firstCurve, true);
+  late Animation<double> _secondAnimation = _initAnimation(widget.secondCurve, false);
 
   Animation<double> _initAnimation(Curve curve, bool inverted) {
     Animation<double> result = _controller.drive(CurveTween(curve: curve));

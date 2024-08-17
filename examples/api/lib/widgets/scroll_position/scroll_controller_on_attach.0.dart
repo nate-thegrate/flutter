@@ -16,7 +16,13 @@ class ScrollControllerDemo extends StatefulWidget {
 }
 
 class _ScrollControllerDemoState extends State<ScrollControllerDemo> {
-  late final ScrollController _controller;
+  late final ScrollController _controller = ScrollController(
+    // These methods will be called in response to a scroll position
+    // being attached to or detached from this ScrollController. This happens
+    // when the Scrollable is built.
+    onAttach: _handlePositionAttach,
+    onDetach: _handlePositionDetach,
+  );
   bool isScrolling = false;
 
   void _handleScrollChange() {
@@ -39,18 +45,6 @@ class _ScrollControllerDemoState extends State<ScrollControllerDemo> {
     // Here the isScrollingNotifier will be used to inform when scrolling starts
     // and stops and change the AppBar's color in response.
     position.isScrollingNotifier.removeListener(_handleScrollChange);
-  }
-
-  @override
-  void initState() {
-    _controller = ScrollController(
-      // These methods will be called in response to a scroll position
-      // being attached to or detached from this ScrollController. This happens
-      // when the Scrollable is built.
-      onAttach: _handlePositionAttach,
-      onDetach: _handlePositionDetach,
-    );
-    super.initState();
   }
 
   @override

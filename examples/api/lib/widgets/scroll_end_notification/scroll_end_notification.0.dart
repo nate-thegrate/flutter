@@ -33,19 +33,13 @@ class _ScrollEndNotificationExampleState extends State<ScrollEndNotificationExam
   static const int itemCount = 25;
   static const double itemExtent = 100;
 
-  late final ScrollController scrollController;
+  final ScrollController scrollController = ScrollController();
   late double lastScrollOffset;
 
   @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
   void dispose() {
-    super.dispose();
     scrollController.dispose();
+    super.dispose();
   }
 
   // After an interactive scroll "ends", auto-scroll so that last item in the

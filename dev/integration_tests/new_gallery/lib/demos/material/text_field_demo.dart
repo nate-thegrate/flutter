@@ -118,17 +118,11 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
     with RestorationMixin {
   PersonData person = PersonData();
 
-  late FocusNode _phoneNumber, _email, _lifeStory, _password, _retypePassword;
-
-  @override
-  void initState() {
-    super.initState();
-    _phoneNumber = FocusNode();
-    _email = FocusNode();
-    _lifeStory = FocusNode();
-    _password = FocusNode();
-    _retypePassword = FocusNode();
-  }
+  final FocusNode _phoneNumber = FocusNode();
+  final FocusNode _email = FocusNode();
+  final FocusNode _lifeStory = FocusNode();
+  final FocusNode _password = FocusNode();
+  final FocusNode _retypePassword = FocusNode();
 
   @override
   void dispose() {

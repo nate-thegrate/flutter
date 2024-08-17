@@ -249,16 +249,10 @@ class _SingleTickerTest extends StatefulWidget {
 }
 
 class _SingleTickerTestState extends State<_SingleTickerTest> with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 100),
-    );
-  }
+  late final AnimationController controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 100),
+  );
 
   @override
   Widget build(BuildContext context) {

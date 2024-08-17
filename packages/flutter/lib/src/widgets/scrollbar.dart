@@ -1331,8 +1331,14 @@ class RawScrollbarState<T extends RawScrollbar> extends State<T> with TickerProv
   double? _startDragThumbOffset;
   ScrollController? _cachedController;
   Timer? _fadeoutTimer;
-  late AnimationController _fadeoutAnimationController;
-  late CurvedAnimation _fadeoutOpacityAnimation;
+  late final AnimationController _fadeoutAnimationController = AnimationController(
+    vsync: this,
+    duration: widget.fadeDuration,
+  )..addStatusListener(_validateInteractions);
+  late final CurvedAnimation _fadeoutOpacityAnimation = CurvedAnimation(
+    parent: _fadeoutAnimationController,
+    curve: Curves.fastOutSlowIn,
+  );
   final GlobalKey  _scrollbarPainterKey = GlobalKey();
   bool _hoverIsActive = false;
   Drag? _thumbDrag;
@@ -1348,7 +1354,19 @@ class RawScrollbarState<T extends RawScrollbar> extends State<T> with TickerProv
   /// Can be customized by subclasses to change scrollbar behavior by overriding
   /// [updateScrollbarPainter].
   @protected
-  late final ScrollbarPainter scrollbarPainter;
+  late final ScrollbarPainter scrollbarPainter = ScrollbarPainter(
+    color: widget.thumbColor ?? const Color(0x66BCBCBC),
+    fadeoutOpacityAnimation: _fadeoutOpacityAnimation,
+    thickness: widget.thickness ?? _kScrollbarThickness,
+    radius: widget.radius,
+    trackRadius: widget.trackRadius,
+    scrollbarOrientation: widget.scrollbarOrientation,
+    mainAxisMargin: widget.mainAxisMargin,
+    shape: widget.shape,
+    crossAxisMargin: widget.crossAxisMargin,
+    minLength: widget.minThumbLength,
+    minOverscrollLength: widget.minOverscrollLength ?? widget.minThumbLength,
+  );
 
   /// Overridable getter to indicate that the scrollbar should be visible, even
   /// when a scroll is not underway.
@@ -1378,32 +1396,6 @@ class RawScrollbarState<T extends RawScrollbar> extends State<T> with TickerProv
   ///   * [RawScrollbar.interactive], which overrides the default behavior.
   @protected
   bool get enableGestures => widget.interactive ?? true;
-
-  @override
-  void initState() {
-    super.initState();
-    _fadeoutAnimationController = AnimationController(
-      vsync: this,
-      duration: widget.fadeDuration,
-    )..addStatusListener(_validateInteractions);
-    _fadeoutOpacityAnimation = CurvedAnimation(
-      parent: _fadeoutAnimationController,
-      curve: Curves.fastOutSlowIn,
-    );
-    scrollbarPainter = ScrollbarPainter(
-      color: widget.thumbColor ?? const Color(0x66BCBCBC),
-      fadeoutOpacityAnimation: _fadeoutOpacityAnimation,
-      thickness: widget.thickness ?? _kScrollbarThickness,
-      radius: widget.radius,
-      trackRadius: widget.trackRadius,
-      scrollbarOrientation: widget.scrollbarOrientation,
-      mainAxisMargin: widget.mainAxisMargin,
-      shape: widget.shape,
-      crossAxisMargin: widget.crossAxisMargin,
-      minLength: widget.minThumbLength,
-      minOverscrollLength: widget.minOverscrollLength ?? widget.minThumbLength,
-    );
-  }
 
   @override
   void didChangeDependencies() {

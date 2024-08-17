@@ -279,15 +279,9 @@ class CupertinoCheckbox extends StatefulWidget {
 
 class _CupertinoCheckboxState extends State<CupertinoCheckbox> with TickerProviderStateMixin, ToggleableStateMixin {
   final _CheckboxPainter _painter = _CheckboxPainter();
-  bool? _previousValue;
+  late bool? _previousValue = widget.value;
 
   bool focused = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _previousValue = widget.value;
-  }
 
   @override
   void didUpdateWidget(CupertinoCheckbox oldWidget) {

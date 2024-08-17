@@ -2604,12 +2604,20 @@ class ScaffoldState extends State<Scaffold> with TickerProviderStateMixin, Resto
   }
 
   // Floating Action Button API
-  late AnimationController _floatingActionButtonMoveController;
-  late FloatingActionButtonAnimator _floatingActionButtonAnimator;
-  FloatingActionButtonLocation? _previousFloatingActionButtonLocation;
-  FloatingActionButtonLocation? _floatingActionButtonLocation;
+  late final AnimationController _floatingActionButtonMoveController = AnimationController(
+    vsync: this,
+    value: 1.0,
+    duration: kFloatingActionButtonSegue * 2,
+  );
+  late FloatingActionButtonLocation _floatingActionButtonLocation = widget.floatingActionButtonLocation ?? _kDefaultFloatingActionButtonLocation;
+  late FloatingActionButtonAnimator _floatingActionButtonAnimator = widget.floatingActionButtonAnimator ?? _kDefaultFloatingActionButtonAnimator;
+  late FloatingActionButtonLocation _previousFloatingActionButtonLocation = _floatingActionButtonLocation;
 
-  late AnimationController _floatingActionButtonVisibilityController;
+
+  late final AnimationController _floatingActionButtonVisibilityController = AnimationController(
+    duration: kFloatingActionButtonSegue,
+    vsync: this,
+  );
 
   /// Gets the current value of the visibility animation for the
   /// [Scaffold.floatingActionButton].
@@ -2631,11 +2639,11 @@ class ScaffoldState extends State<Scaffold> with TickerProviderStateMixin, Resto
 
   // Moves the Floating Action Button to the new Floating Action Button Location.
   void _moveFloatingActionButton(final FloatingActionButtonLocation newLocation) {
-    FloatingActionButtonLocation? previousLocation = _floatingActionButtonLocation;
+    FloatingActionButtonLocation previousLocation = _floatingActionButtonLocation;
     double restartAnimationFrom = 0.0;
     // If the Floating Action Button is moving right now, we need to start from a snapshot of the current transition.
     if (_floatingActionButtonMoveController.isAnimating) {
-      previousLocation = _TransitionSnapshotFabLocation(_previousFloatingActionButtonLocation!, _floatingActionButtonLocation!, _floatingActionButtonAnimator, _floatingActionButtonMoveController.value);
+      previousLocation = _TransitionSnapshotFabLocation(_previousFloatingActionButtonLocation, _floatingActionButtonLocation, _floatingActionButtonAnimator, _floatingActionButtonMoveController.value);
       restartAnimationFrom = _floatingActionButtonAnimator.getAnimationRestart(_floatingActionButtonMoveController.value);
     }
 
@@ -2668,29 +2676,13 @@ class ScaffoldState extends State<Scaffold> with TickerProviderStateMixin, Resto
 
   // INTERNALS
 
-  late _ScaffoldGeometryNotifier _geometryNotifier;
+  late final _ScaffoldGeometryNotifier _geometryNotifier = _ScaffoldGeometryNotifier(
+    const ScaffoldGeometry(),
+    context,
+  );
 
   bool get _resizeToAvoidBottomInset {
     return widget.resizeToAvoidBottomInset ?? true;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _geometryNotifier = _ScaffoldGeometryNotifier(const ScaffoldGeometry(), context);
-    _floatingActionButtonLocation = widget.floatingActionButtonLocation ?? _kDefaultFloatingActionButtonLocation;
-    _floatingActionButtonAnimator = widget.floatingActionButtonAnimator ?? _kDefaultFloatingActionButtonAnimator;
-    _previousFloatingActionButtonLocation = _floatingActionButtonLocation;
-    _floatingActionButtonMoveController = AnimationController(
-      vsync: this,
-      value: 1.0,
-      duration: kFloatingActionButtonSegue * 2,
-    );
-
-    _floatingActionButtonVisibilityController = AnimationController(
-      duration: kFloatingActionButtonSegue,
-      vsync: this,
-    );
   }
 
   @override
@@ -3106,11 +3098,11 @@ class ScaffoldState extends State<Scaffold> with TickerProviderStateMixin, Resto
                   extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
                   minInsets: minInsets,
                   minViewPadding: minViewPadding,
-                  currentFloatingActionButtonLocation: _floatingActionButtonLocation!,
+                  currentFloatingActionButtonLocation: _floatingActionButtonLocation,
                   floatingActionButtonMoveAnimationProgress: _floatingActionButtonMoveController.value,
                   floatingActionButtonMotionAnimator: _floatingActionButtonAnimator,
                   geometryNotifier: _geometryNotifier,
-                  previousFloatingActionButtonLocation: _previousFloatingActionButtonLocation!,
+                  previousFloatingActionButtonLocation: _previousFloatingActionButtonLocation,
                   textDirection: textDirection,
                   isSnackBarFloating: isSnackBarFloating,
                   extendBodyBehindMaterialBanner: extendBodyBehindMaterialBanner,

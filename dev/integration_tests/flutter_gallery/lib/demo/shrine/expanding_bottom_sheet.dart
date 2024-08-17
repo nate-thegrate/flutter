@@ -105,7 +105,10 @@ class ExpandingBottomSheetState extends State<ExpandingBottomSheet> with TickerP
   double _width = _kWidthForCartIcon;
 
   // Controller for the opening and closing of the ExpandingBottomSheet
-  late AnimationController _controller;
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this,
+  );
 
   // Animations for the opening and closing of the ExpandingBottomSheet
   late Animation<double> _widthAnimation;
@@ -114,15 +117,6 @@ class ExpandingBottomSheetState extends State<ExpandingBottomSheet> with TickerP
   late Animation<double> _cartOpacityAnimation;
   late Animation<double> _shapeAnimation;
   late Animation<Offset> _slideAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-  }
 
   @override
   void dispose() {
@@ -403,21 +397,14 @@ class _ProductThumbnailRowState extends State<ProductThumbnailRow> {
 
   // _list represents what's currently on screen. If _internalList updates,
   // it will need to be updated to match it.
-  late _ListModel _list;
+  late final _ListModel _list = _ListModel(
+    listKey: _listKey,
+    initialItems: ScopedModel.of<AppStateModel>(context).productsInCart.keys.toList(),
+    removedItemBuilder: _buildRemovedThumbnail,
+  );
 
   // _internalList represents the list as it is updated by the AppStateModel.
-  late List<int> _internalList;
-
-  @override
-  void initState() {
-    super.initState();
-    _list = _ListModel(
-      listKey: _listKey,
-      initialItems: ScopedModel.of<AppStateModel>(context).productsInCart.keys.toList(),
-      removedItemBuilder: _buildRemovedThumbnail,
-    );
-    _internalList = List<int>.from(_list.list);
-  }
+  late List<int> _internalList = List<int>.from(_list.list);
 
   Product _productWithId(int productId) {
     final AppStateModel model = ScopedModel.of<AppStateModel>(context);

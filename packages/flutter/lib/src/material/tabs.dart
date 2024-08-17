@@ -1330,18 +1330,19 @@ class _TabBarState extends State<TabBar> {
   _IndicatorPainter? _indicatorPainter;
   int? _currentIndex;
   late double _tabStripWidth;
-  late List<GlobalKey> _tabKeys;
-  late List<EdgeInsetsGeometry> _labelPaddings;
-  bool _debugHasScheduledValidTabsCountCheck = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // If indicatorSize is TabIndicatorSize.label, _tabKeys[i] is used to find
-    // the width of tab widget i. See _IndicatorPainter.indicatorRect().
-    _tabKeys = widget.tabs.map((Widget tab) => GlobalKey()).toList();
-    _labelPaddings = List<EdgeInsetsGeometry>.filled(widget.tabs.length, EdgeInsets.zero, growable: true);
-  }
+  // If indicatorSize is TabIndicatorSize.label, _tabKeys[i] is used to find
+  // the width of tab widget i. See _IndicatorPainter.indicatorRect().
+  late final List<GlobalKey> _tabKeys = List<GlobalKey>.generate(
+    widget.tabs.length,
+    (int index) => GlobalKey(),
+  );
+  late final List<EdgeInsetsGeometry> _labelPaddings = List<EdgeInsetsGeometry>.filled(
+    widget.tabs.length,
+    EdgeInsets.zero,
+    growable: true,
+  );
+  bool _debugHasScheduledValidTabsCountCheck = false;
 
   TabBarTheme get _defaults {
     if (Theme.of(context).useMaterial3) {

@@ -551,7 +551,9 @@ class SelectableText extends StatefulWidget {
 class _SelectableTextState extends State<SelectableText> implements TextSelectionGestureDetectorBuilderDelegate {
   EditableTextState? get _editableText => editableTextKey.currentState;
 
-  late _TextSpanEditingController _controller;
+  late _TextSpanEditingController _controller = _TextSpanEditingController(
+    textSpan: widget.textSpan ?? TextSpan(text: widget.data),
+  )..addListener(_onControllerChanged);
 
   FocusNode? _focusNode;
   FocusNode get _effectiveFocusNode =>
@@ -559,7 +561,8 @@ class _SelectableTextState extends State<SelectableText> implements TextSelectio
 
   bool _showSelectionHandles = false;
 
-  late _SelectableTextSelectionGestureDetectorBuilder _selectionGestureDetectorBuilder;
+  late final _SelectableTextSelectionGestureDetectorBuilder _selectionGestureDetectorBuilder =
+      _SelectableTextSelectionGestureDetectorBuilder(state: this);
 
   // API for TextSelectionGestureDetectorBuilderDelegate.
   @override
@@ -573,27 +576,15 @@ class _SelectableTextState extends State<SelectableText> implements TextSelectio
   // End of API for TextSelectionGestureDetectorBuilderDelegate.
 
   @override
-  void initState() {
-    super.initState();
-    _selectionGestureDetectorBuilder = _SelectableTextSelectionGestureDetectorBuilder(
-      state: this,
-    );
-    _controller = _TextSpanEditingController(
-        textSpan: widget.textSpan ?? TextSpan(text: widget.data),
-    );
-    _controller.addListener(_onControllerChanged);
-  }
-
-  @override
   void didUpdateWidget(SelectableText oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.data != oldWidget.data || widget.textSpan != oldWidget.textSpan) {
-      _controller.removeListener(_onControllerChanged);
-      _controller.dispose();
+      _controller
+        ..removeListener(_onControllerChanged)
+        ..dispose();
       _controller = _TextSpanEditingController(
           textSpan: widget.textSpan ?? TextSpan(text: widget.data),
-      );
-      _controller.addListener(_onControllerChanged);
+      )..addListener(_onControllerChanged);
     }
     if (_effectiveFocusNode.hasFocus && _controller.selection.isCollapsed) {
       _showSelectionHandles = false;

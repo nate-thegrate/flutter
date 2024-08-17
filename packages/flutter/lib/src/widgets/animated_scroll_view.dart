@@ -1217,24 +1217,9 @@ abstract class _SliverAnimatedMultiBoxAdaptor extends StatefulWidget {
 }
 
 abstract class _SliverAnimatedMultiBoxAdaptorState<T extends _SliverAnimatedMultiBoxAdaptor> extends State<T> with TickerProviderStateMixin {
-
-  @override
-  void initState() {
-    super.initState();
-    _itemsCount = widget.initialItemCount;
-  }
-
-  @override
-  void dispose() {
-    for (final _ActiveItem item in _incomingItems.followedBy(_outgoingItems)) {
-      item.controller!.dispose();
-    }
-    super.dispose();
-  }
-
   final List<_ActiveItem> _incomingItems = <_ActiveItem>[];
   final List<_ActiveItem> _outgoingItems = <_ActiveItem>[];
-  int _itemsCount = 0;
+  late int _itemsCount = widget.initialItemCount;
 
   _ActiveItem? _removeActiveItemAt(List<_ActiveItem> items, int itemIndex) {
     final int i = binarySearch(items, _ActiveItem.index(itemIndex));
@@ -1426,5 +1411,13 @@ abstract class _SliverAnimatedMultiBoxAdaptorState<T extends _SliverAnimatedMult
     for (int i = _itemsCount - 1 ; i >= 0; i--) {
       removeItem(i, builder, duration: duration);
     }
+  }
+
+  @override
+  void dispose() {
+    for (final _ActiveItem item in _incomingItems.followedBy(_outgoingItems)) {
+      item.controller!.dispose();
+    }
+    super.dispose();
   }
 }

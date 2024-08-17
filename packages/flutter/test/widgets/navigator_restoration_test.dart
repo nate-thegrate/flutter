@@ -1255,23 +1255,17 @@ class RouteFutureWidget extends StatefulWidget {
 }
 
 class RouteFutureWidgetState extends State<RouteFutureWidget> with RestorationMixin {
-  late RestorableRouteFuture<int> routeFuture;
+  late final RestorableRouteFuture<int> routeFuture = RestorableRouteFuture<int>(
+    onPresent: (NavigatorState navigatorState, Object? arguments) {
+      return navigatorState.restorablePushNamed(arguments! as String);
+    },
+    onComplete: (int i) {
+      setState(() {
+        value = i;
+      });
+    },
+  );
   int? value;
-
-  @override
-  void initState() {
-    super.initState();
-    routeFuture = RestorableRouteFuture<int>(
-      onPresent: (NavigatorState navigatorState, Object? arguments) {
-        return navigatorState.restorablePushNamed(arguments! as String);
-      },
-      onComplete: (int i) {
-        setState(() {
-          value = i;
-        });
-      },
-    );
-  }
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {

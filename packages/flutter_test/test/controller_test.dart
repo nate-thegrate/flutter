@@ -1856,13 +1856,7 @@ class _StatefulSlider extends StatefulWidget {
 }
 
 class _StatefulSliderState extends State<_StatefulSlider> {
-  double _value = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _value = widget.initialValue;
-  }
+  late double _value = widget.initialValue;
 
   @override
   Widget build(BuildContext context) {

@@ -172,26 +172,28 @@ class GlowingOverscrollIndicator extends StatefulWidget {
 }
 
 class _GlowingOverscrollIndicatorState extends State<GlowingOverscrollIndicator> with TickerProviderStateMixin {
-  _GlowController? _leadingController;
-  _GlowController? _trailingController;
-  Listenable? _leadingAndTrailingListener;
-
-  @override
-  void initState() {
-    super.initState();
-    _leadingController = _GlowController(vsync: this, color: widget.color, axis: widget.axis);
-    _trailingController = _GlowController(vsync: this, color: widget.color, axis: widget.axis);
-    _leadingAndTrailingListener = Listenable.merge(<Listenable>[_leadingController!, _trailingController!]);
-  }
+  late final _GlowController _leadingController = _GlowController(
+    vsync: this,
+    color: widget.color,
+    axis: widget.axis,
+  );
+  late final _GlowController _trailingController = _GlowController(
+    vsync: this,
+    color: widget.color,
+    axis: widget.axis,
+  );
+  late final Listenable _leadingAndTrailingListener = Listenable.merge(
+    <Listenable>{_leadingController, _trailingController},
+  );
 
   @override
   void didUpdateWidget(GlowingOverscrollIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color || oldWidget.axis != widget.axis) {
-      _leadingController!.color = widget.color;
-      _leadingController!.axis = widget.axis;
-      _trailingController!.color = widget.color;
-      _trailingController!.axis = widget.axis;
+      _leadingController.color = widget.color;
+      _leadingController.axis = widget.axis;
+      _trailingController.color = widget.color;
+      _trailingController.axis = widget.axis;
     }
   }
 
@@ -218,10 +220,10 @@ class _GlowingOverscrollIndicatorState extends State<GlowingOverscrollIndicator>
     // before glow disappears, so the current pixels is -190.0,
     // in this case, we should move the glow up 10.0 pixels and should not
     // overflow the scrollable widget's edge. https://github.com/flutter/flutter/issues/64149.
-    _leadingController!._paintOffsetScrollPixels =
-      -math.min(notification.metrics.pixels - notification.metrics.minScrollExtent, _leadingController!._paintOffset);
-    _trailingController!._paintOffsetScrollPixels =
-      -math.min(notification.metrics.maxScrollExtent - notification.metrics.pixels, _trailingController!._paintOffset);
+    _leadingController._paintOffsetScrollPixels =
+      -math.min(notification.metrics.pixels - notification.metrics.minScrollExtent, _leadingController._paintOffset);
+    _trailingController._paintOffsetScrollPixels =
+      -math.min(notification.metrics.maxScrollExtent - notification.metrics.pixels, _trailingController._paintOffset);
 
     if (notification is OverscrollNotification) {
       _GlowController? controller;
@@ -264,8 +266,8 @@ class _GlowingOverscrollIndicatorState extends State<GlowingOverscrollIndicator>
       }
     } else if ((notification is ScrollEndNotification && notification.dragDetails != null) ||
                (notification is ScrollUpdateNotification && notification.dragDetails != null)) {
-      _leadingController!.scrollEnd();
-      _trailingController!.scrollEnd();
+      _leadingController.scrollEnd();
+      _trailingController.scrollEnd();
     }
     _lastNotificationType = notification.runtimeType;
     return false;
@@ -273,8 +275,8 @@ class _GlowingOverscrollIndicatorState extends State<GlowingOverscrollIndicator>
 
   @override
   void dispose() {
-    _leadingController!.dispose();
-    _trailingController!.dispose();
+    _leadingController.dispose();
+    _trailingController.dispose();
     super.dispose();
   }
 

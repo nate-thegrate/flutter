@@ -1317,21 +1317,13 @@ class _MasterDetailScaffold extends StatefulWidget {
 
 class _MasterDetailScaffoldState extends State<_MasterDetailScaffold>
     implements _PageOpener {
-  late FloatingActionButtonLocation floatingActionButtonLocation;
-  late double detailPageFABGutterWidth;
-  late double detailPageFABlessGutterWidth;
-  late double masterViewWidth;
+  FloatingActionButtonLocation floatingActionButtonLocation = FloatingActionButtonLocation.endTop;
+  double detailPageFABGutterWidth = _kDetailPageFABGutterWidth;
+  double masterViewWidth = _kMasterViewWidth;
+  late double detailPageFABlessGutterWidth = widget.detailPageFABlessGutterWidth
+      ?? _kDetailPageFABlessGutterWidth;
 
   final ValueNotifier<Object?> _detailArguments = ValueNotifier<Object?>(null);
-
-  @override
-  void initState() {
-    super.initState();
-    detailPageFABlessGutterWidth = widget.detailPageFABlessGutterWidth ?? _kDetailPageFABlessGutterWidth;
-    detailPageFABGutterWidth = _kDetailPageFABGutterWidth;
-    masterViewWidth = _kMasterViewWidth;
-    floatingActionButtonLocation = FloatingActionButtonLocation.endTop;
-  }
 
   @override
   void dispose() {

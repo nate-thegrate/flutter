@@ -506,14 +506,8 @@ class CupertinoScrollBehavior extends ScrollBehavior {
 }
 
 class _CupertinoAppState extends State<CupertinoApp> {
-  late HeroController _heroController;
+  final HeroController _heroController = CupertinoApp.createCupertinoHeroController();
   bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
-
-  @override
-  void initState() {
-    super.initState();
-    _heroController = CupertinoApp.createCupertinoHeroController();
-  }
 
   @override
   void dispose() {

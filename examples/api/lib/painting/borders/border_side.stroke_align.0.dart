@@ -24,25 +24,18 @@ class StrokeAlignExample extends StatefulWidget {
   State<StrokeAlignExample> createState() => _StrokeAlignExampleState();
 }
 
-class _StrokeAlignExampleState extends State<StrokeAlignExample> with TickerProviderStateMixin {
-  late final AnimationController animation;
-
-  @override
-  void initState() {
-    super.initState();
-    animation = AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    animation.repeat(reverse: true);
-    animation.addListener(_markDirty);
-  }
+class _StrokeAlignExampleState extends State<StrokeAlignExample> with SingleTickerProviderStateMixin {
+  late final AnimationController animation = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 1),
+  )
+    ..addListener(() => setState(() {}))
+    ..repeat(reverse: true);
 
   @override
   void dispose() {
     animation.dispose();
     super.dispose();
-  }
-
-  void _markDirty() {
-    setState(() {});
   }
 
   static const double borderWidth = 10;

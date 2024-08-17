@@ -54,7 +54,7 @@ class TextButtonExample extends StatefulWidget {
 class _TextButtonExampleState extends State<TextButtonExample> {
   TextDirection textDirection = TextDirection.ltr;
   ThemeMode themeMode = ThemeMode.light;
-  late final ScrollController scrollController;
+  final ScrollController scrollController = ScrollController();
   Future<void>? currentAction;
 
   static const Widget verticalSpacer = SizedBox(height: 16);
@@ -75,12 +75,6 @@ class _TextButtonExampleState extends State<TextButtonExample> {
   static const ImageProvider runningImage = NetworkImage(
     'https://flutter.github.io/assets-for-api-docs/assets/material/text_button_nhu_end.png',
   );
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
 
   @override
   void dispose() {

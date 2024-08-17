@@ -34,19 +34,15 @@ class DynamicColorExample extends StatefulWidget {
 }
 
 class _DynamicColorExampleState extends State<DynamicColorExample> {
-  late ColorScheme currentColorScheme;
+  ColorScheme currentColorScheme = const ColorScheme.light();
   String currentHyperlinkImage = '';
-  late int selectedImage;
-  late bool isLight;
-  late bool isLoading;
+  int selectedImage = 0;
+  bool isLight = true;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    selectedImage = 0;
-    isLight = true;
-    isLoading = true;
-    currentColorScheme = const ColorScheme.light();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _updateImage(widget.images[selectedImage]);
       isLoading = false;

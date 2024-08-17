@@ -727,17 +727,10 @@ class _AlwaysAnimating extends StatefulWidget {
 }
 
 class _AlwaysAnimatingState extends State<_AlwaysAnimating> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 100),
-      vsync: this,
-    );
-    _controller.repeat();
-  }
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 100),
+    vsync: this,
+  )..repeat();
 
   @override
   void dispose() {

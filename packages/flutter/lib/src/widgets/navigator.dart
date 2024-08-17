@@ -3710,10 +3710,9 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
 
     // We have to manually extract the inherited widget in initState because
     // the current context is not fully initialized.
-    final HeroControllerScope? heroControllerScope = context
-      .getElementForInheritedWidgetOfExactType<HeroControllerScope>()
-      ?.widget as HeroControllerScope?;
-    _updateHeroController(heroControllerScope?.controller);
+    _updateHeroController(
+      context.getInheritedWidgetOfExactType<HeroControllerScope>()?.controller,
+    );
 
     if (widget.reportsRouteUpdateToEngine) {
       SystemNavigator.selectSingleEntryHistory();

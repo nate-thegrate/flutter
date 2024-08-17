@@ -1064,31 +1064,21 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
   late ThemeData themeData;
   late MaterialLocalizations localizations;
   _DialPainter? painter;
-  late AnimationController _animationController;
-  late Tween<double> _thetaTween;
-  late Animation<double> _theta;
-  late Tween<double> _radiusTween;
-  late Animation<double> _radius;
+  late final AnimationController _animationController = AnimationController(
+    duration: _kDialAnimateDuration,
+    vsync: this,
+  );
+  late final Tween<double> _thetaTween = Tween<double>(begin: _getThetaForTime(widget.selectedTime));
+  late final Tween<double> _radiusTween = Tween<double>(begin: _getRadiusForTime(widget.selectedTime));
+  late final Animation<double> _theta = _animationController
+    .drive(CurveTween(curve: standardEasing))
+    .drive(_thetaTween)
+    ..addListener(() => setState(() { /* _theta.value has changed */ }));
+  late final Animation<double> _radius = _animationController
+    .drive(CurveTween(curve: standardEasing))
+    .drive(_radiusTween)
+    ..addListener(() => setState(() { /* _radius.value has changed */ }));
   bool _dragging = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: _kDialAnimateDuration,
-      vsync: this,
-    );
-    _thetaTween = Tween<double>(begin: _getThetaForTime(widget.selectedTime));
-    _radiusTween = Tween<double>(begin: _getRadiusForTime(widget.selectedTime));
-    _theta = _animationController
-      .drive(CurveTween(curve: standardEasing))
-      .drive(_thetaTween)
-      ..addListener(() => setState(() { /* _theta.value has changed */ }));
-    _radius = _animationController
-      .drive(CurveTween(curve: standardEasing))
-      .drive(_radiusTween)
-      ..addListener(() => setState(() { /* _radius.value has changed */ }));
-  }
 
   @override
   void didChangeDependencies() {
@@ -1987,18 +1977,8 @@ class _HourMinuteTextField extends StatefulWidget {
 class _HourMinuteTextFieldState extends State<_HourMinuteTextField> with RestorationMixin {
   final RestorableTextEditingController controller = RestorableTextEditingController();
   final RestorableBool controllerHasBeenSet = RestorableBool(false);
-  late FocusNode focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode()
-      ..addListener(() {
-        setState(() {
-          // Rebuild when focus changes.
-        });
-      });
-  }
+  late final FocusNode focusNode = FocusNode()
+    ..addListener(() => setState(() { /* Rebuild when focus changes. */ }));
 
   @override
   void didChangeDependencies() {

@@ -63,18 +63,11 @@ class AnimateSample extends StatefulWidget {
   State<AnimateSample> createState() => _AnimateSampleState();
 }
 
-class _AnimateSampleState extends State<AnimateSample>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    )..forward();
-  }
+class _AnimateSampleState extends State<AnimateSample> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 1),
+  )..forward();
 
   @override
   void dispose() {

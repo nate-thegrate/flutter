@@ -193,7 +193,7 @@ class _SimpleMenuDemo extends StatefulWidget {
 }
 
 class _SimpleMenuDemoState extends State<_SimpleMenuDemo> {
-  late SimpleValue _simpleValue;
+  SimpleValue _simpleValue = SimpleValue.two;
 
   void showAndSetMenuSelection(BuildContext context, SimpleValue value) {
     setState(() {
@@ -212,12 +212,6 @@ class _SimpleMenuDemoState extends State<_SimpleMenuDemo> {
       SimpleValue.two: localizations.demoMenuItemValueTwo,
       SimpleValue.three: localizations.demoMenuItemValueThree,
     }[value]!;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _simpleValue = SimpleValue.two;
   }
 
   @override

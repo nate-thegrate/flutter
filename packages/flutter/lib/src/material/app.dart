@@ -904,15 +904,9 @@ class MaterialScrollBehavior extends ScrollBehavior {
 }
 
 class _MaterialAppState extends State<MaterialApp> {
-  late HeroController _heroController;
+  final HeroController _heroController = MaterialApp.createMaterialHeroController();
 
   bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
-
-  @override
-  void initState() {
-    super.initState();
-    _heroController = MaterialApp.createMaterialHeroController();
-  }
 
   @override
   void dispose() {

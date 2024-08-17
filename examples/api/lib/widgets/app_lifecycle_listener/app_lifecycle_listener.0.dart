@@ -30,31 +30,23 @@ class AppLifecycleDisplay extends StatefulWidget {
 }
 
 class _AppLifecycleDisplayState extends State<AppLifecycleDisplay> {
-  late final AppLifecycleListener _listener;
+  late final AppLifecycleListener _listener = AppLifecycleListener(
+    onShow: () => _handleTransition('show'),
+    onResume: () => _handleTransition('resume'),
+    onHide: () => _handleTransition('hide'),
+    onInactive: () => _handleTransition('inactive'),
+    onPause: () => _handleTransition('pause'),
+    onDetach: () => _handleTransition('detach'),
+    onRestart: () => _handleTransition('restart'),
+    // This fires for each state change. Callbacks above fire only for
+    // specific state transitions.
+    onStateChange: _handleStateChange,
+  );
   final ScrollController _scrollController = ScrollController();
-  final List<String> _states = <String>[];
-  late AppLifecycleState? _state;
-
-  @override
-  void initState() {
-    super.initState();
-    _state = SchedulerBinding.instance.lifecycleState;
-    _listener = AppLifecycleListener(
-      onShow: () => _handleTransition('show'),
-      onResume: () => _handleTransition('resume'),
-      onHide: () => _handleTransition('hide'),
-      onInactive: () => _handleTransition('inactive'),
-      onPause: () => _handleTransition('pause'),
-      onDetach: () => _handleTransition('detach'),
-      onRestart: () => _handleTransition('restart'),
-      // This fires for each state change. Callbacks above fire only for
-      // specific state transitions.
-      onStateChange: _handleStateChange,
-    );
-    if (_state != null) {
-      _states.add(_state!.name);
-    }
-  }
+  late final List<String> _states = <String>[
+    if (_state != null) _state!.name,
+  ];
+  AppLifecycleState? _state = SchedulerBinding.instance.lifecycleState;
 
   @override
   void dispose() {

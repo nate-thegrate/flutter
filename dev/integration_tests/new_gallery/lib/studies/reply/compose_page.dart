@@ -83,17 +83,11 @@ class _SubjectRow extends StatefulWidget {
 }
 
 class _SubjectRowState extends State<_SubjectRow> {
-  TextEditingController? _subjectController;
-
-  @override
-  void initState() {
-    super.initState();
-    _subjectController = TextEditingController(text: widget.subject);
-  }
+  late final TextEditingController _subjectController = TextEditingController(text: widget.subject);
 
   @override
   void dispose() {
-    _subjectController!.dispose();
+    _subjectController.dispose();
     super.dispose();
   }
 
@@ -155,13 +149,7 @@ class _SenderAddressRow extends StatefulWidget {
 }
 
 class __SenderAddressRowState extends State<_SenderAddressRow> {
-  late String senderEmail;
-
-  @override
-  void initState() {
-    super.initState();
-    senderEmail = widget.senderEmail;
-  }
+  late String senderEmail = widget.senderEmail;
 
   @override
   Widget build(BuildContext context) {

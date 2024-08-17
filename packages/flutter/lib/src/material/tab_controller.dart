@@ -459,18 +459,12 @@ class DefaultTabController extends StatefulWidget {
 }
 
 class _DefaultTabControllerState extends State<DefaultTabController> with SingleTickerProviderStateMixin {
-  late TabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(
-      vsync: this,
-      length: widget.length,
-      initialIndex: widget.initialIndex,
-      animationDuration: widget.animationDuration,
-    );
-  }
+  late TabController _controller = TabController(
+    vsync: this,
+    length: widget.length,
+    initialIndex: widget.initialIndex,
+    animationDuration: widget.animationDuration,
+  );
 
   @override
   void dispose() {

@@ -1818,14 +1818,7 @@ class _TappableColorWidget extends StatefulWidget {
 }
 
 class _TappableColorWidgetState extends State<_TappableColorWidget> {
-
-  Color? color;
-
-  @override
-  void initState() {
-    super.initState();
-    color = widget.untappedColor;
-  }
+  late Color color = widget.untappedColor;
 
   @override
   Widget build(BuildContext context) {

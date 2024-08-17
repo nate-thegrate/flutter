@@ -32,22 +32,16 @@ class _IsScrollingListenerExampleState extends State<IsScrollingListenerExample>
   static const int itemCount = 25;
   static const double itemExtent = 100;
 
-  late final ScrollController scrollController;
+  late final ScrollController scrollController = ScrollController(
+    onAttach: (ScrollPosition position) {
+      position.isScrollingNotifier.addListener(handleScrollChange);
+    },
+    onDetach: (ScrollPosition position) {
+      position.isScrollingNotifier.removeListener(handleScrollChange);
+    },
+  );
   late double lastScrollOffset;
   bool isScrolling = false;
-
-  @override
-  void initState() {
-    scrollController = ScrollController(
-      onAttach: (ScrollPosition position) {
-        position.isScrollingNotifier.addListener(handleScrollChange);
-      },
-      onDetach: (ScrollPosition position) {
-        position.isScrollingNotifier.removeListener(handleScrollChange);
-      },
-    );
-    super.initState();
-  }
 
   @override
   void dispose() {

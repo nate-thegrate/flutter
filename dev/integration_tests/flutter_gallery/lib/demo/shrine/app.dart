@@ -22,17 +22,11 @@ class ShrineApp extends StatefulWidget {
 class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMixin {
   // Controller to coordinate both the opening/closing of backdrop and sliding
   // of expanding bottom sheet
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 450),
-      value: 1.0,
-    );
-  }
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 450),
+    value: 1.0,
+  );
 
   @override
   Widget build(BuildContext context) {

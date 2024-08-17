@@ -1280,42 +1280,29 @@ class _SortArrow extends StatefulWidget {
 }
 
 class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
-  late final AnimationController _opacityController;
-  late final CurvedAnimation _opacityAnimation;
+  late final AnimationController _opacityController = AnimationController(
+    value: widget.visible ? 1.0 : 0.0,
+    duration: widget.duration,
+    vsync: this,
+  );
+  late final CurvedAnimation _opacityAnimation = CurvedAnimation(
+    parent: _opacityController,
+    curve: Curves.fastOutSlowIn,
+  )..addListener(_rebuild);
 
-  late final AnimationController _orientationController;
-  late final Animation<double> _orientationAnimation;
-  double _orientationOffset = 0.0;
+  late final AnimationController _orientationController = AnimationController(
+    duration: widget.duration,
+    vsync: this,
+  );
+  late final Animation<double> _orientationAnimation = _orientationController.drive(_turnTween)
+    ..addListener(_rebuild)
+    ..addStatusListener(_resetOrientationAnimation);
+  late double _orientationOffset = widget.visible && !_up! ? math.pi : 0.0;
 
-  bool? _up;
+  late bool? _up = widget.up;
 
   static final Animatable<double> _turnTween = Tween<double>(begin: 0.0, end: math.pi)
     .chain(CurveTween(curve: Curves.easeIn));
-
-  @override
-  void initState() {
-    super.initState();
-    _up = widget.up;
-    _opacityAnimation = CurvedAnimation(
-      parent: _opacityController = AnimationController(
-        duration: widget.duration,
-        vsync: this,
-      ),
-      curve: Curves.fastOutSlowIn,
-    )
-    ..addListener(_rebuild);
-    _opacityController.value = widget.visible ? 1.0 : 0.0;
-    _orientationController = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
-    _orientationAnimation = _orientationController.drive(_turnTween)
-      ..addListener(_rebuild)
-      ..addStatusListener(_resetOrientationAnimation);
-    if (widget.visible) {
-      _orientationOffset = widget.up! ? 0.0 : math.pi;
-    }
-  }
 
   void _rebuild() {
     setState(() {

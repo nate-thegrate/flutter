@@ -62,16 +62,10 @@ class InheritedNotifierExample extends StatefulWidget {
 /// [AnimationController]s can be created with `vsync: this` because of
 /// [TickerProviderStateMixin].
 class _InheritedNotifierExampleState extends State<InheritedNotifierExample> with TickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 10),
-      vsync: this,
-    )..repeat();
-  }
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 10),
+    vsync: this,
+  )..repeat();
 
   @override
   void dispose() {

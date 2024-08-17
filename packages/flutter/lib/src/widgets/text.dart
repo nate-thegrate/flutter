@@ -784,14 +784,9 @@ class _SelectableTextContainer extends StatefulWidget {
 }
 
 class _SelectableTextContainerState extends State<_SelectableTextContainer> {
-  late final _SelectableTextContainerDelegate _selectionDelegate;
+  late final _SelectableTextContainerDelegate _selectionDelegate =
+      _SelectableTextContainerDelegate(_textKey);
   final GlobalKey _textKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    _selectionDelegate = _SelectableTextContainerDelegate(_textKey);
-  }
 
   @override
   void dispose() {

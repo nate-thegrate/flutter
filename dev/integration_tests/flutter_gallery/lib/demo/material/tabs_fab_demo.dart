@@ -46,27 +46,23 @@ class TabsFabDemo extends StatefulWidget {
 class _TabsFabDemoState extends State<TabsFabDemo> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TabController? _controller;
-  late _Page _selectedPage;
+  late final TabController _controller = TabController(
+    vsync: this,
+    length: _allPages.length,
+  )..addListener(_handleTabSelection);
+  late _Page _selectedPage = _allPages[0];
   bool _extendedButtons = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(vsync: this, length: _allPages.length);
-    _controller!.addListener(_handleTabSelection);
-    _selectedPage = _allPages[0];
-  }
 
   @override
   void dispose() {
-    _controller!.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   void _handleTabSelection() {
     setState(() {
-      _selectedPage = _allPages[_controller!.index];
+      _selectedPage = _allPages[_controller.index];
     });
   }
 

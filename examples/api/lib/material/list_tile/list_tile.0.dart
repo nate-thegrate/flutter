@@ -33,34 +33,22 @@ class ListTileExample extends StatefulWidget {
 }
 
 class _ListTileExampleState extends State<ListTileExample> with TickerProviderStateMixin {
-  late final AnimationController _fadeController;
-  late final AnimationController _sizeController;
-  late final Animation<double> _fadeAnimation;
-  late final Animation<double> _sizeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _fadeController = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _sizeController = AnimationController(
-      duration: const Duration(milliseconds: 850),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _fadeAnimation = CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
-    );
-
-    _sizeAnimation = CurvedAnimation(
-      parent: _sizeController,
-      curve: Curves.easeOut,
-    );
-  }
+  late final AnimationController _fadeController = AnimationController(
+    duration: const Duration(seconds: 1),
+    vsync: this,
+  )..repeat(reverse: true);
+  late final AnimationController _sizeController = AnimationController(
+    duration: const Duration(milliseconds: 850),
+    vsync: this,
+  )..repeat(reverse: true);
+  late final Animation<double> _fadeAnimation = CurvedAnimation(
+    parent: _fadeController,
+    curve: Curves.easeInOut,
+  );
+  late final Animation<double> _sizeAnimation = CurvedAnimation(
+    parent: _sizeController,
+    curve: Curves.easeOut,
+  );
 
   @override
   void dispose() {

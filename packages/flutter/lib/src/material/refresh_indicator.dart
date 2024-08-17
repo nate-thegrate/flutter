@@ -267,11 +267,13 @@ class RefreshIndicator extends StatefulWidget {
 /// Contains the state for a [RefreshIndicator]. This class can be used to
 /// programmatically show the refresh indicator, see the [show] method.
 class RefreshIndicatorState extends State<RefreshIndicator> with TickerProviderStateMixin<RefreshIndicator> {
-  late AnimationController _positionController;
-  late AnimationController _scaleController;
-  late Animation<double> _positionFactor;
-  late Animation<double> _scaleFactor;
-  late Animation<double> _value;
+  late final AnimationController _positionController = AnimationController(vsync: this);
+  late final AnimationController _scaleController = AnimationController(vsync: this);
+  late final Animation<double> _positionFactor = _positionController.drive(_kDragSizeFactorLimitTween);
+  late final Animation<double> _scaleFactor = _scaleController.drive(_oneToZeroTween);
+
+  // The "value" of the circular progress indicator during a drag.
+  late final Animation<double> _value = _positionController.drive(_threeQuarterTween);
   late Animation<Color?> _valueColor;
 
   _RefreshIndicatorMode? _mode;
@@ -283,17 +285,6 @@ class RefreshIndicatorState extends State<RefreshIndicator> with TickerProviderS
   static final Animatable<double> _threeQuarterTween = Tween<double>(begin: 0.0, end: 0.75);
   static final Animatable<double> _kDragSizeFactorLimitTween = Tween<double>(begin: 0.0, end: _kDragSizeFactorLimit);
   static final Animatable<double> _oneToZeroTween = Tween<double>(begin: 1.0, end: 0.0);
-
-  @override
-  void initState() {
-    super.initState();
-    _positionController = AnimationController(vsync: this);
-    _positionFactor = _positionController.drive(_kDragSizeFactorLimitTween);
-    _value = _positionController.drive(_threeQuarterTween); // The "value" of the circular progress indicator during a drag.
-
-    _scaleController = AnimationController(vsync: this);
-    _scaleFactor = _scaleController.drive(_oneToZeroTween);
-  }
 
   @override
   void didChangeDependencies() {

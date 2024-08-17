@@ -202,7 +202,10 @@ class _MaterialScrollbar extends RawScrollbar {
 }
 
 class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
-  late AnimationController _hoverAnimationController;
+  late final AnimationController _hoverAnimationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 200),
+  )..addListener(updateScrollbarPainter);
   bool _dragIsActive = false;
   bool _hoverIsActive = false;
   late ColorScheme _colorScheme;
@@ -305,18 +308,6 @@ class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
       return widget.thickness
         ?? _scrollbarTheme.thickness?.resolve(states)
         ?? (_kScrollbarThickness / (_useAndroidScrollbar ? 2 : 1));
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _hoverAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
-    _hoverAnimationController.addListener(() {
-      updateScrollbarPainter();
     });
   }
 

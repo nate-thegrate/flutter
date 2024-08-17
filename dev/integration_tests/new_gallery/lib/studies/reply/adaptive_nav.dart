@@ -41,11 +41,6 @@ class AdaptiveNav extends StatefulWidget {
 
 class _AdaptiveNavState extends State<AdaptiveNav> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final bool isDesktop = isDisplayDesktop(context);
     final bool isTablet = isDisplaySmallDesktop(context);
@@ -151,15 +146,8 @@ class _DesktopNav extends StatefulWidget {
   _DesktopNavState createState() => _DesktopNavState();
 }
 
-class _DesktopNavState extends State<_DesktopNav>
-    with SingleTickerProviderStateMixin {
-  late ValueNotifier<bool> _isExtended;
-
-  @override
-  void initState() {
-    super.initState();
-    _isExtended = ValueNotifier<bool>(widget.extended);
-  }
+class _DesktopNavState extends State<_DesktopNav> {
+  late final ValueNotifier<bool> _isExtended = ValueNotifier<bool>(widget.extended);
 
   @override
   Widget build(BuildContext context) {

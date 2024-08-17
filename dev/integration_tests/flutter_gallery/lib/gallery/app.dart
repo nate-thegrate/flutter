@@ -42,7 +42,13 @@ class GalleryApp extends StatefulWidget {
 }
 
 class _GalleryAppState extends State<GalleryApp> {
-  GalleryOptions? _options;
+  GalleryOptions _options = GalleryOptions(
+    themeMode: ThemeMode.system,
+    textScaleFactor: kAllGalleryTextScaleValues[0],
+    visualDensity: kAllGalleryVisualDensityValues[0],
+    timeDilation: timeDilation,
+    platform: defaultTargetPlatform,
+  );
   Timer? _timeDilationTimer;
   late final AppStateModel model = AppStateModel()..loadProducts();
 
@@ -56,20 +62,8 @@ class _GalleryAppState extends State<GalleryApp> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _options = GalleryOptions(
-      themeMode: ThemeMode.system,
-      textScaleFactor: kAllGalleryTextScaleValues[0],
-      visualDensity: kAllGalleryVisualDensityValues[0],
-      timeDilation: timeDilation,
-      platform: defaultTargetPlatform,
-    );
-  }
-
-  @override
   void reassemble() {
-    _options = _options!.copyWith(platform: defaultTargetPlatform);
+    _options = _options.copyWith(platform: defaultTargetPlatform);
     super.reassemble();
   }
 
@@ -82,7 +76,7 @@ class _GalleryAppState extends State<GalleryApp> {
 
   void _handleOptionsChanged(GalleryOptions newOptions) {
     setState(() {
-      if (_options!.timeDilation != newOptions.timeDilation) {
+      if (_options.timeDilation != newOptions.timeDilation) {
         _timeDilationTimer?.cancel();
         _timeDilationTimer = null;
         if (newOptions.timeDilation > 1.0) {
@@ -104,7 +98,7 @@ class _GalleryAppState extends State<GalleryApp> {
   Widget _applyTextScaleFactor(Widget child) {
     return Builder(
       builder: (BuildContext context) {
-        final double? textScaleFactor = _options!.textScaleFactor!.scale;
+        final double? textScaleFactor = _options.textScaleFactor!.scale;
         return MediaQuery.withClampedTextScaling(
           minScaleFactor: textScaleFactor ?? 0.0,
           maxScaleFactor: textScaleFactor ?? double.infinity,
@@ -142,18 +136,18 @@ class _GalleryAppState extends State<GalleryApp> {
         // PrimaryScrollController. The gallery needs to be migrated before
         // enabling this. https://github.com/flutter/gallery/issues/523
         scrollBehavior: const MaterialScrollBehavior().copyWith(scrollbars: false),
-        theme: kLightGalleryTheme.copyWith(platform: _options!.platform, visualDensity: _options!.visualDensity!.visualDensity),
-        darkTheme: kDarkGalleryTheme.copyWith(platform: _options!.platform, visualDensity: _options!.visualDensity!.visualDensity),
-        themeMode: _options!.themeMode,
+        theme: kLightGalleryTheme.copyWith(platform: _options.platform, visualDensity: _options.visualDensity!.visualDensity),
+        darkTheme: kDarkGalleryTheme.copyWith(platform: _options.platform, visualDensity: _options.visualDensity!.visualDensity),
+        themeMode: _options.themeMode,
         title: 'Flutter Gallery',
         color: Colors.grey,
-        showPerformanceOverlay: _options!.showPerformanceOverlay,
-        checkerboardOffscreenLayers: _options!.showOffscreenLayersCheckerboard,
-        checkerboardRasterCacheImages: _options!.showRasterCacheImagesCheckerboard,
+        showPerformanceOverlay: _options.showPerformanceOverlay,
+        checkerboardOffscreenLayers: _options.showOffscreenLayersCheckerboard,
+        checkerboardRasterCacheImages: _options.showRasterCacheImagesCheckerboard,
         routes: _buildRoutes(),
         builder: (BuildContext context, Widget? child) {
           return Directionality(
-            textDirection: _options!.textDirection,
+            textDirection: _options.textDirection,
             child: _applyTextScaleFactor(
               // Specifically use a blank Cupertino theme here and do not transfer
               // over the Material primary color etc except the brightness to

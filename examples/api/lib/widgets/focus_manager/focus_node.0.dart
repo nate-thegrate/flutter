@@ -31,18 +31,14 @@ class ColorfulButton extends StatefulWidget {
 }
 
 class _ColorfulButtonState extends State<ColorfulButton> {
-  late FocusNode _node;
+  late final FocusNode _node = FocusNode(debugLabel: 'Button')
+    ..addListener(_handleFocusChange);
+  late final FocusAttachment _nodeAttachment = _node.attach(
+    context,
+    onKeyEvent: _handleKeyPress,
+  );
   bool _focused = false;
-  late FocusAttachment _nodeAttachment;
   Color _color = Colors.white;
-
-  @override
-  void initState() {
-    super.initState();
-    _node = FocusNode(debugLabel: 'Button');
-    _node.addListener(_handleFocusChange);
-    _nodeAttachment = _node.attach(context, onKeyEvent: _handleKeyPress);
-  }
 
   void _handleFocusChange() {
     if (_node.hasFocus != _focused) {

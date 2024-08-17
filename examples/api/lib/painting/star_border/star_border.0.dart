@@ -35,24 +35,15 @@ class StarBorderExample extends StatefulWidget {
 }
 
 class _StarBorderExampleState extends State<StarBorderExample> {
-  final OptionModel _model = OptionModel();
   final TextEditingController _textController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _model.addListener(_modelChanged);
-  }
+  late final OptionModel _model = OptionModel()
+    ..addListener(() => setState(() {}));
 
   @override
   void dispose() {
-    _model.removeListener(_modelChanged);
+    _model.dispose();
     _textController.dispose();
     super.dispose();
-  }
-
-  void _modelChanged() {
-    setState(() {});
   }
 
   @override

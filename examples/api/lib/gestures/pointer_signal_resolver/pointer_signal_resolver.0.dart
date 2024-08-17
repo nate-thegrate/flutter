@@ -38,18 +38,12 @@ class ColorChanger extends StatefulWidget {
 }
 
 class _ColorChangerState extends State<ColorChanger> {
-  late HSVColor color;
+  late HSVColor color = widget.initialColor;
 
   void rotateColor() {
     setState(() {
       color = color.withHue((color.hue + 3) % 360.0);
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    color = widget.initialColor;
   }
 
   @override

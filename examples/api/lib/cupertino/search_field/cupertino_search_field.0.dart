@@ -28,13 +28,7 @@ class SearchTextFieldExample extends StatefulWidget {
 }
 
 class _SearchTextFieldExampleState extends State<SearchTextFieldExample> {
-  late TextEditingController textController;
-
-  @override
-  void initState() {
-    super.initState();
-    textController = TextEditingController(text: 'initial text');
-  }
+  late final TextEditingController textController = TextEditingController(text: 'initial text');
 
   @override
   void dispose() {

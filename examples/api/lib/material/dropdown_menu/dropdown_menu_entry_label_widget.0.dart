@@ -26,13 +26,7 @@ class DropdownMenuEntryLabelWidgetExample extends StatefulWidget {
 }
 
 class _DropdownMenuEntryLabelWidgetExampleState extends State<DropdownMenuEntryLabelWidgetExample> {
-  late final TextEditingController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController();
-  }
+  final TextEditingController controller = TextEditingController();
 
   @override
   void dispose() {

@@ -1339,18 +1339,10 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  late final MaterialStatesController _internalStatesController;
+  late final MaterialStatesController _internalStatesController = MaterialStatesController()
+    ..addListener(() => setState(() {}));
   FocusNode? _internalFocusNode;
   FocusNode get _focusNode => widget.focusNode ?? (_internalFocusNode ??= FocusNode());
-
-  @override
-  void initState() {
-    super.initState();
-    _internalStatesController = MaterialStatesController();
-    _internalStatesController.addListener(() {
-      setState(() {});
-    });
-  }
 
   @override
   void dispose() {

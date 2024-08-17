@@ -36,19 +36,14 @@ class _SaveableForm extends StatefulWidget {
 }
 
 class _SaveableFormState extends State<_SaveableForm> {
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller = TextEditingController()
+    ..addListener(_onChanged);
   String _savedValue = '';
   bool _isDirty = false;
 
   @override
-  void initState() {
-    super.initState();
-    _controller.addListener(_onChanged);
-  }
-
-  @override
   void dispose() {
-    _controller.removeListener(_onChanged);
+    _controller.dispose();
     super.dispose();
   }
 

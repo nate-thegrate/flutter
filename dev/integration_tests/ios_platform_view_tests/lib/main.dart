@@ -136,14 +136,7 @@ class FocusTestPage extends StatefulWidget {
 
 class _FocusTestPageState extends State<FocusTestPage> {
 
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-    _controller.text = 'Flutter Text Field';
-  }
+  final TextEditingController _controller = TextEditingController(text: 'Flutter Text Field');
 
   @override
   Widget build(BuildContext context) {

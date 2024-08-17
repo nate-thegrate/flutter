@@ -965,23 +965,16 @@ class _ModalScopeState<T> extends State<_ModalScope<T>> {
   Widget? _page;
 
   // This is the combination of the two animations for the route.
-  late Listenable _listenable;
+  late final Listenable _listenable = Listenable.merge(<Listenable?>{
+    widget.route.animation,
+    widget.route.secondaryAnimation,
+  });
 
   /// The node this scope will use for its root [FocusScope] widget.
   final FocusScopeNode focusScopeNode = FocusScopeNode(
     debugLabel: '$_ModalScopeState Focus Scope',
   );
   final ScrollController primaryScrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    final List<Listenable> animations = <Listenable>[
-      if (widget.route.animation != null) widget.route.animation!,
-      if (widget.route.secondaryAnimation != null) widget.route.secondaryAnimation!,
-    ];
-    _listenable = Listenable.merge(animations);
-  }
 
   @override
   void didUpdateWidget(_ModalScope<T> oldWidget) {

@@ -310,13 +310,7 @@ class TextPage extends StatefulWidget {
 }
 
 class _TextPageState extends State<TextPage> {
-  late final TextEditingController textController;
-
-  @override
-  void initState() {
-    super.initState();
-    textController = TextEditingController(text: 'Sample Text');
-  }
+  final TextEditingController textController = TextEditingController(text: 'Sample Text');
 
   @override
   void dispose() {

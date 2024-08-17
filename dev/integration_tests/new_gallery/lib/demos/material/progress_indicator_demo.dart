@@ -17,32 +17,23 @@ class ProgressIndicatorDemo extends StatefulWidget {
   State<ProgressIndicatorDemo> createState() => _ProgressIndicatorDemoState();
 }
 
-class _ProgressIndicatorDemoState extends State<ProgressIndicatorDemo>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-      animationBehavior: AnimationBehavior.preserve,
-    )..forward();
-
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: const Interval(0.0, 0.9, curve: Curves.fastOutSlowIn),
-      reverseCurve: Curves.fastOutSlowIn,
-    )..addStatusListener((AnimationStatus status) {
-        if (status == AnimationStatus.dismissed) {
-          _controller.forward();
-        } else if (status == AnimationStatus.completed) {
-          _controller.reverse();
-        }
-      });
-  }
+class _ProgressIndicatorDemoState extends State<ProgressIndicatorDemo> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 1500),
+    vsync: this,
+    animationBehavior: AnimationBehavior.preserve,
+  )..forward();
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: const Interval(0.0, 0.9, curve: Curves.fastOutSlowIn),
+    reverseCurve: Curves.fastOutSlowIn,
+  )..addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.dismissed) {
+        _controller.forward();
+      } else if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+    });
 
   @override
   void dispose() {

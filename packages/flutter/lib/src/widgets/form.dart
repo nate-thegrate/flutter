@@ -556,7 +556,7 @@ class FormFieldState<T> extends State<FormField<T>> with RestorationMixin {
   late T? _value = widget.initialValue;
   // Marking it as late, so it can be registered
   // with the value provided by [forceErrorText].
-  late final RestorableStringN _errorText;
+  late final RestorableStringN _errorText = RestorableStringN(widget.forceErrorText);
   final RestorableBool _hasInteractedByUser = RestorableBool(false);
   final FocusNode _focusNode = FocusNode();
 
@@ -676,12 +676,6 @@ class FormFieldState<T> extends State<FormField<T>> with RestorationMixin {
   void deactivate() {
     Form.maybeOf(context)?._unregister(this);
     super.deactivate();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _errorText = RestorableStringN(widget.forceErrorText);
   }
 
   @override

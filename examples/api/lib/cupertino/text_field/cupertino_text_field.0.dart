@@ -28,13 +28,7 @@ class CupertinoTextFieldExample extends StatefulWidget {
 }
 
 class _CupertinoTextFieldExampleState extends State<CupertinoTextFieldExample> {
-  late TextEditingController _textController;
-
-  @override
-  void initState() {
-    super.initState();
-    _textController = TextEditingController(text: 'initial text');
-  }
+  late final TextEditingController _textController = TextEditingController(text: 'initial text');
 
   @override
   void dispose() {

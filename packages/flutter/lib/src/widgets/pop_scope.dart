@@ -179,13 +179,7 @@ class _PopScopeState<T> extends State<PopScope<T>> implements PopEntry<T> {
   }
 
   @override
-  late final ValueNotifier<bool> canPopNotifier;
-
-  @override
-  void initState() {
-    super.initState();
-    canPopNotifier = ValueNotifier<bool>(widget.canPop);
-  }
+  late final ValueNotifier<bool> canPopNotifier = ValueNotifier<bool>(widget.canPop);
 
   @override
   void didChangeDependencies() {

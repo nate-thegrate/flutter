@@ -575,22 +575,15 @@ class _ProductThumbnailRowState extends State<ProductThumbnailRow> {
 
   // _list represents what's currently on screen. If _internalList updates,
   // it will need to be updated to match it.
-  late _ListModel _list;
+  late final _ListModel _list = _ListModel(
+    listKey: _listKey,
+    initialItems:
+        ScopedModel.of<AppStateModel>(context).productsInCart.keys.toList(),
+    removedItemBuilder: _buildRemovedThumbnail,
+  );
 
   // _internalList represents the list as it is updated by the AppStateModel.
-  late List<int> _internalList;
-
-  @override
-  void initState() {
-    super.initState();
-    _list = _ListModel(
-      listKey: _listKey,
-      initialItems:
-          ScopedModel.of<AppStateModel>(context).productsInCart.keys.toList(),
-      removedItemBuilder: _buildRemovedThumbnail,
-    );
-    _internalList = List<int>.from(_list.list);
-  }
+  late List<int> _internalList = List<int>.from(_list.list);
 
   Product _productWithId(int productId) {
     final AppStateModel model = ScopedModel.of<AppStateModel>(context);

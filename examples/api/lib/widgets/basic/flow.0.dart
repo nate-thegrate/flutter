@@ -32,7 +32,10 @@ class FlowMenu extends StatefulWidget {
 }
 
 class _FlowMenuState extends State<FlowMenu> with SingleTickerProviderStateMixin {
-  late AnimationController menuAnimation;
+  late final AnimationController menuAnimation = AnimationController(
+    duration: const Duration(milliseconds: 250),
+    vsync: this,
+  );
   IconData lastTapped = Icons.notifications;
   final List<IconData> menuItems = <IconData>[
     Icons.home,
@@ -49,12 +52,9 @@ class _FlowMenuState extends State<FlowMenu> with SingleTickerProviderStateMixin
   }
 
   @override
-  void initState() {
-    super.initState();
-    menuAnimation = AnimationController(
-      duration: const Duration(milliseconds: 250),
-      vsync: this,
-    );
+  void dispose() {
+    menuAnimation.dispose();
+    super.dispose();
   }
 
   Widget flowMenuItem(IconData icon) {

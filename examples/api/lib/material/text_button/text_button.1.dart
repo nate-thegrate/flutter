@@ -29,13 +29,9 @@ class SelectableButton extends StatefulWidget {
 }
 
 class _SelectableButtonState extends State<SelectableButton> {
-  late final WidgetStatesController statesController;
-
-  @override
-  void initState() {
-    super.initState();
-    statesController = WidgetStatesController(<WidgetState>{if (widget.selected) WidgetState.selected});
-  }
+  late final WidgetStatesController statesController = WidgetStatesController(
+    <WidgetState>{if (widget.selected) WidgetState.selected},
+  );
 
   @override
   void didUpdateWidget(SelectableButton oldWidget) {

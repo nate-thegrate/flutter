@@ -17,23 +17,16 @@ class MenuDemo extends StatefulWidget {
 
 class MenuDemoState extends State<MenuDemo> {
 
-  final String _simpleValue1 = 'Menu item value one';
-  final String _simpleValue2 = 'Menu item value two';
-  final String _simpleValue3 = 'Menu item value three';
-  String? _simpleValue;
+  static const String _simpleValue1 = 'Menu item value one';
+  static const String _simpleValue2 = 'Menu item value two';
+  static const String _simpleValue3 = 'Menu item value three';
+  String? _simpleValue = _simpleValue2;
 
-  final String _checkedValue1 = 'One';
-  final String _checkedValue2 = 'Two';
-  final String _checkedValue3 = 'Free';
-  final String _checkedValue4 = 'Four';
-  late List<String> _checkedValues;
-
-  @override
-  void initState() {
-    super.initState();
-    _simpleValue = _simpleValue2;
-    _checkedValues = <String>[_checkedValue3];
-  }
+  static const String _checkedValue1 = 'One';
+  static const String _checkedValue2 = 'Two';
+  static const String _checkedValue3 = 'Free';
+  static const String _checkedValue4 = 'Four';
+  final List<String> _checkedValues = <String>[_checkedValue3];
 
   void showInSnackBar(String value) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -102,17 +95,17 @@ class MenuDemoState extends State<MenuDemo> {
                 padding: EdgeInsets.zero,
                 onSelected: showMenuSelection,
                 itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: _simpleValue1,
-                    child: const Text('Context menu item one'),
+                    child: Text('Context menu item one'),
                   ),
                   const PopupMenuItem<String>(
                     enabled: false,
                     child: Text('A disabled menu item'),
                   ),
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: _simpleValue3,
-                    child: const Text('Context menu item three'),
+                    child: Text('Context menu item three'),
                   ),
                 ],
               ),
@@ -170,15 +163,15 @@ class MenuDemoState extends State<MenuDemo> {
                 subtitle: Text(_simpleValue!),
               ),
               itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: _simpleValue1,
                   child: Text(_simpleValue1),
                 ),
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: _simpleValue2,
                   child: Text(_simpleValue2),
                 ),
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: _simpleValue3,
                   child: Text(_simpleValue3),
                 ),
@@ -195,23 +188,23 @@ class MenuDemoState extends State<MenuDemo> {
                   CheckedPopupMenuItem<String>(
                     value: _checkedValue1,
                     checked: isChecked(_checkedValue1),
-                    child: Text(_checkedValue1),
+                    child: const Text(_checkedValue1),
                   ),
                   CheckedPopupMenuItem<String>(
                     value: _checkedValue2,
                     enabled: false,
                     checked: isChecked(_checkedValue2),
-                    child: Text(_checkedValue2),
+                    child: const Text(_checkedValue2),
                   ),
                   CheckedPopupMenuItem<String>(
                     value: _checkedValue3,
                     checked: isChecked(_checkedValue3),
-                    child: Text(_checkedValue3),
+                    child: const Text(_checkedValue3),
                   ),
                   CheckedPopupMenuItem<String>(
                     value: _checkedValue4,
                     checked: isChecked(_checkedValue4),
-                    child: Text(_checkedValue4),
+                    child: const Text(_checkedValue4),
                   ),
                 ],
               ),

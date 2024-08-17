@@ -308,19 +308,12 @@ class Carousel62209 extends StatefulWidget {
 
 class _Carousel62209State extends State<Carousel62209> {
   // page variables
-  late PageController _pageController;
+  final PageController _pageController = PageController(keepPage: false);
   int _currentPage = 0;
 
   // controls updates outside of user interaction
-  late List<Carousel62209Page> _pages;
+  late List<Carousel62209Page> _pages = widget.pages.toList();
   bool _jumpingToPage = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _pages = widget.pages.toList();
-    _pageController = PageController(keepPage: false);
-  }
 
   @override
   void didUpdateWidget(Carousel62209 oldWidget) {

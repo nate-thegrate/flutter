@@ -18,13 +18,7 @@ class ExpandingBox extends StatefulWidget {
 }
 
 class _ExpandingBoxState extends State<ExpandingBox> with AutomaticKeepAliveClientMixin<ExpandingBox> {
-  late double _height;
-
-  @override
-  void initState() {
-    super.initState();
-    _height = widget.collapsedSize;
-  }
+  late double _height = widget.collapsedSize;
 
   void toggleSize() {
     setState(() {

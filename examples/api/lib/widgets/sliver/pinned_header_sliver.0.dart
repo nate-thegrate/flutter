@@ -30,13 +30,7 @@ class PinnedHeaderSliverExample extends StatefulWidget {
 
 class _PinnedHeaderSliverExampleState extends State<PinnedHeaderSliverExample> {
   int count = 0;
-  late final ScrollController scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = ScrollController();
-  }
+  final ScrollController scrollController = ScrollController();
 
   @override
   void dispose() {

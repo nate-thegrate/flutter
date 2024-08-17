@@ -102,16 +102,9 @@ class SystemContextMenu extends StatefulWidget {
 }
 
 class _SystemContextMenuState extends State<SystemContextMenu> {
-  late final SystemContextMenuController _systemContextMenuController;
-
-  @override
-  void initState() {
-    super.initState();
-    _systemContextMenuController = SystemContextMenuController(
-      onSystemHide: widget.onSystemHide,
-    );
-    _systemContextMenuController.show(widget.anchor);
-  }
+  late final SystemContextMenuController _systemContextMenuController = SystemContextMenuController(
+    onSystemHide: widget.onSystemHide,
+  )..show(widget.anchor);
 
   @override
   void didUpdateWidget(SystemContextMenu oldWidget) {

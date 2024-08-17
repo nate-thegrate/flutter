@@ -582,15 +582,33 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
   // Animation controller that is run when the overlay (a.k.a radial reaction)
   // is shown in response to user interaction.
-  late AnimationController overlayController;
+  late final AnimationController overlayController = AnimationController(
+    duration: kRadialReactionDuration,
+    vsync: this,
+  );
+
   // Animation controller that is run when the value indicator is being shown
   // or hidden.
-  late AnimationController valueIndicatorController;
+  late final AnimationController valueIndicatorController = AnimationController(
+    duration: valueIndicatorAnimationDuration,
+    vsync: this,
+  );
+
   // Animation controller that is run when enabling/disabling the slider.
-  late AnimationController enableController;
+  late final AnimationController enableController = AnimationController(
+    value: widget.onChanged != null ? 1.0 : 0.0,
+    duration: enableAnimationDuration,
+    vsync: this,
+  );
+
   // Animation controller that is run when transitioning between one value
   // and the next on a discrete slider.
-  late AnimationController positionController;
+  late final AnimationController positionController = AnimationController(
+    value: _convert(widget.value),
+    duration: Duration.zero,
+    vsync: this,
+  );
+
   Timer? interactionTimer;
 
   final GlobalKey _renderObjectKey = GlobalKey();
@@ -611,7 +629,9 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   };
 
   // Action mapping for a focused slider.
-  late Map<Type, Action<Intent>> _actionMap;
+  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
+    _AdjustSliderIntent: CallbackAction<_AdjustSliderIntent>(onInvoke: _actionHandler),
+  };
 
   bool get _enabled => widget.onChanged != null;
   // Value Indicator Animation that appears on the Overlay.
@@ -625,39 +645,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   double? _currentChangedValue;
 
   FocusNode? _focusNode;
-  FocusNode get focusNode => widget.focusNode ?? _focusNode!;
-
-  @override
-  void initState() {
-    super.initState();
-    overlayController = AnimationController(
-      duration: kRadialReactionDuration,
-      vsync: this,
-    );
-    valueIndicatorController = AnimationController(
-      duration: valueIndicatorAnimationDuration,
-      vsync: this,
-    );
-    enableController = AnimationController(
-      duration: enableAnimationDuration,
-      vsync: this,
-    );
-    positionController = AnimationController(
-      duration: Duration.zero,
-      vsync: this,
-    );
-    enableController.value = widget.onChanged != null ? 1.0 : 0.0;
-    positionController.value = _convert(widget.value);
-    _actionMap = <Type, Action<Intent>>{
-      _AdjustSliderIntent: CallbackAction<_AdjustSliderIntent>(
-        onInvoke: _actionHandler,
-      ),
-    };
-    if (widget.focusNode == null) {
-      // Only create a new node if the widget doesn't have one.
-      _focusNode ??= FocusNode();
-    }
-  }
+  FocusNode get focusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
 
   @override
   void dispose() {

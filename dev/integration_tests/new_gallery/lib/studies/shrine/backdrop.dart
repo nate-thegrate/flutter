@@ -200,14 +200,8 @@ class Backdrop extends StatefulWidget {
 class _BackdropState extends State<Backdrop>
     with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
-  late AnimationController _controller;
+  late final AnimationController _controller = widget.controller;
   late Animation<RelativeRect> _layerAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = widget.controller;
-  }
 
   bool get _frontLayerVisible {
     final AnimationStatus status = _controller.status;

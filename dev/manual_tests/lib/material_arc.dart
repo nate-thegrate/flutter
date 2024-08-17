@@ -114,17 +114,15 @@ class _PointDemo extends StatefulWidget {
 class _PointDemoState extends State<_PointDemo> {
   final GlobalKey _painterKey = GlobalKey();
 
-  CurvedAnimation? _animation;
+  late final CurvedAnimation _animation = CurvedAnimation(
+    parent: widget.controller,
+    curve: Curves.fastOutSlowIn,
+  );
   _DragTarget? _dragTarget;
   Size? _screenSize;
   Offset? _begin;
   Offset? _end;
 
-  @override
-  void initState() {
-    super.initState();
-    _animation = CurvedAnimation(parent: widget.controller, curve: Curves.fastOutSlowIn);
-  }
 
   @override
   void dispose() {

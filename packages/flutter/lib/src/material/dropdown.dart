@@ -263,27 +263,20 @@ class _DropdownMenu<T> extends StatefulWidget {
 }
 
 class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
-  late final CurvedAnimation _fadeOpacity;
-  late final CurvedAnimation _resize;
-
-  @override
-  void initState() {
-    super.initState();
-    // We need to hold these animations as state because of their curve
-    // direction. When the route's animation reverses, if we were to recreate
-    // the CurvedAnimation objects in build, we'd lose
-    // CurvedAnimation._curveDirection.
-    _fadeOpacity = CurvedAnimation(
-      parent: widget.route.animation!,
-      curve: const Interval(0.0, 0.25),
-      reverseCurve: const Interval(0.75, 1.0),
-    );
-    _resize = CurvedAnimation(
-      parent: widget.route.animation!,
-      curve: const Interval(0.25, 0.5),
-      reverseCurve: const Threshold(0.0),
-    );
-  }
+  // We need to hold these animations as state because of their curve
+  // direction. When the route's animation reverses, if we were to recreate
+  // the CurvedAnimation objects in build, we'd lose
+  // CurvedAnimation._curveDirection.
+  late final CurvedAnimation _fadeOpacity = CurvedAnimation(
+    parent: widget.route.animation!,
+    curve: const Interval(0.0, 0.25),
+    reverseCurve: const Interval(0.75, 1.0),
+  );
+  late final CurvedAnimation _resize = CurvedAnimation(
+    parent: widget.route.animation!,
+    curve: const Interval(0.25, 0.5),
+    reverseCurve: const Threshold(0.0),
+  );
 
   @override
   void dispose() {

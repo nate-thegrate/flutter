@@ -2216,8 +2216,8 @@ class TestFocus extends StatefulWidget {
 }
 
 class TestFocusState extends State<TestFocus> {
-  late FocusNode focusNode;
-  late String _label;
+  late FocusNode focusNode = FocusNode(debugLabel: widget.debugLabel)..addListener(_updateLabel);
+  late String _label = label;
   bool built = false;
 
   @override
@@ -2228,14 +2228,6 @@ class TestFocusState extends State<TestFocus> {
   }
 
   String get label => focusNode.hasFocus ? '${widget.name.toUpperCase()} FOCUSED' : widget.name.toLowerCase();
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode(debugLabel: widget.debugLabel);
-    _label = label;
-    focusNode.addListener(_updateLabel);
-  }
 
   void _updateLabel() {
     setState(() {

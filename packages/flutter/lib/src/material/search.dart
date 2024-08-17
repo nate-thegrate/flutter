@@ -503,18 +503,18 @@ class _SearchPage<T> extends StatefulWidget {
 }
 
 class _SearchPageState<T> extends State<_SearchPage<T>> {
-  // This node is owned, but not hosted by, the search page. Hosting is done by
-  // the text field.
-  FocusNode focusNode = FocusNode();
+  // Used in the AppBar's text field.
+  final FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    widget.delegate._queryTextController.addListener(_onQueryChanged);
     widget.animation.addStatusListener(_onAnimationStatusChanged);
-    widget.delegate._currentBodyNotifier.addListener(_onSearchBodyChanged);
-    focusNode.addListener(_onFocusChanged);
-    widget.delegate._focusNode = focusNode;
+
+    widget.delegate
+      .._queryTextController.addListener(_onQueryChanged)
+      .._currentBodyNotifier.addListener(_onSearchBodyChanged)
+      .._focusNode = (focusNode..addListener(_onFocusChanged));
   }
 
   @override

@@ -393,18 +393,12 @@ class _DatePickerModeToggleButton extends StatefulWidget {
 }
 
 class _DatePickerModeToggleButtonState extends State<_DatePickerModeToggleButton> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      value: widget.mode == DatePickerMode.year ? 0.5 : 0,
-      upperBound: 0.5,
-      duration: const Duration(milliseconds: 200),
-      vsync: this,
-    );
-  }
+  late final AnimationController _controller = AnimationController(
+    value: widget.mode == DatePickerMode.year ? 0.5 : 0,
+    upperBound: 0.5,
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+  );
 
   @override
   void didUpdateWidget(_DatePickerModeToggleButton oldWidget) {
@@ -544,33 +538,25 @@ class _MonthPicker extends StatefulWidget {
 
 class _MonthPickerState extends State<_MonthPicker> {
   final GlobalKey _pageViewKey = GlobalKey();
-  late DateTime _currentMonth;
-  late PageController _pageController;
+  late DateTime _currentMonth = widget.initialMonth;
+  late final PageController _pageController = PageController(
+    initialPage: DateUtils.monthDelta(widget.firstDate, _currentMonth),
+  );
   late MaterialLocalizations _localizations;
   late TextDirection _textDirection;
-  Map<ShortcutActivator, Intent>? _shortcutMap;
-  Map<Type, Action<Intent>>? _actionMap;
-  late FocusNode _dayGridFocus;
+  static const Map<ShortcutActivator, Intent> _shortcutMap = <ShortcutActivator, Intent>{
+    SingleActivator(LogicalKeyboardKey.arrowLeft): DirectionalFocusIntent(TraversalDirection.left),
+    SingleActivator(LogicalKeyboardKey.arrowRight): DirectionalFocusIntent(TraversalDirection.right),
+    SingleActivator(LogicalKeyboardKey.arrowDown): DirectionalFocusIntent(TraversalDirection.down),
+    SingleActivator(LogicalKeyboardKey.arrowUp): DirectionalFocusIntent(TraversalDirection.up),
+  };
+  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
+    NextFocusIntent: CallbackAction<NextFocusIntent>(onInvoke: _handleGridNextFocus),
+    PreviousFocusIntent: CallbackAction<PreviousFocusIntent>(onInvoke: _handleGridPreviousFocus),
+    DirectionalFocusIntent: CallbackAction<DirectionalFocusIntent>(onInvoke: _handleDirectionFocus),
+  };
+  final FocusNode _dayGridFocus = FocusNode(debugLabel: 'Day Grid');
   DateTime? _focusedDay;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentMonth = widget.initialMonth;
-    _pageController = PageController(initialPage: DateUtils.monthDelta(widget.firstDate, _currentMonth));
-    _shortcutMap = const <ShortcutActivator, Intent>{
-      SingleActivator(LogicalKeyboardKey.arrowLeft): DirectionalFocusIntent(TraversalDirection.left),
-      SingleActivator(LogicalKeyboardKey.arrowRight): DirectionalFocusIntent(TraversalDirection.right),
-      SingleActivator(LogicalKeyboardKey.arrowDown): DirectionalFocusIntent(TraversalDirection.down),
-      SingleActivator(LogicalKeyboardKey.arrowUp): DirectionalFocusIntent(TraversalDirection.up),
-    };
-    _actionMap = <Type, Action<Intent>>{
-      NextFocusIntent: CallbackAction<NextFocusIntent>(onInvoke: _handleGridNextFocus),
-      PreviousFocusIntent: CallbackAction<PreviousFocusIntent>(onInvoke: _handleGridPreviousFocus),
-      DirectionalFocusIntent: CallbackAction<DirectionalFocusIntent>(onInvoke: _handleDirectionFocus),
-    };
-    _dayGridFocus = FocusNode(debugLabel: 'Day Grid');
-  }
 
   @override
   void didChangeDependencies() {
@@ -913,17 +899,10 @@ class _DayPicker extends StatefulWidget {
 class _DayPickerState extends State<_DayPicker> {
 
   /// List of [FocusNode]s, one for each day of the month.
-  late List<FocusNode> _dayFocusNodes;
-
-  @override
-  void initState() {
-    super.initState();
-    final int daysInMonth = DateUtils.getDaysInMonth(widget.displayedMonth.year, widget.displayedMonth.month);
-    _dayFocusNodes = List<FocusNode>.generate(
-      daysInMonth,
-      (int index) => FocusNode(skipTraversal: true, debugLabel: 'Day ${index + 1}'),
-    );
-  }
+  late final List<FocusNode> _dayFocusNodes = List<FocusNode>.generate(
+    DateUtils.getDaysInMonth(widget.displayedMonth.year, widget.displayedMonth.month),
+    (int index) => FocusNode(skipTraversal: true, debugLabel: 'Day ${index + 1}'),
+  );
 
   @override
   void didChangeDependencies() {
@@ -1248,21 +1227,17 @@ class YearPicker extends StatefulWidget {
 }
 
 class _YearPickerState extends State<YearPicker> {
-  ScrollController? _scrollController;
+  late final ScrollController _scrollController = ScrollController(
+    initialScrollOffset: _scrollOffsetForYear(widget.selectedDate ?? widget.firstDate),
+  );
   final MaterialStatesController _statesController = MaterialStatesController();
 
   // The approximate number of years necessary to fill the available space.
   static const int minYears = 18;
 
   @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController(initialScrollOffset: _scrollOffsetForYear(widget.selectedDate ?? widget.firstDate));
-  }
-
-  @override
   void dispose() {
-    _scrollController?.dispose();
+    _scrollController.dispose();
     _statesController.dispose();
     super.dispose();
   }
@@ -1271,7 +1246,7 @@ class _YearPickerState extends State<YearPicker> {
   void didUpdateWidget(YearPicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.selectedDate != oldWidget.selectedDate && widget.selectedDate != null) {
-      _scrollController!.jumpTo(_scrollOffsetForYear(widget.selectedDate!));
+      _scrollController.jumpTo(_scrollOffsetForYear(widget.selectedDate!));
     }
   }
 

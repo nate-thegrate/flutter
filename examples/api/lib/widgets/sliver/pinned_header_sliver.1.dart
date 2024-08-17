@@ -28,14 +28,8 @@ class SettingsAppBarExample extends StatefulWidget {
 class _SettingsAppBarExampleState extends State<SettingsAppBarExample> {
   final GlobalKey headerSliverKey = GlobalKey();
   final GlobalKey titleSliverKey = GlobalKey();
-  late final ScrollController scrollController;
+  final ScrollController scrollController = ScrollController();
   double headerOpacity = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = ScrollController();
-  }
 
   @override
   void dispose() {

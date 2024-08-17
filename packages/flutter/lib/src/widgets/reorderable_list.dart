@@ -1069,7 +1069,8 @@ class _ReorderableItem extends StatefulWidget {
 }
 
 class _ReorderableItemState extends State<_ReorderableItem> {
-  late SliverReorderableListState _listState;
+  late final SliverReorderableListState _listState = SliverReorderableList.of(context)
+    .._registerItem(this);
 
   Offset _startOffset = Offset.zero;
   Offset _targetOffset = Offset.zero;
@@ -1089,13 +1090,6 @@ class _ReorderableItemState extends State<_ReorderableItem> {
   bool _dragging = false;
   BoxConstraints? get childLayoutConstraints => _childLayoutConstraints;
   BoxConstraints? _childLayoutConstraints;
-
-  @override
-  void initState() {
-    _listState = SliverReorderableList.of(context);
-    _listState._registerItem(this);
-    super.initState();
-  }
 
   @override
   void dispose() {

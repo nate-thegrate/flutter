@@ -26,22 +26,16 @@ class ProgressIndicatorExample extends StatefulWidget {
   State<ProgressIndicatorExample> createState() => _ProgressIndicatorExampleState();
 }
 
-class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample> with TickerProviderStateMixin {
-  late AnimationController controller;
-
-  @override
-  void initState() {
-    controller = AnimationController(
-      /// [AnimationController]s can be created with `vsync: this` because of
-      /// [TickerProviderStateMixin].
-      vsync: this,
-      duration: const Duration(seconds: 5),
-    )..addListener(() {
-        setState(() {});
-      });
-    controller.repeat(reverse: true);
-    super.initState();
-  }
+class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample>
+    with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
+  late AnimationController controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 5),
+  )
+    ..addListener(() => setState(() {}))
+    ..repeat(reverse: true);
 
   @override
   void dispose() {

@@ -120,17 +120,10 @@ class _DecuplePixels extends StatefulWidget {
 }
 
 class _DecuplePixelsState extends State<_DecuplePixels> with SingleTickerProviderStateMixin<_DecuplePixels> {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
-    _controller.repeat();
-  }
+  late final AnimationController _controller = AnimationController(
+    duration: widget.duration,
+    vsync: this,
+  )..repeat();
 
   @override
   void dispose() {

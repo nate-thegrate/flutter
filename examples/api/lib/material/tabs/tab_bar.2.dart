@@ -70,14 +70,8 @@ class NestedTabBar extends StatefulWidget {
   State<NestedTabBar> createState() => _NestedTabBarState();
 }
 
-class _NestedTabBarState extends State<NestedTabBar> with TickerProviderStateMixin {
-  late final TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
+class _NestedTabBarState extends State<NestedTabBar> with SingleTickerProviderStateMixin {
+  late final TabController _tabController = TabController(length: 2, vsync: this);
 
   @override
   void dispose() {

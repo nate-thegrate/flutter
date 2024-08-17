@@ -468,26 +468,16 @@ class DrawerController extends StatefulWidget {
 ///
 /// Typically used by a [Scaffold] to [open] and [close] the drawer.
 class DrawerControllerState extends State<DrawerController> with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      value: widget.isDrawerOpen ? 1.0 : 0.0,
-      duration: _kBaseSettleDuration,
-      vsync: this,
-    );
-    _controller
-      ..addListener(_animationChanged)
-      ..addStatusListener(_animationStatusChanged);
-  }
+  LocalHistoryEntry? _historyEntry;
+  final FocusScopeNode _focusScopeNode = FocusScopeNode();
 
-  @override
-  void dispose() {
-    _historyEntry?.remove();
-    _controller.dispose();
-    _focusScopeNode.dispose();
-    super.dispose();
-  }
+  late final AnimationController _controller = AnimationController(
+    value: widget.isDrawerOpen ? 1.0 : 0.0,
+    duration: _kBaseSettleDuration,
+    vsync: this,
+  )
+    ..addListener(_animationChanged)
+    ..addStatusListener(_animationStatusChanged);
 
   @override
   void didChangeDependencies() {
@@ -512,8 +502,13 @@ class DrawerControllerState extends State<DrawerController> with SingleTickerPro
     });
   }
 
-  LocalHistoryEntry? _historyEntry;
-  final FocusScopeNode _focusScopeNode = FocusScopeNode();
+  @override
+  void dispose() {
+    _historyEntry?.remove();
+    _controller.dispose();
+    _focusScopeNode.dispose();
+    super.dispose();
+  }
 
   void _ensureHistoryEntry() {
     if (_historyEntry == null) {
@@ -543,8 +538,6 @@ class DrawerControllerState extends State<DrawerController> with SingleTickerPro
     _historyEntry = null;
     close();
   }
-
-  late AnimationController _controller;
 
   void _handleDragDown(DragDownDetails details) {
     _controller.stop();

@@ -38,7 +38,7 @@ class _TransformationsDemoState extends State<TransformationsDemo>
   final TransformationController _transformationController =
       TransformationController();
   Animation<Matrix4>? _animationReset;
-  late AnimationController _controllerReset;
+  late final AnimationController _controllerReset = AnimationController(vsync: this);
   Matrix4? _homeMatrix;
 
   // Handle reset to home transform animation.
@@ -89,14 +89,6 @@ class _TransformationsDemoState extends State<TransformationsDemo>
     setState(() {
       _board = _board.copyWithSelected(boardPoint);
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controllerReset = AnimationController(
-      vsync: this,
-    );
   }
 
   @override

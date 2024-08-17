@@ -379,23 +379,13 @@ class _ControlTile extends StatelessWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final OptionModel _model = OptionModel();
+  late final OptionModel _model = OptionModel()..addListener(() => setState(() {}));
   final TextEditingController textController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _model.addListener(_modelChanged);
-  }
-
-  @override
   void dispose() {
+    _model.dispose();
     super.dispose();
-    _model.removeListener(_modelChanged);
-  }
-
-  void _modelChanged() {
-    setState(() {});
   }
 
   double sliderValue = 0.0;

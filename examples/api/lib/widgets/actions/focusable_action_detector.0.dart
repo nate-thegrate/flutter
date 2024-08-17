@@ -38,20 +38,14 @@ class _FadButtonState extends State<FadButton> {
   bool _focused = false;
   bool _hovering = false;
   bool _on = false;
-  late final Map<Type, Action<Intent>> _actionMap;
+  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
+    ActivateIntent: CallbackAction<Intent>(
+      onInvoke: (Intent intent) => _toggleState(),
+    ),
+  };
   final Map<ShortcutActivator, Intent> _shortcutMap = const <ShortcutActivator, Intent>{
     SingleActivator(LogicalKeyboardKey.keyX): ActivateIntent(),
   };
-
-  @override
-  void initState() {
-    super.initState();
-    _actionMap = <Type, Action<Intent>>{
-      ActivateIntent: CallbackAction<Intent>(
-        onInvoke: (Intent intent) => _toggleState(),
-      ),
-    };
-  }
 
   Color get color {
     Color baseColor = Colors.lightBlue;

@@ -180,21 +180,13 @@ class ChipsInput<T> extends StatefulWidget {
 
 class ChipsInputState<T> extends State<ChipsInput<T>> {
   @visibleForTesting
-  late final ChipsInputEditingController<T> controller;
+  late final ChipsInputEditingController<T> controller = ChipsInputEditingController<T>(
+    <T>[...widget.values],
+    widget.chipBuilder,
+  )..addListener(_textListener);
 
   String _previousText = '';
   TextSelection? _previousSelection;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller = ChipsInputEditingController<T>(
-      <T>[...widget.values],
-      widget.chipBuilder,
-    );
-    controller.addListener(_textListener);
-  }
 
   @override
   void dispose() {

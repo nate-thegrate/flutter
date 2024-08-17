@@ -40,16 +40,10 @@ class OrderedButton<T> extends StatefulWidget {
 }
 
 class _OrderedButtonState<T> extends State<OrderedButton<T>> {
-  late FocusNode focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode(
-      debugLabel: widget.name,
-      canRequestFocus: widget.canRequestFocus,
-    );
-  }
+  late final FocusNode focusNode = FocusNode(
+    debugLabel: widget.name,
+    canRequestFocus: widget.canRequestFocus,
+  );
 
   @override
   void dispose() {

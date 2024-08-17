@@ -32,15 +32,8 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> with RestorationMixin {
   final RestorableInt _lastCount = RestorableInt(0);
-  late RestorableRouteFuture<int> _counterRoute;
-
-  @override
-  String get restorationId => 'home';
-
-  @override
-  void initState() {
-    super.initState();
-    _counterRoute = RestorableRouteFuture<int>(onPresent: (NavigatorState navigator, Object? arguments) {
+  late final RestorableRouteFuture<int> _counterRoute = RestorableRouteFuture<int>(
+    onPresent: (NavigatorState navigator, Object? arguments) {
       // Defines what route should be shown (and how it should be added
       // to the navigator) when `RestorableRouteFuture.present` is called.
       return navigator.restorablePush(
@@ -53,8 +46,11 @@ class _MyHomeState extends State<MyHome> with RestorationMixin {
       setState(() {
         _lastCount.value = count;
       });
-    });
-  }
+    },
+  );
+
+  @override
+  String get restorationId => 'home';
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {

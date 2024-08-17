@@ -32,13 +32,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   static const int tabCount = 3;
-  late TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: tabCount, vsync: this);
-  }
+  late final TabController tabController = TabController(length: tabCount, vsync: this);
 
   @override
   void dispose() {

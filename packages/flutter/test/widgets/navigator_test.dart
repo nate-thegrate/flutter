@@ -5717,13 +5717,8 @@ class _NestedNavigatorsPage extends StatefulWidget {
 }
 
 class _NestedNavigatorsPageState extends State<_NestedNavigatorsPage> {
-  late final GlobalKey<NavigatorState> _navigatorKey;
-
-  @override
-  void initState() {
-    super.initState();
-    _navigatorKey = widget.navigatorKey ?? GlobalKey<NavigatorState>();
-  }
+  late final GlobalKey<NavigatorState> _navigatorKey = widget.navigatorKey
+      ?? GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {

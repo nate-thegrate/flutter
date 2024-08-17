@@ -18,13 +18,7 @@ class PersistentBottomSheetDemo extends StatefulWidget {
 class _PersistentBottomSheetDemoState extends State<PersistentBottomSheetDemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  VoidCallback? _showBottomSheetCallback;
-
-  @override
-  void initState() {
-    super.initState();
-    _showBottomSheetCallback = _showBottomSheet;
-  }
+  late VoidCallback? _showBottomSheetCallback = _showBottomSheet;
 
   void _showBottomSheet() {
     setState(() { // disable the button

@@ -27,13 +27,7 @@ class ResizingHeaderExample extends StatefulWidget {
 }
 
 class _ResizingHeaderExampleState extends State<ResizingHeaderExample> {
-  late final ScrollController scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = ScrollController();
-  }
+  final ScrollController scrollController = ScrollController();
 
   @override
   void dispose() {

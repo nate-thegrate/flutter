@@ -55,15 +55,7 @@ class DialogDemo extends StatefulWidget {
 }
 
 class DialogDemoState extends State<DialogDemo> {
-
-  TimeOfDay? _selectedTime;
-
-  @override
-  void initState() {
-    super.initState();
-    final DateTime now = DateTime.now();
-    _selectedTime = TimeOfDay(hour: now.hour, minute: now.minute);
-  }
+  TimeOfDay _selectedTime = TimeOfDay.now();
 
   void showDemoDialog<T>({ required BuildContext context, Widget? child }) {
     showDialog<T>(
@@ -173,22 +165,17 @@ class DialogDemoState extends State<DialogDemo> {
           ),
           ElevatedButton(
             child: const Text('CONFIRMATION'),
-            onPressed: () {
-              showTimePicker(
+            onPressed: () async {
+              final TimeOfDay? value = await showTimePicker(
                 context: context,
-                initialTime: _selectedTime!,
-              )
-              .then((TimeOfDay? value) {
-                if (!context.mounted) {
-                  return;
-                }
-                if (value != null && value != _selectedTime) {
-                  _selectedTime = value;
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('You selected: ${value.format(context)}'),
-                  ));
-                }
-              });
+                initialTime: _selectedTime,
+              );
+              if (context.mounted && value != null && value != _selectedTime) {
+                _selectedTime = value;
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('You selected: ${value.format(context)}'),
+                ));
+              }
             },
           ),
           ElevatedButton(

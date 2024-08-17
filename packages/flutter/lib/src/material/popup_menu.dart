@@ -519,20 +519,15 @@ class CheckedPopupMenuItem<T> extends PopupMenuItem<T> {
 
 class _CheckedPopupMenuItemState<T> extends PopupMenuItemState<T, CheckedPopupMenuItem<T>> with SingleTickerProviderStateMixin {
   static const Duration _fadeDuration = Duration(milliseconds: 150);
-  late AnimationController _controller;
-  Animation<double> get _opacity => _controller.view;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(duration: _fadeDuration, vsync: this)
-      ..value = widget.checked ? 1.0 : 0.0
-      ..addListener(() => setState(() { /* animation changed */ }));
-  }
+  late final AnimationController _opacityController = AnimationController(
+    duration: _fadeDuration,
+    vsync: this,
+    value: widget.checked ? 1.0 : 0.0,
+  )..addListener(() => setState(() { /* animation changed */ }));
 
   @override
   void dispose() {
-    _controller.dispose();
+    _opacityController.dispose();
     super.dispose();
   }
 
@@ -540,9 +535,9 @@ class _CheckedPopupMenuItemState<T> extends PopupMenuItemState<T, CheckedPopupMe
   void handleTap() {
     // This fades the checkmark in or out when tapped.
     if (widget.checked) {
-      _controller.reverse();
+      _opacityController.reverse();
     } else {
-      _controller.forward();
+      _opacityController.forward();
     }
     super.handleTap();
   }
@@ -565,8 +560,8 @@ class _CheckedPopupMenuItemState<T> extends PopupMenuItemState<T, CheckedPopupMe
           enabled: widget.enabled,
           titleTextStyle: effectiveLabelTextStyle?.resolve(states),
           leading: FadeTransition(
-            opacity: _opacity,
-            child: Icon(_controller.isDismissed ? null : Icons.done),
+            opacity: _opacityController,
+            child: Icon(_opacityController.isDismissed ? null : Icons.done),
           ),
           title: widget.child,
         ),

@@ -87,30 +87,23 @@ class RallyPieChart extends StatefulWidget {
 
 class _RallyPieChartState extends State<RallyPieChart>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> animation;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    );
-    animation = CurvedAnimation(
-        parent: TweenSequence<double>(<TweenSequenceItem<double>>[
-          TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0, end: 0),
-            weight: 1,
-          ),
-          TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0, end: 1),
-            weight: 1.5,
-          ),
-        ]).animate(controller),
-        curve: Curves.decelerate);
-    controller.forward();
-  }
+  late final AnimationController controller = AnimationController(
+    duration: const Duration(milliseconds: 600),
+    vsync: this,
+  )..forward();
+  late Animation<double> animation = CurvedAnimation(
+    parent: TweenSequence<double>(<TweenSequenceItem<double>>[
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 0),
+        weight: 1,
+      ),
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 1),
+        weight: 1.5,
+      ),
+    ]).animate(controller),
+    curve: Curves.decelerate,
+  );
 
   @override
   void dispose() {
