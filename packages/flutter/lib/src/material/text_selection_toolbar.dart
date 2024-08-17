@@ -163,7 +163,7 @@ class _TextSelectionToolbarOverflowable extends StatefulWidget {
   _TextSelectionToolbarOverflowableState createState() => _TextSelectionToolbarOverflowableState();
 }
 
-class _TextSelectionToolbarOverflowableState extends State<_TextSelectionToolbarOverflowable> with TickerProviderStateMixin {
+class _TextSelectionToolbarOverflowableState extends State<_TextSelectionToolbarOverflowable> {
   // Whether or not the overflow menu is open. When it is closed, the menu
   // items that don't overflow are shown. When it is open, only the overflowing
   // menu items are shown.

@@ -154,7 +154,7 @@ class Backdrop extends StatefulWidget {
 }
 
 class _BackdropState extends State<Backdrop>
-    with TickerProviderStateMixin, RestorationMixin {
+    with SingleTickerProviderStateMixin, RestorationMixin {
   final RestorableInt tabIndex = RestorableInt(0);
   late TabController _tabController;
   late Animation<Offset> _flyLayerHorizontalOffset;

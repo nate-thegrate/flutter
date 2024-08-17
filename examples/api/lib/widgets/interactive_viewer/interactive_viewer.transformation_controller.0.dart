@@ -26,10 +26,10 @@ class TransformationControllerExample extends StatefulWidget {
   State<TransformationControllerExample> createState() => _TransformationControllerExampleState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
+/// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+/// means that this [State] is a [TickerProvider].
 class _TransformationControllerExampleState extends State<TransformationControllerExample>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   final TransformationController _transformationController = TransformationController();
   Animation<Matrix4>? _animationReset;
   late final AnimationController _controllerReset = AnimationController(

@@ -380,7 +380,7 @@ class Stepper extends StatefulWidget {
   State<Stepper> createState() => _StepperState();
 }
 
-class _StepperState extends State<Stepper> with TickerProviderStateMixin {
+class _StepperState extends State<Stepper> {
   late List<GlobalKey> _keys;
   final Map<int, StepState> _oldStates = <int, StepState>{};
 

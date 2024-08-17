@@ -26,9 +26,10 @@ class SizeTransitionExample extends StatefulWidget {
   State<SizeTransitionExample> createState() => _SizeTransitionExampleState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
-class _SizeTransitionExampleState extends State<SizeTransitionExample> with TickerProviderStateMixin {
+class _SizeTransitionExampleState extends State<SizeTransitionExample>
+    with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 3),
     vsync: this,

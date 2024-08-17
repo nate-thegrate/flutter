@@ -658,7 +658,7 @@ abstract class _AnimatedScrollView extends StatefulWidget {
   final Clip clipBehavior;
 }
 
-abstract class _AnimatedScrollViewState<T extends _AnimatedScrollView> extends State<T> with TickerProviderStateMixin {
+abstract class _AnimatedScrollViewState<T extends _AnimatedScrollView> extends State<T> {
   final GlobalKey<_SliverAnimatedMultiBoxAdaptorState<_SliverAnimatedMultiBoxAdaptor>> _sliverAnimatedMultiBoxKey = GlobalKey();
 
   /// Insert an item at [index] and start an animation that will be passed

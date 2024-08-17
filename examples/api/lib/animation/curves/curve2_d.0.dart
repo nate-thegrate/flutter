@@ -56,7 +56,7 @@ class FollowCurve2D extends StatefulWidget {
   State<FollowCurve2D> createState() => _FollowCurve2DState();
 }
 
-class _FollowCurve2DState extends State<FollowCurve2D> with TickerProviderStateMixin {
+class _FollowCurve2DState extends State<FollowCurve2D> with SingleTickerProviderStateMixin {
   // The animation controller for this animation.
   late AnimationController controller = AnimationController(
     duration: widget.duration,

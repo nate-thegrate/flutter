@@ -107,7 +107,7 @@ class _Segment<T> extends StatefulWidget {
   _SegmentState<T> createState() => _SegmentState<T>();
 }
 
-class _SegmentState<T> extends State<_Segment<T>> with TickerProviderStateMixin<_Segment<T>> {
+class _SegmentState<T> extends State<_Segment<T>> with SingleTickerProviderStateMixin {
   late final AnimationController highlightPressScaleController = AnimationController(
     duration: _kOpacityAnimationDuration,
     value: widget.shouldScaleContent ? 1 : 0,

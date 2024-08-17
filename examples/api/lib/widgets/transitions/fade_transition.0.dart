@@ -40,10 +40,10 @@ class FadeTransitionExample extends StatefulWidget {
   State<FadeTransitionExample> createState() => _FadeTransitionExampleState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
 class _FadeTransitionExampleState extends State<FadeTransitionExample>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
   late final AnimationController _controller = AnimationController(
     duration: widget.duration,
     vsync: this,

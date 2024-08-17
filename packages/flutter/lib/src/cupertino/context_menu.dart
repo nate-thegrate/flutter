@@ -368,7 +368,7 @@ class CupertinoContextMenu extends StatefulWidget {
   State<CupertinoContextMenu> createState() => _CupertinoContextMenuState();
 }
 
-class _CupertinoContextMenuState extends State<CupertinoContextMenu> with TickerProviderStateMixin {
+class _CupertinoContextMenuState extends State<CupertinoContextMenu> with SingleTickerProviderStateMixin {
   final GlobalKey _childGlobalKey = GlobalKey();
   bool _childHidden = false;
   // Animates the child while it's opening.
@@ -641,7 +641,7 @@ class _DecoyChild extends StatefulWidget {
   _DecoyChildState createState() => _DecoyChildState();
 }
 
-class _DecoyChildState extends State<_DecoyChild> with TickerProviderStateMixin {
+class _DecoyChildState extends State<_DecoyChild> {
   late Animation<Rect?> _rect;
   late Animation<Decoration> _boxDecoration;
   late final CurvedAnimation _boxDecorationCurvedAnimation;

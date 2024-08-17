@@ -26,9 +26,14 @@ class DecoratedBoxTransitionExample extends StatefulWidget {
   State<DecoratedBoxTransitionExample> createState() => _DecoratedBoxTransitionExampleState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
-class _DecoratedBoxTransitionExampleState extends State<DecoratedBoxTransitionExample> with TickerProviderStateMixin {
+class _DecoratedBoxTransitionExampleState extends State<DecoratedBoxTransitionExample> with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 3),
+  )..repeat(reverse: true);
+
   final DecorationTween decorationTween = DecorationTween(
     begin: BoxDecoration(
       color: const Color(0xFFFFFFFF),
@@ -52,11 +57,6 @@ class _DecoratedBoxTransitionExampleState extends State<DecoratedBoxTransitionEx
       // No shadow.
     ),
   );
-
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 3),
-  )..repeat(reverse: true);
 
   @override
   void dispose() {

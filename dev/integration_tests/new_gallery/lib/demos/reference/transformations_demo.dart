@@ -20,7 +20,7 @@ class TransformationsDemo extends StatefulWidget {
 }
 
 class _TransformationsDemoState extends State<TransformationsDemo>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   final GlobalKey _targetKey = GlobalKey();
   // The radius of a hexagon tile in pixels.
   static const double _kHexagonRadius = 16.0;

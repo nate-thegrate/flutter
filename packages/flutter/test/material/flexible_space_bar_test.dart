@@ -1005,8 +1005,7 @@ class SubCategoryScreenView extends StatefulWidget {
   State<SubCategoryScreenView> createState() => _SubCategoryScreenViewState();
 }
 
-class _SubCategoryScreenViewState extends State<SubCategoryScreenView>
-    with TickerProviderStateMixin {
+class _SubCategoryScreenViewState extends State<SubCategoryScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

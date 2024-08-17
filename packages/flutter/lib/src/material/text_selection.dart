@@ -167,7 +167,7 @@ class _TextSelectionControlsToolbar extends StatefulWidget {
   _TextSelectionControlsToolbarState createState() => _TextSelectionControlsToolbarState();
 }
 
-class _TextSelectionControlsToolbarState extends State<_TextSelectionControlsToolbar> with TickerProviderStateMixin {
+class _TextSelectionControlsToolbarState extends State<_TextSelectionControlsToolbar> {
   void _onChangedClipboardStatus() {
     setState(() {
       // Inform the widget that the value of clipboardStatus has changed.

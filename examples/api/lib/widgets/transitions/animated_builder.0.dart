@@ -28,9 +28,9 @@ class AnimatedBuilderExample extends StatefulWidget {
   State<AnimatedBuilderExample> createState() => _AnimatedBuilderExampleState();
 }
 
-/// AnimationControllers can be created with `vsync: this` because of
-/// TickerProviderStateMixin.
-class _AnimatedBuilderExampleState extends State<AnimatedBuilderExample> with TickerProviderStateMixin {
+class _AnimatedBuilderExampleState extends State<AnimatedBuilderExample> with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 10),
     vsync: this,

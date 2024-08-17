@@ -26,11 +26,12 @@ class AlignTransitionExample extends StatefulWidget {
   State<AlignTransitionExample> createState() => _AlignTransitionExampleState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
-class _AlignTransitionExampleState extends State<AlignTransitionExample> with TickerProviderStateMixin {
-  // Using `late final` for lazy initialization. See
-  // https://dart.dev/null-safety/understanding-null-safety#lazy-initialization.
+class _AlignTransitionExampleState extends State<AlignTransitionExample> with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
+  ///
+  /// Using `late final` for lazy initialization. See
+  /// https://dart.dev/null-safety/understanding-null-safety#lazy-initialization.
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,

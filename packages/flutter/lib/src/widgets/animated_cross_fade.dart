@@ -251,7 +251,7 @@ class AnimatedCrossFade extends StatefulWidget {
   }
 }
 
-class _AnimatedCrossFadeState extends State<AnimatedCrossFade> with TickerProviderStateMixin {
+class _AnimatedCrossFadeState extends State<AnimatedCrossFade> with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: widget.duration,
     reverseDuration: widget.reverseDuration,

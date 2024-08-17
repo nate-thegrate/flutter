@@ -248,7 +248,7 @@ class AnimatedSwitcher extends StatefulWidget {
   }
 }
 
-class _AnimatedSwitcherState extends State<AnimatedSwitcher> with TickerProviderStateMixin {
+class _AnimatedSwitcherState extends State<AnimatedSwitcher> with SingleTickerProviderStateMixin {
   _ChildEntry? _currentEntry;
   final Set<_ChildEntry> _outgoingEntries = <_ChildEntry>{};
   List<Widget>? _outgoingWidgets = const <Widget>[];

@@ -26,9 +26,10 @@ class PositionedTransitionExample extends StatefulWidget {
   State<PositionedTransitionExample> createState() => _PositionedTransitionExampleState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
-class _PositionedTransitionExampleState extends State<PositionedTransitionExample> with TickerProviderStateMixin {
+class _PositionedTransitionExampleState extends State<PositionedTransitionExample>
+    with SingleTickerProviderStateMixin {
+  /// The controller can use `vsync: this`, since using [SingleTickerProviderStateMixin]
+  /// means that this [State] is a [TickerProvider].
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
