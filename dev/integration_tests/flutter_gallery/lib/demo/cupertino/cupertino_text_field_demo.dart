@@ -40,7 +40,7 @@ class _CupertinoTextFieldDemoState extends State<CupertinoTextFieldDemo> {
         child: CupertinoButton(
           minSize: 0.0,
           padding: const EdgeInsets.only(bottom: 4),
-          onPressed: () => setState(() => _chatTextController.clear()),
+          onPressed: () => setState(() { _chatTextController.clear(); }),
           child: const Icon(
             CupertinoIcons.arrow_up_circle_fill,
             size: 28.0,
@@ -50,7 +50,7 @@ class _CupertinoTextFieldDemoState extends State<CupertinoTextFieldDemo> {
       ),
       autofocus: true,
       suffixMode: OverlayVisibilityMode.editing,
-      onSubmitted: (String text)=> setState(() => _chatTextController.clear()),
+      onSubmitted: (String text) => setState(() { _chatTextController.clear(); }),
     );
   }
 

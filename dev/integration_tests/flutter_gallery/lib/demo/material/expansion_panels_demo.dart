@@ -186,140 +186,146 @@ class ExpansionPanelsDemo extends StatefulWidget {
 }
 
 class _ExpansionPanelsDemoState extends State<ExpansionPanelsDemo> {
-  late final List<DemoItem<dynamic>> _demoItems = <DemoItem<dynamic>>[
-    DemoItem<String>(
-      name: 'Trip',
-      value: 'Caribbean cruise',
-      hint: 'Change trip name',
-      valueToString: (String? value) => value,
-      builder: (DemoItem<String> item) {
-        void close() {
-          setState(() {
-            item.isExpanded = false;
-          });
-        }
+  late List<DemoItem<dynamic>> _demoItems;
 
-        return Form(
-          child: Builder(
-            builder: (BuildContext context) {
-              return CollapsibleBody(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                onSave: () { Form.of(context).save(); close(); },
-                onCancel: () { Form.of(context).reset(); close(); },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TextFormField(
-                    controller: item.textController,
-                    decoration: InputDecoration(
-                      hintText: item.hint,
-                      labelText: item.name,
-                    ),
-                    onSaved: (String? value) { item.value = value; },
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    ),
-    DemoItem<Location>(
-      name: 'Location',
-      value: Location.Bahamas,
-      hint: 'Select location',
-      valueToString: (Location? location) => location.toString().split('.')[1],
-      builder: (DemoItem<Location> item) {
-        void close() {
-          setState(() {
-            item.isExpanded = false;
-          });
-        }
-        return Form(
-          child: Builder(
-            builder: (BuildContext context) {
-              return CollapsibleBody(
-                onSave: () { Form.of(context).save(); close(); },
-                onCancel: () { Form.of(context).reset(); close(); },
-                child: FormField<Location>(
-                  initialValue: item.value,
-                  onSaved: (Location? result) { item.value = result; },
-                  builder: (FormFieldState<Location> field) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        RadioListTile<Location>(
-                          value: Location.Bahamas,
-                          title: const Text('Bahamas'),
-                          groupValue: field.value,
-                          onChanged: field.didChange,
-                        ),
-                        RadioListTile<Location>(
-                          value: Location.Barbados,
-                          title: const Text('Barbados'),
-                          groupValue: field.value,
-                          onChanged: field.didChange,
-                        ),
-                        RadioListTile<Location>(
-                          value: Location.Bermuda,
-                          title: const Text('Bermuda'),
-                          groupValue: field.value,
-                          onChanged: field.didChange,
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              );
-            }
-          ),
-        );
-      },
-    ),
-    DemoItem<double>(
-      name: 'Sun',
-      value: 80.0,
-      hint: 'Select sun level',
-      valueToString: (double? amount) => '${amount!.round()}',
-      builder: (DemoItem<double> item) {
-        void close() {
-          setState(() {
-            item.isExpanded = false;
-          });
-        }
+  @override
+  void initState() {
+    super.initState();
 
-        return Form(
-          child: Builder(
-            builder: (BuildContext context) {
-              return CollapsibleBody(
-                onSave: () { Form.of(context).save(); close(); },
-                onCancel: () { Form.of(context).reset(); close(); },
-                child: FormField<double>(
-                  initialValue: item.value,
-                  onSaved: (double? value) { item.value = value; },
-                  builder: (FormFieldState<double> field) {
-                    return Container(
-                      // Allow room for the value indicator.
-                      padding: const EdgeInsets.only(top: 44.0),
-                      child: Slider(
-                        max: 100.0,
-                        divisions: 5,
-                        activeColor: Colors.orange[100 + (field.value! * 5.0).round()],
-                        label: '${field.value!.round()}',
-                        value: field.value!,
-                        onChanged: field.didChange,
+    _demoItems = <DemoItem<dynamic>>[
+      DemoItem<String>(
+        name: 'Trip',
+        value: 'Caribbean cruise',
+        hint: 'Change trip name',
+        valueToString: (String? value) => value,
+        builder: (DemoItem<String> item) {
+          void close() {
+            setState(() {
+              item.isExpanded = false;
+            });
+          }
+
+          return Form(
+            child: Builder(
+              builder: (BuildContext context) {
+                return CollapsibleBody(
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  onSave: () { Form.of(context).save(); close(); },
+                  onCancel: () { Form.of(context).reset(); close(); },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextFormField(
+                      controller: item.textController,
+                      decoration: InputDecoration(
+                        hintText: item.hint,
+                        labelText: item.name,
                       ),
-                    );
-                  },
-                ),
-              );
-            }
-          ),
-        );
-      },
-    ),
-  ];
+                      onSaved: (String? value) { item.value = value; },
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+      DemoItem<Location>(
+        name: 'Location',
+        value: Location.Bahamas,
+        hint: 'Select location',
+        valueToString: (Location? location) => location.toString().split('.')[1],
+        builder: (DemoItem<Location> item) {
+          void close() {
+            setState(() {
+              item.isExpanded = false;
+            });
+          }
+          return Form(
+            child: Builder(
+              builder: (BuildContext context) {
+                return CollapsibleBody(
+                  onSave: () { Form.of(context).save(); close(); },
+                  onCancel: () { Form.of(context).reset(); close(); },
+                  child: FormField<Location>(
+                    initialValue: item.value,
+                    onSaved: (Location? result) { item.value = result; },
+                    builder: (FormFieldState<Location> field) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          RadioListTile<Location>(
+                            value: Location.Bahamas,
+                            title: const Text('Bahamas'),
+                            groupValue: field.value,
+                            onChanged: field.didChange,
+                          ),
+                          RadioListTile<Location>(
+                            value: Location.Barbados,
+                            title: const Text('Barbados'),
+                            groupValue: field.value,
+                            onChanged: field.didChange,
+                          ),
+                          RadioListTile<Location>(
+                            value: Location.Bermuda,
+                            title: const Text('Bermuda'),
+                            groupValue: field.value,
+                            onChanged: field.didChange,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              }
+            ),
+          );
+        },
+      ),
+      DemoItem<double>(
+        name: 'Sun',
+        value: 80.0,
+        hint: 'Select sun level',
+        valueToString: (double? amount) => '${amount!.round()}',
+        builder: (DemoItem<double> item) {
+          void close() {
+            setState(() {
+              item.isExpanded = false;
+            });
+          }
 
+          return Form(
+            child: Builder(
+              builder: (BuildContext context) {
+                return CollapsibleBody(
+                  onSave: () { Form.of(context).save(); close(); },
+                  onCancel: () { Form.of(context).reset(); close(); },
+                  child: FormField<double>(
+                    initialValue: item.value,
+                    onSaved: (double? value) { item.value = value; },
+                    builder: (FormFieldState<double> field) {
+                      return Container(
+                        // Allow room for the value indicator.
+                        padding: const EdgeInsets.only(top: 44.0),
+                        child: Slider(
+                          max: 100.0,
+                          divisions: 5,
+                          activeColor: Colors.orange[100 + (field.value! * 5.0).round()],
+                          label: '${field.value!.round()}',
+                          value: field.value!,
+                          onChanged: field.didChange,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+            ),
+          );
+        },
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -94,16 +94,16 @@ class MenuDemoState extends State<MenuDemo> {
               trailing: PopupMenuButton<String>(
                 padding: EdgeInsets.zero,
                 onSelected: showMenuSelection,
-                itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                  const PopupMenuItem<String>(
+                itemBuilder: (BuildContext context) => const <PopupMenuItem<String>>[
+                  PopupMenuItem<String>(
                     value: _simpleValue1,
                     child: Text('Context menu item one'),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     enabled: false,
                     child: Text('A disabled menu item'),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: _simpleValue3,
                     child: Text('Context menu item three'),
                   ),
@@ -162,19 +162,10 @@ class MenuDemoState extends State<MenuDemo> {
                 title: const Text('An item with a simple menu'),
                 subtitle: Text(_simpleValue!),
               ),
-              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                const PopupMenuItem<String>(
-                  value: _simpleValue1,
-                  child: Text(_simpleValue1),
-                ),
-                const PopupMenuItem<String>(
-                  value: _simpleValue2,
-                  child: Text(_simpleValue2),
-                ),
-                const PopupMenuItem<String>(
-                  value: _simpleValue3,
-                  child: Text(_simpleValue3),
-                ),
+              itemBuilder: (BuildContext context) => const <PopupMenuItem<String>>[
+                PopupMenuItem<String>(value: _simpleValue1, child: Text(_simpleValue1)),
+                PopupMenuItem<String>(value: _simpleValue2, child: Text(_simpleValue2)),
+                PopupMenuItem<String>(value: _simpleValue3, child: Text(_simpleValue3)),
               ],
             ),
             // Pressing the PopupMenuButton on the right of this item shows a menu
