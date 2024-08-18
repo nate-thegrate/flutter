@@ -17,7 +17,6 @@ class PersistentBottomSheetDemo extends StatefulWidget {
 
 class _PersistentBottomSheetDemoState extends State<PersistentBottomSheetDemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   late VoidCallback? _showBottomSheetCallback = _showBottomSheet;
 
   void _showBottomSheet() {

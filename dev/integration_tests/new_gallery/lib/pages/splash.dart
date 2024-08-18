@@ -48,9 +48,8 @@ class _SplashPageState extends State<SplashPage>
     duration: splashPageAnimationDuration,
     vsync: this,
   )..addListener(() => setState(() {}));
-  // If the number of included effects changes, this number should be changed.
-  late final int _effect = _random.nextInt(_effectDurations.length) + 1;
-  final Random _random = Random();
+
+  late final int _effect = Random().nextInt(_effectDurations.length) + 1;
 
   // A map of the effect index to its duration. This duration is used to
   // determine how long to display the splash animation at launch.

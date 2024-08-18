@@ -45,11 +45,13 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
     vsync: this,
     duration: const Duration(milliseconds: 500),
   );
+
   final FocusNode _settingsPageFocusNode = FocusNode();
   final ValueNotifier<bool> _isSettingsOpenNotifier = ValueNotifier<bool>(false);
+
+  late final Widget _homePage = widget.homePage ?? const HomePage();
   late final Widget _settingsPage = widget.settingsPage
     ?? SettingsPage(animationController: _settingsPanelController);
-  late final Widget _homePage = widget.homePage ?? const HomePage();
 
   @override
   void dispose() {

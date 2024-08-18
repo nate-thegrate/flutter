@@ -577,8 +577,7 @@ class _ProductThumbnailRowState extends State<ProductThumbnailRow> {
   // it will need to be updated to match it.
   late final _ListModel _list = _ListModel(
     listKey: _listKey,
-    initialItems:
-        ScopedModel.of<AppStateModel>(context).productsInCart.keys.toList(),
+    initialItems: ScopedModel.of<AppStateModel>(context).productsInCart.keys.toList(),
     removedItemBuilder: _buildRemovedThumbnail,
   );
 

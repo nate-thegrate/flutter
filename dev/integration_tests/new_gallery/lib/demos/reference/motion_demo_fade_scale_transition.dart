@@ -24,9 +24,8 @@ class _FadeScaleTransitionDemoState extends State<FadeScaleTransitionDemo>
     vsync: this,
   )..addStatusListener((AnimationStatus status) {
       setState(() {
-        // setState needs to be called to trigger a rebuild because
-        // the 'HIDE FAB'/'SHOW FAB' button needs to be updated based
-        // the latest value of [_controller.status].
+        // The setState call will update the 'HIDE FAB'/'SHOW FAB' button
+        // based on the latest value of [_controller.status].
       });
     });
 

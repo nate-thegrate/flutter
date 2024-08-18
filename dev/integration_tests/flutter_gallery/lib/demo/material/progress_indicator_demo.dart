@@ -21,6 +21,7 @@ class _ProgressIndicatorDemoState extends State<ProgressIndicatorDemo> with Sing
     vsync: this,
     animationBehavior: AnimationBehavior.preserve,
   )..forward();
+
   late final Animation<double> _animation = CurvedAnimation(
     parent: _controller,
     curve: const Interval(0.0, 0.9, curve: Curves.fastOutSlowIn),

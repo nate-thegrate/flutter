@@ -166,14 +166,14 @@ class DialogDemoState extends State<DialogDemo> {
           ElevatedButton(
             child: const Text('CONFIRMATION'),
             onPressed: () async {
-              final TimeOfDay? value = await showTimePicker(
+              final TimeOfDay? time = await showTimePicker(
                 context: context,
                 initialTime: _selectedTime,
               );
-              if (context.mounted && value != null && value != _selectedTime) {
-                _selectedTime = value;
+              if (context.mounted && time != null && time != _selectedTime) {
+                _selectedTime = time;
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('You selected: ${value.format(context)}'),
+                  content: Text('You selected: ${time.format(context)}'),
                 ));
               }
             },

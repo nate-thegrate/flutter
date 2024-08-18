@@ -50,9 +50,9 @@ class _TabsFabDemoState extends State<TabsFabDemo> with SingleTickerProviderStat
     vsync: this,
     length: _allPages.length,
   )..addListener(_handleTabSelection);
+
   late _Page _selectedPage = _allPages[0];
   bool _extendedButtons = false;
-
 
   @override
   void dispose() {
