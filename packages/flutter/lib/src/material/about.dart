@@ -23,7 +23,6 @@ import 'divider.dart';
 import 'floating_action_button_location.dart';
 import 'ink_decoration.dart';
 import 'list_tile.dart';
-import 'material.dart';
 import 'material_localizations.dart';
 import 'page.dart';
 import 'page_transitions_theme.dart';
@@ -591,12 +590,14 @@ class _PackagesViewState extends State<_PackagesView> {
                   valueListenable: widget.selectedId,
                   builder: (BuildContext context, int? selectedId, Widget? _) {
                     return Center(
-                      child: Material(
+                      child: PhysicalModel(
                         color: Theme.of(context).cardColor,
                         elevation: 4.0,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 600.0),
-                          child: _packagesList(context, selectedId, snapshot.data!, widget.isLateral),
+                        child: SplashBox(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 600.0),
+                            child: _packagesList(context, selectedId, snapshot.data!, widget.isLateral),
+                          ),
                         ),
                       ),
                     );
@@ -605,14 +606,14 @@ class _PackagesViewState extends State<_PackagesView> {
               case ConnectionState.none:
               case ConnectionState.active:
               case ConnectionState.waiting:
-                return Material(
+                return ColoredBox(
                     color: Theme.of(context).cardColor,
-                    child: Column(
-                    children: <Widget>[
-                      widget.about,
-                      const Center(child: CircularProgressIndicator()),
-                    ],
-                  ),
+                    child: SplashBox(
+                      child: Column(children: <Widget>[
+                        widget.about,
+                        const Center(child: CircularProgressIndicator()),
+                      ]),
+                    ),
                 );
             }
           },
@@ -888,22 +889,24 @@ class _PackageLicensePageState extends State<_PackageLicensePage> {
           ),
         ),
         body: Center(
-          child: Material(
+          child: PhysicalModel(
             color: theme.cardColor,
             elevation: 4.0,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 600.0),
-              child: Localizations.override(
-                locale: const Locale('en', 'US'),
-                context: context,
-                child: ScrollConfiguration(
-                  // A Scrollbar is built-in below.
-                  behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                  child: Scrollbar(
-                    child: ListView(
-                      primary: true,
-                      padding: padding,
-                      children: listWidgets,
+            child: SplashBox(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 600.0),
+                child: Localizations.override(
+                  locale: const Locale('en', 'US'),
+                  context: context,
+                  child: ScrollConfiguration(
+                    // A Scrollbar is built-in below.
+                    behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                    child: Scrollbar(
+                      child: ListView(
+                        primary: true,
+                        padding: padding,
+                        children: listWidgets,
+                      ),
                     ),
                   ),
                 ),

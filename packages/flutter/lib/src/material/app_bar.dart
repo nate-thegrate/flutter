@@ -1123,12 +1123,9 @@ class _AppBarState extends State<AppBar> {
           Semantics(
             sortKey: const OrdinalSortKey(0.0),
             explicitChildNodes: true,
-            // Creates a material widget to prevent the flexibleSpace from
+            // Creates a SplashBox to prevent the flexibleSpace from
             // obscuring the ink splashes produced by appBar children.
-            child: Material(
-              type: MaterialType.transparency,
-              child: appBar,
-            ),
+            child: SplashBox(child: appBar),
           ),
         ],
       );

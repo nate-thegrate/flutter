@@ -218,9 +218,8 @@ class _BottomAppBarState extends State<BottomAppBar> {
       ),
     );
 
-    final Material material = Material(
+    final SplashBox splashBox = SplashBox(
       key: materialKey,
-      type: MaterialType.transparency,
       child: SafeArea(child: child),
     );
 
@@ -230,7 +229,7 @@ class _BottomAppBarState extends State<BottomAppBar> {
       shadowColor: shadowColor,
       color: effectiveColor,
       clipBehavior: widget.clipBehavior,
-      child: material,
+      child: splashBox,
     );
   }
 }
