@@ -4460,10 +4460,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
         final Element? newChild = _retakeInactiveElement(key, newWidget);
         if (newChild != null) {
           assert(newChild._parent == null);
-          assert(() {
-            _debugCheckForCycles(newChild);
-            return true;
-          }());
+          assert(_debugCheckForCycles(newChild));
           try {
             newChild._activateWithParent(this, newSlot);
           } catch (_) {
@@ -4481,10 +4478,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
         }
       }
       final Element newChild = newWidget.createElement();
-      assert(() {
-        _debugCheckForCycles(newChild);
-        return true;
-      }());
+      assert(_debugCheckForCycles(newChild));
       newChild.mount(this, newSlot);
       assert(newChild._lifecycleState == _ElementLifecycle.active);
 
@@ -4496,16 +4490,14 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
     }
   }
 
-  void _debugCheckForCycles(Element newChild) {
+  bool _debugCheckForCycles(Element newChild) {
     assert(newChild._parent == null);
-    assert(() {
-      Element node = this;
-      while (node._parent != null) {
-        node = node._parent!;
-      }
-      assert(node != newChild); // indicates we are about to create a cycle
-      return true;
-    }());
+    Element node = this;
+    while (node._parent != null) {
+      node = node._parent!;
+    }
+    assert(node != newChild); // indicates we are about to create a cycle
+    return true;
   }
 
   /// Move the given element to the list of inactive elements and detach its
@@ -6081,10 +6073,7 @@ class InheritedElement extends ProxyElement {
 
   @override
   void debugDeactivated() {
-    assert(() {
-      assert(_dependents.isEmpty);
-      return true;
-    }());
+    assert(_dependents.isEmpty);
     super.debugDeactivated();
   }
 
