@@ -838,8 +838,7 @@ class _RailDestinationState extends State<_RailDestination> {
       selected: widget.selected,
       child: Stack(
         children: <Widget>[
-          Material(
-            type: MaterialType.transparency,
+          SplashBox(
             child: _IndicatorInkWell(
               onTap: widget.disabled ? null : widget.onTap,
               borderRadius: BorderRadius.all(Radius.circular(widget.minWidth / 2.0)),

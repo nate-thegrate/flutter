@@ -715,15 +715,14 @@ class _TextSelectionToolbarContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    return Material(
+    return PhysicalModel(
       // This value was eyeballed to match the native text selection menu on
       // a Pixel 6 emulator running Android API level 34.
       borderRadius: const BorderRadius.all(Radius.circular(_kToolbarHeight / 2)),
       clipBehavior: Clip.antiAlias,
       color: _getColor(theme.colorScheme),
       elevation: 1.0,
-      type: MaterialType.card,
-      child: child,
+      child: SplashBox(child: child),
     );
   }
 }

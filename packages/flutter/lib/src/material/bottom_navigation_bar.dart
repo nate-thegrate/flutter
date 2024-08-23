@@ -1154,8 +1154,7 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerPr
               circles: _circles.toList(),
               textDirection: Directionality.of(context),
             ),
-            child: Material( // Splashes.
-              type: MaterialType.transparency,
+            child: SplashBox(
               child: Padding(
                 padding: EdgeInsets.only(bottom: additionalBottomPadding),
                 child: MediaQuery.removePadding(
