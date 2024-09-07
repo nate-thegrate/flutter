@@ -81,12 +81,8 @@ String? getValueFromEnvOrArgs(
   bool allowNull = false,
 }) {
   final String envName = fromArgToEnvName(name);
-  if (env[envName] != null) {
-    return env[envName];
-  }
-  final String? argValue = argResults[name] as String?;
-  if (argValue != null) {
-    return argValue;
+  if (env[envName] ?? argResults[name] case final String value) {
+    return value;
   }
 
   if (allowNull) {
@@ -101,9 +97,8 @@ bool getBoolFromEnvOrArgs(
   ArgResults argResults,
   Map<String, String> env,
 ) {
-  final String envName = fromArgToEnvName(name);
-  if (env[envName] != null) {
-    return env[envName]?.toUpperCase() == 'TRUE';
+  if (env[fromArgToEnvName(name)] case final String flag) {
+    return flag.toUpperCase() == 'TRUE';
   }
   return argResults[name] as bool;
 }
@@ -126,8 +121,7 @@ List<String> getValuesFromEnvOrArgs(
   if (env[envName] != null && env[envName] != '') {
     return env[envName]!.split(',');
   }
-  final List<String>? argValues = argResults[name] as List<String>?;
-  if (argValues != null) {
+  if (argResults[name] case final List<String> argValues) {
     return argValues;
   }
 

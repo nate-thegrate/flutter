@@ -488,8 +488,7 @@ Match? firstMatchInFile(File file, RegExp regExp) {
     return null;
   }
   for (final String line in file.readAsLinesSync()) {
-    final Match? match = regExp.firstMatch(line);
-    if (match != null) {
+    if (regExp.firstMatch(line) case final Match match) {
       return match;
     }
   }

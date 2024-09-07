@@ -262,8 +262,7 @@ void verifyOptions(String? command, Iterable<Option> options) {
     if (option.defaultsTo != null) {
       expect(option.help, isNot(contains('Default')), reason: '${_header}Help for $target--${option.name}" mentions the default value but that is redundant with the defaultsTo option which is also specified (and preferred).');
 
-      final Map<String, String>? allowedHelp = option.allowedHelp;
-      if (allowedHelp != null) {
+      if (option.allowedHelp case final Map<String, String> allowedHelp) {
         for (final String allowedValue in allowedHelp.keys) {
           expect(
             allowedHelp[allowedValue],

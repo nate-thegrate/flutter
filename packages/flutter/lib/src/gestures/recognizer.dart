@@ -457,8 +457,7 @@ abstract class OneSequenceGestureRecognizer extends GestureRecognizer {
   @protected
   @mustCallSuper
   void resolvePointer(int pointer, GestureDisposition disposition) {
-    final GestureArenaEntry? entry = _entries[pointer];
-    if (entry != null) {
+    if (_entries[pointer] case final GestureArenaEntry entry) {
       _entries.remove(pointer);
       entry.resolve(disposition);
     }

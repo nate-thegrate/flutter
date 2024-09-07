@@ -944,9 +944,8 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
   }
 
   void _pushPolicyData(TraversalDirection direction, FocusScopeNode nearestScope, FocusNode focusedChild) {
-    final _DirectionalPolicyData? policyData = _policyData[nearestScope];
     final _DirectionalPolicyDataEntry newEntry = _DirectionalPolicyDataEntry(node: focusedChild, direction: direction);
-    if (policyData != null) {
+    if (_policyData[nearestScope] case final _DirectionalPolicyData policyData) {
       policyData.history.add(newEntry);
     } else {
       _policyData[nearestScope] = _DirectionalPolicyData(history: <_DirectionalPolicyDataEntry>[newEntry]);

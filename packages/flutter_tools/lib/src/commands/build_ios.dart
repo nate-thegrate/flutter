@@ -150,8 +150,7 @@ class BuildIOSArchiveCommand extends _BuildIOSSubCommand {
 
   @override
   Future<void> validateCommand() async {
-    final String? exportOptions = exportOptionsPlist;
-    if (exportOptions != null) {
+    if (exportOptionsPlist case final String exportOptions) {
       if (argResults?.wasParsed('export-method') ?? false) {
         throwToolExit(
           '"--export-options-plist" is not compatible with "--export-method". Either use "--export-options-plist" and '

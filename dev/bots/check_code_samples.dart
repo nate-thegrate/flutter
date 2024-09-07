@@ -243,13 +243,10 @@ class SampleChecker {
       int count = 0;
       for (final String line in lines) {
         count += 1;
-        final RegExpMatch? validMatch = validExampleRe.firstMatch(line);
-        if (validMatch != null) {
+        if (validExampleRe.firstMatch(line) case final RegExpMatch validMatch) {
           searchStrings.add(validMatch.namedGroup('path')!);
-        }
-        final RegExpMatch? malformedMatch = malformedLinkRe.firstMatch(line);
-        // It's only malformed if it doesn't match the valid RegExp.
-        if (malformedMatch != null && validMatch == null) {
+        } else if (malformedLinkRe.firstMatch(line) case final RegExpMatch malformedMatch) {
+          // It's only malformed if it doesn't match the valid RegExp.
           malformedStrings.add(LinkInfo(malformedMatch.namedGroup('malformed')!, file, count));
         }
       }

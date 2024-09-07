@@ -326,9 +326,8 @@ void _fixBrokenCmakeGeneration(Directory buildDirectory) {
     // vcxproj files contain a BOM, which readAsLinesSync drops; re-add it.
     newProjectContents.writeCharCode(unicodeBomCharacterRune);
     for (final String line in assembleProject.readAsLinesSync()) {
-      final RegExpMatch? commandMatch = commandRegex.firstMatch(line);
-      if (commandMatch != null) {
-        lastCommandConditionConfig = commandMatch.group(1);
+      if (commandRegex.firstMatch(line) case final Match match) {
+        lastCommandConditionConfig = match.group(1);
       } else if (lastCommandConditionConfig != null) {
         final RegExpMatch? assembleCallMatch = assembleCallRegex.firstMatch(line);
         if (assembleCallMatch != null) {

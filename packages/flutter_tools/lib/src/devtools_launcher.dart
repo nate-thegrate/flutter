@@ -68,14 +68,10 @@ class DevtoolsServerLauncher extends DevtoolsLauncher {
           .transform(utf8.decoder)
           .transform(const LineSplitter())
           .listen((String line) {
-        final Match? dtdMatch = _serveDtdPattern.firstMatch(line);
-        if (dtdMatch != null) {
-          final String uri = dtdMatch[1]!;
+        if (_serveDtdPattern.firstMatch(line)?[1]! case final String uri) {
           dtdUri = Uri.parse(uri);
         }
-        final Match? devToolsMatch = _serveDevToolsPattern.firstMatch(line);
-        if (devToolsMatch != null) {
-          final String url = devToolsMatch[1]!;
+        if (_serveDevToolsPattern.firstMatch(line)?[1]! case final String url) {
           devToolsCompleter.complete(Uri.parse(url));
         }
       });

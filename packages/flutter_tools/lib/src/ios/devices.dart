@@ -1504,9 +1504,7 @@ class IOSDeviceLogReader extends DeviceLogReader {
         printing = false;
       }
 
-      final Match? match = _runnerLineRegex.firstMatch(line);
-
-      if (match != null) {
+      if (_runnerLineRegex.firstMatch(line) case final Match match) {
         final String logLine = line.substring(match.end);
         // Only display the log line after the initial device and executable information.
         addToLinesController(decodeSyslog(logLine), IOSDeviceLogSource.idevicesyslog);

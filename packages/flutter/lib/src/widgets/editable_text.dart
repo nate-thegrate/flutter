@@ -2103,8 +2103,7 @@ class EditableText extends StatefulWidget {
             AutofillHints.username : TextInputType.text,
           };
 
-          final TextInputType? keyboardType = iOSKeyboardType[effectiveHint];
-          if (keyboardType != null) {
+          if (iOSKeyboardType[effectiveHint] case final TextInputType keyboardType) {
             return keyboardType;
           }
         case TargetPlatform.android:
@@ -4474,8 +4473,7 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
         TextSelection(baseOffset: graphemeStart, extentOffset: graphemeEnd),
       );
 
-      final TextBox? box = boxes.isEmpty ? null : boxes.first;
-      if (box != null) {
+      if (boxes.firstOrNull case final ui.TextBox box) {
         final Rect paintBounds = renderEditable.paintBounds;
         // Stop early when characters are already below the bottom edge of the
         // RenderEditable, regardless of its clipBehavior.
@@ -4743,11 +4741,8 @@ class EditableTextState extends State<EditableText> with AutomaticKeepAliveClien
 
   @override
   void performSelector(String selectorName) {
-    final Intent? intent = intentForMacOSSelector(selectorName);
-
-    if (intent != null) {
-      final BuildContext? primaryContext = primaryFocus?.context;
-      if (primaryContext != null) {
+    if (intentForMacOSSelector(selectorName) case final Intent intent) {
+      if (primaryFocus?.context case final BuildContext primaryContext) {
         Actions.invoke(primaryContext, intent);
       }
     }

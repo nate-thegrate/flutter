@@ -98,22 +98,17 @@ abstract final class MatrixUtils {
 
   /// Whether the given matrix is the identity matrix.
   static bool isIdentity(Matrix4 a) {
-    return a.storage[0] == 1.0 // col 1
-        && a.storage[1] == 0.0
-        && a.storage[2] == 0.0
-        && a.storage[3] == 0.0
-        && a.storage[4] == 0.0 // col 2
-        && a.storage[5] == 1.0
-        && a.storage[6] == 0.0
-        && a.storage[7] == 0.0
-        && a.storage[8] == 0.0 // col 3
-        && a.storage[9] == 0.0
-        && a.storage[10] == 1.0
-        && a.storage[11] == 0.0
-        && a.storage[12] == 0.0 // col 4
-        && a.storage[13] == 0.0
-        && a.storage[14] == 0.0
-        && a.storage[15] == 1.0;
+    // Values are stored in column-major order
+    // (but this symmetric matrix is unaffected).
+    if (a.storage case [
+      1.0, 0.0, 0.0, 0.0,
+      0.0, 1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0, 0.0,
+      0.0, 0.0, 0.0, 1.0,
+    ]) {
+      return true;
+    }
+    return false;
   }
 
   /// Applies the given matrix as a perspective transform to the given point.

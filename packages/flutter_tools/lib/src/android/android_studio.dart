@@ -306,8 +306,7 @@ class AndroidStudio {
     }
 
     checkForStudio('/Applications');
-    final String? homeDirPath = globals.fsUtils.homeDirPath;
-    if (homeDirPath != null) {
+    if (globals.fsUtils.homeDirPath case final String homeDirPath) {
       checkForStudio(globals.fs.path.join(
         homeDirPath,
         'Applications',

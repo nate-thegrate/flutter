@@ -222,8 +222,7 @@ abstract class CreateBase extends FlutterCommand {
         .file(globals.fs.path.join(projectDir.absolute.path, '.metadata'));
     final FlutterProjectMetadata projectMetadata =
         FlutterProjectMetadata(metadataFile, globals.logger);
-    final FlutterProjectType? projectType = projectMetadata.projectType;
-    if (projectType != null) {
+    if (projectMetadata.projectType case final FlutterProjectType projectType) {
       return projectType;
     }
 
@@ -360,8 +359,7 @@ abstract class CreateBase extends FlutterCommand {
     }
 
     if (!boolArg('skip-name-checks')) {
-      final String? error = _validateProjectName(projectName);
-      if (error != null) {
+      if (_validateProjectName(projectName) case final String error) {
         throwToolExit(error);
       }
     }

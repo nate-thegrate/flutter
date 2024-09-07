@@ -2092,9 +2092,7 @@ Future<void> verifyTabooDocumentation(String workingDirectory, { int minimumMatc
   await for (final File file in _allFiles(workingDirectory, 'dart', minimumMatches: minimumMatches)) {
     final List<String> lines = file.readAsLinesSync();
     for (int index = 0; index < lines.length; index += 1) {
-      final String line = lines[index];
-      final Match? match = tabooPattern.firstMatch(line);
-      if (match != null) {
+      if (tabooPattern.firstMatch(lines[index]) case final Match match) {
         errors.add('${file.path}:${index + 1}: Found use of the taboo word "${match.group(1)}" in documentation string.');
       }
     }
@@ -2313,15 +2311,8 @@ List<T>? _deepSearch<T>(Map<T, Set<T>> map, T start, [ Set<T>? seen ]) {
     if (seen != null && seen.contains(key)) {
       return <T>[start, key];
     }
-    final List<T>? result = _deepSearch<T>(
-      map,
-      key,
-      <T>{
-        if (seen == null) start else ...seen,
-        key,
-      },
-    );
-    if (result != null) {
+    final Set<T> set = <T>{if (seen != null) ...seen else start, key};
+    if (_deepSearch<T>(map, key, set) case final List<T> result) {
       result.insert(0, start);
       // Only report the shortest chains.
       // For example a->b->a, rather than c->a->b->a.

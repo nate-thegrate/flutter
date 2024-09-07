@@ -727,8 +727,7 @@ class RenderIndexedStack extends RenderStack {
 
   @override
   void visitChildrenForSemantics(RenderObjectVisitor visitor) {
-    final RenderBox? displayedChild = _childAtIndex();
-    if (displayedChild != null) {
+    if (_childAtIndex() case final RenderBox displayedChild) {
       visitor(displayedChild);
     }
   }

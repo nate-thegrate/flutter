@@ -221,8 +221,7 @@ abstract class SliverChildDelegate {
   @mustCallSuper
   void debugFillDescription(List<String> description) {
     try {
-      final int? children = estimatedChildCount;
-      if (children != null) {
+      if (estimatedChildCount case final int children) {
         description.add('estimated child count: $children');
       }
     } catch (e) {
@@ -473,17 +472,9 @@ class SliverChildBuilderDelegate extends SliverChildDelegate {
 
   @override
   int? findIndexByKey(Key key) {
-    if (findChildIndexCallback == null) {
-      return null;
-    }
-    final Key childKey;
-    if (key is _SaltedValueKey) {
-      final _SaltedValueKey saltedValueKey = key;
-      childKey = saltedValueKey.value;
-    } else {
-      childKey = key;
-    }
-    return findChildIndexCallback!(childKey);
+    return findChildIndexCallback?.call(switch (key) {
+      _SaltedValueKey(:final Key value) || final Key value => value,
+    });
   }
 
   @override
@@ -506,8 +497,7 @@ class SliverChildBuilderDelegate extends SliverChildDelegate {
       child = RepaintBoundary(child: child);
     }
     if (addSemanticIndexes) {
-      final int? semanticIndex = semanticIndexCallback(child, index);
-      if (semanticIndex != null) {
+      if (semanticIndexCallback(child, index) case final int semanticIndex) {
         child = IndexedSemantics(index: semanticIndex + semanticIndexOffset, child: child);
       }
     }
@@ -699,14 +689,9 @@ class SliverChildListDelegate extends SliverChildDelegate {
 
   @override
   int? findIndexByKey(Key key) {
-    final Key childKey;
-    if (key is _SaltedValueKey) {
-      final _SaltedValueKey saltedValueKey = key;
-      childKey = saltedValueKey.value;
-    } else {
-      childKey = key;
-    }
-    return _findChildIndex(childKey);
+    return _findChildIndex(switch (key) {
+      _SaltedValueKey(:final Key value) || final Key value => value,
+    });
   }
 
   @override
@@ -720,8 +705,7 @@ class SliverChildListDelegate extends SliverChildDelegate {
       child = RepaintBoundary(child: child);
     }
     if (addSemanticIndexes) {
-      final int? semanticIndex = semanticIndexCallback(child, index);
-      if (semanticIndex != null) {
+      if (semanticIndexCallback(child, index) case final int semanticIndex) {
         child = IndexedSemantics(index: semanticIndex + semanticIndexOffset, child: child);
       }
     }

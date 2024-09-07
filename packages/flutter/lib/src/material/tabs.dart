@@ -1291,9 +1291,8 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize {
     double maxHeight = _kTabHeight;
     for (final Widget item in tabs) {
-      if (item is PreferredSizeWidget) {
-        final double itemHeight = item.preferredSize.height;
-        maxHeight = math.max(itemHeight, maxHeight);
+      if (item case PreferredSizeWidget(preferredSize: Size(:final double height))) {
+        maxHeight = math.max(height, maxHeight);
       }
     }
     return Size.fromHeight(maxHeight + indicatorWeight);
@@ -1306,10 +1305,8 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
   /// text or icon.
   bool get tabHasTextAndIcon {
     for (final Widget item in tabs) {
-      if (item is PreferredSizeWidget) {
-        if (item.preferredSize.height == _kTextAndIconTabHeight) {
-          return true;
-        }
+      if (item case PreferredSizeWidget(preferredSize: Size(height: _kTextAndIconTabHeight))) {
+        return true;
       }
     }
     return false;
@@ -1446,10 +1443,11 @@ class _TabBarState extends State<TabBar> {
       _controller!.removeListener(_handleTabControllerTick);
     }
     _controller = newController;
-    if (_controller != null) {
-      _controller!.animation!.addListener(_handleTabControllerAnimationTick);
-      _controller!.addListener(_handleTabControllerTick);
-      _currentIndex = _controller!.index;
+    if (_controller case final TabController controller) {
+      controller
+        ..animation!.addListener(_handleTabControllerAnimationTick)
+        ..addListener(_handleTabControllerTick);
+      _currentIndex = controller.index;
     }
   }
 
@@ -1501,11 +1499,8 @@ class _TabBarState extends State<TabBar> {
       _updateTabController();
       _initIndicatorPainter();
       // Adjust scroll position.
-      if (_scrollController != null && _scrollController!.hasClients) {
-        final ScrollPosition position = _scrollController!.position;
-        if (position is _TabBarScrollPosition) {
-          position.markNeedsPixelsCorrection();
-        }
+      if (_scrollController case ScrollController(hasClients: true, :final _TabBarScrollPosition position)) {
+        position.markNeedsPixelsCorrection();
       }
     } else if (widget.indicatorColor != oldWidget.indicatorColor ||
         widget.indicatorWeight != oldWidget.indicatorWeight ||

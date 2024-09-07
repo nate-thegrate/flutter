@@ -742,10 +742,9 @@ bool upgradePbxProjWithFlutterAssets(IosProject project, Logger logger) {
   final Set<String> printedStatuses = <String>{};
 
   for (final String line in lines) {
-    final Match? match = oldAssets.firstMatch(line);
-    if (match != null) {
-      if (printedStatuses.add(match.group(1)!)) {
-        logger.printStatus('Removing obsolete reference to ${match.group(1)} from ${project.xcodeProject.basename}');
+    if (oldAssets.firstMatch(line)?.group(1)! case final String status) {
+      if (printedStatuses.add(status)) {
+        logger.printStatus('Removing obsolete reference to $status from ${project.xcodeProject.basename}');
       }
     } else {
       buffer.writeln(line);
@@ -788,8 +787,7 @@ _XCResultIssueHandlingResult _handleXCResultIssue({
   } else if (message.toLowerCase().contains('provisioning profile')) {
     return _XCResultIssueHandlingResult(requiresProvisioningProfile: false, hasProvisioningProfileIssue: true);
   } else if (message.toLowerCase().contains('ineligible destinations')) {
-    final String? missingPlatform = _parseMissingPlatform(message);
-    if (missingPlatform != null) {
+    if (_parseMissingPlatform(message) case final String missingPlatform) {
       return _XCResultIssueHandlingResult(requiresProvisioningProfile: false, hasProvisioningProfileIssue: false, missingPlatform: missingPlatform);
     }
   } else if (message.toLowerCase().contains('redefinition of module')) {
@@ -811,8 +809,7 @@ _XCResultIssueHandlingResult _handleXCResultIssue({
       duplicateModule: duplicateModule,
     );
   } else if (message.toLowerCase().contains('not found')) {
-    final String? missingModule = _parseMissingModule(message);
-    if (missingModule != null) {
+    if (_parseMissingModule(message) case final String missingModule) {
       return _XCResultIssueHandlingResult(
         requiresProvisioningProfile: false,
         hasProvisioningProfileIssue: false,
@@ -993,10 +990,9 @@ void _parseIssueInStdout(XcodeBuildExecution xcodeBuildExecution, Logger logger,
   }
 
   if (stderr != null && stderr.contains('Ineligible destinations')) {
-    final String? version = _parseMissingPlatform(stderr);
-      if (version != null) {
-        logger.printError(missingPlatformInstructions(version), emphasis: true);
-      }
+    if (_parseMissingPlatform(stderr) case final String version) {
+      logger.printError(missingPlatformInstructions(version), emphasis: true);
+    }
   }
 }
 
@@ -1020,13 +1016,8 @@ String? _parseDuplicateSymbols(String message) {
   // Example: "duplicate symbol '_$s29plugin_1_name23PluginNamePluginC9setDouble3key5valueySS_SdtF' in:
   //             /Users/username/path/to/app/build/ios/Debug-iphonesimulator/plugin_1_name/plugin_1_name.framework/plugin_1_name[arm64][5](PluginNamePlugin.o)
   final RegExp pattern = RegExp(r'duplicate symbol [\s|\S]*?\/(.*)\.o');
-  final RegExpMatch? match = pattern.firstMatch(message);
-  if (match != null && match.groupCount > 0) {
-    final String? version = match.group(1);
-    if (version != null) {
-      return version.split('/').last.split('[').first.split('(').first;
-    }
-    return version;
+  if (pattern.firstMatch(message)?.group(1) case final String version) {
+    return version.split('/').last.split('[').first.split('(').first;
   }
   return null;
 }

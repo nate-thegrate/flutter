@@ -69,8 +69,7 @@ class DevFSFileContent extends DevFSContent {
   FileStat? _fileStat;
 
   File _getFile() {
-    final File? linkTarget = _linkTarget;
-    if (linkTarget != null) {
+    if (_linkTarget case final File linkTarget) {
       return linkTarget;
     }
     if (file is Link) {
@@ -81,8 +80,7 @@ class DevFSFileContent extends DevFSContent {
   }
 
   void _stat() {
-    final File? linkTarget = _linkTarget;
-    if (linkTarget != null) {
+    if (_linkTarget case final File linkTarget) {
       // Stat the cached symlink target.
       final FileStat fileStat = linkTarget.statSync();
       if (fileStat.type == FileSystemEntityType.notFound) {

@@ -4949,6 +4949,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
     _afterNavigation(entry.route);
   }
 
+  static String _toEncodable(Object? object) => '$object';
   void _afterNavigation(Route<dynamic>? route) {
     if (!kReleaseMode) {
       // Among other uses, performance tools use this event to ensure that perf
@@ -4956,29 +4957,15 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
       // occurred, ensuring that stats only reflect the current page.
 
       Map<String, dynamic>? routeJsonable;
-      if (route != null) {
-        routeJsonable = <String, dynamic>{};
-
-        final String description;
-        if (route is TransitionRoute<dynamic>) {
-          final TransitionRoute<dynamic> transitionRoute = route;
-          description = transitionRoute.debugLabel;
-        } else {
-          description = '$route';
-        }
-        routeJsonable['description'] = description;
-
-        final RouteSettings settings = route.settings;
-        final Map<String, dynamic> settingsJsonable = <String, dynamic> {
-          'name': settings.name,
+      if (route case RouteSettings(:final String? name, :final Object? arguments)) {
+        routeJsonable = <String, dynamic>{
+          'description': route is TransitionRoute ? route.debugLabel : '$route',
+          'settings': <String, dynamic>{
+            'name': name,
+            if (arguments != null)
+              'arguments': jsonEncode(arguments, toEncodable: _toEncodable),
+          },
         };
-        if (settings.arguments != null) {
-          settingsJsonable['arguments'] = jsonEncode(
-            settings.arguments,
-            toEncodable: (Object? object) => '$object',
-          );
-        }
-        routeJsonable['settings'] = settingsJsonable;
       }
 
       developer.postEvent('Flutter.Navigation', <String, dynamic>{

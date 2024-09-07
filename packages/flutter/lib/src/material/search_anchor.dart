@@ -555,8 +555,7 @@ class _SearchViewRoute extends PopupRoute<_SearchViewRoute> {
   final RectTween _rectTween = RectTween();
 
   Rect? getRect() {
-    final BuildContext? context = anchorKey.currentContext;
-    if (context != null) {
+    if (anchorKey.currentContext case final BuildContext context) {
       final RenderBox searchBarBox = context.findRenderObject()! as RenderBox;
       final Size boxSize = searchBarBox.size;
       final NavigatorState navigator = Navigator.of(context);

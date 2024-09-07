@@ -548,8 +548,7 @@ class IntelliJValidatorOnMac extends IntelliJValidator {
     final String major = split[0];
     final String minor = split[1];
 
-    final String? homeDirPath = _homeDirPath;
-    if (homeDirPath != null) {
+    if (_homeDirPath case final String homeDirPath) {
       String pluginsPath = _fileSystem.path.join(
         homeDirPath,
         'Library',

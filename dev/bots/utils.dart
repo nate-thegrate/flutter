@@ -503,11 +503,8 @@ Future<void> runFlutterTest(String workingDirectory, {
   // https://github.com/flutter/flutter/issues/146003
   metricFile.deleteSync();
 
-  if (outputChecker != null) {
-    final String? message = outputChecker(result);
-    if (message != null) {
-      foundError(<String>[message]);
-    }
+  if (outputChecker?.call(result) case final String message) {
+    foundError(<String>[message]);
   }
 }
 

@@ -57,26 +57,22 @@ abstract class RenderShiftedBox extends RenderBox with RenderObjectWithChildMixi
 
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
-    double? result;
-    final RenderBox? child = this.child;
     assert(!debugNeedsLayout);
-    if (child != null) {
+    if (child case final RenderBox child) {
       assert(!child.debugNeedsLayout);
-      result = child.getDistanceToActualBaseline(baseline);
-      final BoxParentData childParentData = child.parentData! as BoxParentData;
-      if (result != null) {
-        result += childParentData.offset.dy;
-      }
-    } else {
-      result = super.computeDistanceToActualBaseline(baseline);
+      late final BoxParentData childParentData = child.parentData! as BoxParentData;
+
+      return switch (child.getDistanceToActualBaseline(baseline)) {
+        final double result => result + childParentData.offset.dy,
+        null => null,
+      };
     }
-    return result;
+    return super.computeDistanceToActualBaseline(baseline);
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final RenderBox? child = this.child;
-    if (child != null) {
+    if (child case final RenderBox child) {
       final BoxParentData childParentData = child.parentData! as BoxParentData;
       context.paintChild(child, childParentData.offset + offset);
     }
@@ -84,8 +80,7 @@ abstract class RenderShiftedBox extends RenderBox with RenderObjectWithChildMixi
 
   @override
   bool hitTestChildren(BoxHitTestResult result, { required Offset position }) {
-    final RenderBox? child = this.child;
-    if (child != null) {
+    if (child case final RenderBox child) {
       final BoxParentData childParentData = child.parentData! as BoxParentData;
       return result.addWithPaintOffset(
         offset: childParentData.offset,
@@ -1127,19 +1122,17 @@ class RenderFractionallySizedOverflowBox extends RenderAligningShiftedBox {
   }
 
   BoxConstraints _getInnerConstraints(BoxConstraints constraints) {
-    double minWidth = constraints.minWidth;
-    double maxWidth = constraints.maxWidth;
+    var BoxConstraints(
+      :double minWidth,  :double maxWidth,
+      :double minHeight, :double maxHeight,
+    ) = constraints;
     if (_widthFactor != null) {
-      final double width = maxWidth * _widthFactor!;
-      minWidth = width;
-      maxWidth = width;
+      maxWidth *= _widthFactor!;
+      minWidth = maxWidth;
     }
-    double minHeight = constraints.minHeight;
-    double maxHeight = constraints.maxHeight;
     if (_heightFactor != null) {
-      final double height = maxHeight * _heightFactor!;
-      minHeight = height;
-      maxHeight = height;
+      maxHeight *= _heightFactor!;
+      minHeight = maxHeight;
     }
     return BoxConstraints(
       minWidth: minWidth,

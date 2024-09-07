@@ -3975,8 +3975,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       if (child != null) {
         _debugRemoveGlobalKeyReservation(child);
       }
-      final Key? key = newWidget.key;
-      if (key is GlobalKey) {
+      if (newWidget.key case final GlobalKey key) {
         assert(owner != null);
         owner!._debugReserveGlobalKeyFor(this, newChild, key);
       }
@@ -4139,8 +4138,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       Element? oldChild;
       final Widget newWidget = newWidgets[newChildrenTop];
       if (haveOldChildren) {
-        final Key? key = newWidget.key;
-        if (key != null) {
+        if (newWidget.key case final Key key) {
           oldChild = oldKeyedChildren![key];
           if (oldChild != null) {
             if (Widget.canUpdate(oldChild.widget, newWidget)) {
@@ -4245,8 +4243,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       _parentBuildScope = parent.buildScope;
     }
     assert(owner != null);
-    final Key? key = widget.key;
-    if (key is GlobalKey) {
+    if (widget.key case final GlobalKey key) {
       owner!._registerGlobalKey(key, this);
     }
     _updateInheritance();
@@ -4298,8 +4295,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
     assert(child._parent == this);
     void visit(Element element) {
       element.updateSlot(newSlot);
-      final Element? descendant = element.renderObjectAttachingChild;
-      if (descendant != null) {
+      if (element.renderObjectAttachingChild case final Element descendant) {
         visit(descendant);
       }
     }
@@ -4391,8 +4387,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       }
       return true;
     }());
-    final Element? parent = element._parent;
-    if (parent != null) {
+    if (element._parent case final Element parent) {
       assert(() {
         if (parent == this) {
           throw FlutterError.fromParts(<DiagnosticsNode>[
@@ -4455,10 +4450,8 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
     }
 
     try {
-      final Key? key = newWidget.key;
-      if (key is GlobalKey) {
-        final Element? newChild = _retakeInactiveElement(key, newWidget);
-        if (newChild != null) {
+      if (newWidget.key case final GlobalKey key) {
+        if (_retakeInactiveElement(key, newWidget) case final Element newChild) {
           assert(newChild._parent == null);
           assert(() {
             _debugCheckForCycles(newChild);
@@ -4700,8 +4693,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
       FlutterMemoryAllocations.instance.dispatchObjectDisposed(object: this);
     }
     // Use the private property to avoid a CastError during hot reload.
-    final Key? key = _widget?.key;
-    if (key is GlobalKey) {
+    if (_widget?.key case final GlobalKey key) {
       owner!._unregisterGlobalKey(key, this);
     }
     // Release resources to reduce the severity of memory leaks caused by
@@ -5121,8 +5113,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
     properties.add(DiagnosticsProperty<Key>('key', _widget?.key, showName: false, defaultValue: null, level: DiagnosticLevel.hidden));
     _widget?.debugFillProperties(properties);
     properties.add(FlagProperty('dirty', value: dirty, ifTrue: 'dirty'));
-    final Set<InheritedElement>? deps = _dependencies;
-    if (deps != null && deps.isNotEmpty) {
+    if (_dependencies case final Set<InheritedElement> deps when deps.isNotEmpty) {
       final List<InheritedElement> sortedDependencies = deps.toList()
         ..sort((InheritedElement a, InheritedElement b) =>
             a.toStringShort().compareTo(b.toStringShort()));
@@ -5191,8 +5182,8 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
           ),
           describeElement('The widget on which setState() or markNeedsBuild() was called was'),
         ];
-        if (owner!._debugCurrentBuildTarget != null) {
-          information.add(owner!._debugCurrentBuildTarget!.describeWidget('The widget which was currently being built when the offending call was made was'));
+        if (owner!._debugCurrentBuildTarget case final Element target) {
+          information.add(target.describeWidget('The widget which was currently being built when the offending call was made was'));
         }
         throw FlutterError.fromParts(information);
       } else if (owner!._debugStateLocked) {

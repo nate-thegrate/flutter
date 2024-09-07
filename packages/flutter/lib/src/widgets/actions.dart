@@ -882,8 +882,7 @@ class Actions extends StatefulWidget {
 
     _visitActionsAncestors(context, (InheritedElement element) {
       final _ActionsScope actions = element.widget as _ActionsScope;
-      final Action<T>? result = _castAction(actions, intent: intent);
-      if (result != null) {
+      if (_castAction(actions, intent: intent) case final Action<T> result) {
         context.dependOnInheritedElement(element);
         action = result;
         return true;
@@ -911,8 +910,7 @@ class Actions extends StatefulWidget {
 
     _visitActionsAncestors(context, (InheritedElement element) {
       final _ActionsScope actions = element.widget as _ActionsScope;
-      final Action<T>? result = _castAction(actions, intent: intent);
-      if (result != null) {
+      if (_castAction(actions, intent: intent) case final Action<T> result) {
         action = result;
         return true;
       }

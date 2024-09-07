@@ -198,9 +198,9 @@ class ProxyAnimation extends Animation<double>
     if (value == _parent) {
       return;
     }
-    if (_parent != null) {
-      _status = _parent!.status;
-      _value = _parent!.value;
+    if (_parent case final Animation<double> parent) {
+      _status = parent.status;
+      _value = parent.value;
       if (isListening) {
         didStopListening();
       }

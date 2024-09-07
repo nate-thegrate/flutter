@@ -2240,8 +2240,7 @@ class _VerticalOuterDimensionState extends ScrollableState {
   void _handleDragEnd(DragEndDetails details) {
     lastDragOffset = null;
     lockedAxis = null;
-    final double dx = details.velocity.pixelsPerSecond.dx;
-    final double dy = details.velocity.pixelsPerSecond.dy;
+    final Offset(:double dx, :double dy) = details.velocity.pixelsPerSecond;
     final DragEndDetails verticalDragDetails = DragEndDetails(
       velocity: Velocity(pixelsPerSecond: Offset(0.0, dy)),
       primaryVelocity: dy,

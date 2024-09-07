@@ -52,15 +52,11 @@ abstract class Command {
 
   /// Serializes this command to parameter name/value pairs.
   @mustCallSuper
-  Map<String, String> serialize() {
-    final Map<String, String> result = <String, String>{
-      'command': kind,
-    };
-    if (timeout != null) {
-      result['timeout'] = '${timeout!.inMilliseconds}';
-    }
-    return result;
-  }
+  Map<String, String> serialize() => <String, String>{
+    'command': kind,
+    if (timeout case Duration(inMilliseconds: final int milliseconds))
+      'timeout': '$milliseconds',
+  };
 }
 
 /// An object sent from a Flutter application back to the Flutter Driver in

@@ -476,8 +476,7 @@ class VisualStudio {
       ]);
       if (result.exitCode == 0) {
         final RegExp pattern = RegExp(r'InstallationFolder\s+REG_SZ\s+(.+)');
-        final RegExpMatch? match = pattern.firstMatch(result.stdout);
-        if (match != null) {
+        if (pattern.firstMatch(result.stdout) case final Match match) {
           return match.group(1)!.trim();
         }
       }

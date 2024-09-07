@@ -598,8 +598,7 @@ class _DropdownMenuState<T> extends State<DropdownMenu<T>> {
   }
 
   double? getWidth(GlobalKey key) {
-    final BuildContext? context = key.currentContext;
-    if (context != null) {
+    if (key.currentContext case final BuildContext context) {
       final RenderBox box = context.findRenderObject()! as RenderBox;
       return box.hasSize ? box.size.width : null;
     }
@@ -1031,8 +1030,7 @@ class _RenderDropdownMenuBody extends RenderBox
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final RenderBox? child = firstChild;
-    if (child != null) {
+    if (firstChild case final RenderBox child) {
       final _DropdownMenuBodyParentData childParentData = child.parentData! as _DropdownMenuBodyParentData;
       context.paintChild(child, offset + childParentData.offset);
     }

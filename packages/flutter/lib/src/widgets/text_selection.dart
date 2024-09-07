@@ -1455,11 +1455,9 @@ class SelectionOverlay {
   /// Destroys the handles by removing them from overlay.
   /// {@endtemplate}
   void hideHandles() {
-    if (_handles != null) {
-      _handles!.start.remove();
-      _handles!.start.dispose();
-      _handles!.end.remove();
-      _handles!.end.dispose();
+    if (_handles case (:final OverlayEntry start, :final OverlayEntry end)) {
+      start..remove()..dispose();
+      end..remove()..dispose();
       _handles = null;
     }
   }

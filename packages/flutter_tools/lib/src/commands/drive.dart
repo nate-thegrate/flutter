@@ -393,8 +393,7 @@ class DriveCommand extends RunCommandBase {
     }
     screenshotTokens = tokens;
 
-    final int? timeoutSeconds = _timeoutSeconds;
-    if (timeoutSeconds != null) {
+    if (_timeoutSeconds case final int timeoutSeconds) {
       timeoutTimer = Timer(
         Duration(seconds: timeoutSeconds),
         () {

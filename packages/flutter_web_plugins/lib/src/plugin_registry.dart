@@ -120,8 +120,7 @@ class Registrar extends BinaryMessenger {
   ) async {
     ByteData? response;
     try {
-      final MessageHandler? handler = _handlers[channel];
-      if (handler != null) {
+      if (_handlers[channel] case final MessageHandler handler) {
         response = await handler(data);
       }
     } catch (exception, stack) {

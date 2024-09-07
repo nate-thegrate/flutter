@@ -2286,8 +2286,7 @@ class _FifoCache<K, V> {
   /// if not, calls the given callback to obtain it first.
   V putIfAbsent(K key, V Function() loader) {
     assert(key != null);
-    final V? result = _cache[key];
-    if (result != null) {
+    if (_cache[key] case final V result) {
       return result;
     }
     if (_cache.length == _maximumSize) {

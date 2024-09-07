@@ -302,8 +302,7 @@ Rect _calculateSubtreeBoundsHelper(RenderObject object, Matrix4 transform) {
     final Matrix4 childTransform = transform.clone();
     object.applyPaintTransform(child, childTransform);
     Rect childBounds = _calculateSubtreeBoundsHelper(child, childTransform);
-    final Rect? paintClip = object.describeApproximatePaintClip(child);
-    if (paintClip != null) {
+    if (object.describeApproximatePaintClip(child) case final Rect paintClip) {
       final Rect transformedPaintClip = MatrixUtils.transformRect(
         transform,
         paintClip,
@@ -1389,8 +1388,7 @@ mixin WidgetInspectorService {
     reference.count -= 1;
     assert(reference.count >= 0);
     if (reference.count == 0) {
-      final Object? value = reference.value;
-      if (value != null) {
+      if (reference.value case final Object value) {
           _objectToId.remove(value);
       }
       _idToReferenceData.remove(reference.id);
@@ -1607,8 +1605,7 @@ mixin WidgetInspectorService {
   void _sendInspectEvent(Object? object){
     inspect(object);
 
-    final _Location? location = _getSelectedSummaryWidgetLocation(null);
-    if (location != null) {
+    if (_getSelectedSummaryWidgetLocation(null) case final _Location location) {
       postEvent(
         'navigate',
         <String, Object>{
@@ -1625,8 +1622,7 @@ mixin WidgetInspectorService {
   /// Returns a DevTools uri linking to a specific element on the inspector page.
   String? _devToolsInspectorUriForElement(Element element) {
     if (activeDevToolsServerAddress != null && connectedVmServiceUri != null) {
-      final String? inspectorRef = toId(element, _consoleObjectGroup);
-      if (inspectorRef != null) {
+      if (toId(element, _consoleObjectGroup) case final String inspectorRef?) {
         return devToolsInspectorUri(inspectorRef);
       }
     }
@@ -1761,8 +1757,7 @@ mixin WidgetInspectorService {
 
   /// Memoized version of [_isLocalCreationLocationImpl].
   bool _isLocalCreationLocation(String locationUri) {
-    final bool? cachedValue = _isLocalCreationCache[locationUri];
-    if (cachedValue != null) {
+    if (_isLocalCreationCache[locationUri] case final bool cachedValue?) {
       return cachedValue;
     }
     final bool result = _isLocalCreationLocationImpl(locationUri);
@@ -3644,9 +3639,8 @@ class DevToolsDeepLinkProperty extends DiagnosticsProperty<String> {
 bool debugIsLocalCreationLocation(Object object) {
   bool isLocal = false;
   assert(() {
-    final _Location? location = _getCreationLocation(object);
-    if (location != null) {
-      isLocal = WidgetInspectorService.instance._isLocalCreationLocation(location.file);
+    if (_getCreationLocation(object) case _Location(:final String file)) {
+      isLocal = WidgetInspectorService.instance._isLocalCreationLocation(file);
     }
     return true;
   }());
@@ -3797,8 +3791,7 @@ class InspectorSerializationDelegate implements DiagnosticsSerializationDelegate
     if (summaryTree) {
       result['summaryTree'] = true;
     }
-    final _Location? creationLocation = _getCreationLocation(value);
-    if (creationLocation != null) {
+    if (_getCreationLocation(value) case final _Location creationLocation) {
       result['locationId'] = _toLocationId(creationLocation);
       result['creationLocation'] = creationLocation.toJsonMap();
       if (service._isLocalCreationLocation(creationLocation.file)) {

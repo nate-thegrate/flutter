@@ -221,8 +221,7 @@ class SnippetGenerator {
     final RegExp codeStartEnd =
         RegExp(r'^\s*```(?<language>[-\w]+|[-\w]+ (?<section>[-\w]+))?\s*$');
     for (final SourceLine line in sample.input) {
-      final RegExpMatch? match = codeStartEnd.firstMatch(line.text);
-      if (match != null) {
+      if (codeStartEnd.firstMatch(line.text) case final RegExpMatch match) {
         // If we saw the start or end of a code block
         inCodeBlock = !inCodeBlock;
         if (match.namedGroup('language') != null) {

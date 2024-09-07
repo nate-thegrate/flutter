@@ -707,18 +707,14 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator> w
 
   Widget _buildCupertinoIndicator(BuildContext context) {
     final Color? tickColor = widget.backgroundColor;
-    final double? value = widget.value;
-    if (value == null) {
-      return CupertinoActivityIndicator(
+    if (widget.value case final double value) {
+      return CupertinoActivityIndicator.partiallyRevealed(
         key: widget.key,
-        color: tickColor
+        color: tickColor,
+        progress: value,
       );
     }
-    return CupertinoActivityIndicator.partiallyRevealed(
-      key: widget.key,
-      color: tickColor,
-      progress: value
-    );
+    return CupertinoActivityIndicator(key: widget.key, color: tickColor);
   }
 
   Widget _buildMaterialIndicator(BuildContext context, double headValue, double tailValue, double offsetValue, double rotationValue) {
@@ -951,8 +947,7 @@ class _RefreshProgressIndicatorState extends _CircularProgressIndicatorState {
   // When value is null the arrow animation starting from wherever we left it.
   @override
   Widget build(BuildContext context) {
-    final double? value = widget.value;
-    if (value != null) {
+    if (widget.value case final double value) {
       _lastValue = value;
       _controller.value = _convertTween.transform(value)
         * (1333 / 2 / _kIndeterminateCircularDuration);
@@ -981,13 +976,11 @@ class _RefreshProgressIndicatorState extends _CircularProgressIndicatorState {
   Widget _buildMaterialIndicator(BuildContext context, double headValue, double tailValue, double offsetValue, double rotationValue) {
     final double? value = widget.value;
     final double arrowheadScale = value == null ? 0.0 : const Interval(0.1, _strokeHeadInterval).transform(value);
-    final double rotation;
 
-    if (value == null && _lastValue == null) {
-      rotation = 0.0;
-    } else {
-      rotation = math.pi * _additionalRotationTween.transform(value ?? _lastValue!);
-    }
+    final double rotation = switch (value ?? _lastValue) {
+      final double value => math.pi * _additionalRotationTween.transform(value),
+      null => 0.0,
+    };
 
     Color valueColor = widget._getValueColor(context);
     final double opacity = valueColor.opacity;

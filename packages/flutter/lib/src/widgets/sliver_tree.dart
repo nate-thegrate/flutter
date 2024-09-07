@@ -310,10 +310,9 @@ class TreeSliverController {
   /// add a [Builder] widget, which provides a new scope with a
   /// [BuildContext] that is "under" the [TreeSliver].
   static TreeSliverController of(BuildContext context) {
-    final _TreeSliverState<Object?>? result =
-        context.findAncestorStateOfType<_TreeSliverState<Object?>>();
-    if (result != null) {
-      return result.controller;
+    if (context.findAncestorStateOfType<_TreeSliverState<Object?>>()?.controller
+    case final TreeSliverController controller?) {
+      return controller;
     }
     throw FlutterError.fromParts(<DiagnosticsNode>[
       ErrorSummary(

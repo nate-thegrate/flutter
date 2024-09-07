@@ -715,13 +715,10 @@ abstract class WidgetStateProperty<T> {
   /// This is useful for widgets that have parameters which can optionally be a
   /// [WidgetStateProperty]. For example, [InkWell.mouseCursor] can be a
   /// [MouseCursor] or a [WidgetStateProperty<MouseCursor>].
-  static T resolveAs<T>(T value, Set<WidgetState> states) {
-    if (value is WidgetStateProperty<T>) {
-      final WidgetStateProperty<T> property = value;
-      return property.resolve(states);
-    }
-    return value;
-  }
+  static T resolveAs<T>(T value, Set<WidgetState> states) => switch (value) {
+    final WidgetStateProperty<T> property => property.resolve(states),
+    _ => value,
+  };
 
   /// Convenience method for creating a [WidgetStateProperty] from a
   /// [WidgetPropertyResolver] function alone.

@@ -174,35 +174,36 @@ Future<void> main(List<String> arguments) async {
   }
 
   final bool includeDartUi = parsedArguments.wasParsed('dart-ui-location') || parsedArguments['include-dart-ui'] as bool;
-  late Directory dartUiLocation;
-  if (((parsedArguments['dart-ui-location'] ?? '') as String).isNotEmpty) {
-    dartUiLocation = Directory(
-        path.absolute(parsedArguments['dart-ui-location'] as String));
-  } else {
-    dartUiLocation = Directory(_defaultDartUiLocation);
-  }
+  final Directory dartUiLocation = Directory(switch (parsedArguments['dart-ui-location']) {
+    final String location when location.isNotEmpty => path.absolute(location),
+    _ => _defaultDartUiLocation,
+  });
+
   if (!dartUiLocation.existsSync()) {
     stderr.writeln('Unable to find dart:ui directory ${dartUiLocation.path}');
     exit(1);
   }
 
-  if (parsedArguments['interactive'] != null) {
+  late final _SnippetChecker snippetChecker = _SnippetChecker(
+    flutterPackages,
+    tempDirectory: parsedArguments['temp'] as String?,
+    verbose: parsedArguments['verbose'] as bool,
+    dartUiLocation: includeDartUi ? dartUiLocation : null,
+  );
+
+  if (parsedArguments['interactive'] case final String filePath) {
     await _runInteractive(
       flutterPackages: flutterPackages,
       tempDirectory: parsedArguments['temp'] as String?,
-      filePath: parsedArguments['interactive'] as String,
+      filePath: filePath,
       dartUiLocation: includeDartUi ? dartUiLocation : null,
     );
-  } else {
-    if (await _SnippetChecker(
-        flutterPackages,
-        tempDirectory: parsedArguments['temp'] as String?,
-        verbose: parsedArguments['verbose'] as bool,
-        dartUiLocation: includeDartUi ? dartUiLocation : null,
-      ).checkSnippets()) {
-      stderr.writeln('See the documentation at the top of dev/bots/analyze_snippet_code.dart for details.');
-      exit(1);
-    }
+  } else if (await snippetChecker.checkSnippets()) {
+    stderr.writeln(
+      'See the documentation at the top of '
+      'dev/bots/analyze_snippet_code.dart for details.',
+    );
+    exit(1);
   }
 }
 
@@ -253,36 +254,24 @@ class _ErrorBase implements Comparable<Object> {
 
   @override
   int compareTo(Object other) {
+    (Comparable<Object>?, Comparable<Object>?)? comparison;
+
     if (other is _ErrorBase) {
       if (other.file != file) {
-        if (other.file == null) {
-          return -1;
-        }
-        if (file == null) {
-          return 1;
-        }
-        return file!.compareTo(other.file!);
-      }
-      if (other.line != line) {
-        if (other.line == null) {
-          return -1;
-        }
-        if (line == null) {
-          return 1;
-        }
-        return line!.compareTo(other.line!);
-      }
-      if (other.column != column) {
-        if (other.column == null) {
-          return -1;
-        }
-        if (column == null) {
-          return 1;
-        }
-        return column!.compareTo(other.column!);
+        comparison = (file, other.file);
+      } else if (other.line != line) {
+        comparison = (line, other.line);
+      } else if (other.column != column) {
+        comparison = (column, other.column);
       }
     }
-    return toString().compareTo(other.toString());
+
+    return switch (comparison) {
+      (_, null) => -1,
+      (null, _) => 1,
+      null => toString().compareTo(other.toString()),
+      _ => comparison.$1!.compareTo(comparison.$2!),
+    };
   }
 }
 
@@ -860,19 +849,17 @@ class _SnippetChecker {
         // ```
         //
         // This section removes the label.
-        for (int index = 0; index < block.length; index += 1) {
-          final Match? prefix = _namedArgumentRegExp.matchAsPrefix(block[index]);
-          if (prefix != null) {
-            block[index] = block[index].substring(prefix.group(0)!.length);
+        for (final (int index, String line) in block.indexed) {
+          if (_namedArgumentRegExp.matchAsPrefix(line) case final Match prefix) {
+            block[index] = line.substring(prefix.group(0)!.length);
             break;
           }
         }
       }
       // strip trailing comma, if any
-      for (int index = block.length - 1; index >= 0; index -= 1) {
-        if (!block[index].startsWith(_nonCodeRegExp)) {
-          final Match? lastLine = _trailingCommaRegExp.matchAsPrefix(block[index]);
-          if (lastLine != null) {
+      for (final (int index, String line) in block.indexed) {
+        if (!line.startsWith(_nonCodeRegExp)) {
+          if (_trailingCommaRegExp.matchAsPrefix(line) case final Match lastLine) {
             block[index] = lastLine.group(1)! + lastLine.group(2)!;
           }
           break;

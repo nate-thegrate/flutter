@@ -207,12 +207,12 @@ class ChipsInputState<T> extends State<ChipsInput<T>> {
   void _textListener() {
     final String currentText = controller.text;
 
-    if (_previousSelection != null) {
+    if (_previousSelection case TextSelection(
+      baseOffset: final int cursorStart,
+      extentOffset: final int cursorEnd,
+    )) {
       final int currentNumber = countReplacements(currentText);
       final int previousNumber = countReplacements(_previousText);
-
-      final int cursorEnd = _previousSelection!.extentOffset;
-      final int cursorStart = _previousSelection!.baseOffset;
 
       final List<T> values = <T>[...widget.values];
 

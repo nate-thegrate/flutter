@@ -229,9 +229,8 @@ Future<bool> runXcodeTests({
   );
 
   if (testResultExit != 0) {
-    final Directory? dumpDirectory = hostAgent.dumpDirectory;
     final Directory xcresultBundle = Directory(path.join(resultBundleTemp, 'result.xcresult'));
-    if (dumpDirectory != null) {
+    if (hostAgent case HostAgent(:final Directory dumpDirectory)) {
       if (xcresultBundle.existsSync()) {
         // Zip the test results to the artifacts directory for upload.
         final String zipPath = path.join(dumpDirectory.path,

@@ -571,8 +571,7 @@ end
         );
 
         if (testResultExit != 0) {
-          final Directory? dumpDirectory = hostAgent.dumpDirectory;
-          if (dumpDirectory != null) {
+          if (hostAgent case HostAgent(:final Directory dumpDirectory)) {
             // Zip the test results to the artifacts directory for upload.
             await inDirectory(resultBundleTemp, () {
               final String zipPath = path.join(dumpDirectory.path,

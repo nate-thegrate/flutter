@@ -86,8 +86,7 @@ LanguageVersion determineLanguageVersion(File file, Package? package, String flu
       continue;
     }
     // Check for a match with the language version.
-    final Match? match = _languageVersion.matchAsPrefix(trimmedLine);
-    if (match != null) {
+    if (_languageVersion.matchAsPrefix(trimmedLine) case final Match match) {
       final String rawMajor = match.group(1) ?? '';
       final String rawMinor = match.group(2) ?? '';
       try {
