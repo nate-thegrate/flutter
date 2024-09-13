@@ -11,10 +11,9 @@ final List<GlobalKey> globalKeys = defaultPages.map<GlobalKey>((_) => GlobalKey(
 int? currentPage;
 
 Widget buildPage(int page) {
-  return SizedBox(
+  return SizedBox.fromSize(
     key: globalKeys[page],
-    width: pageSize.width,
-    height: pageSize.height,
+    size: pageSize,
     child: Text(page.toString()),
   );
 }
@@ -35,8 +34,9 @@ Widget buildFrame({
   return Directionality(
     textDirection: textDirection,
     child: Center(
-      child: SizedBox(
-        width: pageSize.width, height: pageSize.height, child: child,
+      child: SizedBox.fromSize(
+        size: pageSize,
+        child: child,
       ),
     ),
   );

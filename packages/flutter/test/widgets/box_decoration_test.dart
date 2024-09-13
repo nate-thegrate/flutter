@@ -126,10 +126,7 @@ Future<void> main() async {
         child: Container(
           key: key,
           decoration: BoxDecoration(border: Border.all(width: 10.0)),
-          child: const SizedBox(
-            width: 25.0,
-            height: 25.0,
-          ),
+          child: const SizedBox.square(dimension: 25),
         ),
       ),
     );

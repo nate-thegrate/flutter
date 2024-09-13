@@ -1359,7 +1359,7 @@ void main() {
             message: tooltipText,
             triggerMode: TooltipTriggerMode.tap,
             showDuration: showDuration,
-            child: SizedBox(width: 100.0, height: 100.0),
+            child: SizedBox.square(dimension: 100.0),
           ),
         ),
       ),
@@ -1397,10 +1397,7 @@ void main() {
           child: Tooltip(
             message: tooltipText,
             waitDuration: waitDuration,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -1434,10 +1431,7 @@ void main() {
         home: Center(
           child: Tooltip(
             message: tooltipText,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -1475,10 +1469,7 @@ void main() {
           child: Tooltip(
             message: tooltipText,
             waitDuration: waitDuration,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -1528,18 +1519,12 @@ void main() {
             Tooltip(
               message: 'first tooltip',
               waitDuration: waitDuration,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
             Tooltip(
               message: 'last tooltip',
               waitDuration: waitDuration,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ],
         ),
@@ -1579,10 +1564,7 @@ void main() {
             message: tooltipText,
             waitDuration: waitDuration,
             exitDuration: waitDuration,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -1866,10 +1848,7 @@ void main() {
           child: Tooltip(
             message: tooltipText,
             waitDuration: waitDuration,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -1915,7 +1894,7 @@ void main() {
                       child: Tooltip(
                         key: tooltipKey,
                         message: tooltipText,
-                        child: const SizedBox(width: 10.0, height: 10.0),
+                        child: const SizedBox.square(dimension: 10.0),
                       ),
                     ),
                   ],
@@ -2465,10 +2444,7 @@ void main() {
             message: tooltipText,
             waitDuration: waitDuration,
             onTriggered: onTriggered,
-            child: const SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: const SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -2494,10 +2470,7 @@ void main() {
           child: Tooltip(
             message: tooltipText,
             waitDuration: waitDuration,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -2531,10 +2504,7 @@ void main() {
             message: tooltipText,
             waitDuration: waitDuration,
             triggerMode: TooltipTriggerMode.longPress,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -2579,10 +2549,7 @@ void main() {
             waitDuration: waitDuration,
             showDuration: showDuration,
             triggerMode: TooltipTriggerMode.longPress,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -3108,7 +3075,7 @@ Future<void> setWidgetForTooltipMode(
         onTriggered: onTriggered,
         showDuration: showDuration,
         enableTapToDismiss: enableTapToDismiss ?? true,
-        child: const SizedBox(width: 100.0, height: 100.0),
+        child: const SizedBox.square(dimension: 100.0),
       ),
     ),
   );

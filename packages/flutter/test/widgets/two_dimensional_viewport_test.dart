@@ -23,9 +23,8 @@ void main() {
             maxXIndex: 0,
             maxYIndex: 0,
             builder: (BuildContext context, ChildVicinity vicinity) {
-              return SizedBox(
-                height: 200,
-                width: 200,
+              return SizedBox.square(
+                dimension: 200,
                 child: Center(child: Text('C${vicinity.xIndex}:R${vicinity.yIndex}')),
               );
             }
@@ -54,9 +53,8 @@ void main() {
             maxYIndex: 0,
             addRepaintBoundaries: false,
             builder: (BuildContext context, ChildVicinity vicinity) {
-              return SizedBox(
-                height: 200,
-                width: 200,
+              return SizedBox.square(
+                dimension: 200,
                 child: Center(child: Text('C${vicinity.xIndex}:R${vicinity.yIndex}')),
               );
             }
@@ -85,9 +83,8 @@ void main() {
           addRepaintBoundaries: false,
           builder: (BuildContext context, ChildVicinity vicinity) {
             capturedContext = context;
-            return SizedBox(
-              height: 200,
-              width: 200,
+            return SizedBox.square(
+              dimension: 200,
               child: Center(child: Text('C${vicinity.xIndex}:R${vicinity.yIndex}')),
             );
           }
@@ -514,9 +511,8 @@ void main() {
       testWidgets('repaintBoundaries', (WidgetTester tester) async {
         final List<List<Widget>> children = <List<Widget>>[];
         children.add(<Widget>[
-          const SizedBox(
-            height: 200,
-            width: 200,
+          const SizedBox.square(
+            dimension: 200,
             child: Center(child: Text('R0:C0')),
           )
         ]);
@@ -586,9 +582,8 @@ void main() {
       testWidgets('will return null for a ChildVicinity outside of list bounds', (WidgetTester tester) async {
         final List<List<Widget>> children = <List<Widget>>[];
         children.add(<Widget>[
-          const SizedBox(
-            height: 200,
-            width: 200,
+          const SizedBox.square(
+            dimension: 200,
             child: Center(child: Text('R0:C0')),
           )
         ]);
@@ -619,9 +614,8 @@ void main() {
       testWidgets('shouldRebuild', (WidgetTester tester) async {
         final List<List<Widget>> children = <List<Widget>>[];
         children.add(<Widget>[
-          const SizedBox(
-            height: 200,
-            width: 200,
+          const SizedBox.square(
+            dimension: 200,
             child: Center(child: Text('R0:C0')),
           )
         ]);

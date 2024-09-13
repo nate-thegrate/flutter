@@ -670,9 +670,8 @@ void main() {
           const PopupMenuItem<int>(value: 3, child: Text('CCC')),
         ];
       },
-      child: const SizedBox(
-        height: 100.0,
-        width: 100.0,
+      child: const SizedBox.square(
+        dimension: 100.0,
         child: Text('XXX'),
       ),
     );
@@ -1088,9 +1087,8 @@ void main() {
                 ),
               ];
             },
-            child: const SizedBox(
-              height: 100.0,
-              width: 100.0,
+            child: const SizedBox.square(
+              dimension: 100.0,
               child: Text('XXX'),
             ),
           ),
@@ -1179,9 +1177,8 @@ void main() {
                 const PopupMenuItem<int>(value: 5, child: Text('5')),
               ];
             },
-            child: const SizedBox(
-              height: 100.0,
-              width: 100.0,
+            child: const SizedBox.square(
+              dimension: 100.0,
               child: Text('XXX'),
             ),
           ),
@@ -1311,9 +1308,8 @@ void main() {
                 ),
               ];
             },
-            child: const SizedBox(
-              height: 100.0,
-              width: 100.0,
+            child: const SizedBox.square(
+              dimension: 100.0,
               child: Text('XXX'),
             ),
           ),
@@ -1392,9 +1388,8 @@ void main() {
                 const PopupMenuItem<int>(value: 5, child: Text('5')),
               ];
             },
-            child: const SizedBox(
-              height: 100.0,
-              width: 100.0,
+            child: const SizedBox.square(
+              dimension: 100.0,
               child: Text('XXX'),
             ),
           ),
@@ -2890,9 +2885,8 @@ void main() {
                 },
                 child: const Text('press'),
               ),
-              SizedBox(
-                height: 10,
-                width: 10,
+              SizedBox.square(
+                dimension: 10,
                 child: Navigator(
                   key: navigator,
                   onGenerateRoute: (RouteSettings settings) => MaterialPageRoute<void>(

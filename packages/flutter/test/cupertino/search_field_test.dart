@@ -289,10 +289,9 @@ void main() {
         const CupertinoApp(
           home: Center(
             child: CupertinoSearchTextField(
-              prefixIcon: SizedBox(
+              prefixIcon: SizedBox.square(
                 key: prefixIcon,
-                width: 50,
-                height: 50,
+                dimension: 50,
               ),
             ),
           ),

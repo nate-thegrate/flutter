@@ -367,17 +367,11 @@ void main() {
             children: <Widget>[
               Semantics(
                 value: 'value one',
-                child: const SizedBox(
-                  height: 10.0,
-                  width: 10.0,
-                ),
+                child: const SizedBox.square(dimension: 10),
               ),
               Semantics(
                 value: 'value two',
-                child: const SizedBox(
-                  height: 10.0,
-                  width: 10.0,
-                ),
+                child: const SizedBox.square(dimension: 10),
               ),
             ],
           ),
@@ -1164,7 +1158,7 @@ void main() {
             left: 100.0,
             child: Semantics( // Box 0
               button: true,
-              child: const SizedBox(width: 30.0, height: 30.0),
+              child: const SizedBox.square(dimension: 30),
             ),
           ),
           Positioned(
@@ -1172,7 +1166,7 @@ void main() {
             left: 200.0,
             child: Semantics( // Box 1
               button: true,
-              child: const SizedBox(width: 30.0, height: 30.0),
+              child: const SizedBox.square(dimension: 30),
             ),
           ),
           Positioned(
@@ -1180,7 +1174,7 @@ void main() {
             left: 100.0,
             child: Semantics( // Box 2
               button: true,
-              child: const SizedBox(width: 30.0, height: 30.0),
+              child: const SizedBox.square(dimension: 30),
             ),
           ),
           Positioned(
@@ -1188,7 +1182,7 @@ void main() {
             left: 0.0,
             child: Semantics( // Box 3
               button: true,
-              child: const SizedBox(width: 30.0, height: 30.0),
+              child: const SizedBox.square(dimension: 30),
             ),
           ),
           Positioned(
@@ -1196,7 +1190,7 @@ void main() {
             left: 100.0,
             child: Semantics( // Box 4
               button: true,
-              child: const SizedBox(width: 30.0, height: 30.0),
+              child: const SizedBox.square(dimension: 30),
             ),
           ),
         ],
@@ -1693,13 +1687,13 @@ void main() {
                 key: key1,
                 label: 'label1',
                 onTap: () {},
-                child: const SizedBox(width: 10, height: 10),
+                child: const SizedBox.square(dimension: 10),
               ),
               Semantics(
                 key: key2,
                 label: 'label2',
                 onTap: () {},
-                child: const SizedBox(width: 10, height: 10),
+                child: const SizedBox.square(dimension: 10),
               ),
             ],
           ),
@@ -1735,12 +1729,12 @@ void main() {
                 blockUserActions: true,
                 label: 'label1',
                 onTap: () { },
-                child: const SizedBox(width: 10, height: 10),
+                child: const SizedBox.square(dimension: 10),
               ),
               Semantics(
                 label: 'label2',
                 onLongPress: () { },
-                child: const SizedBox(width: 10, height: 10),
+                child: const SizedBox.square(dimension: 10),
               ),
             ],
           ),
@@ -1770,12 +1764,12 @@ void main() {
                 blockUserActions: true,
                 label: 'label1',
                 onTap: () { },
-                child: const SizedBox(width: 10, height: 10),
+                child: const SizedBox.square(dimension: 10),
               ),
               Semantics(
                 label: 'label2',
                 onTap: () { },
-                child: const SizedBox(width: 10, height: 10),
+                child: const SizedBox.square(dimension: 10),
               ),
             ],
           ),

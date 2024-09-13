@@ -28,7 +28,7 @@ void main() {
                 top: 456.0,
                 child: CompositedTransformTarget(
                   link: linkToUse ?? link,
-                  child: const SizedBox(height: 10.0, width: 10.0),
+                  child: const SizedBox.square(dimension: 10.0),
                 ),
               ),
               Positioned(
@@ -98,7 +98,7 @@ void main() {
               top: 456.0,
               child: CompositedTransformTarget(
                 link: link,
-                child: const SizedBox(height: 10.0, width: 10.0),
+                child: const SizedBox.square(dimension: 10.0),
               ),
             ),
             Positioned(
@@ -340,7 +340,7 @@ void main() {
         link: link,
         child: CompositedTransformTarget(
           link: link,
-          child: const SizedBox(height: 20, width: 20),
+          child: const SizedBox.square(dimension: 20),
         ),
       ),
     );

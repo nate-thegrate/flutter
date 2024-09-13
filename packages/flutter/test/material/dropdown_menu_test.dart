@@ -669,9 +669,8 @@ void main() {
     Widget buildMenuAnchor({EdgeInsets? expandedInsets}) {
       return MaterialApp(
         home: Scaffold(
-          body: SizedBox(
-            width: parentWidth,
-            height: parentWidth,
+          body: SizedBox.square(
+            dimension: parentWidth,
             child: DropdownMenu<ShortMenu>(
               expandedInsets: expandedInsets,
               dropdownMenuEntries: shortMenuItems,
@@ -733,9 +732,8 @@ void main() {
     Widget buildMenuAnchor({EdgeInsetsGeometry? expandedInsets}) {
       return MaterialApp(
         home: Scaffold(
-          body: SizedBox(
-            width: parentWidth,
-            height: parentWidth,
+          body: SizedBox.square(
+            dimension: parentWidth,
             child: DropdownMenu<ShortMenu>(
               expandedInsets: expandedInsets,
               dropdownMenuEntries: shortMenuItems,

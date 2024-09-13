@@ -213,7 +213,7 @@ void main() {
                 context,
                 axis: Axis.horizontal,
               );
-              return const SizedBox(height: 1200.0, width: 1200.0);
+              return const SizedBox.square(dimension: 1200.0);
             }
           ),
         ),

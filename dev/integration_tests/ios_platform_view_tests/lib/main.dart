@@ -191,9 +191,8 @@ class _ZOrderTestPageState extends State<ZOrderTestPage> {
           children: <Widget>[
             Visibility(
                 visible: _showBackground,
-                child: const SizedBox(
-                  width: 500,
-                  height: 500,
+                child: const SizedBox.square(
+                  dimension: 500,
                   child: UiKitView(
                     viewType: 'platform_view',
                     creationParamsCodec: StandardMessageCodec(),
@@ -204,9 +203,8 @@ class _ZOrderTestPageState extends State<ZOrderTestPage> {
                   showDialog<void>(
                       context: context,
                       builder: (BuildContext context) {
-                        return const SizedBox(
-                          width: 250,
-                          height: 250,
+                        return const SizedBox.square(
+                          dimension: 250,
                           child: UiKitView(
                             viewType: 'platform_button',
                             creationParamsCodec: StandardMessageCodec(),

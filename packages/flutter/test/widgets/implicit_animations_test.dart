@@ -942,9 +942,8 @@ class _TestTweenAnimationBuilderWidgetState extends _TestAnimatedWidgetState {
       onEnd: widget.callback,
       child: child,
       builder: (BuildContext context, double? size, Widget? child) {
-        return SizedBox(
-          width: size,
-          height: size,
+        return SizedBox.square(
+          dimension: size,
           child: child,
         );
       },

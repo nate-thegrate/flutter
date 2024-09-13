@@ -31,7 +31,7 @@ void main() {
             body: Center(
               child: InteractiveViewer(
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -83,7 +83,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -138,7 +138,7 @@ void main() {
                 constrained: false,
                 scaleEnabled: false,
                 transformationController: transformationController,
-                child: const SizedBox(width: 2000.0, height: 2000.0),
+                child: const SizedBox.square(dimension: 2000),
               ),
             ),
           ),
@@ -247,7 +247,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -301,7 +301,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -339,7 +339,7 @@ void main() {
                 panAxis: PanAxis.aligned,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -377,7 +377,7 @@ void main() {
                 panAxis: PanAxis.aligned,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -415,7 +415,7 @@ void main() {
                 panAxis: PanAxis.horizontal,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -453,7 +453,7 @@ void main() {
                 panAxis: PanAxis.horizontal,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -491,7 +491,7 @@ void main() {
                 panAxis: PanAxis.horizontal,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -529,7 +529,7 @@ void main() {
                 panAxis: PanAxis.vertical,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -567,7 +567,7 @@ void main() {
                 panAxis: PanAxis.vertical,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -605,7 +605,7 @@ void main() {
                 panAxis: PanAxis.vertical,
                 boundaryMargin: const EdgeInsets.all(double.infinity),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -643,7 +643,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -703,7 +703,7 @@ void main() {
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 minScale: minScale,
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -788,7 +788,7 @@ void main() {
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 minScale: minScale,
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -874,7 +874,7 @@ void main() {
             body: Center(
               child: InteractiveViewer(
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -896,7 +896,7 @@ void main() {
               child: InteractiveViewer(
                 transformationController: transformationController,
                 scaleEnabled: false,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -933,7 +933,7 @@ void main() {
                 onInteractionEnd: (ScaleEndDetails details) {
                   currentVelocity = details.velocity;
                 },
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -971,7 +971,7 @@ void main() {
                 maxScale: 100000,
                 minScale: 0.01,
                 transformationController: transformationController,
-                child: const SizedBox(width: 1000.0, height: 1000.0),
+                child: const SizedBox.square(dimension: 1000),
               ),
             ),
           ),
@@ -1015,7 +1015,7 @@ void main() {
                 onInteractionEnd: (ScaleEndDetails details) {
                   currentVelocity = details.velocity;
                 },
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1065,7 +1065,7 @@ void main() {
                 onInteractionEnd: (ScaleEndDetails details) {
                   calledEnd = true;
                 },
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1136,7 +1136,7 @@ void main() {
                 onInteractionEnd: (ScaleEndDetails details) {
                   calledEnd = true;
                 },
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1233,7 +1233,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1291,7 +1291,7 @@ void main() {
                 minScale: 1.0,
                 maxScale: 1.0,
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1335,7 +1335,7 @@ void main() {
                     scale = details.scale;
                   },
                   transformationController: transformationController,
-                  child: const SizedBox(width: 200.0, height: 200.0),
+                  child: const SizedBox.square(dimension: 200.0),
                 ),
               ),
             ),
@@ -1405,7 +1405,7 @@ void main() {
                 clipBehavior: Clip.none,
                 minScale: 1.0,
                 maxScale: 1.0,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1423,7 +1423,7 @@ void main() {
                 constrained: false,
                 minScale: 1.0,
                 maxScale: 1.0,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1527,7 +1527,7 @@ void main() {
           home: Scaffold(
             body: Center(
               child: InteractiveViewer(
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1542,7 +1542,7 @@ void main() {
             body: Center(
               child: InteractiveViewer.builder(
                 builder: (BuildContext context, Quad viewport) {
-                  return const SizedBox(width: 200.0, height: 200.0);
+                  return const SizedBox.square(dimension: 200.0);
                 },
               ),
             ),
@@ -1564,7 +1564,7 @@ void main() {
                   boundaryMargin: const EdgeInsets.all(double.infinity),
                   transformationController: transformationController,
                   scaleFactor: scaleFactor,
-                  child: const SizedBox(width: 200.0, height: 200.0),
+                  child: const SizedBox.square(dimension: 200.0),
                 ),
               ),
             ),
@@ -1655,13 +1655,12 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: SizedBox(
-              width: 200,
-              height: 200,
+            body: SizedBox.square(
+              dimension: 200,
               child: InteractiveViewer(
                 constrained: false,
                 transformationController: transformationController1,
-                child: const SizedBox(width: 2000.0, height: 2000.0),
+                child: const SizedBox.square(dimension: 2000),
               ),
             ),
           ),
@@ -1681,14 +1680,13 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: SizedBox(
-              width: 200,
-              height: 200,
+            body: SizedBox.square(
+              dimension: 200,
               child: InteractiveViewer(
                 constrained: false,
                 interactionEndFrictionCoefficient: 0.01,
                 transformationController: transformationController2,
-                child: const SizedBox(width: 2000.0, height: 2000.0),
+                child: const SizedBox.square(dimension: 2000),
               ),
             ),
           ),
@@ -1715,7 +1713,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1758,7 +1756,7 @@ void main() {
               child: InteractiveViewer(
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1795,7 +1793,7 @@ void main() {
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
                 trackpadScrollCausesScale: true,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1830,7 +1828,7 @@ void main() {
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
                 trackpadScrollCausesScale: true,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),
@@ -1880,7 +1878,7 @@ void main() {
                 boundaryMargin: const EdgeInsets.all(boundaryMargin),
                 transformationController: transformationController,
                 trackpadScrollCausesScale: true,
-                child: const SizedBox(width: 200.0, height: 200.0),
+                child: const SizedBox.square(dimension: 200.0),
               ),
             ),
           ),

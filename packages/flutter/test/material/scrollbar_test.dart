@@ -164,10 +164,7 @@ void main() {
           child: const Scrollbar(
             thumbVisibility: true,
             child: SingleChildScrollView(
-              child: SizedBox(
-                width: 4000.0,
-                height: 4000.0,
-              ),
+              child: SizedBox.square(dimension: 4000),
             ),
           ),
         ),
@@ -189,10 +186,7 @@ void main() {
             thumbVisibility: true,
             controller: controller,
             child: const SingleChildScrollView(
-              child: SizedBox(
-                width: 4000.0,
-                height: 4000.0,
-              ),
+              child: SizedBox.square(dimension: 4000),
             ),
           ),
         ),
@@ -217,10 +211,7 @@ void main() {
             controller: controller,
             child: SingleChildScrollView(
               controller: controller,
-              child: const SizedBox(
-                width: 4000.0,
-                height: 4000.0,
-              ),
+              child: const SizedBox.square(dimension: 4000),
             ),
           ),
         ),
@@ -248,10 +239,7 @@ void main() {
                   thumbVisibility: true,
                   child: SingleChildScrollView(
                     primary: true,
-                    child: SizedBox(
-                      width: 4000.0,
-                      height: 4000.0,
-                    ),
+                    child: SizedBox.square(dimension: 4000),
                   ),
                 );
               },
@@ -278,10 +266,7 @@ void main() {
             child: const Scrollbar(
               thumbVisibility: true,
               child: SingleChildScrollView(
-                child: SizedBox(
-                  width: 4000.0,
-                  height: 4000.0,
-                ),
+                child: SizedBox.square(dimension: 4000),
               ),
             ),
           ),
@@ -306,10 +291,7 @@ void main() {
               thumbVisibility: true,
               controller: controller,
               child: const SingleChildScrollView(
-                child: SizedBox(
-                  width: 4000.0,
-                  height: 4000.0,
-                ),
+                child: SizedBox.square(dimension: 4000),
               ),
             ),
           ),
@@ -335,10 +317,7 @@ void main() {
             controller: controller,
             child: SingleChildScrollView(
               controller: controller,
-              child: const SizedBox(
-                width: 4000.0,
-                height: 4000.0,
-              ),
+              child: const SizedBox.square(dimension: 4000),
             ),
           ),
         ),
@@ -366,10 +345,7 @@ void main() {
                   thumbVisibility: true,
                   child: SingleChildScrollView(
                     primary: true,
-                    child: SizedBox(
-                      width: 4000.0,
-                      height: 4000.0,
-                    ),
+                    child: SizedBox.square(dimension: 4000),
                   ),
                 );
               },
@@ -397,10 +373,7 @@ void main() {
             controller: controller,
             child: SingleChildScrollView(
               controller: controller,
-              child: const SizedBox(
-                width: 4000.0,
-                height: 4000.0,
-              ),
+              child: const SizedBox.square(dimension: 4000),
             ),
           ),
         ),
@@ -439,10 +412,7 @@ void main() {
                     controller: controller,
                     child: SingleChildScrollView(
                       controller: controller,
-                      child: const SizedBox(
-                        width: 4000.0,
-                        height: 4000.0,
-                      ),
+                      child: const SizedBox.square(dimension: 4000),
                     ),
                   ),
                 ),
@@ -495,10 +465,7 @@ void main() {
                     controller: controller,
                     child: SingleChildScrollView(
                       controller: controller,
-                      child: const SizedBox(
-                        width: 4000.0,
-                        height: 4000.0,
-                      ),
+                      child: const SizedBox.square(dimension: 4000),
                     ),
                   ),
                 ),
@@ -546,10 +513,7 @@ void main() {
                     controller: controller,
                     child: SingleChildScrollView(
                       controller: controller,
-                      child: const SizedBox(
-                        width: 4000.0,
-                        height: 4000.0,
-                      ),
+                      child: const SizedBox.square(dimension: 4000),
                     ),
                   ),
                 ),
@@ -608,10 +572,7 @@ void main() {
                     controller: controller,
                     child: SingleChildScrollView(
                       controller: controller,
-                      child: const SizedBox(
-                        width: 4000.0,
-                        height: 4000.0,
-                      ),
+                      child: const SizedBox.square(dimension: 4000),
                     ),
                   ),
                 ),
@@ -711,7 +672,7 @@ void main() {
             controller: scrollController,
             child: SingleChildScrollView(
               controller: scrollController,
-              child: const SizedBox(width: 1000.0, height: 1000.0),
+              child: const SizedBox.square(dimension: 1000.0),
             ),
           ),
         ),
@@ -795,7 +756,7 @@ void main() {
       const MaterialApp(
         home: Scrollbar(
           child: SingleChildScrollView(
-            child: SizedBox(width: 4000.0, height: 4000.0),
+            child: SizedBox.square(dimension: 4000.0),
           ),
         ),
       ),
@@ -883,7 +844,7 @@ void main() {
             thumbVisibility: true,
             controller: scrollController,
             child: const SingleChildScrollView(
-              child: SizedBox(width: 4000.0, height: 4000.0),
+              child: SizedBox.square(dimension: 4000.0),
             ),
           ),
         ),
@@ -973,7 +934,7 @@ void main() {
           scrollbarTheme: ScrollbarThemeData(thumbVisibility: MaterialStateProperty.all(true)),
         ),
         home: const SingleChildScrollView(
-          child: SizedBox(width: 4000.0, height: 4000.0),
+          child: SizedBox.square(dimension: 4000.0),
         ),
       ),
     );
@@ -1029,7 +990,7 @@ void main() {
           ),
         ),
         home: const SingleChildScrollView(
-          child: SizedBox(width: 4000.0, height: 4000.0),
+          child: SizedBox.square(dimension: 4000.0),
         ),
       ),
     );
@@ -1113,7 +1074,7 @@ void main() {
           ),
         ),
         home: const SingleChildScrollView(
-          child: SizedBox(width: 4000.0, height: 4000.0),
+          child: SizedBox.square(dimension: 4000.0),
         ),
       ),
     );
@@ -1181,7 +1142,7 @@ void main() {
           ),
         ),
         home: const SingleChildScrollView(
-          child: SizedBox(width: 4000.0, height: 4000.0),
+          child: SizedBox.square(dimension: 4000.0),
         ),
       ),
     );
@@ -1249,7 +1210,7 @@ void main() {
           ),
         ),
         home: const SingleChildScrollView(
-          child: SizedBox(width: 4000.0, height: 4000.0),
+          child: SizedBox.square(dimension: 4000.0),
         ),
       ),
     );
@@ -1310,7 +1271,7 @@ void main() {
           ),
           child: const Scrollbar(
             child: SingleChildScrollView(
-              child: SizedBox(width: 4000.0, height: 4000.0),
+              child: SizedBox.square(dimension: 4000.0),
             ),
           ),
         ),
@@ -1350,7 +1311,7 @@ void main() {
             controller: controller,
             child: SingleChildScrollView(
               controller: controller,
-              child: const SizedBox(width: 4000.0, height: 4000.0),
+              child: const SizedBox.square(dimension: 4000.0),
             ),
           ),
         ),
@@ -1447,7 +1408,7 @@ void main() {
             thumbVisibility: true,
             controller: scrollController,
             child: const SingleChildScrollView(
-              child: SizedBox(width: 4000.0, height: 4000.0),
+              child: SizedBox.square(dimension: 4000.0),
             ),
           ),
         ),
@@ -1523,10 +1484,7 @@ void main() {
                 onTap: () {
                   tapCount += 1;
                 },
-                child: const SizedBox(
-                  width: 4000.0,
-                  height: 4000.0,
-                ),
+                child: const SizedBox.square(dimension: 4000),
               ),
             ),
           ),
@@ -1615,7 +1573,7 @@ void main() {
             thumbVisibility: true,
             controller: scrollController,
             child: const SingleChildScrollView(
-              child: SizedBox(width: 4000.0, height: 4000.0),
+              child: SizedBox.square(dimension: 4000.0),
             ),
           ),
         ),
@@ -1871,7 +1829,7 @@ The provided ScrollController cannot be shared by multiple ScrollView widgets.''
               scrollbarOrientation: orientation,
               controller: scrollController,
               child: const SingleChildScrollView(
-                child: SizedBox(width: 4000.0, height: 4000.0)
+                child: SizedBox.square(dimension: 4000.0)
               ),
             ),
           ),

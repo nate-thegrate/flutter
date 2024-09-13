@@ -870,9 +870,8 @@ void main() {
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: OutlinedButton(
             autofocus: true,
             onPressed: () {},
@@ -895,9 +894,8 @@ void main() {
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: OutlinedButton(
             focusNode: focusNode,
             onHover: (bool value) { hovering = value; },
@@ -922,9 +920,8 @@ void main() {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: OutlinedButton(
               onPressed: enabled ? () { } : null,
               onHover: (bool value) {
@@ -2585,9 +2582,8 @@ void main() {
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: OutlinedButton.icon(
             autofocus: true,
             onPressed: () {},
@@ -2611,9 +2607,8 @@ void main() {
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: OutlinedButton.icon(
             focusNode: focusNode,
             onHover: (bool value) { hovering = value; },
@@ -2638,9 +2633,8 @@ void main() {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: OutlinedButton.icon(
               key: key,
               onPressed: enabled ? () { } : null,

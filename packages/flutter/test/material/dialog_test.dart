@@ -120,10 +120,7 @@ void main() {
       )
     );
     const Dialog dialog = Dialog(
-      child: SizedBox(
-        width: 200,
-        height: 200
-      ),
+      child: SizedBox.square(dimension: 200),
     );
     await tester.pumpWidget(_buildAppWithDialog(dialog, theme: theme));
 

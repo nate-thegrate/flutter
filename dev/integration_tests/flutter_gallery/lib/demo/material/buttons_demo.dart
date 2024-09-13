@@ -370,7 +370,7 @@ class _ButtonsDemoState extends State<ButtonsDemo> {
             onPressed: null,
           ),
         ]
-        .map<Widget>((Widget button) => SizedBox(width: 64.0, height: 64.0, child: button))
+        .map<Widget>((Widget button) => SizedBox.square(dimension: 64.0, child: button))
         .toList(),
       ),
     );

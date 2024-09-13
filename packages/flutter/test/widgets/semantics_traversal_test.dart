@@ -308,9 +308,8 @@ class TraversalTester {
                     container: true,
                     explicitChildNodes: true,
                     label: label,
-                    child: SizedBox(
-                      width: children[label]!.width,
-                      height: children[label]!.height,
+                    child: SizedBox.fromSize(
+                      size: children[label]!.size,
                     ),
                   ),
                 );

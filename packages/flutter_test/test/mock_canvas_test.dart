@@ -56,7 +56,7 @@ void main() {
       await tester.pumpWidget(
         const CustomPaint(
           painter: MyPainter(color: Colors.transparent),
-          child: SizedBox(width: 50, height: 50),
+          child: SizedBox.square(dimension: 50),
         ),
       );
 
@@ -84,7 +84,7 @@ void main() {
       await tester.pumpWidget(
         const CustomPaint(
           painter: MyPainter(color: Colors.transparent),
-          child: SizedBox(width: 50, height: 50),
+          child: SizedBox.square(dimension: 50),
         ),
       );
 
@@ -114,7 +114,7 @@ void main() {
       await tester.pumpWidget(
         const CustomPaint(
           painter: MyPainter(color: Colors.transparent),
-          child: SizedBox(width: 50, height: 50),
+          child: SizedBox.square(dimension: 50),
         ),
       );
 
@@ -152,7 +152,7 @@ void main() {
       await tester.pumpWidget(
         const CustomPaint(
           painter: MyPainter(color: Colors.transparent),
-          child: SizedBox(width: 50, height: 50),
+          child: SizedBox.square(dimension: 50),
         ),
       );
 
@@ -180,7 +180,7 @@ void main() {
       await tester.pumpWidget(
         const CustomPaint(
           painter: MyPainter(color: Colors.transparent),
-          child: SizedBox(width: 50, height: 50),
+          child: SizedBox.square(dimension: 50),
         ),
       );
 
@@ -211,7 +211,7 @@ void main() {
       await tester.pumpWidget(
         const CustomPaint(
           painter: MyPainter(color: Colors.transparent),
-          child: SizedBox(width: 50, height: 50),
+          child: SizedBox.square(dimension: 50),
         ),
       );
 

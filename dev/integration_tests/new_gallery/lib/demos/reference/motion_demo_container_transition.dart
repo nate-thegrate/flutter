@@ -295,9 +295,8 @@ class _OpenContainerTransformDemoState
               ),
               closedColor: colorScheme.secondary,
               closedBuilder: (BuildContext context, void Function() openContainer) {
-                return SizedBox(
-                  height: _fabDimension,
-                  width: _fabDimension,
+                return SizedBox.square(
+                  dimension: _fabDimension,
                   child: Center(
                     child: Icon(
                       Icons.add,

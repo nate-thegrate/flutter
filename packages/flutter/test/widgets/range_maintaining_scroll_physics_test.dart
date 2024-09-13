@@ -277,9 +277,8 @@ void main() {
         child: ScrollConfiguration(
           behavior: const RangeMaintainingTestScrollBehavior(),
           child: Align(
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
+            child: SizedBox.square(
+              dimension: 100.0,
               child: ListView(
                 children: <Widget>[
                   SizedBox(height: itemExtent, child: Placeholder(key: key)),

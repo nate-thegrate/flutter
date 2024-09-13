@@ -75,7 +75,7 @@ class ImageIcon extends StatelessWidget {
     if (image == null) {
       return Semantics(
         label: semanticLabel,
-        child: SizedBox(width: iconSize, height: iconSize),
+        child: SizedBox.square(dimension: iconSize),
       );
     }
 

@@ -1631,9 +1631,8 @@ void main() {
 
     final OverlayEntry nonSizingEntry = OverlayEntry(
       builder: (BuildContext context) {
-        return const SizedBox(
-          width: 600,
-          height: 600,
+        return const SizedBox.square(
+          dimension: 600,
           child: Center(child: Text('Hello')),
         );
       },
@@ -1707,7 +1706,7 @@ void main() {
       builder: (BuildContext context) {
         return const Positioned(
           top: 100,
-          child: SizedBox(width: 600, height: 600),
+          child: SizedBox.square(dimension: 600),
         );
       },
     );
@@ -1738,7 +1737,7 @@ void main() {
 
     final OverlayEntry entry = OverlayEntry(
       builder: (BuildContext context) {
-        return const SizedBox(width: 600, height: 600);
+        return const SizedBox.square(dimension: 600);
       },
     );
     addTearDown(() => entry..remove()..dispose());

@@ -20,10 +20,9 @@ void main() {
             key: parentKey,
             builder: (BuildContext context, BoxConstraints constraints) {
               layoutBuilderSize = constraints.biggest;
-              return SizedBox(
+              return SizedBox.fromSize(
                 key: childKey,
-                width: layoutBuilderSize.width / 2.0,
-                height: layoutBuilderSize.height / 2.0,
+                size: layoutBuilderSize / 2.0,
               );
             },
           ),
@@ -221,10 +220,9 @@ void main() {
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   layoutBuilderSize = constraints.biggest;
-                  return SizedBox(
+                  return SizedBox.fromSize(
                     key: childKey,
-                    width: layoutBuilderSize.width,
-                    height: layoutBuilderSize.height,
+                    size: layoutBuilderSize,
                   );
                 },
               ),
@@ -815,9 +813,8 @@ void main() {
         Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: _SmartLayoutBuilder(
                 text: text,
                 offsetPercentage: offsetPercentage,

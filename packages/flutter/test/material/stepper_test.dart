@@ -17,17 +17,11 @@ void main() {
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
               Step(
                 title: Text('Step 2'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -51,17 +45,11 @@ void main() {
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
               Step(
                 title: Text('Step 2'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -81,17 +69,11 @@ void main() {
               steps: const <Step>[
                 Step(
                   title: Text('Step 1'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
                 Step(
                   title: Text('Step 2'),
-                  content: SizedBox(
-                    width: 200.0,
-                    height: 200.0,
-                  ),
+                  content: SizedBox.square(dimension: 200),
                 ),
               ],
             ),
@@ -112,17 +94,11 @@ void main() {
               steps: const <Step>[
                 Step(
                   title: Text('Step 1'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
                 Step(
                   title: Text('Step 2'),
-                  content: SizedBox(
-                    width: 200.0,
-                    height: 200.0,
-                  ),
+                  content: SizedBox.square(dimension: 200),
                 ),
               ],
             ),
@@ -149,10 +125,7 @@ void main() {
               steps: const <Step>[
                 Step(
                   title: Text('Step 1'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -233,17 +206,11 @@ void main() {
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
               Step(
                 title: Text('Step 2'),
-                content: SizedBox(
-                  width: 200.0,
-                  height: 200.0,
-                ),
+                content: SizedBox.square(dimension: 200),
               ),
             ],
           ),
@@ -277,17 +244,11 @@ void main() {
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
               Step(
                 title: Text('Step 2'),
-                content: SizedBox(
-                  width: 200.0,
-                  height: 200.0,
-                ),
+                content: SizedBox.square(dimension: 200),
               ),
             ],
           ),
@@ -315,18 +276,12 @@ void main() {
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
               Step(
                 title: Text('Step 2'),
                 state: StepState.disabled,
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -360,10 +315,7 @@ void main() {
               ),
               Step(
                 title: Text('Step 3'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -397,10 +349,7 @@ void main() {
               ),
               Step(
                 title: Text('Step 3'),
-                content: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                ),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -422,17 +371,11 @@ void main() {
                 Step(
                   title: Text('A'),
                   state: StepState.complete,
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
                 Step(
                   title: Text('B'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -492,17 +435,11 @@ void main() {
                 Step(
                   title: Text('A'),
                   state: StepState.complete,
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
                 Step(
                   title: Text('B'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -580,17 +517,11 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
                     Step(
                       title: Text('A'),
                       state: StepState.complete,
-                      content: SizedBox(
-                        width: 100.0,
-                        height: 100.0,
-                      ),
+                      content: SizedBox.square(dimension: 100),
                     ),
                     Step(
                       title: Text('C'),
-                      content: SizedBox(
-                        width: 100.0,
-                        height: 100.0,
-                      ),
+                      content: SizedBox.square(dimension: 100),
                     ),
                   ],
                 );
@@ -629,10 +560,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
                 Step(
                   title: Text('A'),
                   state: StepState.error,
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -720,12 +648,12 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
               Step(
                 title: Text('A'),
                 state: StepState.editing,
-                content: SizedBox(width: 100.0, height: 100.0),
+                content: SizedBox.square(dimension: 100.0),
               ),
               Step(
                 title: Text('B'),
                 state: StepState.complete,
-                content: SizedBox(width: 100.0, height: 100.0),
+                content: SizedBox.square(dimension: 100.0),
               ),
             ],
           ),
@@ -887,7 +815,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
             steps: const <Step>[
               Step(
                 title: Text('step1'),
-                content: SizedBox(width: 100, height: 100),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -947,7 +875,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
             steps: const <Step>[
               Step(
                 title: Text('step1'),
-                content: SizedBox(width: 100, height: 100),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -1017,7 +945,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
             steps: const <Step>[
               Step(
                 title: Text('step1'),
-                content: SizedBox(width: 100, height: 100),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -1063,7 +991,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
             steps: const <Step>[
               Step(
                 title: Text('step1'),
-                content: SizedBox(width: 100, height: 100),
+                content: SizedBox.square(dimension: 100),
               ),
             ],
           ),
@@ -1126,10 +1054,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
               steps: const <Step>[
                 Step(
                   title: Text('Step 1'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -1155,10 +1080,7 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
               steps: const <Step>[
                 Step(
                   title: Text('Step 1'),
-                  content: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                  ),
+                  content: SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -1568,17 +1490,17 @@ testWidgets('Stepper custom indexed controls test', (WidgetTester tester) async 
               Step(
                 title: Text('A'),
                 state: StepState.complete,
-                content: SizedBox(width: 100.0, height: 100.0),
+                content: SizedBox.square(dimension: 100.0),
               ),
               Step(
                 title: Text('B'),
                 state: StepState.editing,
-                content: SizedBox(width: 100.0, height: 100.0),
+                content: SizedBox.square(dimension: 100.0),
               ),
               Step(
                 title: Text('C'),
                 state: StepState.error,
-                content: SizedBox(width: 100.0, height: 100.0),
+                content: SizedBox.square(dimension: 100.0),
               ),
             ],
           ),

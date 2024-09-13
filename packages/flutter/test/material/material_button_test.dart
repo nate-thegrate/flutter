@@ -722,7 +722,7 @@ void main() {
         minWidth: 0.0,
         height: 0.0,
         padding: const EdgeInsets.all(4.0),
-        child: const SizedBox(width: 8.0, height: 8.0),
+        child: const SizedBox.square(dimension: 8.0),
       ),
     );
     expect(tester.getSize(find.byType(MaterialButton)), const Size(16.0, 16.0));
@@ -733,7 +733,7 @@ void main() {
         minWidth: 18.0,
         height: 18.0,
         padding: const EdgeInsets.all(4.0),
-        child: const SizedBox(width: 8.0, height: 8.0),
+        child: const SizedBox.square(dimension: 8.0),
       ),
     );
     expect(tester.getSize(find.byType(MaterialButton)), const Size(18.0, 18.0));

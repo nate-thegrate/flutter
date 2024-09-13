@@ -61,9 +61,8 @@ Widget buildTest({
                 ? <DismissDirection, double>{}
                 : <DismissDirection, double>{DismissDirection.startToEnd: startToEndThreshold},
             crossAxisEndOffset: crossAxisEndOffset,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
+            child: SizedBox.square(
+              dimension: 100.0,
               child: Text(item.toString()),
             ),
           );
@@ -884,9 +883,8 @@ void main() {
           onResize: () {
             resized = true;
           },
-          child: const SizedBox(
-            width: 100.0,
-            height: 100.0,
+          child: const SizedBox.square(
+            dimension: 100.0,
             child: Text('0'),
           ),
         ),
@@ -919,9 +917,8 @@ void main() {
                   });
                 },
                 crossAxisEndOffset: crossAxisEndOffset,
-                child: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
+                child: SizedBox.square(
+                  dimension: 100.0,
                   child: Text(1.toString()),
                 ),
               ),
@@ -984,9 +981,8 @@ void main() {
       buildStack(
         child: const Dismissible(
           key: ValueKey<int>(1),
-          child: SizedBox(
-            width: 100.0,
-            height: 100.0,
+          child: SizedBox.square(
+            dimension: 100.0,
           ),
         ),
       ),
@@ -1000,9 +996,8 @@ void main() {
           child: Dismissible(
             key: const ValueKey<int>(1),
             behavior: behavior,
-            child: const SizedBox(
-              width: 100.0,
-              height: 100.0,
+            child: const SizedBox.square(
+              dimension: 100.0,
             ),
           ),
         ),
@@ -1126,9 +1121,8 @@ void main() {
           direction: direction,
           key: const Key('Dismissible'),
           resizeDuration: null,
-          child: const SizedBox(
-            width: 100.0,
-            height: 100.0,
+          child: const SizedBox.square(
+            dimension: 100.0,
             child: Text('I Love Flutter!'),
           ),
         ),

@@ -576,9 +576,8 @@ void main() {
                           child: Checkbox(value: false, onChanged: null),
                         ),
                         WidgetSpan(
-                          child: SizedBox(
-                            width: 20,
-                            height: 20,
+                          child: SizedBox.square(
+                            dimension: 20,
                             child: Checkbox(value: true, onChanged: null),
                           ),
                         ),
@@ -588,9 +587,8 @@ void main() {
                           baseline: TextBaseline.alphabetic,
                         ),
                         WidgetSpan(
-                          child: SizedBox(
-                            width: 20,
-                            height: 20,
+                          child: SizedBox.square(
+                            dimension: 20,
                             child: Checkbox(value: true, onChanged: null),
                           ),
                         ),
@@ -856,9 +854,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.baseline,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -870,9 +867,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.baseline,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -966,9 +962,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.aboveBaseline,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -980,9 +975,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.aboveBaseline,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -1076,9 +1070,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.belowBaseline,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -1090,9 +1083,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.belowBaseline,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -1186,9 +1178,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.top,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -1200,9 +1191,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.top,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -1296,9 +1286,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),
@@ -1310,9 +1299,8 @@ void main() {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             baseline: TextBaseline.alphabetic,
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
+                            child: SizedBox.square(
+                              dimension: 20,
                               child: Checkbox(value: true, onChanged: null),
                             ),
                           ),

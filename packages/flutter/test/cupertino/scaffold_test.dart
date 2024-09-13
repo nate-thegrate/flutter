@@ -236,7 +236,7 @@ void main() {
   });
 
   testWidgets('Contents have automatic sliver padding between translucent bars', (WidgetTester tester) async {
-    const SizedBox content = SizedBox(height: 600.0, width: 600.0);
+    const SizedBox content = SizedBox.square(dimension: 600.0);
 
     await tester.pumpWidget(
       CupertinoApp(

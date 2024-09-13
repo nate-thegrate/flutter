@@ -48,9 +48,8 @@ void main() {
         theme: ThemeData(platform: platform),
         home: Directionality(
           textDirection: textDirection,
-          child: SizedBox(
-            height: itemHeight * 10,
-            width: itemHeight * 10,
+          child: SizedBox.square(
+            dimension: itemHeight * 10,
             child: ReorderableListView(
               header: header,
               footer: footer,
@@ -355,9 +354,8 @@ void main() {
           return MaterialApp(
             home: Directionality(
               textDirection: TextDirection.ltr,
-              child: SizedBox(
-                width: 100,
-                height: 100,
+              child: SizedBox.square(
+                dimension: 100,
                 child: ReorderableListView(
                   children: const <Widget>[
                     SizedBox(key: firstBox, width: 10, height: 10),
@@ -382,9 +380,9 @@ void main() {
         addTearDown(primary.dispose);
         final Widget reorderableList = ReorderableListView(
           children: const <Widget>[
-            SizedBox(width: 100.0, height: 100.0, key: Key('C'), child: Text('C')),
-            SizedBox(width: 100.0, height: 100.0, key: Key('B'), child: Text('B')),
-            SizedBox(width: 100.0, height: 100.0, key: Key('A'), child: Text('A')),
+            SizedBox.square(dimension: 100.0, key: Key('C'), child: Text('C')),
+            SizedBox.square(dimension: 100.0, key: Key('B'), child: Text('B')),
+            SizedBox.square(dimension: 100.0, key: Key('A'), child: Text('A')),
           ],
           onReorder: (int oldIndex, int newIndex) { },
         );
@@ -393,9 +391,8 @@ void main() {
           return MaterialApp(
             home: PrimaryScrollController(
               controller: controller,
-              child: SizedBox(
-                height: 100.0,
-                width: 100.0,
+              child: SizedBox.square(
+                dimension: 100.0,
                 child: reorderableList,
               ),
             ),
@@ -435,9 +432,9 @@ void main() {
                   scrollController: customController,
                   onReorder: (int oldIndex, int newIndex) { },
                   children: const <Widget>[
-                    SizedBox(width: 100.0, height: 100.0, key: firstBox, child: Text('C')),
-                    SizedBox(width: 100.0, height: 100.0, key: secondBox, child: Text('B')),
-                    SizedBox(width: 100.0, height: 100.0, key: thirdBox, child: Text('A')),
+                    SizedBox.square(dimension: 100.0, key: firstBox, child: Text('C')),
+                    SizedBox.square(dimension: 100.0, key: secondBox, child: Text('B')),
+                    SizedBox.square(dimension: 100.0, key: thirdBox, child: Text('A')),
                   ],
                 ),
               ),
@@ -527,9 +524,9 @@ void main() {
       testWidgets('Still builds when no PrimaryScrollController is available', (WidgetTester tester) async {
         final Widget reorderableList = ReorderableListView(
           children: const <Widget>[
-            SizedBox(width: 100.0, height: 100.0, key: Key('C'), child: Text('C')),
-            SizedBox(width: 100.0, height: 100.0, key: Key('B'), child: Text('B')),
-            SizedBox(width: 100.0, height: 100.0, key: Key('A'), child: Text('A')),
+            SizedBox.square(dimension: 100.0, key: Key('C'), child: Text('C')),
+            SizedBox.square(dimension: 100.0, key: Key('B'), child: Text('B')),
+            SizedBox.square(dimension: 100.0, key: Key('A'), child: Text('A')),
           ],
           onReorder: (int oldIndex, int newIndex) { },
         );
@@ -548,9 +545,8 @@ void main() {
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
           ],
-          child:SizedBox(
-            width: 100.0,
-            height: 100.0,
+          child: SizedBox.square(
+            dimension: 100.0,
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: overlay,
@@ -1055,9 +1051,8 @@ void main() {
           return MaterialApp(
             home: Directionality(
               textDirection: TextDirection.ltr,
-              child: SizedBox(
-                width: 100,
-                height: 100,
+              child: SizedBox.square(
+                dimension: 100,
                 child: ReorderableListView(
                   scrollDirection: Axis.horizontal,
                   children: const <Widget>[
@@ -1704,9 +1699,9 @@ void main() {
   testWidgets('Throws an error if no overlay present', (WidgetTester tester) async {
     final Widget reorderableList = ReorderableListView(
       children: const <Widget>[
-        SizedBox(width: 100.0, height: 100.0, key: Key('C'), child: Text('C')),
-        SizedBox(width: 100.0, height: 100.0, key: Key('B'), child: Text('B')),
-        SizedBox(width: 100.0, height: 100.0, key: Key('A'), child: Text('A')),
+        SizedBox.square(dimension: 100.0, key: Key('C'), child: Text('C')),
+        SizedBox.square(dimension: 100.0, key: Key('B'), child: Text('B')),
+        SizedBox.square(dimension: 100.0, key: Key('A'), child: Text('A')),
       ],
       onReorder: (int oldIndex, int newIndex) { },
     );
@@ -1716,9 +1711,8 @@ void main() {
         DefaultMaterialLocalizations.delegate,
         DefaultWidgetsLocalizations.delegate,
       ],
-      child: SizedBox(
-        width: 100.0,
-        height: 100.0,
+      child: SizedBox.square(
+        dimension: 100.0,
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: reorderableList,
@@ -1949,9 +1943,8 @@ class _StatefulState extends State<_Stateful> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 48.0,
-      height: 48.0,
+    return SizedBox.square(
+      dimension: 48.0,
       child: Material(
         child: Checkbox(
           value: checked,

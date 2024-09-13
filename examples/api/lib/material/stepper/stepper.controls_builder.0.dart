@@ -45,17 +45,11 @@ class ControlsBuilderExample extends StatelessWidget {
       steps: const <Step>[
         Step(
           title: Text('A'),
-          content: SizedBox(
-            width: 100.0,
-            height: 100.0,
-          ),
+          content: SizedBox.square(dimension: 100),
         ),
         Step(
           title: Text('B'),
-          content: SizedBox(
-            width: 100.0,
-            height: 100.0,
-          ),
+          content: SizedBox.square(dimension: 100),
         ),
       ],
     );

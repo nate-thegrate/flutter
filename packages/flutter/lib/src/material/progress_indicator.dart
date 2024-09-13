@@ -1002,8 +1002,8 @@ class _RefreshProgressIndicatorState extends _CircularProgressIndicatorState {
       context: context,
       child: Padding(
         padding: widget.indicatorMargin,
-        child: SizedBox.fromSize(
-          size: const Size.square(_indicatorSize),
+        child: SizedBox.square(
+          dimension: _indicatorSize,
           child: Material(
             type: MaterialType.circle,
             color: backgroundColor,

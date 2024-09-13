@@ -657,9 +657,8 @@ void main() {
         Directionality(
           textDirection: TextDirection.rtl,
           child: Center(
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
+            child: SizedBox.square(
+              dimension: 100.0,
               child: RepaintBoundary(
                 child: Container(
                   clipBehavior: Clip.hardEdge,
@@ -764,7 +763,7 @@ void main() {
           ),
         ],
       ),
-      child: const SizedBox(width: 50, height: 50),
+      child: const SizedBox.square(dimension: 50),
     );
 
     await tester.pumpWidget(

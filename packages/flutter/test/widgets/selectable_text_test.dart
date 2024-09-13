@@ -584,9 +584,8 @@ void main() {
       const MaterialApp(
         home: Scaffold(
           body: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: Opacity(
                 opacity: 0.5,
                 child: SelectableText('selectable text'),

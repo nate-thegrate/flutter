@@ -15,13 +15,11 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: Center(
                 child: layoutCounter,
               ),
@@ -35,9 +33,8 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: layoutCounter,
         ),
       ),

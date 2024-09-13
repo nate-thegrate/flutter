@@ -642,9 +642,8 @@ class _DismissibleState extends State<Dismissible> with TickerProviderStateMixin
       return SizeTransition(
         sizeFactor: _resizeAnimation!,
         axis: _directionIsXAxis ? Axis.vertical : Axis.horizontal,
-        child: SizedBox(
-          width: _sizePriorToCollapse!.width,
-          height: _sizePriorToCollapse!.height,
+        child: SizedBox.fromSize(
+          size: _sizePriorToCollapse,
           child: background,
         ),
       );

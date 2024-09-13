@@ -46,10 +46,9 @@ void main() {
         children: <Widget>[
           Positioned(
             left: 10.0,
-            child: SizedBox(
+            child: SizedBox.square(
               key: key,
-              width: 10.0,
-              height: 10.0,
+              dimension: 10.0,
             ),
           ),
         ],
@@ -74,10 +73,9 @@ void main() {
         children: <Widget>[
           Positioned(
             right: 10.0,
-            child: SizedBox(
+            child: SizedBox.square(
               key: key,
-              width: 10.0,
-              height: 10.0,
+              dimension: 10.0,
             ),
           ),
         ],
@@ -436,7 +434,7 @@ void main() {
   testWidgets('Clip.none is respected by describeApproximateClip', (WidgetTester tester) async {
     await tester.pumpWidget(const Stack(
       textDirection: TextDirection.ltr,
-      children: <Widget>[Positioned(left: 1000, right: 2000, child: SizedBox(width: 2000, height: 2000))],
+      children: <Widget>[Positioned(left: 1000, right: 2000, child: SizedBox.square(dimension: 2000))],
     ));
     final RenderStack renderObject = tester.allRenderObjects.whereType<RenderStack>().first;
     expect(renderObject.clipBehavior, equals(Clip.hardEdge));
@@ -469,10 +467,7 @@ void main() {
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () { tapped = true; },
-                child: const SizedBox(
-                  width: 200.0,
-                  height: 200.0,
-                ),
+                child: const SizedBox.square(dimension: 200),
               ),
             ],
           ),
@@ -527,17 +522,11 @@ void main() {
         child: Center(
           child: Stack(
             children: <Widget>[
-              SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              SizedBox.square(dimension: 100),
               Positioned(
                 top: 0.0,
                 left: 0.0,
-                child: SizedBox(
-                  width: 200.0,
-                  height: 200.0,
-                ),
+                child: SizedBox.square(dimension: 200),
               ),
             ],
           ),
@@ -557,17 +546,11 @@ void main() {
           child: Stack(
             clipBehavior: Clip.none,
             children: <Widget>[
-              SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              SizedBox.square(dimension: 100),
               Positioned(
                 top: 0.0,
                 left: 0.0,
-                child: SizedBox(
-                  width: 200.0,
-                  height: 200.0,
-                ),
+                child: SizedBox.square(dimension: 200),
               ),
             ],
           ),
@@ -750,15 +733,15 @@ void main() {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            SizedBox(width: 100.0, height: 100.0),
-            Positioned(left: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(right: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(start: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(end: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
+            SizedBox.square(dimension: 100.0),
+            Positioned(left: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(right: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(start: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(end: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
           ],
         ),
       ),
@@ -779,15 +762,15 @@ void main() {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            SizedBox(width: 100.0, height: 100.0),
-            Positioned(left: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(right: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(start: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(end: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
+            SizedBox.square(dimension: 100.0),
+            Positioned(left: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(right: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(start: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(end: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
           ],
         ),
       ),
@@ -808,15 +791,15 @@ void main() {
         child: Stack(
           alignment: Alignment.bottomRight,
           children: <Widget>[
-            SizedBox(width: 100.0, height: 100.0),
-            Positioned(left: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(right: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(start: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(end: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
+            SizedBox.square(dimension: 100.0),
+            Positioned(left: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(right: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(start: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(end: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
           ],
         ),
       ),
@@ -837,15 +820,15 @@ void main() {
         child: Stack(
           alignment: Alignment.topLeft,
           children: <Widget>[
-            SizedBox(width: 100.0, height: 100.0),
-            Positioned(left: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(right: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            Positioned(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(start: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(end: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(top: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
-            PositionedDirectional(bottom: 0.0, child: SizedBox(width: 100.0, height: 100.0)),
+            SizedBox.square(dimension: 100.0),
+            Positioned(left: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(right: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            Positioned(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(start: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(end: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(top: 0.0, child: SizedBox.square(dimension: 100.0)),
+            PositionedDirectional(bottom: 0.0, child: SizedBox.square(dimension: 100.0)),
           ],
         ),
       ),

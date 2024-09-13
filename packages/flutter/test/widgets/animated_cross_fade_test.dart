@@ -13,14 +13,8 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Center(
           child: AnimatedCrossFade(
-            firstChild: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
-            secondChild: SizedBox(
-              width: 200.0,
-              height: 200.0,
-            ),
+            firstChild: SizedBox.square(dimension: 100),
+            secondChild: SizedBox.square(dimension: 200),
             duration: Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showFirst,
           ),
@@ -38,14 +32,8 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Center(
           child: AnimatedCrossFade(
-            firstChild: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
-            secondChild: SizedBox(
-              width: 200.0,
-              height: 200.0,
-            ),
+            firstChild: SizedBox.square(dimension: 100),
+            secondChild: SizedBox.square(dimension: 200),
             duration: Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showSecond,
           ),
@@ -67,14 +55,8 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Center(
           child: AnimatedCrossFade(
-            firstChild: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
-            secondChild: SizedBox(
-              width: 200.0,
-              height: 200.0,
-            ),
+            firstChild: SizedBox.square(dimension: 100),
+            secondChild: SizedBox.square(dimension: 200),
             duration: Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showSecond,
           ),
@@ -98,15 +80,13 @@ void main() {
         child: Center(
           child: AnimatedCrossFade(
             alignment: Alignment.bottomRight,
-            firstChild: SizedBox(
+            firstChild: SizedBox.square(
               key: firstKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
-            secondChild: SizedBox(
+            secondChild: SizedBox.square(
               key: secondKey,
-              width: 200.0,
-              height: 200.0,
+              dimension: 200.0,
             ),
             duration: const Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showFirst,
@@ -121,15 +101,13 @@ void main() {
         child: Center(
           child: AnimatedCrossFade(
             alignment: Alignment.bottomRight,
-            firstChild: SizedBox(
+            firstChild: SizedBox.square(
               key: firstKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
-            secondChild: SizedBox(
+            secondChild: SizedBox.square(
               key: secondKey,
-              width: 200.0,
-              height: 200.0,
+              dimension: 200.0,
             ),
             duration: const Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showSecond,
@@ -156,15 +134,13 @@ void main() {
         child: Center(
           child: AnimatedCrossFade(
             alignment: AlignmentDirectional.bottomEnd,
-            firstChild: SizedBox(
+            firstChild: SizedBox.square(
               key: firstKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
-            secondChild: SizedBox(
+            secondChild: SizedBox.square(
               key: secondKey,
-              width: 200.0,
-              height: 200.0,
+              dimension: 200.0,
             ),
             duration: const Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showFirst,
@@ -179,15 +155,13 @@ void main() {
         child: Center(
           child: AnimatedCrossFade(
             alignment: AlignmentDirectional.bottomEnd,
-            firstChild: SizedBox(
+            firstChild: SizedBox.square(
               key: firstKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
-            secondChild: SizedBox(
+            secondChild: SizedBox.square(
               key: secondKey,
-              width: 200.0,
-              height: 200.0,
+              dimension: 200.0,
             ),
             duration: const Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showSecond,
@@ -214,15 +188,13 @@ void main() {
         child: Center(
           child: AnimatedCrossFade(
             alignment: AlignmentDirectional.bottomEnd,
-            firstChild: SizedBox(
+            firstChild: SizedBox.square(
               key: firstKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
-            secondChild: SizedBox(
+            secondChild: SizedBox.square(
               key: secondKey,
-              width: 200.0,
-              height: 200.0,
+              dimension: 200.0,
             ),
             duration: const Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showFirst,
@@ -237,15 +209,13 @@ void main() {
         child: Center(
           child: AnimatedCrossFade(
             alignment: AlignmentDirectional.bottomEnd,
-            firstChild: SizedBox(
+            firstChild: SizedBox.square(
               key: firstKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
-            secondChild: SizedBox(
+            secondChild: SizedBox.square(
               key: secondKey,
-              width: 200.0,
-              height: 200.0,
+              dimension: 200.0,
             ),
             duration: const Duration(milliseconds: 200),
             crossFadeState: CrossFadeState.showSecond,

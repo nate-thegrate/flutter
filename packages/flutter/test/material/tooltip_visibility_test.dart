@@ -27,10 +27,7 @@ void main() {
           visible: false,
           child: Tooltip(
             message: tooltipText,
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -58,10 +55,7 @@ void main() {
             child: Tooltip(
               message: tooltipText,
               waitDuration: waitDuration,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -99,10 +93,7 @@ void main() {
             child: Tooltip(
               message: tooltipText,
               waitDuration: waitDuration,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -151,7 +142,7 @@ void main() {
           child: Tooltip(
             key: tooltipKey,
             message: tooltipText,
-            child: const SizedBox(width: 100.0, height: 100.0),
+            child: const SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -171,7 +162,7 @@ void main() {
           child: Tooltip(
             key: tooltipKey,
             message: tooltipText,
-            child: const SizedBox(width: 100.0, height: 100.0),
+            child: const SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -191,7 +182,7 @@ Future<void> setWidgetForTooltipMode(WidgetTester tester, TooltipTriggerMode tri
         child: Tooltip(
           message: tooltipText,
           triggerMode: triggerMode,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100),
         ),
       ),
     ),

@@ -142,10 +142,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -241,10 +238,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -357,10 +351,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -432,10 +423,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -523,10 +511,7 @@ void main() {
                   ));
                 },
                 behavior: HitTestBehavior.opaque,
-                child: const SizedBox(
-                  height: 100.0,
-                  width: 100.0,
-                ),
+                child: const SizedBox.square(dimension: 100),
               );
             },
           ),

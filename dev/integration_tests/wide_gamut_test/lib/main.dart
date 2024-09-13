@@ -288,10 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const ColoredBox(
               color: Color(0xff00ff00),
-              child: SizedBox(
-                width: 100,
-                height: 100,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
             ImageFiltered(
                 imageFilter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),

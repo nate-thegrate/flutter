@@ -170,7 +170,7 @@ void main() {
                     WidgetSpan(
                       child: Row(
                         children: <Widget>[
-                          SizedBox(height: 16, width: 16),
+                          SizedBox.square(dimension: 16),
                         ],
                       ),
                     ),

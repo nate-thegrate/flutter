@@ -9,9 +9,9 @@ void main() {
   testWidgets('Spacer takes up space.', (WidgetTester tester) async {
     await tester.pumpWidget(const Column(
       children: <Widget>[
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
         Spacer(),
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
       ],
     ));
     final Rect spacerRect = tester.getRect(find.byType(Spacer));
@@ -27,15 +27,15 @@ void main() {
     await tester.pumpWidget(const Row(
       textDirection: TextDirection.rtl,
       children: <Widget>[
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
         spacer1,
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
         spacer2,
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
         spacer3,
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
         spacer4,
-        SizedBox(width: 10.0, height: 10.0),
+        SizedBox.square(dimension: 10.0),
       ],
     ));
     final Rect spacer1Rect = tester.getRect(find.byType(Spacer).at(0));
@@ -60,7 +60,7 @@ void main() {
         children: <Widget>[
           SizedBox(width: 20.0, height: 10.0),
           Spacer(),
-          SizedBox(width: 10.0, height: 10.0),
+          SizedBox.square(dimension: 10.0),
         ],
       ),
     ));

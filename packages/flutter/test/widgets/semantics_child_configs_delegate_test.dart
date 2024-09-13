@@ -41,18 +41,18 @@ void main() {
                 Semantics(
                   label: '1',
                   tagForChildren: first,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                   // this tests that empty nodes disappear
                 ),
                 Semantics(
                   label: '2',
                   tagForChildren: second,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
                 Semantics(
                   label: '3',
                   tagForChildren: third,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -102,18 +102,18 @@ void main() {
                 Semantics(
                   label: '1',
                   tagForChildren: first,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                   // this tests that empty nodes disappear
                 ),
                 Semantics(
                   label: '2',
                   tagForChildren: second,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
                 Semantics(
                   label: '3',
                   tagForChildren: third,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -155,18 +155,18 @@ void main() {
                 Semantics(
                   label: '1',
                   tagForChildren: first,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                   // this tests that empty nodes disappear
                 ),
                 Semantics(
                   label: '2',
                   tagForChildren: second,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
                 Semantics(
                   label: '3',
                   tagForChildren: third,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -201,18 +201,18 @@ void main() {
                 Semantics(
                   label: '1',
                   tagForChildren: first,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                   // this tests that empty nodes disappear
                 ),
                 Semantics(
                   label: '2',
                   tagForChildren: second,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
                 Semantics(
                   label: '3',
                   tagForChildren: third,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
               ],
             ),

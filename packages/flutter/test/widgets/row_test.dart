@@ -290,10 +290,9 @@ void main() {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            SizedBox.square(
               key: childKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
           ],
         ),
@@ -711,10 +710,9 @@ void main() {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            SizedBox.square(
               key: childKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
           ],
         ),
@@ -1132,10 +1130,9 @@ void main() {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            SizedBox.square(
               key: childKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
           ],
         ),

@@ -950,9 +950,8 @@ class _ViewContentState extends State<_ViewContent> {
       alignment: Alignment.topLeft,
       child: Transform.translate(
         offset: _viewRect.topLeft,
-        child: SizedBox(
-          width: _viewRect.width,
-          height: _viewRect.height,
+        child: SizedBox.fromSize(
+          size: _viewRect.size,
           child: Material(
             clipBehavior: Clip.antiAlias,
             shape: effectiveShape,

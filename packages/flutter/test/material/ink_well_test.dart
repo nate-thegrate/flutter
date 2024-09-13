@@ -150,9 +150,8 @@ void main() {
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               hoverColor: const Color(0xff00ff00),
               splashColor: const Color(0xffff0000),
@@ -181,9 +180,8 @@ void main() {
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               overlayColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
                 if (states.contains(MaterialState.hovered)) {
@@ -221,9 +219,8 @@ void main() {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkWell(
                 focusNode: focusNode,
                 hoverColor: const Color(0xff00ff00),
@@ -261,9 +258,8 @@ void main() {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkWell(
                 focusNode: focusNode,
                 overlayColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
@@ -308,9 +304,8 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Container(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               splashFactory: NoSplash.splashFactory,
               overlayColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
@@ -346,9 +341,8 @@ void main() {
           child: Center(
             child: Focus(
               focusNode: focusNode,
-              child: SizedBox(
-                width: 100,
-                height: 100,
+              child: SizedBox.square(
+                dimension: 100,
                 child: InkWell(
                   hoverColor: const Color(0xff00ff00),
                   splashColor: splashColor,
@@ -388,9 +382,8 @@ void main() {
           child: Center(
             child: Focus(
               focusNode: focusNode,
-              child: SizedBox(
-                width: 100,
-                height: 100,
+              child: SizedBox.square(
+                dimension: 100,
                 child: InkWell(
                   overlayColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
                     if (states.contains(MaterialState.hovered)) {
@@ -431,9 +424,8 @@ void main() {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkResponse(
                 focusNode: focusNode,
                 radius: 20,
@@ -462,9 +454,8 @@ void main() {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkWell(
                 focusNode: focusNode,
                 borderRadius: BorderRadius.circular(10),
@@ -497,9 +488,8 @@ void main() {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: MouseRegion(
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10),
@@ -537,9 +527,8 @@ void main() {
           textDirection: TextDirection.ltr,
           child: Align(
             alignment: Alignment.topLeft,
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: MouseRegion(
                 child: InkWell(
                   focusNode: focusNode,
@@ -590,9 +579,8 @@ void main() {
           textDirection: TextDirection.ltr,
           child: Align(
             alignment: Alignment.topLeft,
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: MouseRegion(
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10),
@@ -644,9 +632,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkResponse(
                 focusNode: focusNode,
                 radius: radius,
@@ -683,9 +670,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkResponse(
                 focusNode: focusNode,
                 highlightShape: shape,
@@ -725,9 +711,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkWell(
                 focusNode: focusNode,
                 borderRadius: borderRadius,
@@ -772,9 +757,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
           textDirection: TextDirection.ltr,
           child: Align(
             alignment: Alignment.topLeft,
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: MouseRegion(
                 child: InkWell(
                   focusNode: focusNode,
@@ -842,9 +826,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
             textDirection: TextDirection.ltr,
             child: Align(
               alignment: Alignment.topLeft,
-              child: SizedBox(
-                width: 100,
-                height: 100,
+              child: SizedBox.square(
+                dimension: 100,
                 child: MouseRegion(
                   child: InkWell(
                     focusNode: focusNode,
@@ -927,9 +910,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               focusNode: focusNode,
               hoverColor: const Color(0xff00ff00),
@@ -1288,9 +1270,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
       Material(
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               autofocus: true,
               onTap: () {},
@@ -1315,9 +1296,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
       Material(
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               focusNode: focusNode,
               onHover: (bool value) { hovering = value; },
@@ -1359,7 +1339,7 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
                   key: middleKey,
                   child: paddedInkWell(
                     key: innerKey,
-                    child: const SizedBox(width: 50, height: 50),
+                    child: const SizedBox.square(dimension: 50),
                   ),
                 ),
               ),
@@ -1527,7 +1507,7 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
                   key: middleKey,
                   child: paddedInkWell(
                     key: innerKey,
-                    child: const SizedBox(width: 50, height: 50),
+                    child: const SizedBox.square(dimension: 50),
                   ),
                 ),
               ),
@@ -1565,9 +1545,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
           child: Directionality(
             textDirection: TextDirection.ltr,
             child: Center(
-              child: SizedBox(
-                width: 100,
-                height: 100,
+              child: SizedBox.square(
+                dimension: 100,
                 child: InkWell(
                   key: parentKey,
                   onTap: () {},
@@ -1577,17 +1556,15 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
                       height: 50,
                       child: Row(
                         children: <Widget>[
-                          SizedBox(
-                            width: 50,
-                            height: 50,
+                          SizedBox.square(
+                            dimension: 50,
                             child: InkWell(
                               key: leftKey,
                               onTap: () {},
                             ),
                           ),
-                          SizedBox(
-                            width: 50,
-                            height: 50,
+                          SizedBox.square(
+                            dimension: 50,
                             child: InkWell(
                               key: rightKey,
                               onTap: () {},
@@ -1773,15 +1750,13 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
             child: GestureDetector(
               onHorizontalDragStart: (_) {},
               child: Center(
-                child: SizedBox(
-                  width: 100,
-                  height: 100,
+                child: SizedBox.square(
+                  dimension: 100,
                   child: InkWell(
                     onTap: () {},
                     child: Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
+                      child: SizedBox.square(
+                        dimension: 50,
                         child: InkWell(
                           key: innerKey,
                           onTap: () {},
@@ -1828,9 +1803,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkWell(
                 onTap: enabled ? () { } : null,
                 onHover: (bool value) {
@@ -1888,9 +1862,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: InkWell(
                 onTap: enabled ? () { } : null,
                 onHover: (bool value) { },
@@ -2147,9 +2120,8 @@ testWidgets('InkResponse radius can be updated', (WidgetTester tester) async {
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: InkWell(
               overlayColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                 if (states.contains(MaterialState.hovered)) {

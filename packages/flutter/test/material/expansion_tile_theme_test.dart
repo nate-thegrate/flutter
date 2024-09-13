@@ -335,7 +335,7 @@ void main() {
               key: expansionTileKey,
               title: TestText('title'),
               children: <Widget>[
-                SizedBox(height: 100, width: 100),
+                SizedBox.square(dimension: 100),
               ],
             ),
           ),

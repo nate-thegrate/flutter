@@ -1910,9 +1910,8 @@ class _SelectionHandleOverlayState extends State<_SelectionHandleOverlay> with S
       showWhenUnlinked: false,
       child: FadeTransition(
         opacity: _opacity,
-        child: SizedBox(
-          width: interactiveRect.width,
-          height: interactiveRect.height,
+        child: SizedBox.fromSize(
+          size: interactiveRect.size,
           child: Align(
             alignment: Alignment.topLeft,
             child: RawGestureDetector(

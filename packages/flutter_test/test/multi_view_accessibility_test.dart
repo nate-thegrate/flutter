@@ -15,14 +15,12 @@ void main() {
     await pumpViews(
       tester: tester,
       viewContents: <Widget>[
-        SizedBox(
-          width: 47.0,
-          height: 47.0,
+        SizedBox.square(
+          dimension: 47.0,
           child: GestureDetector(onTap: () {}),
         ),
-        SizedBox(
-          width: 46.0,
-          height: 46.0,
+        SizedBox.square(
+          dimension: 46.0,
           child: GestureDetector(onTap: () {}),
         ),
       ],
@@ -45,14 +43,12 @@ void main() {
     await pumpViews(
       tester: tester,
       viewContents: <Widget>[
-        SizedBox(
-          width: 47.0,
-          height: 47.0,
+        SizedBox.square(
+          dimension: 47.0,
           child: GestureDetector(onTap: () {}),
         ),
-        SizedBox(
-          width: 46.0,
-          height: 46.0,
+        SizedBox.square(
+          dimension: 46.0,
           child: GestureDetector(onTap: () {}),
         ),
       ],

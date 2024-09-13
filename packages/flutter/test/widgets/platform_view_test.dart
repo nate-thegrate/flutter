@@ -3938,7 +3938,7 @@ void main() {
         Center(
           child: Column(
             children: <Widget>[
-              SizedBox(width: 300, height: 300, child: platformViewLink),
+              SizedBox.square(dimension: 300, child: platformViewLink),
               Focus(
                 debugLabel: 'container',
                 child: Container(key: containerKey),
@@ -3999,7 +3999,7 @@ void main() {
           );
         },
       );
-      await tester.pumpWidget(SizedBox(width: 300, height: 300, child: platformViewLink));
+      await tester.pumpWidget(SizedBox.square(dimension: 300, child: platformViewLink));
 
       final Focus platformViewFocusWidget = tester.widget(
         find.descendant(
@@ -4050,9 +4050,8 @@ void main() {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            width: 600,
-            height: 600,
+          child: SizedBox.square(
+            dimension: 600,
             child: MouseRegion(
               onEnter: (_) { logs.add('enter1'); },
               onExit: (_) { logs.add('exit1'); },
@@ -4060,9 +4059,8 @@ void main() {
               child: Stack(
                 children: <Widget>[
                   Center(
-                    child: SizedBox(
-                      width: 400,
-                      height: 400,
+                    child: SizedBox.square(
+                      dimension: 400,
                       child: MouseRegion(
                         onEnter: (_) { logs.add('enter2'); },
                         onExit: (_) { logs.add('exit2'); },
@@ -4071,9 +4069,8 @@ void main() {
                     ),
                   ),
                   Center(
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
+                    child: SizedBox.square(
+                      dimension: 200,
                       child: target,
                     ),
                   ),
@@ -4176,9 +4173,8 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: htmlElementView,
         ),
       )

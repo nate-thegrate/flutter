@@ -224,9 +224,8 @@ void main() {
     testWidgets('width of picker is consistent', (WidgetTester tester) async {
       await tester.pumpWidget(
         CupertinoApp(
-          home: SizedBox(
-            height: 400.0,
-            width: 400.0,
+          home: SizedBox.square(
+            dimension: 400.0,
             child: CupertinoTimerPicker(
               onTimerDurationChanged: (_) { },
               initialTimerDuration: const Duration(hours: 12, minutes: 30, seconds: 59),
@@ -263,9 +262,8 @@ void main() {
     late Duration duration;
     await tester.pumpWidget(
       CupertinoApp(
-        home: SizedBox(
-          height: 400.0,
-          width: 400.0,
+        home: SizedBox.square(
+          dimension: 400,
           child: CupertinoTimerPicker(
             minuteInterval: 10,
             secondInterval: 12,
@@ -355,9 +353,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              width: 400,
-              height: 400,
+            child: SizedBox.square(
+              dimension: 400,
               child: CupertinoDatePicker(
                 onDateTimeChanged: (DateTime d) => newDateTime = d,
                 initialDateTime: DateTime(2018, 10, 10, 10, 3),
@@ -404,9 +401,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400,
               child: CupertinoDatePicker(
                 onDateTimeChanged: (DateTime dateTime) => selectedDateTime = dateTime,
                 initialDateTime: DateTime(2018, 1, 1, 10, 30),
@@ -425,9 +421,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400,
               child: CupertinoDatePicker(
                 onDateTimeChanged: (DateTime dateTime) => selectedDateTime = dateTime,
                 // Change the initial date, but it shouldn't affect the present state.
@@ -450,9 +445,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (_) { },
@@ -472,9 +466,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400,
               child: CupertinoDatePicker(
                 onDateTimeChanged: (_) { },
                 initialDateTime: DateTime(2018, 9, 15, 3, 14),
@@ -494,9 +487,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.monthYear,
                 onDateTimeChanged: (_) { },
@@ -554,9 +546,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (_) { },
@@ -598,9 +589,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 onDateTimeChanged: (_) { },
@@ -642,9 +632,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.monthYear,
                 onDateTimeChanged: (_) { },
@@ -755,9 +744,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   maximumDate: maximum,
@@ -797,9 +785,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   minimumDate: minimum,
@@ -840,9 +827,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   minimumDate: minimum,
@@ -876,9 +862,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   minimumDate: minimum,
@@ -908,9 +893,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (DateTime newDate) {
@@ -955,9 +939,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   minimumDate: minimum,
@@ -1022,9 +1005,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   minimumDate: minimum,
                   maximumDate: maximum,
@@ -1099,9 +1081,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.time,
                   minimumDate: minimum,
@@ -1177,9 +1158,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.monthYear,
                   minimumDate: minimum,
@@ -1231,9 +1211,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (DateTime newDate) {
@@ -1289,9 +1268,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   minimumDate: minDate,
@@ -1319,9 +1297,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 minimumDate: minDate,
                 onDateTimeChanged: (DateTime newDate) { },
@@ -1342,9 +1319,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.time,
                   onDateTimeChanged: (DateTime newDate) {
@@ -1370,9 +1346,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.time,
                   onDateTimeChanged: (DateTime newDate) {
@@ -1398,9 +1373,8 @@ void main() {
         await tester.pumpWidget(
           CupertinoApp(
             home: Center(
-              child: SizedBox(
-                height: 400.0,
-                width: 400.0,
+              child: SizedBox.square(
+                dimension: 400,
                 child: CupertinoDatePicker(
                   use24hFormat: true,
                   mode: CupertinoDatePickerMode.time,
@@ -1428,9 +1402,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 onDateTimeChanged: (DateTime newDate) {
@@ -1477,9 +1450,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 onDateTimeChanged: (DateTime newDate) {
@@ -1615,9 +1587,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 dateOrder: DatePickerDateOrder.ydm,
                 mode: CupertinoDatePickerMode.date,
@@ -1644,9 +1615,8 @@ void main() {
       Widget buildApp(DatePickerDateOrder order) {
         return CupertinoApp(
           home: Center(
-            child: SizedBox(
-              height: 400.0,
-              width: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: CupertinoDatePicker(
                 key: ValueKey<DatePickerDateOrder>(order),
                 dateOrder: order,
@@ -1968,9 +1938,8 @@ void main() {
     await tester.pumpWidget(
       CupertinoApp(
         home: Center(
-          child: SizedBox(
-            height: 400.0,
-            width: 400.0,
+          child: SizedBox.square(
+            dimension: 400.0,
             child: CupertinoDatePicker(
               onDateTimeChanged: (DateTime newDate) => date = newDate,
               initialDateTime: initialDate,
@@ -2052,9 +2021,8 @@ void main() {
     await tester.pumpWidget(
       CupertinoApp(
         home: Center(
-          child: SizedBox(
-            height: 400.0,
-            width: 400.0,
+          child: SizedBox.square(
+            dimension: 400,
             child: CupertinoDatePicker(
               initialDateTime: initial,
               minimumDate: minimum,
@@ -2095,9 +2063,8 @@ void main() {
     await tester.pumpWidget(
       CupertinoApp(
         home: Center(
-          child: SizedBox(
-            height: 400.0,
-            width: 400.0,
+          child: SizedBox.square(
+            dimension: 400,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               onDateTimeChanged: (_) { },

@@ -889,10 +889,7 @@ void main() {
               scrollDirection: scrollDirection,
               itemExtent: 50.0,
               children: const <Widget>[
-                SizedBox(
-                  height: 50.0,
-                  width: 50.0,
-                ),
+                SizedBox.square(dimension: 50),
               ],
             ),
           ),

@@ -170,10 +170,9 @@ void main() {
               onPointerDown: (PointerDownEvent event) {
                 pointerDown = true;
               },
-              child: SizedBox(
+              child: SizedBox.square(
                 key: key1,
-                width: 100.0,
-                height: 100.0,
+                dimension: 100.0,
                 child: Container(
                   color: const Color(0xFF0000FF),
                 ),
@@ -199,10 +198,9 @@ void main() {
               onPointerDown: (PointerDownEvent event) {
                 pointerDown = true;
               },
-              child: SizedBox(
+              child: SizedBox.square(
                 key: key1,
-                width: 100.0,
-                height: 100.0,
+                dimension: 100.0,
                 child: Container(
                   color: const Color(0xFF0000FF),
                 ),
@@ -228,10 +226,9 @@ void main() {
               onPointerDown: (PointerDownEvent event) {
                 pointerDown = true;
               },
-              child: SizedBox(
+              child: SizedBox.square(
                 key: key1,
-                width: 100.0,
-                height: 100.0,
+                dimension: 100.0,
                 child: Container(
                   color: const Color(0xFF0000FF),
                 ),
@@ -267,9 +264,8 @@ void main() {
                           offset = const Offset(0.8, 0.8);
                         });
                       },
-                      child: SizedBox(
-                        width: 100.0,
-                        height: 100.0,
+                      child: SizedBox.square(
+                        dimension: 100.0,
                         child: Text(
                           'foo',
                           key: textKey,
@@ -597,10 +593,10 @@ void main() {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxHeight: 200, maxWidth: 200),
             child: clip == null
-              ? const UnconstrainedBox(child: SizedBox(width: 400, height: 400))
+              ? const UnconstrainedBox(child: SizedBox.square(dimension: 400))
               : UnconstrainedBox(
                 clipBehavior: clip,
-                child: const SizedBox(width: 400, height: 400),
+                child: const SizedBox.square(dimension: 400),
               ),
           ),
         ),
@@ -767,9 +763,8 @@ void main() {
       alignment: Alignment.topLeft,
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: Listener(
             onPointerDown: (_) { logs.add('down1'); },
             child: MouseRegion(
@@ -889,7 +884,7 @@ void main() {
                   label: '3',
                   onTap: (){ },
                   container: true,
-                  child: const SizedBox(width: 10, height: 10),
+                  child: const SizedBox.square(dimension: 10),
                 ),
               ),
             ),
@@ -1038,9 +1033,8 @@ void main() {
       alignment: Alignment.topLeft,
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: Listener(
             onPointerDown: (_) { logs.add('down1'); },
             child: MouseRegion(

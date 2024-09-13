@@ -157,7 +157,7 @@ void main() {
                     SelectableRegion(
                       focusNode: focusNode,
                       selectionControls: materialTextSelectionControls,
-                      child: const SelectAllWidget(child: SizedBox(width: 100, height: 100)),
+                      child: const SelectAllWidget(child: SizedBox.square(dimension: 100)),
                     ),
                     const Text('Fine, thank you.'),
                   ],
@@ -188,7 +188,7 @@ void main() {
               SelectableRegion(
                 focusNode: focusNode,
                 selectionControls: materialTextSelectionControls,
-                child: SelectAllWidget(key: spy, child: const SizedBox(width: 100, height: 100)),
+                child: SelectAllWidget(key: spy, child: const SizedBox.square(dimension: 100)),
               ),
               const Text('Fine, thank you.'),
             ],

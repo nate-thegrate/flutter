@@ -51,9 +51,8 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
-          width: 300,
-          height: 300,
+        child: SizedBox.square(
+          dimension: 300,
           child: Listener(
             onPointerHover: (_) {
               log.add('bottom');

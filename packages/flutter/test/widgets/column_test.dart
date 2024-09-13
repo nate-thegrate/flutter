@@ -372,10 +372,9 @@ void main() {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(
+            SizedBox.square(
               key: childKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
           ],
         ),
@@ -763,10 +762,9 @@ void main() {
           mainAxisSize: MainAxisSize.min,
           verticalDirection: VerticalDirection.up,
           children: <Widget>[
-            SizedBox(
+            SizedBox.square(
               key: childKey,
-              width: 100.0,
-              height: 100.0,
+              dimension: 100.0,
             ),
           ],
         ),

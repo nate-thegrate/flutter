@@ -35,9 +35,8 @@ void main() {
             Positioned(
               top: 100.0,
               left: 100.0,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
+              child: SizedBox.square(
+                dimension: 100.0,
                 child: Transform(
                   transform: Matrix4.diagonal3Values(0.5, 0.5, 1.0),
                   origin: const Offset(100.0, 50.0),
@@ -83,9 +82,8 @@ void main() {
             Positioned(
               top: 100.0,
               left: 100.0,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
+              child: SizedBox.square(
+                dimension: 100.0,
                 child: Transform(
                   transform: Matrix4.diagonal3Values(0.5, 0.5, 1.0),
                   alignment: Alignment.centerRight,
@@ -132,9 +130,8 @@ void main() {
             Positioned(
               top: 100.0,
               left: 100.0,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
+              child: SizedBox.square(
+                dimension: 100.0,
                 child: Transform(
                   transform: Matrix4.diagonal3Values(0.5, 0.5, 1.0),
                   alignment: alignment,
@@ -202,9 +199,8 @@ void main() {
             Positioned(
               top: 100.0,
               left: 100.0,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
+              child: SizedBox.square(
+                dimension: 100.0,
                 child: Transform(
                   transform: Matrix4.diagonal3Values(0.5, 0.5, 1.0),
                   origin: const Offset(100.0, 0.0),
@@ -551,7 +547,7 @@ void main() {
       Transform.translate(
         offset: const Offset(25.0, 25.0),
         filterQuality: FilterQuality.low,
-        child: const SizedBox(width: 100, height: 100),
+        child: const SizedBox.square(dimension: 100),
       ),
     );
     expect(tester.layers.whereType<ImageFilterLayer>().length, 1);
@@ -569,7 +565,7 @@ void main() {
       Transform.scale(
         scale: 3.14159,
         filterQuality: FilterQuality.low,
-        child: const SizedBox(width: 100, height: 100),
+        child: const SizedBox.square(dimension: 100),
       ),
     );
     expect(tester.layers.whereType<ImageFilterLayer>().length, 1);
@@ -587,7 +583,7 @@ void main() {
       Transform.rotate(
         angle: math.pi / 4,
         filterQuality: FilterQuality.low,
-        child: const SizedBox(width: 100, height: 100),
+        child: const SizedBox.square(dimension: 100),
       ),
     );
     expect(tester.layers.whereType<ImageFilterLayer>().length, 1);
@@ -602,12 +598,13 @@ void main() {
 
   testWidgets('Offset Transform.rotate with FilterQuality produces filter layer', (WidgetTester tester) async {
     await tester.pumpWidget(
-      SizedBox(width: 400, height: 400,
+      SizedBox.square(
+        dimension: 400,
         child: Center(
           child: Transform.rotate(
             angle: math.pi / 4,
             filterQuality: FilterQuality.low,
-            child: const SizedBox(width: 100, height: 100),
+            child: const SizedBox.square(dimension: 100),
           ),
         ),
       ),
@@ -627,7 +624,7 @@ void main() {
       Transform.rotate(
         angle: math.pi / 4,
         filterQuality: FilterQuality.low,
-        child: const SizedBox(width: 100, height: 100),
+        child: const SizedBox.square(dimension: 100),
       ),
     );
     expect(tester.layers.whereType<ImageFilterLayer>(), hasLength(1));
@@ -635,7 +632,7 @@ void main() {
     await tester.pumpWidget(
       Transform.rotate(
         angle: math.pi / 4,
-        child: const SizedBox(width: 100, height: 100),
+        child: const SizedBox.square(dimension: 100),
       ),
     );
     expect(tester.layers.whereType<ImageFilterLayer>(), isEmpty);
@@ -652,7 +649,7 @@ void main() {
       Transform.rotate(
         angle: math.pi / 4,
         filterQuality: FilterQuality.low,
-        child: const SizedBox(width: 100, height: 100),
+        child: const SizedBox.square(dimension: 100),
       ),
     );
     expect(tester.layers.whereType<ImageFilterLayer>(), hasLength(1));
@@ -711,10 +708,7 @@ void main() {
               scale: 1.0,
               scaleX: 1.0,
               scaleY: 1.0,
-              child: const SizedBox(
-                height: 100,
-                width: 100,
-              ),
+              child: const SizedBox.square(dimension: 100),
             ),
           )));
     }, throwsAssertionError);
@@ -726,10 +720,7 @@ void main() {
           textDirection: TextDirection.ltr,
           child: Center(
             child: Transform.scale(
-              child: const SizedBox(
-                height: 100,
-                width: 100,
-              ),
+              child: const SizedBox.square(dimension: 100),
             ),
           )));
     }, throwsAssertionError);
@@ -741,9 +732,8 @@ void main() {
     const double width = 150;
     await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          height: 400,
-          width: 400,
+        child: SizedBox.square(
+          dimension: 400,
           child: Center(
             child: Transform.scale(
               scale: scale,
@@ -768,9 +758,8 @@ void main() {
     const double width = 150;
     await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
-        child: SizedBox(
-          height: 400,
-          width: 400,
+        child: SizedBox.square(
+          dimension: 400,
           child: Center(
             child: Transform.scale(
               scaleX: scaleX,

@@ -83,10 +83,7 @@ void main() {
             child: PhysicalModel(
               elevation: 9.0,
               color: Colors.blue[900]!,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -121,10 +118,7 @@ void main() {
                 ),
               ),
               elevation: elevation,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             ),
           ),
         ),

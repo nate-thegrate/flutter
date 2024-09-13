@@ -80,10 +80,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -157,10 +154,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -219,10 +213,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -304,10 +295,7 @@ void main() {
                   ));
                 },
                 behavior: HitTestBehavior.opaque,
-                child: const SizedBox(
-                  height: 100.0,
-                  width: 100.0,
-                ),
+                child: const SizedBox.square(dimension: 100),
               );
             },
           ),
@@ -396,10 +384,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -449,10 +434,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -526,10 +508,7 @@ void main() {
                     ));
                   },
                   behavior: HitTestBehavior.opaque,
-                  child: const SizedBox(
-                    height: 100.0,
-                    width: 100.0,
-                  ),
+                  child: const SizedBox.square(dimension: 100),
                 ),
                 GestureDetector(
                   key: materialBannerTapTarget,
@@ -545,10 +524,7 @@ void main() {
                     ));
                   },
                   behavior: HitTestBehavior.opaque,
-                  child: const SizedBox(
-                    height: 100.0,
-                    width: 100.0,
-                  ),
+                  child: const SizedBox.square(dimension: 100),
                 ),
               ],
             );
@@ -606,10 +582,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -669,10 +642,7 @@ void main() {
                   ));
                 },
                 behavior: HitTestBehavior.opaque,
-                child: const SizedBox(
-                  height: 100.0,
-                  width: 100.0,
-                ),
+                child: const SizedBox.square(dimension: 100),
               );
             },
           ),
@@ -733,10 +703,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),
@@ -759,7 +726,7 @@ void main() {
         home: Directionality(
           textDirection: textDirection,
           child: MaterialBanner(
-            content: const SizedBox(width: 100, height: 100),
+            content: const SizedBox.square(dimension: 100),
             actions: List<Widget>.generate(actionCount, (int index) {
               return SizedBox(
                 width: 64,
@@ -810,7 +777,7 @@ void main() {
                     key: const ValueKey<String>('tap-target'),
                     onTap: () {
                       ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-                        content: const SizedBox(width: 100, height: 100),
+                        content: const SizedBox.square(dimension: 100),
                         actions: List<Widget>.generate(actionCount, (int index) {
                           if (index == 0) {
                             return SizedBox(
@@ -891,7 +858,7 @@ void main() {
         home: Directionality(
           textDirection: textDirection,
           child: MaterialBanner(
-            content: const SizedBox(width: 100, height: 100),
+            content: const SizedBox.square(dimension: 100),
             actions: List<Widget>.generate(actionCount, (int index) {
               return SizedBox(
                 width: 200,
@@ -933,7 +900,7 @@ void main() {
                     key: const ValueKey<String>('tap-target'),
                     onTap: () {
                       ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-                        content: const SizedBox(width: 100, height: 100),
+                        content: const SizedBox.square(dimension: 100),
                         actions: List<Widget>.generate(actionCount, (int index) {
                           if (index == 0) {
                             return SizedBox(
@@ -996,7 +963,7 @@ void main() {
           textDirection: textDirection,
           child: MaterialBanner(
             overflowAlignment: overflowAlignment,
-            content: const SizedBox(width: 100, height: 100),
+            content: const SizedBox.square(dimension: 100),
             actions: List<Widget>.generate(actionCount, (int index) {
               return SizedBox(
                 width: 200,
@@ -1039,7 +1006,7 @@ void main() {
                     onTap: () {
                       ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
                         overflowAlignment: overflowAlignment,
-                        content: const SizedBox(width: 100, height: 100),
+                        content: const SizedBox.square(dimension: 100),
                         actions: List<Widget>.generate(actionCount, (int index) {
                           if (index == 0) {
                             return SizedBox(
@@ -1195,10 +1162,7 @@ void main() {
                 ));
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),

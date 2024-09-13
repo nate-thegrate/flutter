@@ -28,12 +28,12 @@ Future<void> test(WidgetTester tester, double offset, EdgeInsetsGeometry padding
         offset: viewportOffset,
         axisDirection: axisDirection,
         slivers: <Widget>[
-          const SliverToBoxAdapter(child: SizedBox(width: 400.0, height: 400.0, child: Text('before'))),
+          const SliverToBoxAdapter(child: SizedBox.square(dimension: 400, child: Text('before'))),
           SliverPadding(
             padding: padding,
-            sliver: const SliverToBoxAdapter(child: SizedBox(width: 400.0, height: 400.0, child: Text('padded'))),
+            sliver: const SliverToBoxAdapter(child: SizedBox.square(dimension: 400, child: Text('padded'))),
           ),
-          const SliverToBoxAdapter(child: SizedBox(width: 400.0, height: 400.0, child: Text('after'))),
+          const SliverToBoxAdapter(child: SizedBox.square(dimension: 400, child: Text('after'))),
         ],
       ),
     ),
@@ -269,7 +269,7 @@ void main() {
           offset: offset,
           slivers: const <Widget>[
             SliverPadding(padding: EdgeInsets.all(100.0)),
-            SliverToBoxAdapter(child: SizedBox(width: 400.0, height: 400.0, child: Text('x'))),
+            SliverToBoxAdapter(child: SizedBox.square(dimension: 400, child: Text('x'))),
           ],
         ),
       ),
@@ -288,7 +288,7 @@ void main() {
           controller: controller,
           slivers: const <Widget>[
             SliverPadding(padding: EdgeInsets.all(100.0)),
-            SliverToBoxAdapter(child: SizedBox(width: 400.0, height: 400.0, child: Text('x'))),
+            SliverToBoxAdapter(child: SizedBox.square(dimension: 400, child: Text('x'))),
           ],
         ),
       ),

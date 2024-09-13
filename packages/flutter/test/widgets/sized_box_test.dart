@@ -70,10 +70,9 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
+        child: SizedBox.square(
           key: patient,
-          width: 100.0,
-          height: 100.0,
+          dimension: 100.0,
         ),
       ),
     );
@@ -81,10 +80,9 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
+        child: SizedBox.square(
           key: patient,
-          width: 1000.0,
-          height: 1000.0,
+          dimension: 1000.0,
         ),
       ),
     );
@@ -145,10 +143,9 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
+        child: SizedBox.square(
           key: patient,
-          width: 100.0,
-          height: 100.0,
+          dimension: 100.0,
           child: Container(),
         ),
       ),
@@ -157,10 +154,9 @@ void main() {
 
     await tester.pumpWidget(
       Center(
-        child: SizedBox(
+        child: SizedBox.square(
           key: patient,
-          width: 1000.0,
-          height: 1000.0,
+          dimension: 1000.0,
           child: Container(),
         ),
       ),

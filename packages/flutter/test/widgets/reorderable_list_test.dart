@@ -1587,7 +1587,7 @@ void main() {
       await tester.pumpAndSettle();
     }
     await testFor();
-    await testFor(prototypeItem: const SizedBox(height: 100, width: 100, child: Text('prototype')));
+    await testFor(prototypeItem: const SizedBox.square(dimension: 100, child: Text('prototype')));
     await testFor(itemExtent: 100);
   });
 

@@ -280,7 +280,7 @@ class Icon extends StatelessWidget {
     if (icon == null) {
       return Semantics(
         label: semanticLabel,
-        child: SizedBox(width: iconSize, height: iconSize),
+        child: SizedBox.square(dimension: iconSize),
       );
     }
 
@@ -343,9 +343,8 @@ class Icon extends StatelessWidget {
     return Semantics(
       label: semanticLabel,
       child: ExcludeSemantics(
-        child: SizedBox(
-          width: iconSize,
-          height: iconSize,
+        child: SizedBox.square(
+          dimension: iconSize,
           child: Center(
             child: iconWidget,
           ),

@@ -25,9 +25,8 @@ void main() {
       onTap: () {
         tapped = true;
       },
-      child: const SizedBox(
-        width: 10.0,
-        height: 10.0,
+      child: const SizedBox.square(
+        dimension: 10.0,
         child: Text('target', textDirection: TextDirection.ltr),
       ),
     );
@@ -37,9 +36,8 @@ void main() {
       onHover: (_) { hovered = true; },
       onEnter: (_) { hovered = true; },
       onExit: (_) { hovered = true; },
-      child: const SizedBox(
-        width: 10.0,
-        height: 10.0,
+      child: const SizedBox.square(
+        dimension: 10.0,
         child: Text('target', textDirection: TextDirection.ltr),
       ),
     );

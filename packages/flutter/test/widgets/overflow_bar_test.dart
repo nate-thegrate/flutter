@@ -58,9 +58,9 @@ void main() {
           child: OverflowBar(
             spacing: spacing,
             children: <Widget>[
-              SizedBox(width: 48, height: 48, key: child1Key),
-              SizedBox(width: 64, height: 64, key: child2Key),
-              SizedBox(width: 32, height: 32, key: child3Key),
+              SizedBox.square(dimension: 48, key: child1Key),
+              SizedBox.square(dimension: 64, key: child2Key),
+              SizedBox.square(dimension: 32, key: child3Key),
             ],
           ),
         ),
@@ -114,9 +114,9 @@ void main() {
               overflowAlignment: overflowAlignment,
               overflowDirection: overflowDirection,
               children: <Widget>[
-                SizedBox(width: 48, height: 48, key: child1Key),
-                SizedBox(width: 64, height: 64, key: child2Key),
-                SizedBox(width: 32, height: 32, key: child3Key),
+                SizedBox.square(dimension: 48, key: child1Key),
+                SizedBox.square(dimension: 64, key: child2Key),
+                SizedBox.square(dimension: 32, key: child3Key),
               ],
             ),
           ),

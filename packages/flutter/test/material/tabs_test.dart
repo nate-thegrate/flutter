@@ -159,14 +159,14 @@ void main() {
 
   testWidgets('Tab sizing - icon', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const MaterialApp(home: Center(child: Material(child: Tab(icon: SizedBox(width: 10.0, height: 10.0))))),
+      const MaterialApp(home: Center(child: Material(child: Tab(icon: SizedBox.square(dimension: 10))))),
     );
     expect(tester.getSize(find.byType(Tab)), const Size(10.0, 46.0));
   });
 
   testWidgets('Tab sizing - child', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const MaterialApp(home: Center(child: Material(child: Tab(child: SizedBox(width: 10.0, height: 10.0))))),
+      const MaterialApp(home: Center(child: Material(child: Tab(child: SizedBox.square(dimension: 10))))),
     );
     expect(tester.getSize(find.byType(Tab)), const Size(10.0, 46.0));
   });
@@ -188,7 +188,7 @@ void main() {
     final ThemeData theme = ThemeData(fontFamily: 'FlutterTest');
     final bool material3 = theme.useMaterial3;
     await tester.pumpWidget(
-      MaterialApp(theme: theme, home: const Center(child: Material(child: Tab(icon: SizedBox(width: 10.0, height: 10.0), text: 'x')))),
+      MaterialApp(theme: theme, home: const Center(child: Material(child: Tab(icon: SizedBox.square(dimension: 10), text: 'x')))),
     );
     expect(tester.renderObject<RenderParagraph>(find.byType(RichText)).text.style!.fontFamily, 'FlutterTest');
     expect(
@@ -203,9 +203,8 @@ void main() {
         home: const Center(
           child: Material(
             child: Tab(
-              icon: SizedBox(
-                width: 10.0,
-                height: 10.0,
+              icon: SizedBox.square(
+                dimension: 10,
               ),
               iconMargin: EdgeInsets.symmetric(
                 horizontal: 100.0,
@@ -224,7 +223,7 @@ void main() {
     final ThemeData theme = ThemeData(fontFamily: 'FlutterTest');
     final bool material3 = theme.useMaterial3;
     await tester.pumpWidget(
-      MaterialApp(theme: theme, home: const Center(child: Material(child: Tab(icon: SizedBox(width: 10.0, height: 10.0), child: Text('x'))))),
+      MaterialApp(theme: theme, home: const Center(child: Material(child: Tab(icon: SizedBox.square(dimension: 10), child: Text('x'))))),
     );
     expect(tester.renderObject<RenderParagraph>(find.byType(RichText)).text.style!.fontFamily, 'FlutterTest');
     expect(
@@ -1380,9 +1379,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1429,9 +1427,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1489,9 +1486,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               viewportFraction: 0.8,
               controller: tabController,
@@ -1533,9 +1529,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1577,9 +1572,8 @@ void main() {
               tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
               controller: controller,
             ),
-            SizedBox(
-              width: 400.0,
-              height: 400.0,
+            SizedBox.square(
+              dimension: 400.0,
               child: TabBarView(
                 viewportFraction: viewportFraction,
                 controller: controller,
@@ -1759,9 +1753,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1803,9 +1796,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1848,9 +1840,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1897,9 +1888,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -1949,9 +1939,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -2144,9 +2133,8 @@ void main() {
       textDirection: TextDirection.ltr,
       child: SizedBox.expand(
         child: Center(
-          child: SizedBox(
-            width: 400.0,
-            height: 400.0,
+          child: SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -2201,9 +2189,8 @@ void main() {
             tabs: tabs.map<Widget>((String tab) => Tab(text: tab)).toList(),
             controller: tabController,
           ),
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
+          SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -2351,9 +2338,8 @@ void main() {
       textDirection: TextDirection.ltr,
       child: SizedBox.expand(
         child: Center(
-          child: SizedBox(
-            width: 400.0,
-            height: 400.0,
+          child: SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               physics: const TabBarTestScrollPhysics(),
@@ -5250,9 +5236,8 @@ void main() {
       textDirection: TextDirection.ltr,
       child: SizedBox.expand(
         child: Center(
-          child: SizedBox(
-            width: 400.0,
-            height: 400.0,
+          child: SizedBox.square(
+            dimension: 400.0,
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[

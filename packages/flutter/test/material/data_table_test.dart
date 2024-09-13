@@ -2135,10 +2135,7 @@ void main() {
                     onSecondaryTapDown: (TapDownDetails details) {
                       secondaryTappedDown = true;
                     },
-                    child: const SizedBox(
-                      width: 100.0,
-                      height: 100.0,
-                    ),
+                    child: const SizedBox.square(dimension: 100),
                   ),
                 ],
               ),

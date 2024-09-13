@@ -173,10 +173,9 @@ void main() {
                       },
                     ),
                   },
-                  child: SizedBox(
+                  child: SizedBox.square(
                     key: tapTargetKey,
-                    width: 100,
-                    height: 100,
+                    dimension: 100,
                   ),
                 ),
               ),

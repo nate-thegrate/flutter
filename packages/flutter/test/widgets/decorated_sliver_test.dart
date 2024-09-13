@@ -20,7 +20,7 @@ void main() {
             DecoratedSliver(
               decoration: decoration,
               sliver: const SliverToBoxAdapter(
-                child: SizedBox(width: 100, height: 100),
+                child: SizedBox.square(dimension: 100),
               ),
             )
           ],
@@ -55,7 +55,7 @@ void main() {
                 DecoratedSliver(
                   decoration: activateDecoration,
                   sliver: const SliverToBoxAdapter(
-                    child: SizedBox(width: 100, height: 100),
+                    child: SizedBox.square(dimension: 100),
                   ),
                 )
               ],
@@ -95,7 +95,7 @@ void main() {
                   decoration: decoration,
                   position: activePosition,
                   sliver: const SliverToBoxAdapter(
-                    child: SizedBox(width: 100, height: 100),
+                    child: SizedBox.square(dimension: 100),
                   ),
                 )
               ],

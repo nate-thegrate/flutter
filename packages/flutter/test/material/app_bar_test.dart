@@ -681,7 +681,7 @@ void main() {
         theme: themeData,
         home: Scaffold(
           appBar: AppBar(
-            leading: const SizedBox(height: 36, width: 36,),
+            leading: const SizedBox.square(dimension: 36),
             title: const Text('X'),
           ), // Doesn't really matter. Triggers a hamburger regardless.
         ),
@@ -3272,7 +3272,7 @@ void main() {
           theme: themeData,
           home: Scaffold(
             appBar: AppBar(
-              leading: const SizedBox(height: 36, width: 36,),
+              leading: const SizedBox.square(dimension: 36),
               title: const Text('X'),
             ), // Doesn't really matter. Triggers a hamburger regardless.
           ),

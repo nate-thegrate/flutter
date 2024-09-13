@@ -1401,8 +1401,8 @@ void main() {
           home: Center(
             child: CupertinoTextField(
               padding: EdgeInsets.all(20.0),
-              prefix: SizedBox(height: 100.0, width: 100.0),
-              suffix: SizedBox(height: 50.0, width: 50.0),
+              prefix: SizedBox.square(dimension: 100.0),
+              suffix: SizedBox.square(dimension: 50.0),
               strutStyle: StrutStyle.disabled,
             ),
           ),
@@ -1427,8 +1427,8 @@ void main() {
           home: Center(
             child: CupertinoTextField(
               padding: EdgeInsets.all(30.0),
-              prefix: SizedBox(height: 100.0, width: 100.0),
-              suffix: SizedBox(height: 50.0, width: 50.0),
+              prefix: SizedBox.square(dimension: 100.0),
+              suffix: SizedBox.square(dimension: 50.0),
               strutStyle: StrutStyle.disabled,
             ),
           ),
@@ -1459,8 +1459,8 @@ void main() {
           home: Center(
             child: CupertinoTextField(
               padding: EdgeInsets.all(20.0),
-              prefix: SizedBox(height: 100.0, width: 100.0),
-              suffix: SizedBox(height: 50.0, width: 50.0),
+              prefix: SizedBox.square(dimension: 100.0),
+              suffix: SizedBox.square(dimension: 50.0),
             ),
           ),
         ),
@@ -1484,8 +1484,8 @@ void main() {
           home: Center(
             child: CupertinoTextField(
               padding: EdgeInsets.all(30.0),
-              prefix: SizedBox(height: 100.0, width: 100.0),
-              suffix: SizedBox(height: 50.0, width: 50.0),
+              prefix: SizedBox.square(dimension: 100.0),
+              suffix: SizedBox.square(dimension: 50.0),
             ),
           ),
         ),
@@ -6769,9 +6769,8 @@ void main() {
         home: DecoratedBox(
           decoration: const BoxDecoration(color: Color(0xFFFFFFFF)),
           child: Center(
-            child: SizedBox(
-              width: 200,
-              height: 200,
+            child: SizedBox.square(
+              dimension: 200,
               child: RepaintBoundary(
                 key: const ValueKey<int>(1),
                 child: CupertinoTextField(
@@ -6972,9 +6971,8 @@ void main() {
           home: CupertinoPageScaffold(
             child: Align(
               alignment: Alignment.topLeft,
-              child: SizedBox(
-                width: 200,
-                height: 200,
+              child: SizedBox.square(
+                dimension: 200,
                 child: CupertinoTextField(
                   controller: controller,
                   maxLines: null,
@@ -7033,9 +7031,8 @@ void main() {
           home: CupertinoPageScaffold(
             child: Align(
               alignment: Alignment.topRight,
-              child: SizedBox(
-                width: 200,
-                height: 200,
+              child: SizedBox.square(
+                dimension: 200,
                 child: CupertinoTextField(
                   controller: controller,
                   maxLines: null,
@@ -7094,9 +7091,8 @@ void main() {
           debugShowCheckedModeBanner: false,
           home: CupertinoPageScaffold(
             child: Align(
-              child: SizedBox(
-                width: 200,
-                height: 200,
+              child: SizedBox.square(
+                dimension: 200,
                 child: CupertinoTextField(
                   controller: controller,
                   maxLines: null,
@@ -7159,9 +7155,8 @@ void main() {
           debugShowCheckedModeBanner: false,
           home: CupertinoPageScaffold(
             child: Align(
-              child: SizedBox(
-                width: 200,
-                height: 200,
+              child: SizedBox.square(
+                dimension: 200,
                 child: CupertinoTextField(
                   controller: controller,
                   maxLines: null,
@@ -7229,9 +7224,8 @@ void main() {
           debugShowCheckedModeBanner: false,
           home: CupertinoPageScaffold(
             child: Align(
-              child: SizedBox(
-                width: 200,
-                height: 200,
+              child: SizedBox.square(
+                dimension: 200,
                 child: CupertinoTextField(
                   controller: controller,
                   maxLines: null,
@@ -7394,9 +7388,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     focusNode: focusNode,
                     expands: true,
@@ -7441,9 +7434,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     textAlignVertical: TextAlignVertical.center,
                     focusNode: focusNode,
@@ -7489,9 +7481,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     textAlignVertical: TextAlignVertical.bottom,
                     focusNode: focusNode,
@@ -7537,9 +7528,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     textAlignVertical: const TextAlignVertical(y: 0.75),
                     focusNode: focusNode,
@@ -7587,9 +7577,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     focusNode: focusNode,
                     expands: true,
@@ -7639,9 +7628,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     textAlignVertical: TextAlignVertical.top,
                     focusNode: focusNode,
@@ -7693,9 +7681,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     textAlignVertical: TextAlignVertical.bottom,
                     focusNode: focusNode,
@@ -7747,9 +7734,8 @@ void main() {
             debugShowCheckedModeBanner: false,
             home: CupertinoPageScaffold(
               child: Align(
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
+                child: SizedBox.fromSize(
+                  size: size,
                   child: CupertinoTextField(
                     textAlignVertical: const TextAlignVertical(y: 0.75),
                     focusNode: focusNode,
@@ -8516,9 +8502,8 @@ void main() {
     final Widget widget = CupertinoApp(
       home: RepaintBoundary(
         key: const ValueKey<int>(1),
-        child: SizedBox(
-          height: 200.0,
-          width: 200.0,
+        child: SizedBox.square(
+          dimension: 200.0,
           child: Center(
             child: SizedBox(
               // Make sure the input field is not high enough for the WidgetSpan.
@@ -9804,9 +9789,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: CupertinoTextField(
                 autofocus: true,
                 focusNode: focusNode,
@@ -9831,9 +9815,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: CupertinoTextField(
                 autofocus: true,
                 focusNode: focusNode,
@@ -9866,9 +9849,8 @@ void main() {
           debugShowCheckedModeBanner: false,
           home: CupertinoPageScaffold(
             child: Align(
-              child: SizedBox(
-                width: 200,
-                height: 200,
+              child: SizedBox.square(
+                dimension: 200,
                 child: CupertinoTextField(
                   autofocus: true,
                   focusNode: focusNode,
@@ -9921,9 +9903,8 @@ void main() {
       await tester.pumpWidget(
         CupertinoApp(
           home: Center(
-            child: SizedBox(
-              width: 100,
-              height: 100,
+            child: SizedBox.square(
+              dimension: 100,
               child: CupertinoTextField(
                 autofocus: true,
                 focusNode: focusNode,

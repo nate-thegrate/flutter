@@ -21,7 +21,7 @@ void main() {
           data: MediaQueryData(),
           child: CupertinoScrollbar(
             child: SingleChildScrollView(
-              child: SizedBox(width: 4000.0, height: 4000.0),
+              child: SizedBox.square(dimension: 4000.0),
             ),
           ),
         ),
@@ -65,7 +65,7 @@ void main() {
             ),
             child: CupertinoScrollbar(
               child: ListView(
-                children: const <Widget>[SizedBox(width: 4000, height: 4000)],
+                children: const <Widget>[SizedBox.square(dimension: 4000)],
               ),
             ),
           ),
@@ -111,7 +111,7 @@ void main() {
             child: CupertinoScrollbar(
               child: ListView(
                 physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-                children: const <Widget> [SizedBox(width: 10, height: 10)],
+                children: const <Widget> [SizedBox.square(dimension: 10)],
               ),
             ),
           ),

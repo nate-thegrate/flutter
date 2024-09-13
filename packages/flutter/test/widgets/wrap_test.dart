@@ -708,7 +708,7 @@ void main() {
     await tester.pumpWidget(const Wrap(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        SizedBox(width: 500.0, height: 500.0),
+        SizedBox.square(dimension: 500.0),
       ],
     ));
 
@@ -718,8 +718,8 @@ void main() {
       textDirection: TextDirection.ltr,
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
-        SizedBox(width: 500.0, height: 500.0),
-        SizedBox(width: 500.0, height: 500.0),
+        SizedBox.square(dimension: 500.0),
+        SizedBox.square(dimension: 500.0),
       ],
     ));
 

@@ -1231,10 +1231,9 @@ void main() {
                   child: Placeholder(key: insideBody),
                 ),
               ),
-              floatingActionButton: SizedBox(
+              floatingActionButton: SizedBox.square(
                 key: floatingActionButton,
-                width: 77.0,
-                height: 77.0,
+                dimension: 77.0,
                 child: SafeArea(
                   child: Placeholder(key: insideFloatingActionButton),
                 ),
@@ -1333,10 +1332,9 @@ void main() {
                   child: Placeholder(key: insideBody),
                 ),
               ),
-              floatingActionButton: SizedBox(
+              floatingActionButton: SizedBox.square(
                 key: floatingActionButton,
-                width: 77.0,
-                height: 77.0,
+                dimension: 77.0,
                 child: SafeArea(
                   child: Placeholder(key: insideFloatingActionButton),
                 ),
@@ -2446,10 +2444,7 @@ void main() {
                   scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
                 },
                 behavior: HitTestBehavior.opaque,
-                child: const SizedBox(
-                  height: 100.0,
-                  width: 100.0,
-                ),
+                child: const SizedBox.square(dimension: 100),
               );
             },
           ),
@@ -2481,10 +2476,7 @@ void main() {
                 ScaffoldMessenger.of(context);
               },
               behavior: HitTestBehavior.opaque,
-              child: const SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             );
           },
         ),

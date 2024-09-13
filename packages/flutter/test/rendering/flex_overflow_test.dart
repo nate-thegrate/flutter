@@ -11,7 +11,7 @@ void main() {
       const Center(
         child: Column(
           children: <Widget>[
-            SizedBox(width: 200.0, height: 200.0),
+            SizedBox.square(dimension: 200.0),
           ],
         ),
       ),
@@ -25,7 +25,7 @@ void main() {
           height: 100.0,
           child: Column(
             children: <Widget>[
-              SizedBox(width: 200.0, height: 200.0),
+              SizedBox.square(dimension: 200.0),
             ],
           ),
         ),
@@ -42,7 +42,7 @@ void main() {
           height: 0.0,
           child: Column(
             children: <Widget>[
-              SizedBox(width: 200.0, height: 200.0),
+              SizedBox.square(dimension: 200.0),
             ],
           ),
         ),

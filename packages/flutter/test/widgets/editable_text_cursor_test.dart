@@ -1025,7 +1025,7 @@ void main() {
         key: const ValueKey<int>(1),
         child: Column(
           children: <Widget>[
-            const SizedBox(width: 10, height: 10),
+            const SizedBox.square(dimension: 10),
             EditableText(
               backgroundCursorColor: Colors.grey,
               key: editableTextKey,
@@ -1086,7 +1086,7 @@ void main() {
         key: const ValueKey<int>(1),
         child: Column(
           children: <Widget>[
-            const SizedBox(width: 10, height: 10),
+            const SizedBox.square(dimension: 10),
             EditableText(
               backgroundCursorColor: Colors.grey,
               key: editableTextKey,

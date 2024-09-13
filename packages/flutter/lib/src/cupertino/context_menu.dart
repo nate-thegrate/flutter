@@ -1244,10 +1244,7 @@ class _ContextMenuRouteStaticState extends State<_ContextMenuRouteStatic> with T
         ),
       ),
     );
-    const SizedBox spacer = SizedBox(
-      width: _kPadding,
-      height: _kPadding,
-    );
+    const SizedBox spacer = SizedBox.square(dimension: _kPadding);
     final Expanded sheet = Expanded(
       child: AnimatedBuilder(
         animation: _sheetController,

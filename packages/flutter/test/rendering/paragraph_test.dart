@@ -560,10 +560,10 @@ void main() {
       text: 'a',
       style: TextStyle(fontSize: 10.0),
       children: <InlineSpan>[
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
         TextSpan(text: 'a'),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
       ],
     );
     // Fake the render boxes that correspond to the WidgetSpans. We use
@@ -599,10 +599,10 @@ void main() {
       text: 'a',
       style: TextStyle(fontSize: 10.0),
       children: <InlineSpan>[
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
         TextSpan(text: 'a'),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
       ],
     );
     // Fake the render boxes that correspond to the WidgetSpans. We use
@@ -641,14 +641,14 @@ void main() {
       text: 'a',
       style: TextStyle(fontSize: 10.0),
       children: <InlineSpan>[
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
         TextSpan(text: 'a'),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
-        WidgetSpan(child: SizedBox(width: 21, height: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
+        WidgetSpan(child: SizedBox.square(dimension: 21)),
       ],
     );
     // Fake the render boxes that correspond to the WidgetSpans. We use

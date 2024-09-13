@@ -347,9 +347,8 @@ void main() {
           Semantics(
             label: 'This is not text',
             container: true,
-            child: const SizedBox(
-              width: 200.0,
-              height: 200.0,
+            child: const SizedBox.square(
+              dimension: 200.0,
               child: Placeholder(),
             ),
           ),
@@ -639,9 +638,8 @@ void main() {
     testWidgets('Tappable box at 48 by 48', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       await tester.pumpWidget(_boilerplate(
-        SizedBox(
-          width: 48.0,
-          height: 48.0,
+        SizedBox.square(
+          dimension: 48.0,
           child: GestureDetector(onTap: () {}),
         ),
       ));
@@ -687,9 +685,8 @@ void main() {
       await tester.pumpWidget(_boilerplate(
         Transform.scale(
           scale: 0.5, // should have new height of 24 by 24.
-          child: SizedBox(
-            width: 48.0,
-            height: 48.0,
+          child: SizedBox.square(
+            dimension: 48.0,
             child: GestureDetector(onTap: () {}),
           ),
         ),
@@ -806,14 +803,13 @@ void main() {
       await tester.pumpWidget(_boilerplate(MergeSemantics(
         child: Semantics(
           container: true,
-          child: SizedBox(
-            width: 50.0,
-            height: 50.0,
+          child: SizedBox.square(
+            dimension: 50.0,
             child: Semantics(
               container: true,
               child: GestureDetector(
                 onTap: () {},
-                child: const SizedBox(width: 4.0, height: 4.0),
+                child: const SizedBox.square(dimension: 4.0),
               ),
             ),
           ),
@@ -862,9 +858,8 @@ void main() {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: SizedBox(
-                        width: 100,
-                        height: 100,
+                      child: SizedBox.square(
+                        dimension: 100,
                         child: Semantics(container: true, onTap: () {}, child: const Text('hello'))),
                     ),
                     Container(
@@ -889,7 +884,7 @@ void main() {
         container: true,
         onTap: () {},
         label: 'test',
-        child: const SizedBox(width: 10.0, height: 10.0),
+        child: const SizedBox.square(dimension: 10.0),
       )));
       final Evaluation result = await labeledTapTargetGuideline.evaluate(tester);
       expect(result.passed, true);
@@ -902,7 +897,7 @@ void main() {
         container: true,
         onLongPress: () {},
         label: '',
-        child: const SizedBox(width: 10.0, height: 10.0),
+        child: const SizedBox.square(dimension: 10.0),
       )));
       final Evaluation result = await labeledTapTargetGuideline.evaluate(tester);
       expect(result.passed, false);
@@ -915,7 +910,7 @@ void main() {
         container: true,
         onTap: () {},
         label: '',
-        child: const SizedBox(width: 10.0, height: 10.0),
+        child: const SizedBox.square(dimension: 10.0),
       )));
       final Evaluation result = await labeledTapTargetGuideline.evaluate(tester);
       expect(result.passed, false);
@@ -931,7 +926,7 @@ void main() {
         label: '',
         child: Semantics(
           label: 'test',
-          child: const SizedBox(width: 10.0, height: 10.0),
+          child: const SizedBox.square(dimension: 10.0),
         ),
       )));
       final Evaluation result = await labeledTapTargetGuideline.evaluate(tester);

@@ -350,7 +350,7 @@ void main() {
     (WidgetTester tester) async {
       const Map<int, Widget> children = <int, Widget>{
         0: Text('Child 1'),
-        1: SizedBox(width: 50, height: 50),
+        1: SizedBox.square(dimension: 50),
         2: Placeholder(),
       };
 
@@ -1098,7 +1098,7 @@ void main() {
     children[0] = GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (TapDownDetails details) { tapDownDetails = details; },
-      child: const SizedBox(width: 200, height: 200),
+      child: const SizedBox.square(dimension: 200),
     );
     children[1] = const Text('Child 2');
 
@@ -1130,7 +1130,7 @@ void main() {
     children[0] = GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (TapDownDetails details) { tapDownDetails = details; },
-      child: const SizedBox(width: 200, height: 200),
+      child: const SizedBox.square(dimension: 200),
     );
     children[1] = const Text('Child 2');
 

@@ -20,7 +20,7 @@ Widget _buildScroller({ required List<String> log }) {
       return false;
     },
     child: const SingleChildScrollView(
-      child: SizedBox(width: 1000.0, height: 1000.0),
+      child: SizedBox.square(dimension: 1000.0),
     ),
   );
 }

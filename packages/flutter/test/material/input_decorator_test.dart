@@ -2420,9 +2420,8 @@ void main() {
       final String longStringB = String.fromCharCodes(List<int>.generate(200, (_) => 66));
 
       await tester.pumpWidget(Center(
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: buildInputDecorator(
             isEmpty: true,
             decoration: InputDecoration(
@@ -2438,9 +2437,8 @@ void main() {
       );
 
       await tester.pumpWidget(Center(
-        child: SizedBox(
-          width: 100,
-          height: 100,
+        child: SizedBox.square(
+          dimension: 100,
           child: buildInputDecorator(
             isFocused: true,
             isEmpty: true,
@@ -10205,7 +10203,7 @@ void main() {
           decoration: const InputDecoration(
             prefixIcon: Padding(
               padding: EdgeInsets.all(16.0),
-              child: SizedBox(width: 8.0, height: 8.0, key: prefixKey),
+              child: SizedBox.square(dimension: 8.0, key: prefixKey),
             ),
             filled: true,
           ),
@@ -10416,7 +10414,7 @@ void main() {
       await tester.pumpWidget(
         buildInputDecoratorM2(
           decoration: const InputDecoration(
-            prefixIcon: SizedBox(width: 100.0, height: 100.0, key: prefixKey),
+            prefixIcon: SizedBox.square(dimension: 100.0, key: prefixKey),
             filled: true,
           ),
         ),
@@ -13204,9 +13202,8 @@ void main() {
 
       await tester.pumpWidget(
         Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: buildInputDecoratorM2(
               // isFocused: false (default)
               isEmpty: true,
@@ -13227,9 +13224,8 @@ void main() {
 
       await tester.pumpWidget(
         Center(
-          child: SizedBox(
-            width: 100,
-            height: 100,
+          child: SizedBox.square(
+            dimension: 100,
             child: buildInputDecoratorM2(
               isFocused: true,
               isEmpty: true,

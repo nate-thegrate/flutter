@@ -92,10 +92,7 @@ void main() {
       SingleChildScrollView(
         child: Align(
           key: alignKey,
-          child: const SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
+          child: const SizedBox.square(dimension: 10),
         ),
       ),
     );
@@ -115,10 +112,7 @@ void main() {
           children: <Widget>[
             Align(
               widthFactor: 0.5,
-              child: SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ],
         ),
@@ -138,10 +132,7 @@ void main() {
           children: <Widget>[
             Align(
               heightFactor: 0.5,
-              child: SizedBox(
-                height: 100.0,
-                width: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ],
         ),

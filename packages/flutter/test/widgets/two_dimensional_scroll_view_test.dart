@@ -10,9 +10,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'two_dimensional_utils.dart';
 
 Widget? _testChildBuilder(BuildContext context, ChildVicinity vicinity) {
-  return SizedBox(
-    height: 200,
-    width: 200,
+  return SizedBox.square(
+    dimension: 200,
     child: Center(child: Text('C${vicinity.xIndex}:R${vicinity.yIndex}')),
   );
 }
@@ -372,7 +371,7 @@ void main() {
               hitTestBehavior: HitTestBehavior.translucent,
               delegate: delegate = TwoDimensionalChildBuilderDelegate(
                 builder: (BuildContext context, ChildVicinity vicinity) {
-                  return const SizedBox(width: 50, height: 50);
+                  return const SizedBox.square(dimension: 50);
                 },
               ),
             ),

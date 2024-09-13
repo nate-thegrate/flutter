@@ -502,8 +502,8 @@ void main() {
         Directionality(
           textDirection: TextDirection.ltr,
           child: ListView(children: const <Widget>[
-            SizedBox(width: 100.0, height: 100.0, child: Text('hello')),
-            SizedBox(width: 100.0, height: 100.0, child: Text('hello')),
+            SizedBox.square(dimension: 100, child: Text('hello')),
+            SizedBox.square(dimension: 100, child: Text('hello')),
           ]),
         ),
       );
@@ -738,15 +738,13 @@ void main() {
                   child: Center(
                     child: Row(
                       children: <Widget>[
-                        SizedBox(
+                        SizedBox.square(
                           key: ValueKey<String>('leftchild'),
-                          width: 25,
-                          height: 25,
+                          dimension: 25,
                         ),
-                        SizedBox(
+                        SizedBox.square(
                           key: ValueKey<String>('rightchild'),
-                          width: 25,
-                          height: 25,
+                          dimension: 25,
                         ),
                       ],
                     ),
@@ -801,13 +799,11 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Center(
-            child: SizedBox(
-              height: 200,
-              width: 200,
+            child: SizedBox.square(
+              dimension: 200,
               child: Center(
-                child: SizedBox(
-                  height: 100,
-                  width: 100,
+                child: SizedBox.square(
+                  dimension: 100,
                   child: Center(
                     child: SizedBox(
                       key: ValueKey<String>('leaf'),

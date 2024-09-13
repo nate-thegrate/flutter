@@ -16,10 +16,7 @@ void main() {
             throw Exception('Should not reach this point.');
           },
           child: const SizeChangedLayoutNotifier(
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       ),

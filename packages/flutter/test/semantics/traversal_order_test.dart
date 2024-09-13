@@ -17,9 +17,8 @@ void main() {
             return Row(
               children: List<Widget>.generate(3, (int row) {
                 return Semantics(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
+                  child: SizedBox.square(
+                    dimension: 50.0,
                     child: Text('$column - $row'),
                   ),
                 );

@@ -67,10 +67,9 @@ class TestRootState extends State<TestRoot> {
   Widget build(BuildContext context) {
     return Center(
       key: _localKey,
-      child: SizedBox(
+      child: SizedBox.square(
         key: _globalKey,
-        width: 100,
-        height: 100,
+        dimension: 100,
       ),
     );
   }

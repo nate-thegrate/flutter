@@ -183,7 +183,7 @@ void main() {
             child: Center(
               child: RawChip(
                 avatar: const Icon(Icons.add),
-                label: const SizedBox(width: 100, height: 100),
+                label: const SizedBox.square(dimension: 100),
                 onSelected: (bool newValue) { },
               ),
             ),
@@ -224,7 +224,7 @@ void main() {
             child: Center(
               child: RawChip(
                 avatar: const Icon(Icons.add),
-                label: const SizedBox(width: 100, height: 100),
+                label: const SizedBox.square(dimension: 100),
                 onSelected: (bool newValue) { },
               ),
             ),
@@ -267,7 +267,7 @@ void main() {
                   child: Center(
                     child: RawChip(
                       avatar: const Icon(Icons.add),
-                      label: const SizedBox(width: 100, height: 100),
+                      label: const SizedBox.square(dimension: 100),
                       onSelected: (bool newValue) { },
                     ),
                   ),
@@ -315,7 +315,7 @@ void main() {
                   child: Center(
                     child: RawChip(
                       avatar: const Icon(Icons.add),
-                      label: const SizedBox(width: 100, height: 100),
+                      label: const SizedBox.square(dimension: 100),
                       onSelected: (bool newValue) { },
                     ),
                   ),
@@ -373,7 +373,7 @@ void main() {
                     shape: shape,
                     iconTheme: iconTheme,
                     avatar: const Icon(Icons.add),
-                    label: const SizedBox(width: 100, height: 100),
+                    label: const SizedBox.square(dimension: 100),
                     onSelected: (bool newValue) { },
                   ),
                 ),
@@ -417,7 +417,7 @@ void main() {
                     shape: shape,
                     iconTheme: iconTheme,
                     avatar: const Icon(Icons.add),
-                    label: const SizedBox(width: 100, height: 100),
+                    label: const SizedBox.square(dimension: 100),
                     onSelected: (bool newValue) { },
                   ),
                 ),
@@ -462,7 +462,7 @@ void main() {
                     shape: shape,
                     iconTheme: iconTheme,
                     avatar: const Icon(Icons.add),
-                    label: const SizedBox(width: 100, height: 100),
+                    label: const SizedBox.square(dimension: 100),
                     onSelected: (bool newValue) { },
                   ),
                 ),
@@ -1197,7 +1197,7 @@ void main() {
           child: Center(
               child: RawChip(
                 selected: true,
-                label: const SizedBox(width: 100, height: 100),
+                label: const SizedBox.square(dimension: 100),
                 onSelected: (bool newValue) { },
               ),
             ),
@@ -1308,7 +1308,7 @@ void main() {
             child: Center(
               child: RawChip(
                 avatar: const Icon(Icons.add),
-                label: const SizedBox(width: 100, height: 100),
+                label: const SizedBox.square(dimension: 100),
                 onSelected: (bool newValue) { },
               ),
             ),

@@ -407,15 +407,11 @@ class _HeroState extends State<Hero> {
     }
 
     if (showPlaceholder && !_shouldIncludeChild) {
-      return SizedBox(
-        width: _placeholderSize!.width,
-        height: _placeholderSize!.height,
-      );
+      return SizedBox.fromSize(size: _placeholderSize);
     }
 
-    return SizedBox(
-      width: _placeholderSize?.width,
-      height: _placeholderSize?.height,
+    return SizedBox.fromSize(
+      size: _placeholderSize,
       child: Offstage(
         offstage: showPlaceholder,
         child: TickerMode(

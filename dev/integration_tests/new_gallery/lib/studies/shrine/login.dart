@@ -91,10 +91,7 @@ class _ShrineLogo extends StatelessWidget {
         children: <Widget>[
           const FadeInImagePlaceholder(
             image: AssetImage('packages/shrine_images/diamond.png'),
-            placeholder: SizedBox(
-              width: 34,
-              height: 34,
-            ),
+            placeholder: SizedBox.square(dimension: 34),
           ),
           const SizedBox(height: 16),
           Text(

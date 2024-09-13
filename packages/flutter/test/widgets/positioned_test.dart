@@ -87,9 +87,8 @@ void main() {
       Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 100.0,
-            width: 100.0,
+          child: SizedBox.square(
+            dimension: 100.0,
             child: Stack(
               children: <Widget>[
                 PositionedTransition(

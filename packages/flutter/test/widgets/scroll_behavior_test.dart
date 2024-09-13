@@ -139,9 +139,8 @@ void main() {
           behavior: const ScrollBehavior(),
           child: ListView(
             children: const <Widget>[
-              SizedBox(
-                height: 1000.0,
-                width: 1000.0,
+              SizedBox.square(
+                dimension: 1000.0,
                 child: Text('Test'),
               ),
             ],
@@ -170,9 +169,8 @@ void main() {
           child: ListView(
             controller: controller,
             children: const <Widget>[
-              SizedBox(
-                height: 1000.0,
-                width: 1000.0,
+              SizedBox.square(
+                dimension: 1000.0,
                 child: Text('I Love Flutter!'),
               ),
             ],
@@ -238,9 +236,8 @@ void main() {
               return ListView(
               controller: controller,
               children: const <Widget>[
-                SizedBox(
-                  height: 1000.0,
-                  width: 1000.0,
+                SizedBox.square(
+                  dimension: 1000.0,
                   child: Text('I Love Flutter!'),
                 ),
               ],
@@ -309,9 +306,8 @@ void main() {
               return ListView(
                 controller: controller,
                 children: const <Widget>[
-                  SizedBox(
-                    height: 1000.0,
-                    width: 1000.0,
+                  SizedBox.square(
+                    dimension: 1000.0,
                     child: Text('I Love Flutter!'),
                   ),
                 ],

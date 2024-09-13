@@ -117,7 +117,7 @@ void main() {
         child: SizedOverflowBox(
           size: const Size(100.0, 100.0),
           alignment: Alignment.topRight,
-          child: SizedBox(height: 50.0, width: 50.0, key: inner),
+          child: SizedBox.square(dimension: 50.0, key: inner),
         ),
       ),
     ));
@@ -140,7 +140,7 @@ void main() {
         child: SizedOverflowBox(
           size: const Size(100.0, 100.0),
           alignment: AlignmentDirectional.bottomStart,
-          child: SizedBox(height: 50.0, width: 50.0, key: inner),
+          child: SizedBox.square(dimension: 50.0, key: inner),
         ),
       ),
     ));

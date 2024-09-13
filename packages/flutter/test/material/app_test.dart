@@ -1326,9 +1326,8 @@ void main() {
       scrollBehavior: const MaterialScrollBehavior(),
       home: ListView(
         children: const <Widget>[
-          SizedBox(
-            height: 1000.0,
-            width: 1000.0,
+          SizedBox.square(
+            dimension: 1000,
             child: Text('Test'),
           ),
         ],
@@ -1345,9 +1344,8 @@ void main() {
       scrollBehavior: const MaterialScrollBehavior(),
       home: ListView(
         children: const <Widget>[
-          SizedBox(
-            height: 1000.0,
-            width: 1000.0,
+          SizedBox.square(
+            dimension: 1000,
             child: Text('Test'),
           ),
         ],
@@ -1362,9 +1360,8 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: ListView(
         children: const <Widget>[
-          SizedBox(
-            height: 1000.0,
-            width: 1000.0,
+          SizedBox.square(
+            dimension: 1000,
             child: Text('Test'),
           ),
         ],
@@ -1381,9 +1378,8 @@ void main() {
       theme: ThemeData().copyWith(useMaterial3: false),
       home: ListView(
         children: const <Widget>[
-          SizedBox(
-            height: 1000.0,
-            width: 1000.0,
+          SizedBox.square(
+            dimension: 1000,
             child: Text('Test'),
           ),
         ],

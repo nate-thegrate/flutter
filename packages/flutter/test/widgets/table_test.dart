@@ -353,7 +353,7 @@ void main() {
 
   testWidgets('Really small deficit double precision error', (WidgetTester tester) async {
     // Regression test for https://github.com/flutter/flutter/issues/27083
-    const SizedBox cell = SizedBox(width: 16, height: 16);
+    const SizedBox cell = SizedBox.square(dimension: 16);
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -377,7 +377,7 @@ void main() {
   });
 
   testWidgets('Calculating flex columns with small width deficit', (WidgetTester tester) async {
-    const SizedBox cell = SizedBox(width: 1, height: 1);
+    const SizedBox cell = SizedBox.square(dimension: 1);
     // If the error is present, pumpWidget() will fail due to an unsatisfied
     // assertion during the layout phase.
     await tester.pumpWidget(

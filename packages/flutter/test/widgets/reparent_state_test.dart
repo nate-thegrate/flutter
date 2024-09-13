@@ -235,7 +235,7 @@ void main() {
       textDirection: TextDirection.ltr,
       children: <Widget>[
         StateMarker(key: key),
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
       ],
     ));
 
@@ -245,7 +245,7 @@ void main() {
     await tester.pumpWidget(Stack(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
         StateMarker(key: key),
       ],
     ));
@@ -257,7 +257,7 @@ void main() {
       textDirection: TextDirection.ltr,
       children: <Widget>[
         StateMarker(key: key),
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
       ],
     ));
 
@@ -271,9 +271,9 @@ void main() {
     await tester.pumpWidget(Stack(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
         StateMarker(key: key),
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
       ],
     ));
 
@@ -283,8 +283,8 @@ void main() {
     await tester.pumpWidget(Stack(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        SizedBox(width: 100.0, height: 100.0, child: StateMarker(key: key)),
-        const SizedBox(width: 100.0, height: 100.0),
+        SizedBox.square(dimension: 100.0, child: StateMarker(key: key)),
+        const SizedBox.square(dimension: 100.0),
       ],
     ));
 
@@ -294,9 +294,9 @@ void main() {
     await tester.pumpWidget(Stack(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
         StateMarker(key: key),
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
       ],
     ));
 
@@ -306,8 +306,8 @@ void main() {
     await tester.pumpWidget(Stack(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        const SizedBox(width: 100.0, height: 100.0),
-        SizedBox(width: 100.0, height: 100.0, child: StateMarker(key: key)),
+        const SizedBox.square(dimension: 100.0),
+        SizedBox.square(dimension: 100.0, child: StateMarker(key: key)),
       ],
     ));
 
@@ -317,9 +317,9 @@ void main() {
     await tester.pumpWidget(Stack(
       textDirection: TextDirection.ltr,
       children: <Widget>[
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
         StateMarker(key: key),
-        const SizedBox(width: 100.0, height: 100.0),
+        const SizedBox.square(dimension: 100.0),
       ],
     ));
 

@@ -185,26 +185,17 @@ void main() {
               Semantics(
                 label: 'node 1',
                 selected: true,
-                child: const SizedBox(
-                  width: 10.0,
-                  height: 10.0,
-                ),
+                child: const SizedBox.square(dimension: 10),
               ),
               Semantics(
                 label: 'node 2',
                 selected: true,
-                child: const SizedBox(
-                  width: 10.0,
-                  height: 10.0,
-                ),
+                child: const SizedBox.square(dimension: 10),
               ),
               Semantics(
                 label: 'node 3',
                 selected: true,
-                child: const SizedBox(
-                  width: 10.0,
-                  height: 10.0,
-                ),
+                child: const SizedBox.square(dimension: 10),
               ),
             ],
           ),

@@ -22,10 +22,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -38,10 +35,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 200.0,
-              height: 200.0,
-            ),
+            child: SizedBox.square(dimension: 200),
           ),
         ),
       );
@@ -64,10 +58,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -98,10 +89,7 @@ void main() {
           child: AnimatedSize(
             onEnd: handleEnd,
             duration: const Duration(milliseconds: 200),
-            child: const SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: const SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -113,10 +101,7 @@ void main() {
           child: AnimatedSize(
             onEnd: handleEnd,
             duration: const Duration(milliseconds: 200),
-            child: const SizedBox(
-              width: 200.0,
-              height: 200.0,
-            ),
+            child: const SizedBox.square(dimension: 200),
           ),
         ),
       );
@@ -130,10 +115,7 @@ void main() {
           child: AnimatedSize(
             onEnd: handleEnd,
             duration: const Duration(milliseconds: 200),
-            child: const SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: const SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -150,10 +132,7 @@ void main() {
             height: 100.0,
             child: AnimatedSize(
               duration: Duration(milliseconds: 200),
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -171,10 +150,7 @@ void main() {
             height: 100.0,
             child: AnimatedSize(
               duration: Duration(milliseconds: 200),
-              child: SizedBox(
-                width: 200.0,
-                height: 200.0,
-              ),
+              child: SizedBox.square(dimension: 200),
             ),
           ),
         ),
@@ -275,10 +251,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -306,10 +279,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -329,10 +299,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       );
@@ -347,10 +314,7 @@ void main() {
             child: AnimatedSize(
               duration: const Duration(milliseconds: 200),
               clipBehavior: clip,
-              child: const SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: const SizedBox.square(dimension: 100),
             ),
           ),
         );
@@ -369,10 +333,7 @@ void main() {
                   AnimatedSize(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInOutBack,
-                    child: SizedBox(
-                      width: size.width,
-                      height: size.height,
-                    ),
+                    child: SizedBox.fromSize(size: size),
                   ),
                 ],
               ),
@@ -494,10 +455,7 @@ void main() {
         const Center(
           child: AnimatedSize(
             duration: Duration(milliseconds: 200),
-            child: SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: SizedBox.square(dimension: 100),
           ),
         ),
       );

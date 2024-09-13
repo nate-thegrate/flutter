@@ -6216,7 +6216,7 @@ void main() {
         controller.value = TextEditingValue(text: 'a' * 100, composing: const TextRange(start: 0, end: 10));
         // Use a FittedBox with an zero-sized child to set the paint transform
         // to the zero matrix.
-        await tester.pumpWidget(FittedBox(child: SizedBox.fromSize(size: Size.zero, child: builder())));
+        await tester.pumpWidget(FittedBox(child: SizedBox.shrink(child: builder())));
         await tester.showKeyboard(find.byType(EditableText));
         expect(tester.testTextInput.log, contains(matchesMethodCall(
           'TextInput.setMarkedTextRect',
@@ -9684,9 +9684,8 @@ void main() {
                 builder: (BuildContext innerContext) {
                   return Align(
                     alignment: Alignment.topLeft,
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
+                    child: SizedBox.square(
+                      dimension: 200,
                       child: EditableText(
                         maxLines: null,
                         controller: controller,
@@ -9755,9 +9754,8 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: Align(
         alignment: Alignment.topLeft,
-        child: SizedBox(
-          width: 200,
-          height: 200,
+        child: SizedBox.square(
+          dimension: 200,
           child: SingleChildScrollView(
             controller: outerController,
             child: EditableText(
@@ -9797,9 +9795,8 @@ void main() {
       await tester.pumpWidget(MaterialApp(
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            width: 200,
-            height: 200,
+          child: SizedBox.square(
+            dimension: 200,
             child: EditableText(
               maxLines: null,
               controller: controller,
@@ -13313,9 +13310,8 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Center(
-          child: SizedBox(
-            height: 600.0,
-            width: 600.0,
+          child: SizedBox.square(
+            dimension: 600.0,
             child: EditableText(
               controller: controller,
               scrollController: scrollController,
@@ -15298,10 +15294,9 @@ void main() {
               BuildContext context,
               EditableTextState editableTextState,
             ) {
-              return SizedBox(
+              return SizedBox.square(
                 key: key,
-                width: 10.0,
-                height: 10.0,
+                dimension: 10.0,
               );
             },
           ),
@@ -15355,10 +15350,9 @@ void main() {
                   BuildContext context,
                   EditableTextState editableTextState,
                 ) {
-                  return SizedBox(
+                  return SizedBox.square(
                     key: key,
-                    width: 10.0,
-                    height: 10.0,
+                    dimension: 10.0,
                   );
                 },
               );

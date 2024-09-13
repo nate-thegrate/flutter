@@ -46,9 +46,8 @@ class VeryLongPictureScrollingPerfState extends State<VeryLongPictureScrollingPe
         ],
       ),
       backgroundColor: Colors.transparent,
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+      body: SizedBox.fromSize(
+        size: MediaQuery.sizeOf(context),
         child: useList
             ? ListView.builder(
           key: const ValueKey<String>('vlp_list_view_scrollable'),

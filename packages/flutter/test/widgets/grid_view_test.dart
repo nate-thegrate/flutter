@@ -617,10 +617,9 @@ void main() {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemBuilder: (BuildContext context, int index) {
           counters[index] = (counters[index] ?? 0) + 1;
-          return SizedBox(
+          return SizedBox.square(
             key: ValueKey<int>(index),
-            width: 200,
-            height: 200,
+            dimension: 200,
           );
         },
       ),

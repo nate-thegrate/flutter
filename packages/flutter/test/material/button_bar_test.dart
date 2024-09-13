@@ -22,7 +22,7 @@ void main() {
         const MaterialApp(
           home: ButtonBar(
             children: <Widget>[
-              SizedBox(width: 10.0, height: 10.0),
+              SizedBox.square(dimension: 10.0),
             ],
           ),
         ),
@@ -43,7 +43,7 @@ void main() {
             ),
             child: ButtonBar(
               children: <Widget>[
-                SizedBox(width: 10.0, height: 10.0),
+                SizedBox.square(dimension: 10.0),
               ],
             ),
           ),
@@ -66,7 +66,7 @@ void main() {
             child: ButtonBar(
               alignment: MainAxisAlignment.start,
               children: <Widget>[
-                SizedBox(width: 10.0, height: 10.0),
+                SizedBox.square(dimension: 10.0),
               ],
             ),
           ),
@@ -349,7 +349,7 @@ void main() {
                 child: ButtonBar(
                   layoutBehavior: ButtonBarLayoutBehavior.constrained,
                   children: <Widget>[
-                    SizedBox(width: 10.0, height: 10.0),
+                    SizedBox.square(dimension: 10.0),
                   ],
                 ),
               ),
@@ -372,7 +372,7 @@ void main() {
                 child: ButtonBar(
                   layoutBehavior: ButtonBarLayoutBehavior.padded,
                   children: <Widget>[
-                    SizedBox(width: 10.0, height: 10.0),
+                    SizedBox.square(dimension: 10.0),
                   ],
                 ),
               ),

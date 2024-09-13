@@ -78,9 +78,8 @@ class _ProgressIndicatorDemoState extends State<ProgressIndicatorDemo> with Sing
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           const CircularProgressIndicator(),
-          SizedBox(
-              width: 20.0,
-              height: 20.0,
+          SizedBox.square(
+              dimension: 20.0,
               child: CircularProgressIndicator(value: _animation.value),
           ),
           SizedBox(

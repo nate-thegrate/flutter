@@ -113,9 +113,8 @@ Widget buildImageAtRatio(String imageName, Key key, double ratio, bool inferSize
 Widget buildImageCacheResized(String name, Key key, int width, int height, int cacheWidth, int cacheHeight) {
   return Center(
     child: RepaintBoundary(
-      child: SizedBox(
-        width: 250,
-        height: 250,
+      child: SizedBox.square(
+        dimension: 250,
         child: Center(
           child: Image.memory(
             Uint8List.fromList(kTransparentImage),

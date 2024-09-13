@@ -11,7 +11,7 @@ void main() {
     await tester.pumpWidget(
       const AnnotatedRegion<int>(
         value: 1,
-        child: SizedBox(width: 100.0, height: 100.0),
+        child: SizedBox.square(dimension: 100),
       ),
     );
     final List<Layer> layers = tester.layers;
@@ -25,7 +25,7 @@ void main() {
         offset: const Offset(25.0, 25.0),
         child: const AnnotatedRegion<int>(
           value: 1,
-          child: SizedBox(width: 100.0, height: 100.0),
+          child: SizedBox.square(dimension: 100),
         ),
       ),
     );

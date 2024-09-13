@@ -761,9 +761,8 @@ class IconButton extends StatelessWidget {
       constraints: adjustedConstraints,
       child: Padding(
         padding: effectivePadding,
-        child: SizedBox(
-          height: effectiveIconSize,
-          width: effectiveIconSize,
+        child: SizedBox.square(
+          dimension: effectiveIconSize,
           child: Align(
             alignment: effectiveAlignment,
             child: IconTheme.merge(

@@ -1450,15 +1450,10 @@ void main() {
               ),
               BottomNavigationBarItem(
                 label: 'B',
-                icon: Builder(
-                  builder: (BuildContext context) {
-                    builderIconSize = IconTheme.of(context).size!;
-                    return SizedBox(
-                      width: builderIconSize,
-                      height: builderIconSize,
-                    );
-                  },
-                ),
+                icon: Builder(builder: (BuildContext context) {
+                  builderIconSize = IconTheme.of(context).size!;
+                  return SizedBox.square(dimension: builderIconSize);
+                }),
               ),
             ],
           ),

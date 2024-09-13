@@ -1830,9 +1830,8 @@ Future<void> _pumpTextWidget({
     Directionality(
       textDirection: TextDirection.ltr,
       child: Center(
-        child: SizedBox(
-          width: 50.0,
-          height: 50.0,
+        child: SizedBox.square(
+          dimension: 50.0,
           child: Text(
             text,
             overflow: overflow,

@@ -21,9 +21,8 @@ Widget buildFrame(TabController tabController, { Color? color, Color? selectedCo
         data: ThemeData(colorScheme: const ColorScheme.light().copyWith(secondary: kSelectedColor)),
         child: SizedBox.expand(
           child: Center(
-            child: SizedBox(
-              width: 400.0,
-              height: 400.0,
+            child: SizedBox.square(
+              dimension: 400.0,
               child: Column(
                 children: <Widget>[
                   TabPageSelector(
@@ -292,9 +291,8 @@ void main() {
             data: ThemeData(colorScheme: const ColorScheme.light().copyWith(secondary: kSelectedColor)),
             child: const SizedBox.expand(
               child: Center(
-                child: SizedBox(
-                  width: 400.0,
-                  height: 400.0,
+                child: SizedBox.square(
+                  dimension: 400.0,
                   child: DefaultTabController(
                     length: 3,
                     child: Column(

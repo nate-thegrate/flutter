@@ -23,9 +23,8 @@ void main() {
       CupertinoApp(
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            height: 300.0,
-            width: 300.0,
+          child: SizedBox.square(
+            dimension: 300.0,
             child: CupertinoPicker(
               itemExtent: 50.0,
               onSelectedItemChanged: (_) { },
@@ -88,9 +87,8 @@ void main() {
           textDirection: TextDirection.ltr,
           child: Align(
             alignment: Alignment.topLeft,
-            child: SizedBox(
-              height: 300.0,
-              width: 300.0,
+            child: SizedBox.square(
+              dimension: 300.0,
               child: CupertinoPicker(
                 scrollController: controller,
                 itemExtent: 50.0,
@@ -133,9 +131,8 @@ void main() {
         theme: const CupertinoThemeData(brightness: Brightness.light),
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            height: 300.0,
-            width: 300.0,
+          child: SizedBox.square(
+            dimension: 300,
             child: CupertinoPicker(
               backgroundColor: const CupertinoDynamicColor.withBrightness(
                 color: Color(0xFF123456), // Set alpha channel to FF to disable under magnifier painting.
@@ -158,9 +155,8 @@ void main() {
         theme: const CupertinoThemeData(brightness: Brightness.dark),
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            height: 300.0,
-            width: 300.0,
+          child: SizedBox.square(
+            dimension: 300,
             child: CupertinoPicker(
               backgroundColor: const CupertinoDynamicColor.withBrightness(
                 color: Color(0xFF123456),
@@ -185,9 +181,8 @@ void main() {
         theme: const CupertinoThemeData(brightness: Brightness.light),
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            height: 300.0,
-            width: 300.0,
+          child: SizedBox.square(
+            dimension: 300,
             child: CupertinoPicker(
               itemExtent: 15.0,
               onSelectedItemChanged: (int i) {},
@@ -208,9 +203,8 @@ void main() {
         theme: const CupertinoThemeData(brightness: Brightness.light),
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            height: 300.0,
-            width: 300.0,
+          child: SizedBox.square(
+            dimension: 300,
             child: CupertinoPicker(
               itemExtent: 15.0,
               onSelectedItemChanged: (int i) {},
@@ -441,9 +435,8 @@ void main() {
         theme: ThemeData(brightness: brightness),
         home: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            height: 300.0,
-            width: 300.0,
+          child: SizedBox.square(
+            dimension: 300,
             child: CupertinoPicker(
               itemExtent: 50.0,
               onSelectedItemChanged: (_) { },
@@ -556,9 +549,8 @@ void main() {
                     onTap: () {
                       tappedChildren.add(index);
                     },
-                    child: SizedBox(
-                      width: 55,
-                      height: 55,
+                    child: SizedBox.square(
+                      dimension: 55,
                       child: CustomPaint(
                         painter: TestCallbackPainter(onPaint: () {
                           paintedChildren.add(index);

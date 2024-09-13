@@ -121,8 +121,8 @@ void main() {
       Flow(
         delegate: DuplicatePainterOpacityFlowDelegate(1.0),
         children: const <Widget>[
-          SizedBox(width: 100.0, height: 100.0),
-          SizedBox(width: 100.0, height: 100.0),
+          SizedBox.square(dimension: 100.0),
+          SizedBox.square(dimension: 100.0),
         ],
       ),
     );
@@ -144,7 +144,7 @@ void main() {
       Flow(
         delegate: OpacityFlowDelegate(opacity),
         children: const <Widget>[
-          SizedBox(width: 100.0, height: 100.0),
+          SizedBox.square(dimension: 100.0),
         ],
       ),
     );
@@ -164,7 +164,7 @@ void main() {
       Flow(
         delegate: OpacityFlowDelegate(opacity),
         children: const <Widget>[
-          SizedBox(width: 100.0, height: 100.0),
+          SizedBox.square(dimension: 100.0),
         ],
       ),
     );
@@ -179,7 +179,7 @@ void main() {
           delegate: OpacityFlowDelegate(opacity),
           clipBehavior: clip,
           children: const <Widget>[
-            SizedBox(width: 100.0, height: 100.0),
+            SizedBox.square(dimension: 100.0),
           ],
         ),
       );
@@ -193,7 +193,7 @@ void main() {
       Flow.unwrapped(
         delegate: OpacityFlowDelegate(opacity),
         children: const <Widget>[
-          SizedBox(width: 100.0, height: 100.0),
+          SizedBox.square(dimension: 100.0),
         ],
       ),
     );
@@ -208,7 +208,7 @@ void main() {
           delegate: OpacityFlowDelegate(opacity),
           clipBehavior: clip,
           children: const <Widget>[
-            SizedBox(width: 100.0, height: 100.0),
+            SizedBox.square(dimension: 100.0),
           ],
         ),
       );

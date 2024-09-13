@@ -42,10 +42,7 @@ void main() {
       home: Center(
         child: Semantics(
           label: 'Hello!',
-          child: const SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
+          child: const SizedBox.square(dimension: 10),
         ),
       ),
     ));

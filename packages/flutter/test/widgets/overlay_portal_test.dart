@@ -176,7 +176,7 @@ void main() {
                           return OverlayPortal(
                             controller: controller1,
                             overlayChildBuilder: (BuildContext context) {
-                              return Semantics(label: msg, child: const SizedBox(width: 100, height: 100));
+                              return Semantics(label: msg, child: const SizedBox.square(dimension: 100));
                             },
                             child: const Text('overlay child'),
                           );

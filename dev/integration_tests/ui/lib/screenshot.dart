@@ -75,7 +75,7 @@ List<Widget> _buildCells(double epsilon) {
         color: const Color(0xffff0102),
         borderRadius: BorderRadius.all(Radius.circular(i.toDouble() + epsilon)),
         elevation: 5.0,
-        child: const SizedBox(height: 10.0, width: 10.0),
+        child: const SizedBox.square(dimension: 10.0),
       ),
     );
   });

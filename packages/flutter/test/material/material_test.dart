@@ -30,9 +30,8 @@ Widget buildMaterial({
   Color color = const Color(0xFF0000FF),
 }) {
   return Center(
-    child: SizedBox(
-      height: 100.0,
-      width: 100.0,
+    child: SizedBox.square(
+      dimension: 100.0,
       child: Material(
         color: color,
         shadowColor: shadowColor,
@@ -139,9 +138,8 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Column(
           children: <Widget>[
-            SizedBox(
-              width: 150.0,
-              height: 150.0,
+            SizedBox.square(
+              dimension: 150.0,
               child: CustomPaint(
                 painter: PaintRecorder(log),
               ),
@@ -160,9 +158,8 @@ void main() {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: 100.0,
-                      height: 100.0,
+                    SizedBox.square(
+                      dimension: 100.0,
                       child: CustomPaint(
                         painter: PaintRecorder(log),
                       ),
@@ -193,9 +190,8 @@ void main() {
   testWidgets('Shadow color defaults', (WidgetTester tester) async {
     Widget buildWithShadow(Color? shadowColor) {
       return Center(
-        child: SizedBox(
-          height: 100.0,
-          width: 100.0,
+        child: SizedBox.square(
+          dimension: 100.0,
           child: Material(
             shadowColor: shadowColor,
             elevation: 10,
@@ -556,7 +552,7 @@ void main() {
           Material(
             key: materialKey,
             type: MaterialType.transparency,
-            child: const SizedBox(width: 100.0, height: 100.0),
+            child: const SizedBox.square(dimension: 100.0),
           ),
       );
 
@@ -571,7 +567,7 @@ void main() {
           key: materialKey,
           type: MaterialType.transparency,
           clipBehavior: Clip.antiAlias,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -586,7 +582,7 @@ void main() {
           type: MaterialType.transparency,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           clipBehavior: Clip.antiAlias,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -606,7 +602,7 @@ void main() {
           type: MaterialType.transparency,
           shape: const StadiumBorder(),
           clipBehavior: Clip.antiAlias,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -626,7 +622,7 @@ void main() {
           type: MaterialType.transparency,
           shape: shape,
           clipBehavior: Clip.antiAlias,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         );
       }
       final Widget material = buildMaterial();
@@ -688,7 +684,7 @@ void main() {
       await tester.pumpWidget(
         Material(
           key: materialKey,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -706,7 +702,7 @@ void main() {
           key: materialKey,
           borderRadius: const BorderRadius.all(Radius.circular(5.0)),
           elevation: 1.0,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -724,7 +720,7 @@ void main() {
           key: materialKey,
           shape: const StadiumBorder(),
           elevation: 1.0,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -740,7 +736,7 @@ void main() {
         Material(
           key: materialKey,
           type: MaterialType.card,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -759,7 +755,7 @@ void main() {
           type: MaterialType.card,
           borderRadius: const BorderRadius.all(Radius.circular(5.0)),
           elevation: 5.0,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -778,7 +774,7 @@ void main() {
           type: MaterialType.card,
           shape: const StadiumBorder(),
           elevation: 5.0,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -795,7 +791,7 @@ void main() {
           key: materialKey,
           type: MaterialType.circle,
           color: const Color(0xFF0000FF),
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -812,7 +808,7 @@ void main() {
           key: materialKey,
           type: MaterialType.button,
           color: const Color(0xFF0000FF),
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -832,7 +828,7 @@ void main() {
           color: const Color(0xFF0000FF),
           borderRadius: const BorderRadius.all(Radius.circular(6.0)),
           elevation: 4.0,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -852,7 +848,7 @@ void main() {
           color: const Color(0xFF0000FF),
           shape: const StadiumBorder(),
           elevation: 4.0,
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -877,7 +873,7 @@ void main() {
               color: Color(0xFF0000FF),
             ),
           ),
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -897,7 +893,7 @@ void main() {
               color: Color(0xFF0000FF),
             ),
           ),
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -912,7 +908,7 @@ void main() {
           key: materialKey,
           type: MaterialType.transparency,
           shape: const CircleBorder(),
-          child: const SizedBox(width: 100.0, height: 100.0),
+          child: const SizedBox.square(dimension: 100.0),
         ),
       );
 
@@ -1128,7 +1124,7 @@ void main() {
   testWidgets('$InkFeature dispatches memory events', (WidgetTester tester) async {
     await tester.pumpWidget(
       const Material(
-        child: SizedBox(width: 20, height: 20),
+        child: SizedBox.square(dimension: 20),
       ),
     );
 

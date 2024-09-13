@@ -25,9 +25,8 @@ class HeavyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      height: 200,
+    return SizedBox.square(
+      dimension: 200,
       child: Text('$index: ${_weight.length}'),
     );
   }

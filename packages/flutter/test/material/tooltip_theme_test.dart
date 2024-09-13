@@ -946,10 +946,7 @@ void main() {
           child: const Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -989,10 +986,7 @@ void main() {
           child: Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -1030,10 +1024,7 @@ void main() {
           child: const Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -1063,10 +1054,7 @@ void main() {
           child: Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -1106,10 +1094,7 @@ void main() {
           child: const Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -1147,10 +1132,7 @@ void main() {
           child: Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-              ),
+              child: SizedBox.square(dimension: 100),
             ),
           ),
         ),
@@ -1184,7 +1166,7 @@ void main() {
           child: const Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(width: 100.0, height: 100.0),
+              child: SizedBox.square(dimension: 100.0),
             ),
           ),
         ),
@@ -1207,7 +1189,7 @@ void main() {
           child: Center(
             child: Tooltip(
               message: tooltipText,
-              child: SizedBox(width: 100.0, height: 100.0),
+              child: SizedBox.square(dimension: 100.0),
             ),
           ),
         ),

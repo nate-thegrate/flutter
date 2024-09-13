@@ -110,16 +110,14 @@ void main() {
       textDirection: TextDirection.ltr,
       child: Stack(
         children: <Widget>[
-          SizedBox(
-            width: 50.0,
-            height: 50.0,
+          SizedBox.square(
+            dimension: 50.0,
             child: MouseRegion(
               onEnter: (_) => onEnterRegion1 = true,
             ),
           ),
-          SizedBox(
-            width: 50.0,
-            height: 50.0,
+          SizedBox.square(
+            dimension: 50.0,
             child: MouseRegion(
               opaque: false,
               hitTestBehavior: HitTestBehavior.deferToChild,
@@ -150,16 +148,14 @@ void main() {
       textDirection: TextDirection.ltr,
       child: Stack(
         children: <Widget>[
-          SizedBox(
-            width: 50.0,
-            height: 50.0,
+          SizedBox.square(
+            dimension: 50.0,
             child: MouseRegion(
               onEnter: (_) => onEnterRegion1 = true,
             ),
           ),
-          SizedBox(
-            width: 50.0,
-            height: 50.0,
+          SizedBox.square(
+            dimension: 50.0,
             child: MouseRegion(
               hitTestBehavior: HitTestBehavior.translucent,
               onEnter: (_) => onEnterRegion2 = true,
@@ -281,10 +277,7 @@ void main() {
     PointerExitEvent? exit;
     await tester.pumpWidget(Center(
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -307,10 +300,7 @@ void main() {
     PointerExitEvent? exit;
     await tester.pumpWidget(Center(
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -344,10 +334,7 @@ void main() {
     PointerHoverEvent? move;
     PointerExitEvent? exit;
     await tester.pumpWidget(const Center(
-      child: SizedBox(
-        width: 100.0,
-        height: 100.0,
-      ),
+      child: SizedBox.square(dimension: 100),
     ));
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer(location: Offset.zero);
@@ -358,10 +345,7 @@ void main() {
     expect(exit, isNull);
     await tester.pumpWidget(Center(
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -381,10 +365,7 @@ void main() {
     PointerExitEvent? exit;
     await tester.pumpWidget(Center(
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -398,10 +379,7 @@ void main() {
     enter = null;
     exit = null;
     await tester.pumpWidget(const Center(
-      child: SizedBox(
-        width: 100.0,
-        height: 100.0,
-      ),
+      child: SizedBox.square(dimension: 100),
     ));
     expect(enter, isNull);
     expect(move, isNull);
@@ -415,10 +393,7 @@ void main() {
     await tester.pumpWidget(Container(
       alignment: Alignment.topLeft,
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -433,10 +408,7 @@ void main() {
     await tester.pumpWidget(Container(
       alignment: Alignment.center,
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -457,10 +429,7 @@ void main() {
     await tester.pumpWidget(Container(
       alignment: Alignment.center,
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -475,10 +444,7 @@ void main() {
     await tester.pumpWidget(Container(
       alignment: Alignment.topLeft,
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) => enter = details,
         onHover: (PointerHoverEvent details) => move = details,
         onExit: (PointerExitEvent details) => exit = details,
@@ -625,20 +591,14 @@ void main() {
         children: <Widget>[
           MouseRegion(
             key: key1,
-            child: const SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: const SizedBox.square(dimension: 100),
             onEnter: (PointerEnterEvent details) => enter1.add(details),
             onHover: (PointerHoverEvent details) => move1.add(details),
             onExit: (PointerExitEvent details) => exit1.add(details),
           ),
           MouseRegion(
             key: key2,
-            child: const SizedBox(
-              width: 100.0,
-              height: 100.0,
-            ),
+            child: const SizedBox.square(dimension: 100),
             onEnter: (PointerEnterEvent details) => enter2.add(details),
             onHover: (PointerHoverEvent details) => move2.add(details),
             onExit: (PointerExitEvent details) => exit2.add(details),
@@ -694,7 +654,7 @@ void main() {
     await tester.pumpWidget(const _Scaffold(
       topLeft: MouseRegion(
         cursor: SystemMouseCursors.text,
-        child: SizedBox(width: 10, height: 10),
+        child: SizedBox.square(dimension: 10),
       ),
     ));
 
@@ -994,10 +954,7 @@ void main() {
           onEnter: (PointerEnterEvent e) => enter.add(e),
           onHover: (PointerHoverEvent e) => hover.add(e),
           onExit: (PointerExitEvent e) => exit.add(e),
-          child: const SizedBox(
-            height: 100.0,
-            width: 100.0,
-          ),
+          child: const SizedBox.square(dimension: 100),
         ),
       ),
     );
@@ -1191,9 +1148,8 @@ void main() {
               height: 100,
               width: 10,
               alignment: moved ? Alignment.topLeft : Alignment.bottomLeft,
-              child: SizedBox(
-                height: 10,
-                width: 10,
+              child: SizedBox.square(
+                dimension: 10,
                 child: HoverClient(
                   onHover: (bool value) {
                     setState(() { hovered = value; });
@@ -1267,9 +1223,8 @@ void main() {
             onEnter: (PointerEnterEvent e) { addLog('enterA'); },
             onHover: (PointerHoverEvent e) { addLog('hoverA'); },
             onExit: (PointerExitEvent e) { addLog('exitA'); },
-            child: SizedBox(
-              width: 150,
-              height: 150,
+            child: SizedBox.square(
+              dimension: 150,
               child: Stack(
                 children: <Widget>[
                   Positioned(
@@ -1433,10 +1388,7 @@ void main() {
                 onEnter: (_) { bottomRegionIsHovered = true; },
                 onHover: (_) { bottomRegionIsHovered = true; },
                 onExit: (_) { bottomRegionIsHovered = true; },
-                child: const SizedBox(
-                  width: 10,
-                  height: 10,
-                ),
+                child: const SizedBox.square(dimension: 10),
               ),
             ),
             const MouseRegion(),
@@ -1463,9 +1415,8 @@ void main() {
     await gesture.addPointer(location: const Offset(20, 20));
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           onEnter: (_) { logs.add('enter1'); },
           onHover: (_) { logs.add('hover1'); },
@@ -1484,9 +1435,8 @@ void main() {
     logs.clear();
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           onEnter: (_) { logs.add('enter2'); },
           onHover: (_) { logs.add('hover2'); },
@@ -1505,9 +1455,8 @@ void main() {
 
     // Compare: It repaints if the MouseRegion is deactivated.
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           opaque: false,
           child: CustomPaint(
@@ -1529,9 +1478,8 @@ void main() {
     void handlePaintChild() { logs.add('paint'); }
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           onHover: handleHover,
           child: CustomPaint(painter: _DelegatedPainter(onPaint: handlePaintChild)),
@@ -1546,9 +1494,8 @@ void main() {
     logs.clear();
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           opaque: false,
           // Dummy callback so that MouseRegion stays affective after opaque
@@ -1573,9 +1520,8 @@ void main() {
     void onPaintChild() { logPaints.add('paint'); }
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           cursor: SystemMouseCursors.forbidden,
           onEnter: (_) { logEnters.add('enter'); },
@@ -1592,9 +1538,8 @@ void main() {
     logEnters.clear();
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           cursor: SystemMouseCursors.text,
           onEnter: (_) { logEnters.add('enter'); },
@@ -1620,9 +1565,8 @@ void main() {
     void onPaintChild() { logPaints.add('paint'); }
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           cursor: SystemMouseCursors.forbidden,
           child: MouseRegion(
@@ -1642,9 +1586,8 @@ void main() {
     logEnters.clear();
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           cursor: SystemMouseCursors.forbidden,
           child: MouseRegion(
@@ -1662,9 +1605,8 @@ void main() {
     logEnters.clear();
 
     await tester.pumpWidget(_Scaffold(
-      topLeft: SizedBox(
-        height: 10,
-        width: 10,
+      topLeft: SizedBox.square(
+        dimension: 10,
         child: MouseRegion(
           cursor: SystemMouseCursors.forbidden,
           child: MouseRegion(
@@ -1703,9 +1645,8 @@ void main() {
         height: 50,
         child: Row(
           children: <Widget>[
-            SizedBox(
-              width: 50,
-              height: 50,
+            SizedBox.square(
+              dimension: 50,
               child: MouseRegion(
                 key: key,
                 onEnter: (_) { logEnters.add('enter'); },
@@ -1713,9 +1654,8 @@ void main() {
                 cursor: SystemMouseCursors.click,
               ),
             ),
-            const SizedBox(
-              width: 50,
-              height: 50,
+            const SizedBox.square(
+              dimension: 50,
             ),
           ],
         ),
@@ -1819,10 +1759,7 @@ void main() {
   testWidgets('No new frames are scheduled when mouse moves without triggering callbacks', (WidgetTester tester) async {
     await tester.pumpWidget(Center(
       child: MouseRegion(
-        child: const SizedBox(
-          width: 100.0,
-          height: 100.0,
-        ),
+        child: const SizedBox.square(dimension: 100),
         onEnter: (PointerEnterEvent details) {},
         onHover: (PointerHoverEvent details) {},
         onExit: (PointerExitEvent details) {},
@@ -1879,10 +1816,7 @@ void main() {
           onEnter: (_) => onEnter = true,
           onExit: (_) => onExit = true,
           onHover: (_) => onHover = true,
-          child: const SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
+          child: const SizedBox.square(dimension: 10),
         ),
       ),
     ));

@@ -33,24 +33,21 @@ class RelayoutBoundariesCrashState extends State<RelayoutBoundariesCrash> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
+      child: SizedBox.square(
         // when _mode is true, constraints are tight, otherwise constraints are loose
-        width: !_mode ? 100.0 : null,
-        height: !_mode ? 100.0 : null,
+        dimension: !_mode ? 100.0 : null,
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             // Make the outer SizedBoxes relayout without making the Placeholders relayout.
             final double dimension = !_mode ? 10.0 : 20.0;
             return Column(
               children: <Widget>[
-                SizedBox(
-                  width: dimension,
-                  height: dimension,
+                SizedBox.square(
+                  dimension: dimension,
                   child: const Placeholder(),
                 ),
-                SizedBox(
-                  width: dimension,
-                  height: dimension,
+                SizedBox.square(
+                  dimension: dimension,
                   child: const Placeholder(),
                 ),
               ],

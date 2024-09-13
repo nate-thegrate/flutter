@@ -118,7 +118,7 @@ void main() {
                     focusNode: outer1,
                     child: Focus(
                       focusNode: inner1,
-                      child: const SizedBox(width: 10, height: 10),
+                      child: const SizedBox.square(dimension: 10),
                     ),
                   ),
                 ),
@@ -131,7 +131,7 @@ void main() {
                       padding: const EdgeInsets.all(5),
                       child: Focus(
                         focusNode: inner2,
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                     ),
                   ),
@@ -174,7 +174,7 @@ void main() {
                     focusNode: outer1,
                     child: Focus(
                       focusNode: inner1,
-                      child: const SizedBox(width: 10, height: 10),
+                      child: const SizedBox.square(dimension: 10),
                     ),
                   ),
                 ),
@@ -183,7 +183,7 @@ void main() {
                     focusNode: outer2,
                     child: Focus(
                       focusNode: inner2,
-                      child: const SizedBox(width: 10, height: 10),
+                      child: const SizedBox.square(dimension: 10),
                     ),
                   ),
                 ),
@@ -565,17 +565,16 @@ void main() {
               children: <Widget>[
                 Focus(
                   focusNode: node1,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
-                SizedBox(
-                  width: 100,
-                  height: 100,
+                SizedBox.square(
+                  dimension: 100,
                   child: Navigator(
                     pages: <Page<void>>[
                       MaterialPage<void>(
                         child: Focus(
                           focusNode: node2,
-                          child: const SizedBox(width: 100, height: 100),
+                          child: const SizedBox.square(dimension: 100),
                         ),
                       ),
                     ],
@@ -584,7 +583,7 @@ void main() {
                 ),
                 Focus(
                   focusNode: node3,
-                  child: const SizedBox(width: 100, height: 100),
+                  child: const SizedBox.square(dimension: 100),
                 ),
               ],
             ),
@@ -931,15 +930,15 @@ void main() {
                     child: Row(children: <Widget>[
                       Focus(
                         focusNode: nodes[0],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                       Focus(
                         focusNode: nodes[1],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                       Focus(
                         focusNode: nodes[2],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                     ]),
                   ),
@@ -950,21 +949,21 @@ void main() {
                         textDirection: TextDirection.rtl,
                         child: Focus(
                           focusNode: nodes[3],
-                          child: const SizedBox(width: 10, height: 10),
+                          child: const SizedBox.square(dimension: 10),
                         ),
                       ),
                       Directionality(
                         textDirection: TextDirection.rtl,
                         child: Focus(
                           focusNode: nodes[4],
-                          child: const SizedBox(width: 10, height: 10),
+                          child: const SizedBox.square(dimension: 10),
                         ),
                       ),
                       Directionality(
                         textDirection: TextDirection.ltr,
                         child: Focus(
                           focusNode: nodes[5],
-                          child: const SizedBox(width: 10, height: 10),
+                          child: const SizedBox.square(dimension: 10),
                         ),
                       ),
                     ]),
@@ -974,28 +973,28 @@ void main() {
                       textDirection: TextDirection.ltr,
                       child: Focus(
                         focusNode: nodes[6],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                     ),
                     Directionality(
                       textDirection: TextDirection.rtl,
                       child: Focus(
                         focusNode: nodes[7],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                     ),
                     Directionality(
                       textDirection: TextDirection.rtl,
                       child: Focus(
                         focusNode: nodes[8],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                     ),
                     Directionality(
                       textDirection: TextDirection.ltr,
                       child: Focus(
                         focusNode: nodes[9],
-                        child: const SizedBox(width: 10, height: 10),
+                        child: const SizedBox.square(dimension: 10),
                       ),
                     ),
                   ]),
@@ -1048,7 +1047,7 @@ void main() {
                 // Boxes that all have the same upper left origin corner.
                 return Focus(
                   focusNode: nodes[index],
-                  child: SizedBox(width: 10.0 * (index + 1), height: 10.0 * (index + 1)),
+                  child: SizedBox.square(dimension: 10.0 * (index + 1)),
                 );
               }),
             ),
@@ -1075,7 +1074,7 @@ void main() {
               children: List<Widget>.generate(nodeCount, (int index) {
                 return Focus(
                   focusNode: nodes[index],
-                  child: SizedBox(width: 10.0 * (index + 1), height: 10.0 * (index + 1)),
+                  child: SizedBox.square(dimension: 10.0 * (index + 1)),
                 );
               }),
             ),
@@ -1235,7 +1234,7 @@ void main() {
                   nodeCount,
                   (int index) => Focus(
                     focusNode: nodes[index],
-                    child: const SizedBox(width: 10, height: 10),
+                    child: const SizedBox.square(dimension: 10),
                   ),
                 ),
               ),
@@ -1282,7 +1281,7 @@ void main() {
                     order: NumericFocusOrder(nodeCount - index.toDouble()),
                     child: Focus(
                       focusNode: nodes[index],
-                      child: const SizedBox(width: 10, height: 10),
+                      child: const SizedBox.square(dimension: 10),
                     ),
                   ),
                 ),
@@ -1332,7 +1331,7 @@ void main() {
                     order: LexicalFocusOrder(keys[index]),
                     child: Focus(
                       focusNode: nodes[index],
-                      child: const SizedBox(width: 10, height: 10),
+                      child: const SizedBox.square(dimension: 10),
                     ),
                   ),
                 ),
@@ -1388,21 +1387,21 @@ void main() {
                             order: const NumericFocusOrder(9),
                             child: Focus(
                               focusNode: nodes[9],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const NumericFocusOrder(8),
                             child: Focus(
                               focusNode: nodes[8],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const NumericFocusOrder(7),
                             child: Focus(
                               focusNode: nodes[7],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                         ]),
@@ -1417,21 +1416,21 @@ void main() {
                             order: const NumericFocusOrder(4),
                             child: Focus(
                               focusNode: nodes[4],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const NumericFocusOrder(5),
                             child: Focus(
                               focusNode: nodes[5],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const NumericFocusOrder(6),
                             child: Focus(
                               focusNode: nodes[6],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                         ]),
@@ -1446,28 +1445,28 @@ void main() {
                             order: const LexicalFocusOrder('D'),
                             child: Focus(
                               focusNode: nodes[3],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const LexicalFocusOrder('C'),
                             child: Focus(
                               focusNode: nodes[2],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const LexicalFocusOrder('B'),
                             child: Focus(
                               focusNode: nodes[1],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                           FocusTraversalOrder(
                             order: const LexicalFocusOrder('A'),
                             child: Focus(
                               focusNode: nodes[0],
-                              child: const SizedBox(width: 10, height: 10),
+                              child: const SizedBox.square(dimension: 10),
                             ),
                           ),
                         ]),
@@ -1637,12 +1636,12 @@ void main() {
                       Focus(
                         debugLabel: 'upperLeft',
                         onFocusChange: (bool focus) => focusUpperLeft = focus,
-                        child: SizedBox(width: 100, height: 100, key: upperLeftKey),
+                        child: SizedBox.square(dimension: 100, key: upperLeftKey),
                       ),
                       Focus(
                         debugLabel: 'upperRight',
                         onFocusChange: (bool focus) => focusUpperRight = focus,
-                        child: SizedBox(width: 100, height: 100, key: upperRightKey),
+                        child: SizedBox.square(dimension: 100, key: upperRightKey),
                       ),
                     ],
                   ),
@@ -1651,12 +1650,12 @@ void main() {
                       Focus(
                         debugLabel: 'lowerLeft',
                         onFocusChange: (bool focus) => focusLowerLeft = focus,
-                        child: SizedBox(width: 100, height: 100, key: lowerLeftKey),
+                        child: SizedBox.square(dimension: 100, key: lowerLeftKey),
                       ),
                       Focus(
                         debugLabel: 'lowerRight',
                         onFocusChange: (bool focus) => focusLowerRight = focus,
-                        child: SizedBox(width: 100, height: 100, key: lowerRightKey),
+                        child: SizedBox.square(dimension: 100, key: lowerRightKey),
                       ),
                     ],
                   ),
@@ -1768,7 +1767,7 @@ void main() {
           debugLabel: '[$index]',
           focusNode: nodes[index],
           onFocusChange: (bool isFocused) => focus[index] = isFocused,
-          child: const SizedBox(width: 100, height: 100),
+          child: const SizedBox.square(dimension: 100),
         );
       }
 
@@ -2219,11 +2218,11 @@ void main() {
                     children: <Widget>[
                       Focus(
                         debugLabel: 'upperLeft',
-                        child: SizedBox(width: 100, height: 100, key: upperLeftKey),
+                        child: SizedBox.square(dimension: 100, key: upperLeftKey),
                       ),
                       Focus(
                         debugLabel: 'upperRight',
-                        child: SizedBox(width: 100, height: 100, key: upperRightKey),
+                        child: SizedBox.square(dimension: 100, key: upperRightKey),
                       ),
                     ],
                   ),
@@ -2231,11 +2230,11 @@ void main() {
                     children: <Widget>[
                       Focus(
                         debugLabel: 'lowerLeft',
-                        child: SizedBox(width: 100, height: 100, key: lowerLeftKey),
+                        child: SizedBox.square(dimension: 100, key: lowerLeftKey),
                       ),
                       const Focus(
                         debugLabel: 'lowerRight',
-                        child: SizedBox(width: 100, height: 100),
+                        child: SizedBox.square(dimension: 100),
                       ),
                     ],
                   ),
@@ -2276,9 +2275,9 @@ void main() {
           debugLabel: 'Scope',
           child: Column(
             children: <Widget>[
-              Focus(focusNode: focusTop, child: const SizedBox(width: 100, height: 100)),
-              Focus(focusNode: focusCenter, child: const SizedBox(width: 100, height: 100)),
-              Focus(focusNode: focusBottom, child: const SizedBox(width: 100, height: 100)),
+              Focus(focusNode: focusTop, child: const SizedBox.square(dimension: 100)),
+              Focus(focusNode: focusCenter, child: const SizedBox.square(dimension: 100)),
+              Focus(focusNode: focusBottom, child: const SizedBox.square(dimension: 100)),
             ],
           ),
         ),
@@ -2300,8 +2299,8 @@ void main() {
           debugLabel: 'Scope',
           child: Column(
             children: <Widget>[
-              Focus(focusNode: focusTop, child: const SizedBox(width: 100, height: 100)),
-              Focus(focusNode: focusBottom, child: const SizedBox(width: 100, height: 100)),
+              Focus(focusNode: focusTop, child: const SizedBox.square(dimension: 100)),
+              Focus(focusNode: focusBottom, child: const SizedBox.square(dimension: 100)),
             ],
           ),
         ),
@@ -2337,11 +2336,11 @@ void main() {
                           Focus(
                             autofocus: true,
                             debugLabel: 'upperLeft',
-                            child: SizedBox(width: 100, height: 100, key: upperLeftKey),
+                            child: SizedBox.square(dimension: 100, key: upperLeftKey),
                           ),
                           Focus(
                             debugLabel: 'upperRight',
-                            child: SizedBox(width: 100, height: 100, key: upperRightKey),
+                            child: SizedBox.square(dimension: 100, key: upperRightKey),
                           ),
                         ],
                       ),
@@ -2349,11 +2348,11 @@ void main() {
                         children: <Widget>[
                           Focus(
                             debugLabel: 'lowerLeft',
-                            child: SizedBox(width: 100, height: 100, key: lowerLeftKey),
+                            child: SizedBox.square(dimension: 100, key: lowerLeftKey),
                           ),
                           Focus(
                             debugLabel: 'lowerRight',
-                            child: SizedBox(width: 100, height: 100, key: lowerRightKey),
+                            child: SizedBox.square(dimension: 100, key: lowerRightKey),
                           ),
                         ],
                       ),
@@ -2426,15 +2425,15 @@ void main() {
                             autofocus: true,
                             skipTraversal: true,
                             debugLabel: '1',
-                            child: SizedBox(width: 100, height: 100, key: key1),
+                            child: SizedBox.square(dimension: 100, key: key1),
                           ),
                           Focus(
                             debugLabel: '2',
-                            child: SizedBox(width: 100, height: 100, key: key2),
+                            child: SizedBox.square(dimension: 100, key: key2),
                           ),
                           Focus(
                             debugLabel: '3',
-                            child: SizedBox(width: 100, height: 100, key: key3),
+                            child: SizedBox.square(dimension: 100, key: key3),
                           ),
                         ],
                       ),
@@ -2713,9 +2712,8 @@ void main() {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      SizedBox(
-                        width: 100,
-                        height: 100,
+                      SizedBox.square(
+                        dimension: 100,
                         child: EditableText(
                           autofocus: true,
                           key: upperLeftKey,
@@ -2726,9 +2724,8 @@ void main() {
                           style: const TextStyle(),
                         ),
                       ),
-                      SizedBox(
-                        width: 100,
-                        height: 100,
+                      SizedBox.square(
+                        dimension: 100,
                         child: EditableText(
                           key: upperRightKey,
                           controller: controller2,
@@ -2742,9 +2739,8 @@ void main() {
                   ),
                   Row(
                     children: <Widget>[
-                      SizedBox(
-                        width: 100,
-                        height: 100,
+                      SizedBox.square(
+                        dimension: 100,
                         child: EditableText(
                           key: lowerLeftKey,
                           controller: controller3,
@@ -2754,9 +2750,8 @@ void main() {
                           style: const TextStyle(),
                         ),
                       ),
-                      SizedBox(
-                        width: 100,
-                        height: 100,
+                      SizedBox.square(
+                        dimension: 100,
                         child: EditableText(
                           key: lowerRightKey,
                           controller: controller4,

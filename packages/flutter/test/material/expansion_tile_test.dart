@@ -439,7 +439,7 @@ void main() {
             child: ExpansionTile(
               title: Text('title'),
               children: <Widget>[
-                SizedBox(height: 100, width: 100),
+                SizedBox.square(dimension: 100),
               ],
             ),
           ),
@@ -470,7 +470,7 @@ void main() {
               title: Text('title'),
               childrenPadding: EdgeInsets.fromLTRB(10, 8, 12, 4),
               children: <Widget>[
-                SizedBox(height: 100, width: 100),
+                SizedBox.square(dimension: 100),
               ],
             ),
           ),
@@ -505,7 +505,7 @@ void main() {
           backgroundColor: backgroundColor,
           collapsedBackgroundColor: collapsedBackgroundColor,
           children: <Widget>[
-            SizedBox(height: 100, width: 100),
+            SizedBox.square(dimension: 100),
           ],
         ),
       ),
@@ -539,7 +539,7 @@ void main() {
           title: TestText('title'),
           trailing: TestIcon(),
           children: <Widget>[
-            SizedBox(height: 100, width: 100),
+            SizedBox.square(dimension: 100),
           ],
         ),
       ),
@@ -576,7 +576,7 @@ void main() {
           title: TestText('title'),
           trailing: TestIcon(),
           children: <Widget>[
-            SizedBox(height: 100, width: 100),
+            SizedBox.square(dimension: 100),
           ],
         ),
       ),
@@ -767,7 +767,7 @@ void main() {
           child: ExpansionTile(
             title: Text('Title'),
             children: <Widget>[
-              SizedBox(height: 100, width: 100),
+              SizedBox.square(dimension: 100),
             ],
           ),
         ),
@@ -807,7 +807,7 @@ void main() {
           child: ExpansionTile(
             title: Text('Title'),
             children: <Widget>[
-              SizedBox(height: 100, width: 100),
+              SizedBox.square(dimension: 100),
             ],
           ),
         ),
@@ -955,7 +955,7 @@ void main() {
                   title: const TestText('title'),
                   trailing: const TestIcon(),
                   children: const <Widget>[
-                    SizedBox(height: 100, width: 100),
+                    SizedBox.square(dimension: 100),
                   ],
                 ),
                 // This button is used to update the ExpansionTile properties.
@@ -1029,7 +1029,7 @@ void main() {
                   title: const TestText('title'),
                   trailing: const TestIcon(),
                   children: const <Widget>[
-                    SizedBox(height: 100, width: 100),
+                    SizedBox.square(dimension: 100),
                   ],
                 ),
                 // This button is used to update the ExpansionTile properties.
@@ -1097,7 +1097,7 @@ void main() {
               expansionAnimationStyle: animationStyle,
               title: const TestText('title'),
               children: const <Widget>[
-                SizedBox(height: 100, width: 100),
+                SizedBox.square(dimension: 100),
               ],
             ),
           ),
@@ -1226,7 +1226,7 @@ void main() {
               title: TestText('title'),
               trailing: TestIcon(),
               children: <Widget>[
-                SizedBox(height: 100, width: 100),
+                SizedBox.square(dimension: 100),
               ],
             ),
           ),
@@ -1303,7 +1303,7 @@ void main() {
             title: TestText('title'),
             trailing: TestIcon(),
             children: <Widget>[
-              SizedBox(height: 100, width: 100),
+              SizedBox.square(dimension: 100),
             ],
           ),
         ),
@@ -1349,7 +1349,7 @@ void main() {
                 title: TestText('title'),
                 trailing: TestIcon(),
                 children: <Widget>[
-                  SizedBox(height: 100, width: 100),
+                  SizedBox.square(dimension: 100),
                 ],
               ),
             ),

@@ -1479,9 +1479,8 @@ class _DragItemProxy extends StatelessWidget {
           return Positioned(
             left: effectivePosition.dx,
             top: effectivePosition.dy,
-            child: SizedBox(
-              width: size.width,
-              height: size.height,
+            child: SizedBox.fromSize(
+              size: size,
               child: OverflowBox(
                 minWidth: constraints.minWidth,
                 minHeight: constraints.minHeight,

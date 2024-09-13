@@ -423,9 +423,8 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Align(
           alignment: Alignment.topLeft,
-          child: SizedBox(
-            width: 200.0,
-            height: 200.0,
+          child: SizedBox.square(
+            dimension: 200.0,
             child: CupertinoSegmentedControl<int>(
               children: children,
               onValueChanged: (int newValue) { },
@@ -941,7 +940,7 @@ void main() {
     children[0] = GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (TapDownDetails details) { tapDownDetails = details; },
-      child: const SizedBox(width: 200, height: 200),
+      child: const SizedBox.square(dimension: 200),
     );
     children[1] = const Text('Child 2');
 

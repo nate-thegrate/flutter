@@ -53,15 +53,13 @@ void main() {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 100.0,
-            width: 100.0,
+          child: SizedBox.square(
+            dimension: 100.0,
             child: SingleChildScrollView(
               controller: controller,
               scrollDirection: axis,
-              child: const SizedBox(
-                width: 200,
-                height: 200,
+              child: const SizedBox.square(
+                dimension: 200,
                 child: SizedBox.shrink(),
               ),
             ),
@@ -608,9 +606,8 @@ void main() {
 
     final List<List<Widget>> children = List<List<Widget>>.generate(10, (int y) {
       return List<Widget>.generate(10, (int x) {
-        return SizedBox(
-          height: 100.0,
-          width: 100.0,
+        return SizedBox.square(
+          dimension: 100.0,
           child: Text('$x,$y'),
         );
       });
@@ -638,9 +635,8 @@ void main() {
       Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 200.0,
-            width: 200.0,
+          child: SizedBox.square(
+            dimension: 200.0,
             child: ListView(
               controller: controllerY,
               children: List<Widget>.generate(10, (int y) {
@@ -985,9 +981,8 @@ void main() {
       Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 200.0,
-            width: 200.0,
+          child: SizedBox.square(
+            dimension: 200.0,
             child: ListView(
               controller: controllerY,
               children: <Widget>[
@@ -1037,9 +1032,8 @@ void main() {
       Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 200.0,
-            width: 200.0,
+          child: SizedBox.square(
+            dimension: 200.0,
             child: ListView(
               controller: controllerY,
               children: <Widget>[
@@ -1227,9 +1221,8 @@ void main() {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 400.0,
-            width: 400.0,
+          child: SizedBox.square(
+            dimension: 400.0,
             child: CustomScrollView(
               scrollDirection: axis,
               center: reversed ? const Key('19') : null,
@@ -1239,9 +1232,8 @@ void main() {
                   ? floatingHeader
                   : SliverToBoxAdapter(
                     key: (i == 19) ? const Key('19') : null,
-                    child: SizedBox(
-                      height: 300.0,
-                      width: 300,
+                    child: SizedBox.square(
+                      dimension: 300,
                       child: Text('Tile $i'),
                     ),
                   );
@@ -1573,9 +1565,8 @@ void main() {
       return Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
-          child: SizedBox(
-            height: 400.0,
-            width: 400.0,
+          child: SizedBox.square(
+            dimension: 400.0,
             child: CustomScrollView(
               scrollDirection: axis,
               reverse: reverse,
@@ -1947,7 +1938,7 @@ void main() {
             physics: physics,
             scrollDirection: scrollDirection,
             shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) => SizedBox(height: 50, width: 50, child: Text('Item $index')),
+            itemBuilder: (BuildContext context, int index) => SizedBox.square(dimension: 50, child: Text('Item $index')),
             itemCount: 20,
             itemExtent: 50,
           ),
@@ -2265,7 +2256,7 @@ void main() {
       child: CustomScrollView(
         clipBehavior: Clip.none,
         slivers: <Widget>[
-          SliverToBoxAdapter(child: SizedBox(width: 20, height: 20)),
+          SliverToBoxAdapter(child: SizedBox.square(dimension: 20)),
         ]
       ),
     ));
@@ -2282,7 +2273,7 @@ void main() {
       textDirection: TextDirection.ltr,
       child: CustomScrollView(
         slivers: <Widget>[
-          SliverToBoxAdapter(child: SizedBox(width: 20, height: 20)),
+          SliverToBoxAdapter(child: SizedBox.square(dimension: 20)),
         ]
       ),
     ));
