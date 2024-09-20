@@ -398,8 +398,11 @@ String _formatParseWarning(String content) {
 // https://developer.android.com/studio/releases/gradle-plugin#updating-gradle
 // AGP has a minimum version of gradle required but no max starting at
 // AGP version 2.3.0+.
-bool validateGradleAndAgp(Logger logger,
-    {required String? gradleV, required String? agpV}) {
+bool validateGradleAndAgp(
+  Logger logger, {
+  required String? gradleV,
+  required String? agpV,
+}) {
 
   const String oldestSupportedAgpVersion = '3.3.0';
   const String oldestSupportedGradleVersion = '4.10.1';

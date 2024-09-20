@@ -210,23 +210,19 @@ class Feature {
   });
 
   /// Creates a [Feature] that is fully enabled across channels.
-  const Feature.fullyEnabled(
-      {required this.name,
-      this.environmentOverride,
-      this.configSetting,
-      this.extraHelpText})
-      : master = const FeatureChannelSetting(
-          available: true,
-          enabledByDefault: true,
-        ),
-        beta = const FeatureChannelSetting(
-          available: true,
-          enabledByDefault: true,
-        ),
-        stable = const FeatureChannelSetting(
-          available: true,
-          enabledByDefault: true,
-        );
+  const Feature.fullyEnabled({
+    required this.name,
+    this.environmentOverride,
+    this.configSetting,
+    this.extraHelpText,
+  }) : master = _fullyEnabled,
+       beta = _fullyEnabled,
+       stable = _fullyEnabled;
+
+  static const FeatureChannelSetting _fullyEnabled = FeatureChannelSetting(
+    available: true,
+    enabledByDefault: true,
+  );
 
   /// The user visible name for this feature.
   final String name;

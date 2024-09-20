@@ -232,8 +232,7 @@ const double colorEpsilon = 0.004;
 ///
 /// Note: This doesn't recurse into the swatches [Color] type, instead treating
 /// them as [Color]s.
-Matcher isSameColorSwatchAs<T>(ColorSwatch<T> color,
-    {double threshold = colorEpsilon}) {
+Matcher isSameColorSwatchAs<T>(ColorSwatch<T> color, {double threshold = colorEpsilon}) {
   return _ColorSwatchMatcher<T>(color, threshold);
 }
 

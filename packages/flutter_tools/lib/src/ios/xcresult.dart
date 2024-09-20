@@ -40,9 +40,9 @@ class XCResultGenerator {
   /// then stores the useful information the json into an [XCResult] object.
   ///
   /// A`issueDiscarders` can be passed to discard any issues that matches the description of any [XCResultIssueDiscarder] in the list.
-  Future<XCResult> generate(
-      {List<XCResultIssueDiscarder> issueDiscarders =
-          const <XCResultIssueDiscarder>[]}) async {
+  Future<XCResult> generate({
+    List<XCResultIssueDiscarder> issueDiscarders = const <XCResultIssueDiscarder>[],
+  }) async {
     final Version? xcodeVersion = xcode.currentVersion;
     final RunResult result = await processUtils.run(
       <String>[
@@ -282,15 +282,12 @@ enum XCResultIssueType {
 
 /// Discards the [XCResultIssue] that matches any of the matchers.
 class XCResultIssueDiscarder {
-  XCResultIssueDiscarder(
-      {this.typeMatcher,
-      this.subTypeMatcher,
-      this.messageMatcher,
-      this.locationMatcher})
-      : assert(typeMatcher != null ||
-            subTypeMatcher != null ||
-            messageMatcher != null ||
-            locationMatcher != null);
+  XCResultIssueDiscarder({
+    this.typeMatcher,
+    this.subTypeMatcher,
+    this.messageMatcher,
+    this.locationMatcher,
+  }) : assert((typeMatcher ?? subTypeMatcher ?? messageMatcher ?? locationMatcher) != null);
 
   /// The type of the discarder.
   ///
@@ -340,8 +337,10 @@ String? _convertUrlToLocationString(String url) {
 }
 
 // Determine if an `issue` should be discarded based on the `discarder`.
-bool _shouldDiscardIssue(
-    {required XCResultIssue issue, required XCResultIssueDiscarder discarder}) {
+bool _shouldDiscardIssue({
+  required XCResultIssue issue,
+  required XCResultIssueDiscarder discarder,
+}) {
   if (issue.type == discarder.typeMatcher) {
     return true;
   }

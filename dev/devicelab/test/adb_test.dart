@@ -288,10 +288,12 @@ class FakeDevice extends AndroidDevice {
   }
 
   @override
-  Future<String> adb(List<String> arguments,
-      {Map<String, String>? environment,
-      bool silent = false,
-      bool canFail = false}) async {
+  Future<String> adb(
+    List<String> arguments, {
+    Map<String, String>? environment,
+    bool silent = false,
+    bool canFail = false,
+  }) async {
       environment ??= <String, String>{};
     commandLog.add(CommandArgs(
       command: 'adb',

@@ -151,8 +151,8 @@ List<String> signedXcframeworks(String flutterRoot) {
 /// [binariesWithEntitlements], [binariesWithoutEntitlements], and
 /// [unsignedBinaries] lists should be updated accordingly.
 Future<void> verifyExist(
-  String flutterRoot,
-  {@visibleForTesting ProcessManager processManager = const LocalProcessManager()
+  String flutterRoot, {
+  @visibleForTesting ProcessManager processManager = const LocalProcessManager(),
 }) async {
   final List<String> binaryPaths = await findBinaryPaths(
     path.join(flutterRoot, 'bin', 'cache'),
@@ -185,9 +185,9 @@ Future<void> verifyExist(
 
 /// Verify code signatures and entitlements of all binaries in the cache.
 Future<void> verifySignatures(
-  String flutterRoot,
-  {@visibleForTesting ProcessManager processManager = const LocalProcessManager()}
-) async {
+  String flutterRoot, {
+  @visibleForTesting ProcessManager processManager = const LocalProcessManager(),
+}) async {
   final List<String> unsignedFiles = <String>[];
   final List<String> wrongEntitlementBinaries = <String>[];
   final List<String> unexpectedFiles = <String>[];
@@ -280,8 +280,8 @@ Future<void> verifySignatures(
 
 /// Find every binary file in the given [rootDirectory].
 Future<List<String>> findBinaryPaths(
-  String rootDirectory,
-  {@visibleForTesting ProcessManager processManager = const LocalProcessManager()
+  String rootDirectory, {
+  @visibleForTesting ProcessManager processManager = const LocalProcessManager(),
 }) async {
   final List<String> allBinaryPaths = <String>[];
   final io.ProcessResult result = await processManager.run(
@@ -308,9 +308,9 @@ Future<List<String>> findBinaryPaths(
 
 /// Find every xcframework in the given [rootDirectory].
 Future<List<String>> findXcframeworksPaths(
-    String rootDirectory,
-    {@visibleForTesting ProcessManager processManager = const LocalProcessManager()
-    }) async {
+  String rootDirectory, {
+  @visibleForTesting ProcessManager processManager = const LocalProcessManager(),
+}) async {
   final io.ProcessResult result = await processManager.run(
     <String>[
       'find',
@@ -332,9 +332,9 @@ Future<List<String>> findXcframeworksPaths(
 
 /// Check mime-type of file at [filePath] to determine if it is binary.
 Future<bool> isBinary(
-  String filePath,
-  {@visibleForTesting ProcessManager processManager = const LocalProcessManager()}
-) async {
+  String filePath, {
+  @visibleForTesting ProcessManager processManager = const LocalProcessManager(),
+}) async {
   final io.ProcessResult result = await processManager.run(
     <String>[
       'file',
@@ -349,9 +349,9 @@ Future<bool> isBinary(
 /// Check if the binary has the expected entitlements.
 Future<bool> hasExpectedEntitlements(
   String binaryPath,
-  String flutterRoot,
-  {@visibleForTesting ProcessManager processManager = const LocalProcessManager()}
-) async {
+  String flutterRoot, {
+  @visibleForTesting ProcessManager processManager = const LocalProcessManager(),
+}) async {
   final io.ProcessResult entitlementResult = await processManager.run(
     <String>[
       'codesign',

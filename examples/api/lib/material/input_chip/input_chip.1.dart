@@ -299,8 +299,11 @@ class ChipsInputEditingController<T> extends TextEditingController {
   String get textWithReplacements => text;
 
   @override
-  TextSpan buildTextSpan(
-      {required BuildContext context, TextStyle? style, required bool withComposing}) {
+  TextSpan buildTextSpan({
+    required BuildContext context,
+    TextStyle? style,
+    required bool withComposing,
+  }) {
 
     final Iterable<WidgetSpan> chipWidgets =
         values.map((T v) => WidgetSpan(child: chipBuilder(context, v)));

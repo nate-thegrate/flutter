@@ -8,8 +8,7 @@ import '../base/logger.dart';
 
 /// Utility class that can record time used in different phases of a test run.
 class TestTimeRecorder {
-  TestTimeRecorder(this.logger,
-      {this.stopwatchFactory = const StopwatchFactory()})
+  TestTimeRecorder(this.logger, {this.stopwatchFactory = const StopwatchFactory()})
       : _phaseRecords = List<TestTimeRecord>.generate(
           TestTimePhases.values.length,
           (_) => TestTimeRecord(stopwatchFactory),

@@ -60,8 +60,7 @@ class ExpandingBottomSheet extends StatefulWidget {
   @override
   ExpandingBottomSheetState createState() => ExpandingBottomSheetState();
 
-  static ExpandingBottomSheetState? of(BuildContext context,
-      {bool isNullOk = false}) {
+  static ExpandingBottomSheetState? of(BuildContext context, {bool isNullOk = false}) {
     final ExpandingBottomSheetState? result = context.findAncestorStateOfType<ExpandingBottomSheetState>();
     if (isNullOk || result != null) {
       return result;
@@ -725,8 +724,7 @@ class ExtraProductsNumber extends StatelessWidget {
 }
 
 class ProductThumbnail extends StatelessWidget {
-  const ProductThumbnail(this.animation, this.opacityAnimation, this.product,
-      {super.key});
+  const ProductThumbnail(this.animation, this.opacityAnimation, this.product, {super.key});
 
   final Animation<double> animation;
   final Animation<double> opacityAnimation;

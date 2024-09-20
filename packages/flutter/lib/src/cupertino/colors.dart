@@ -1198,18 +1198,21 @@ class CupertinoDynamicColor with Diagnosticable implements Color {
   ColorSpace get colorSpace => _effectiveColor.colorSpace;
 
   @override
-  Color withValues(
-          {double? alpha,
-          double? red,
-          double? green,
-          double? blue,
-          ColorSpace? colorSpace}) =>
-      _effectiveColor.withValues(
-          alpha: alpha,
-          red: red,
-          green: green,
-          blue: blue,
-          colorSpace: colorSpace);
+  Color withValues({
+    double? alpha,
+    double? red,
+    double? green,
+    double? blue,
+    ColorSpace? colorSpace,
+  }) {
+    return _effectiveColor.withValues(
+      alpha: alpha,
+      red: red,
+      green: green,
+      blue: blue,
+      colorSpace: colorSpace,
+    );
+  }
 }
 
 /// Creates a diagnostics property for [CupertinoDynamicColor].

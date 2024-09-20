@@ -5,8 +5,11 @@
 import 'dart:convert' show json;
 import 'dart:math' as math;
 
-double _doNormal(
-    {required double mean, required double stddev, required double x}) {
+double _doNormal({
+  required double mean,
+  required double stddev,
+  required double x,
+}) {
   return (1.0 / (stddev * math.sqrt(2.0 * math.pi))) *
       math.pow(math.e, -0.5 * math.pow((x - mean) / stddev, 2.0));
 }

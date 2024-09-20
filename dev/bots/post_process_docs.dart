@@ -134,10 +134,13 @@ Future<String> getBranchName({
 /// Updates the footer of the api documentation with the correct branch and versions.
 /// [footerPath] is the path to the location of the footer js file and [version] is a
 /// string with the version calculated by the flutter tool.
-Future<void> createFooter(File footerFile, String version,
-    {@visibleForTesting String? timestampParam,
-    @visibleForTesting String? branchParam,
-    @visibleForTesting String? revisionParam}) async {
+Future<void> createFooter(
+  File footerFile,
+  String version, {
+  @visibleForTesting String? timestampParam,
+  @visibleForTesting String? branchParam,
+  @visibleForTesting String? revisionParam,
+}) async {
   final String timestamp = timestampParam ?? DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
   final String gitBranch = branchParam ?? await getBranchName();
   final String revision = revisionParam ?? await gitRevision();

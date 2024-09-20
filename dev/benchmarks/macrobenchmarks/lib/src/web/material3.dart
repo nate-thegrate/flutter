@@ -2337,8 +2337,11 @@ class _ComponentDecorationState extends State<ComponentDecoration> {
 }
 
 class ComponentGroupDecoration extends StatelessWidget {
-  const ComponentGroupDecoration(
-      {super.key, required this.label, required this.children});
+  const ComponentGroupDecoration({
+    super.key,
+    required this.label,
+    required this.children,
+  });
 
   final String label;
   final List<Widget> children;

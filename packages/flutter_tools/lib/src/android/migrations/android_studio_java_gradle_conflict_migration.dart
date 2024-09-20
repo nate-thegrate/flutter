@@ -71,8 +71,8 @@ const String errorWhileMigrating = 'Encountered an error while attempting Gradle
 /// https://docs.gradle.org/current/userguide/compatibility.html
 class AndroidStudioJavaGradleConflictMigration extends ProjectMigrator {
   AndroidStudioJavaGradleConflictMigration(
-    super.logger,
-    {required AndroidProject project,
+    super.logger, {
+    required AndroidProject project,
     AndroidStudio? androidStudio,
     required Java? java,
   }) : _gradleWrapperPropertiesFile = getGradleWrapperFile(project.hostAppGradleRoot),

@@ -2403,13 +2403,11 @@ class _SelectableFragment with Selectable, Diagnosticable, ChangeNotifier implem
   }
 
   SelectionResult _updateSelectionEdgeByMultiSelectableTextBoundary(
-    Offset globalPosition,
-    {
-      required bool isEnd,
-      required _TextBoundaryAtPositionInText getTextBoundary,
-      required _TextBoundaryAtPosition getClampedTextBoundary,
-    }
-  ) {
+    Offset globalPosition, {
+    required bool isEnd,
+    required _TextBoundaryAtPositionInText getTextBoundary,
+    required _TextBoundaryAtPosition getClampedTextBoundary,
+  }) {
     // When the start/end edges are swapped, i.e. the start is after the end, and
     // the scrollable synthesizes an event for the opposite edge, this will potentially
     // move the opposite edge outside of the origin text boundary and we are unable to recover.

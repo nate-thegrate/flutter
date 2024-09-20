@@ -9,8 +9,11 @@ import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 import 'utils/memory_leak_tests.dart';
 
 class _TestExecution {
-  _TestExecution(
-      {required this.settings, required this.settingName, required this.test});
+  _TestExecution({
+    required this.settings,
+    required this.settingName,
+    required this.test,
+  });
 
   final String settingName;
   final LeakTesting settings;

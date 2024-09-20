@@ -1730,8 +1730,10 @@ void addIosProjectFile(Directory directory, {required String Function() projectF
 /// If [kotlinDsl] is true, then build.gradle.kts is created instead of
 /// build.gradle. It's the caller's responsibility to make sure that
 /// [gradleFileContent] is consistent with the value of the [kotlinDsl] flag.
-void addAndroidGradleFile(Directory directory, {
-  required String Function() gradleFileContent, bool kotlinDsl = false,
+void addAndroidGradleFile(
+  Directory directory, {
+  required String Function() gradleFileContent,
+  bool kotlinDsl = false,
 }) {
   directory
       .childDirectory('android')
@@ -1741,8 +1743,10 @@ void addAndroidGradleFile(Directory directory, {
     ..writeAsStringSync(gradleFileContent());
 }
 
-void addRootGradleFile(Directory directory,
-    {required String Function() gradleFileContent}) {
+void addRootGradleFile(
+  Directory directory, {
+  required String Function() gradleFileContent,
+}) {
   directory.childDirectory('android').childFile('build.gradle')
     ..createSync(recursive: true)
     ..writeAsStringSync(gradleFileContent());

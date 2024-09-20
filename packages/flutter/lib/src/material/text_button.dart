@@ -121,7 +121,7 @@ class TextButton extends ButtonStyleButton {
     required Widget label,
     IconAlignment iconAlignment = IconAlignment.start,
   }) {
-     if (icon == null) {
+    if (icon == null) {
       return TextButton(
         key: key,
         onPressed: onPressed,
@@ -136,7 +136,8 @@ class TextButton extends ButtonStyleButton {
         child: label,
       );
     }
-    return _TextButtonWithIcon( key: key,
+    return _TextButtonWithIcon(
+      key: key,
       onPressed: onPressed,
       onLongPress: onLongPress,
       onHover: onHover,

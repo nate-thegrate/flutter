@@ -172,10 +172,11 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  List<Widget> _buildTabs(
-      {required BuildContext context,
-      required ThemeData theme,
-      bool isVertical = false}) {
+  List<Widget> _buildTabs({
+    required BuildContext context,
+    required ThemeData theme,
+    bool isVertical = false,
+  }) {
     final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
     return <Widget>[
       _RallyTab(

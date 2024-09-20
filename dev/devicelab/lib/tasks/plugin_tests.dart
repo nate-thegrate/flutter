@@ -371,14 +371,13 @@ public class $pluginClass: NSObject, FlutterPlugin {
   }
 
   static Future<_FlutterProject> create(
-      Directory directory,
-      List<String> options,
-      String target,
-      {
-        required String name,
-        required String template,
-        Map<String, String>? environment,
-      }) async {
+    Directory directory,
+    List<String> options,
+    String target, {
+    required String name,
+    required String template,
+    Map<String, String>? environment,
+  }) async {
     await inDirectory(directory, () async {
       await flutter(
         'create',

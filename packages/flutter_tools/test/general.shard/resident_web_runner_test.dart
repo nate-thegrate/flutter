@@ -1640,8 +1640,10 @@ class FakeChromeConnection extends Fake implements ChromeConnection {
   final List<ChromeTab> tabs = <ChromeTab>[];
 
   @override
-  Future<ChromeTab> getTab(bool Function(ChromeTab tab) accept,
-      {Duration? retryFor}) async {
+  Future<ChromeTab> getTab(
+    bool Function(ChromeTab tab) accept, {
+    Duration? retryFor,
+  }) async {
     return tabs.firstWhere(accept);
   }
 
@@ -1766,8 +1768,7 @@ class FakeFlutterDevice extends Fake implements FlutterDevice {
   }
 
   @override
-  Future<void> exitApps(
-      {Duration timeoutDelay = const Duration(seconds: 10)}) async {}
+  Future<void> exitApps({Duration timeoutDelay = const Duration(seconds: 10)}) async {}
 
   @override
   Future<void> connect({

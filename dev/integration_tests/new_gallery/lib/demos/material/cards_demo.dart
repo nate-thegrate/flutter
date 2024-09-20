@@ -69,8 +69,7 @@ List<TravelDestination> destinations(BuildContext context) {
 }
 
 class TravelDestinationItem extends StatelessWidget {
-  const TravelDestinationItem(
-      {super.key, required this.destination, this.shape});
+  const TravelDestinationItem({super.key, required this.destination, this.shape});
 
   // This height will allow for all the Card's content to fit comfortably within the card.
   static const double height = 360.0;

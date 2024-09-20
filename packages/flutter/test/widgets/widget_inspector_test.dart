@@ -2078,8 +2078,8 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
             expect(childrenFromOtherApi.length, equals(children.length));
           }
 
-          bool allChildrenSatisfyCondition(Map<String, Object?> treeRoot,
-              {
+          bool allChildrenSatisfyCondition(
+            Map<String, Object?> treeRoot, {
             required bool Function(Map<String, Object?> child) condition,
           }) {
             final List<Object?> children = childrenFromJsonResponse(treeRoot);
@@ -2097,8 +2097,8 @@ class _TestWidgetInspectorService extends TestWidgetInspectorService {
             return true;
           }
 
-          bool oneChildSatisfiesCondition(Map<String, Object?> treeRoot,
-              {
+          bool oneChildSatisfiesCondition(
+            Map<String, Object?> treeRoot, {
             required bool Function(Map<String, Object?> child) condition,
           }) {
             final List<Object?> children = childrenFromJsonResponse(treeRoot);

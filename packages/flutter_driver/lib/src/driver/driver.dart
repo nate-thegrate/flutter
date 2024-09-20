@@ -532,8 +532,7 @@ abstract class FlutterDriver {
   /// ```
   /// {@end-tool}
   ///
-  Future<void> sendTextInputAction(TextInputAction action,
-      {Duration? timeout}) async {
+  Future<void> sendTextInputAction(TextInputAction action, {Duration? timeout}) async {
     await sendCommand(SendTextInputAction(action, timeout: timeout));
   }
 

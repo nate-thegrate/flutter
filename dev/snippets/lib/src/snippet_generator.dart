@@ -18,17 +18,15 @@ import 'util.dart';
 /// Generates the snippet HTML, as well as saving the output snippet main to
 /// the output directory.
 class SnippetGenerator {
-  SnippetGenerator(
-      {SnippetConfiguration? configuration,
-      FileSystem filesystem = const LocalFileSystem(),
-      Directory? flutterRoot})
-      : flutterRoot =
-            flutterRoot ?? FlutterInformation.instance.getFlutterRoot(),
-        configuration = configuration ??
-            FlutterRepoSnippetConfiguration(
-                filesystem: filesystem,
-                flutterRoot: flutterRoot ??
-                    FlutterInformation.instance.getFlutterRoot());
+  SnippetGenerator({
+    SnippetConfiguration? configuration,
+    FileSystem filesystem = const LocalFileSystem(),
+    Directory? flutterRoot,
+  }) : flutterRoot = flutterRoot ?? FlutterInformation.instance.getFlutterRoot(),
+       configuration = configuration ?? FlutterRepoSnippetConfiguration(
+         filesystem: filesystem,
+         flutterRoot: flutterRoot ?? FlutterInformation.instance.getFlutterRoot(),
+       );
 
   final Directory flutterRoot;
 
@@ -418,8 +416,7 @@ class SnippetGenerator {
 
   List<SourceLine>? _headers;
 
-  static List<File> _listDartFiles(Directory directory,
-      {bool recursive = false}) {
+  static List<File> _listDartFiles(Directory directory, {bool recursive = false}) {
     return directory
         .listSync(recursive: recursive, followLinks: false)
         .whereType<File>()
