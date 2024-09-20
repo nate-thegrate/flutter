@@ -456,17 +456,10 @@ extension DapTestClientExtension on DapTestClient {
   ///
   /// Returns a Future that completes when the server returns a corresponding
   /// response.
-  Future<Response> stackTrace(
-    int threadId, {
-    int? startFrame,
-    int? numFrames,
-  }) {
-    return sendRequest(StackTraceArguments(
-      threadId: threadId,
-      startFrame: startFrame,
-      levels: numFrames,
-    ));
-  }
+  Future<Response> stackTrace(int threadId,
+          {int? startFrame, int? numFrames}) =>
+      sendRequest(StackTraceArguments(
+          threadId: threadId, startFrame: startFrame, levels: numFrames));
 
   /// Clears breakpoints in [file].
   Future<void> clearBreakpoints(String filePath) async {

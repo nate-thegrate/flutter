@@ -287,7 +287,12 @@ class XCResultIssueDiscarder {
     this.subTypeMatcher,
     this.messageMatcher,
     this.locationMatcher,
-  }) : assert((typeMatcher ?? subTypeMatcher ?? messageMatcher ?? locationMatcher) != null);
+  }) : assert(
+         typeMatcher != null ||
+         subTypeMatcher != null ||
+         messageMatcher != null ||
+         locationMatcher != null,
+       );
 
   /// The type of the discarder.
   ///
