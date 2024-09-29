@@ -157,8 +157,8 @@ class CardTheme extends InheritedWidget with Diagnosticable {
 
   /// The [ThemeData.cardTheme] property of the ambient [Theme].
   static CardTheme of(BuildContext context) {
-    final CardTheme? cardTheme = context.dependOnInheritedWidgetOfExactType<CardTheme>();
-    return cardTheme ?? Theme.of(context).cardTheme;
+    return context.dependOnInheritedWidgetOfExactType<CardTheme>()
+      ?? Theme.select(context, (ThemeData theme) => theme.cardTheme);
   }
 
   @override

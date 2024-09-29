@@ -148,7 +148,7 @@ class TabBarTheme with Diagnosticable {
 
   /// The data from the closest [TabBarTheme] instance given the build context.
   static TabBarTheme of(BuildContext context) {
-    return Theme.of(context).tabBarTheme;
+    return Theme.select(context, (ThemeData theme) => theme.tabBarTheme);
   }
 
   /// Linearly interpolate between two tab bar themes.
