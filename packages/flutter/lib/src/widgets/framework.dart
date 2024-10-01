@@ -55,6 +55,7 @@ export 'package:flutter/rendering.dart' show RenderBox, RenderObject, debugDumpL
 // int _counter = 0;
 // Future<Directory> getApplicationDocumentsDirectory() async => Directory('');
 // late AnimationController animation;
+// late Element elementA, elementB;
 
 class _DebugOnly {
   const _DebugOnly();
@@ -6294,13 +6295,54 @@ class InheritedFilterElement<Selector> extends ProxyElement implements Inherited
   }
 
   /// Tracks which selectors each dependent is using.
+  ///
+  /// {@template flutter.widgets.InheritedFilterElement.dependents}
+  /// Example (using [int] as the [Selector] type):
+  ///
+  /// ```dart
+  /// Map<Element, Set<int>> _dependents = <Element, Set<int>>{
+  ///   elementA: <int>{1, 2, 3},
+  ///   elementB: <int>{2, 3, 4},
+  /// };
+  /// ```
+  ///
+  /// After calling `setDependencies(elementB, 5)`:
+  ///
+  /// ```dart
+  /// Map<Element, Set<int>> _dependents = <Element, Set<int>>{
+  ///   elementA: <int>{1, 2, 3},
+  ///   elementB: <int>{2, 3, 4, 5},
+  /// };
+  /// ```
+  ///
+  /// Then, after `clearSelectors(elementA)` is called:
+  ///
+  /// ```dart
+  /// Map<Element, Set<int>> _dependents = <Element, Set<int>>{
+  ///   elementA: <int>{},
+  ///   elementB: <int>{2, 3, 4, 5},
+  /// };
+  /// ```
+  /// {@endtemplate}
   @override
   final Map<Element, HashSet<Selector>> _dependents = <Element, HashSet<Selector>>{};
 
+  /// Returns the dependencies value recorded for [dependent]
+  /// with [setDependencies].
+  ///
+  /// Each dependent element is mapped to a [Set] of [Selector] objects
+  /// which represents how the element depends on this [InheritedFilterElement].
+  /// When the set is empty (e.g. after calling [clearSelectors]),
+  /// the dependent will not be notified until another
+  /// [BuildContext.dependOnInheritedWidgetOfExactType] call is performed to
+  /// add a [Selector] to this set.
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
   @override
   Set<Selector> getDependencies([Element? dependent]) {
     if (dependent == null) {
-      // Return a set containing all selectors in use.
+      // If a single dependent isn't specified,
+      // return a set containing all selectors in use.
       return <Selector>{
         for (final Set<Selector> selectors in _dependents.values) ...selectors,
       };
@@ -6308,6 +6350,10 @@ class InheritedFilterElement<Selector> extends ProxyElement implements Inherited
     return _dependents[dependent]!;
   }
 
+  /// Asserts that the aspect is a [Selector], and then
+  /// calls [setDependencies] to assign it to the [dependent].
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
   @override
   void updateDependencies(Element dependent, Object? aspect) {
     assert(() {
@@ -6315,20 +6361,21 @@ class InheritedFilterElement<Selector> extends ProxyElement implements Inherited
         return true;
       }
 
+      final String dependentWidget = dependent.widget.runtimeType.toString();
       final String widgetType = widget.runtimeType.toString();
       final String invalidType = aspect.runtimeType.toString();
       String firstLetter = invalidType[0];
       if (firstLetter == '_') {
         firstLetter = invalidType[1];
       }
-      final String an = switch (firstLetter.toLowerCase()) {
-        'a' || 'e' || 'i' || 'o' || 'u' => 'an',
+      final String an = switch (firstLetter) {
+        'A' || 'E' || 'I' || 'O' || 'U' => 'an',
         _ => 'a',
       };
 
       throw FlutterError.fromParts(
         <DiagnosticsNode>[
-          ErrorSummary('$widgetType was sent an invalid aspect.'),
+          ErrorSummary('$dependentWidget sent an invalid aspect to $widgetType.'),
           ErrorDescription(
             '$widgetType() is an instance of InheritedFilter<$Selector>(). '
             'The aspect $aspect is not a valid selector for this widget.',
@@ -6343,18 +6390,28 @@ class InheritedFilterElement<Selector> extends ProxyElement implements Inherited
     dependent._usingFilter = true;
   }
 
+  /// Adds a [selector] to the [dependent]'s aspect.
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
   @override
-  void setDependencies(Element dependent, covariant Selector value) {
-    (_dependents[dependent] ??= HashSet<Selector>()).add(value);
+  void setDependencies(Element dependent, covariant Selector selector) {
+    (_dependents[dependent] ??= HashSet<Selector>()).add(selector);
   }
 
+  /// Called by [Element.deactivate] to remove the provided [dependent]
+  /// from this [InheritedFilterElement]'s dependencies.
+  ///
+  /// Subclasses can override this method to release any resources retained for
+  /// a given [dependent].
   @override
   void removeDependent(Element dependent) {
     _dependents.remove(dependent);
   }
 
-  /// Resets the dependent's aspect (to an empty set)
+  /// Resets the dependent's aspect to an empty [Selector] set,
   /// in preparation for another build.
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
   void clearSelectors(Element dependent) {
     final HashSet<Object?>? selectors = _dependents[dependent];
     assert(selectors != null);
@@ -6434,12 +6491,11 @@ class InheritedFilterElement<Selector> extends ProxyElement implements Inherited
   /// [InheritedElement.notifyDependent] calls to the minimum amount necessary.
   ///
   /// For example, after [State.setState] is called, the [InheritedFilterElement]
-  /// will not evaulate any of that dependent's selectors, since the [State] is
-  /// about to rebuild anyway.
+  /// will not evaulate any of that dependent's selectors, since [State.build]
+  /// is going to be called regardless.
   ///
-  /// When switching to an [InheritedFilter] paradigm, consider double-checking
-  /// any logic contained in [State.didChangeDependencies], since calls to that
-  /// method will be made less frequently.
+  /// Generally, after switching to an [InheritedFilter] paradigm, calls to
+  /// [State.didChangeDependencies] are made less frequently.
   /// {@endtemplate}
   @override
   void notifyDependent(InheritedFilter<Selector> oldWidget, Element dependent) {
