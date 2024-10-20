@@ -19,6 +19,7 @@ import 'package:flutter/rendering.dart';
 import 'binding.dart';
 import 'debug.dart';
 import 'focus_manager.dart';
+import 'inherited_filter.dart';
 import 'inherited_model.dart';
 import 'notification_listener.dart';
 import 'widget_inspector.dart';
@@ -54,6 +55,7 @@ export 'package:flutter/rendering.dart' show RenderBox, RenderObject, debugDumpL
 // int _counter = 0;
 // Future<Directory> getApplicationDocumentsDirectory() async => Directory('');
 // late AnimationController animation;
+// late Element elementA, elementB;
 
 class _DebugOnly {
   const _DebugOnly();
@@ -1835,6 +1837,60 @@ abstract class ParentDataWidget<T extends ParentData> extends ProxyWidget {
 /// ```
 /// {@end-tool} {@youtube 560 315 https://www.youtube.com/watch?v=1t-8rBCGBYw}
 ///
+/// {@template flutter.widgets.InheritedWidget.subtypes}
+/// ## Choosing an `InheritedWidget` type to extend from
+///
+/// ### InheritedWidget
+///
+/// The base [InheritedWidget] class is a simple—yet powerful—API.
+/// It works best with a single `.of(context)` method that all descendents
+/// subscribe to.
+///
+/// ### InheritedNotifier
+///
+/// [InheritedNotifier] is set up to automatically notify clients
+/// based on updates to an [Animation], [ChangeNotifier], or any
+/// other [Listenable] object.
+///
+/// ### InheritedTheme
+///
+/// Inherited widgets can implement the [InheritedTheme] interface in order
+/// to be "captured" (via [InheritedTheme.capture]) when the user navigates
+/// to a new route.
+///
+/// ### InheritedFilter
+///
+/// Widgets that subscribe to an [InheritedFilter] specify a **selector**,
+/// and they receive updates when the selector's output changes. If a widget
+/// then switches over to a different selector, its dependency is
+/// updated accordingly.
+///
+/// [InheritedFilter] works best when the inherited widget holds a complex
+/// object (or multiple objects), since it can be selective with which
+/// dependents are notified during each update.
+///
+/// ### InheritedModel
+///
+/// [InheritedModel] is conceptually similar to a
+/// group of several [InheritedWidget]s: descendant widgets can subscribe
+/// to one aspect, multiple aspects, or the entire model.
+///
+/// [InheritedModel] is less flexible than [InheritedFilter], since it's only
+/// capable of supporting a finite number of independent aspects.
+/// But using an inherited model can be advantageous, since each instance can
+/// specify which aspects of the model it supports: if an [InheritedModel]
+/// object only supports a subset of the full model, it can notify dependents
+/// accordingly without retrieving any additional information.
+///
+/// ### Other Packages
+///
+/// Other `InheritedWidget` subtypes can be found in libraries outside of
+/// Flutter packages, including **provider**, **riverpod**, and **bloc**.
+///
+/// For more information, see Flutter's
+/// [list of state management approaches](https://docs.flutter.dev/data-and-backend/state-mgmt/options).
+/// {@endtemplate}
+///
 /// See also:
 ///
 /// * [StatefulWidget] and [State], for widgets that can build differently
@@ -2659,6 +2715,10 @@ final class BuildScope {
     if (!element._inDirtyList) {
       _dirtyElements.add(element);
       element._inDirtyList = true;
+    }
+    if (element._usingFilter) {
+      InheritedFilterElement._clear(element);
+      element._usingFilter = false;
     }
     if (!_buildScheduled && !_building) {
       _buildScheduled = true;
@@ -5151,6 +5211,11 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
   // Whether we've already built or not. Set in [rebuild].
   bool _debugBuiltOnce = false;
 
+  /// Whether at least one of the [_dependencies] is an [InheritedFilterElement].
+  ///
+  /// Resets to false once [InheritedFilterElement._clear] is called.
+  bool _usingFilter = false;
+
   /// Marks the element as dirty and adds it to the global list of widgets to
   /// rebuild in the next frame.
   ///
@@ -6239,6 +6304,253 @@ class InheritedElement extends ProxyElement {
       assert(dependent._dependencies!.contains(this));
       notifyDependent(oldWidget, dependent);
     }
+  }
+}
+
+/// An [Element] that uses an [InheritedFilter] widget as its configuration.
+///
+/// {@macro flutter.widgets.InheritedFilter}
+///
+/// {@macro flutter.widgets.InheritedFilterElement.notifyDependent}
+class InheritedFilterElement<Selector> extends ProxyElement implements InheritedElement {
+  /// Creates an element that uses the given widget as its configuration.
+  InheritedFilterElement(InheritedFilter<Selector> super.widget);
+
+  static void _clear(Element dependent) {
+    final Set<InheritedElement>? dependencies = dependent._dependencies;
+    if (dependencies == null) {
+      return;
+    }
+    for (final InheritedElement inheritedElement in dependencies) {
+      if (inheritedElement is InheritedFilterElement) {
+        inheritedElement.clearSelectors(dependent);
+      }
+    }
+  }
+
+  @override
+  void _updateInheritance() {
+    assert(_lifecycleState == _ElementLifecycle.active);
+    const PersistentHashMap<Type, InheritedElement> emptyMap = PersistentHashMap<Type, InheritedElement>.empty();
+    _inheritedElements = (_parent?._inheritedElements ?? emptyMap).put(widget.runtimeType, this);
+  }
+
+  @override
+  void debugDeactivated() {
+    assert(_dependents.isEmpty);
+    super.debugDeactivated();
+  }
+
+  /// Tracks which selectors each dependent is using.
+  ///
+  /// {@template flutter.widgets.InheritedFilterElement.dependents}
+  /// Example (using [int] as the [Selector] type):
+  ///
+  /// ```dart
+  /// Map<Element, Set<int>> _dependents = <Element, Set<int>>{
+  ///   elementA: <int>{1, 2, 3},
+  ///   elementB: <int>{2, 3, 4},
+  /// };
+  /// ```
+  ///
+  /// After calling `setDependencies(elementB, 5)`:
+  ///
+  /// ```dart
+  /// Map<Element, Set<int>> _dependents = <Element, Set<int>>{
+  ///   elementA: <int>{1, 2, 3},
+  ///   elementB: <int>{2, 3, 4, 5},
+  /// };
+  /// ```
+  ///
+  /// Then, after `clearSelectors(elementA)` is called:
+  ///
+  /// ```dart
+  /// Map<Element, Set<int>> _dependents = <Element, Set<int>>{
+  ///   elementA: <int>{},
+  ///   elementB: <int>{2, 3, 4, 5},
+  /// };
+  /// ```
+  /// {@endtemplate}
+  @override
+  final Map<Element, HashSet<Selector>> _dependents = <Element, HashSet<Selector>>{};
+
+  /// Returns the dependencies value recorded for [dependent]
+  /// with [setDependencies].
+  ///
+  /// Each dependent element is mapped to a [Set] of [Selector] objects
+  /// which represents how the element depends on this [InheritedFilterElement].
+  /// When the set is empty (e.g. after calling [clearSelectors]),
+  /// the dependent will not be notified until another
+  /// [BuildContext.dependOnInheritedWidgetOfExactType] call is performed to
+  /// add a [Selector] to this set.
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
+  @override
+  Set<Selector> getDependencies([Element? dependent]) {
+    if (dependent == null) {
+      // If a single dependent isn't specified,
+      // return a set containing all selectors in use.
+      return <Selector>{
+        for (final Set<Selector> selectors in _dependents.values) ...selectors,
+      };
+    }
+    return _dependents[dependent]!;
+  }
+
+  /// Asserts that the aspect is a [Selector], and then
+  /// calls [setDependencies] to assign it to the [dependent].
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
+  @override
+  void updateDependencies(Element dependent, Object? aspect) {
+    assert(() {
+      if (aspect is Selector) {
+        return true;
+      }
+
+      final String dependentWidget = dependent.widget.runtimeType.toString();
+      final String widgetType = widget.runtimeType.toString();
+      final String invalidType = aspect.runtimeType.toString();
+      String firstLetter = invalidType[0];
+      if (firstLetter == '_') {
+        firstLetter = invalidType[1];
+      }
+      final String an = switch (firstLetter) {
+        'A' || 'E' || 'I' || 'O' || 'U' => 'an',
+        _ => 'a',
+      };
+
+      throw FlutterError.fromParts(
+        <DiagnosticsNode>[
+          ErrorSummary('$dependentWidget sent an invalid aspect to $widgetType.'),
+          ErrorDescription(
+            '$widgetType() is an instance of InheritedFilter<$Selector>(). '
+            'The aspect $aspect is not a valid selector for this widget.',
+          ),
+          ErrorHint(
+            'Instead of $an $invalidType, consider using an instance of $Selector.',
+          ),
+        ],
+      );
+    }());
+    setDependencies(dependent, aspect as Selector);
+    dependent._usingFilter = true;
+  }
+
+  /// Adds a [selector] to the [dependent]'s aspect.
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
+  @override
+  void setDependencies(Element dependent, covariant Selector selector) {
+    (_dependents[dependent] ??= HashSet<Selector>()).add(selector);
+  }
+
+  /// Called by [Element.deactivate] to remove the provided [dependent]
+  /// from this [InheritedFilterElement]'s dependencies.
+  ///
+  /// Subclasses can override this method to release any resources retained for
+  /// a given [dependent].
+  @override
+  void removeDependent(Element dependent) {
+    _dependents.remove(dependent);
+  }
+
+  /// Resets the dependent's aspect to an empty [Selector] set,
+  /// in preparation for another build.
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.dependents}
+  void clearSelectors(Element dependent) {
+    final HashSet<Object?>? selectors = _dependents[dependent];
+    assert(selectors != null);
+    selectors!.clear();
+  }
+
+  /// {@macro flutter.widgets.InheritedFilter}
+  ///
+  /// {@macro flutter.widgets.InheritedFilterElement.notifyDependent}
+  @override
+  void notifyClients(InheritedFilter<Selector> oldWidget) {
+    final InheritedFilter<Selector> widget = this.widget as InheritedFilter<Selector>;
+    if (!widget.updateShouldNotify(oldWidget)) {
+      return;
+    }
+
+    for (final Element dependent in _dependents.keys) {
+      final HashSet<Selector> selectors = _dependents[dependent]!;
+
+      for (final Selector selector in selectors) {
+        Equality<Object?>? equality;
+        if (selector is EqualityFilter) {
+          equality = selector.equality;
+        }
+        equality ??= widget.equality;
+
+        assert((Equality<Object?> equality) {
+          final Object? selectorResult = widget.select(selector);
+          if (equality.isValidKey(selectorResult)) {
+            return true;
+          }
+          final Equality<Object?>? selectorEquality = selector is EqualityFilter
+              ? selector.equality
+              : null;
+          throw FlutterError.fromParts(
+            <DiagnosticsNode>[
+              ErrorSummary(
+                'The return value of ${widget.runtimeType}.select() is not valid.',
+              ),
+              if (selectorEquality != null)
+                ErrorDescription(
+                  'The selector $selector is using "$selectorEquality" for equality. '
+                  'Its output, "$selectorResult", was determined to be an invalid key '
+                  'for the equality relationship. ',
+                )
+              else
+                ErrorDescription(
+                  '${widget.runtimeType} is an InheritedSelector<$Selector> instance '
+                  'and uses ',
+                ),
+            ],
+          );
+        }(equality));
+
+        if (equality.equals(widget.select(selector), oldWidget.select(selector))) {
+          continue;
+        }
+
+        assert(() {
+          // Check that it really is our descendant.
+          Element? ancestor = dependent._parent;
+          while (ancestor != this && ancestor != null) {
+            ancestor = ancestor._parent;
+          }
+          return ancestor == this;
+        }());
+        // Check that it really depends on us.
+        assert(dependent._dependencies!.contains(this));
+
+        notifyDependent(oldWidget, dependent);
+        break;
+      }
+    }
+  }
+
+  /// Clears the dependent's selectors and notifies it to rebuild.
+  ///
+  /// {@template flutter.widgets.InheritedFilterElement.notifyDependent}
+  /// A primary aim of [InheritedFilter] is to reduce the frequency of
+  /// [InheritedElement.notifyDependent] calls to the minimum amount necessary.
+  ///
+  /// For example, after [State.setState] is called, the [InheritedFilterElement]
+  /// will not evaulate any of that dependent's selectors, since [State.build]
+  /// is going to be called regardless.
+  ///
+  /// Generally, after switching to an [InheritedFilter] paradigm, calls to
+  /// [State.didChangeDependencies] are made less frequently.
+  /// {@endtemplate}
+  @override
+  void notifyDependent(InheritedFilter<Selector> oldWidget, Element dependent) {
+    clearSelectors(dependent);
+    dependent.didChangeDependencies();
   }
 }
 

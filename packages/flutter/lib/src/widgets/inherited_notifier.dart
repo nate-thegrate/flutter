@@ -52,16 +52,14 @@ import 'framework.dart';
 /// ** See code in examples/api/lib/widgets/inherited_notifier/inherited_notifier.0.dart **
 /// {@end-tool}
 ///
+/// {@macro flutter.widgets.InheritedWidget.subtypes}
+///
 /// See also:
 ///
 ///  * [Animation], an implementation of [Listenable] that ticks each frame to
 ///    update a value.
 ///  * [ViewportOffset] or its subclass [ScrollPosition], implementations of
 ///    [Listenable] that trigger when a view is scrolled.
-///  * [InheritedWidget], an inherited widget that only notifies dependents
-///    when its value is different.
-///  * [InheritedModel], an inherited widget that allows clients to subscribe
-///    to changes for subparts of the value.
 abstract class InheritedNotifier<T extends Listenable> extends InheritedWidget {
   /// Create an inherited widget that updates its dependents when [notifier]
   /// sends notifications.

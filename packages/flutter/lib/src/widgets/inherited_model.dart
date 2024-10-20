@@ -111,13 +111,7 @@ import 'framework.dart';
 /// ** See code in examples/api/lib/widgets/inherited_model/inherited_model.0.dart **
 /// {@end-tool}
 ///
-/// See also:
-///
-/// * [InheritedWidget], an inherited widget that only notifies dependents when
-///   its value is different.
-/// * [InheritedNotifier], an inherited widget whose value can be a
-///   [Listenable], and which will notify dependents whenever the value sends
-///   notifications.
+/// {@macro flutter.widgets.InheritedWidget.subtypes}
 abstract class InheritedModel<T> extends InheritedWidget {
   /// Creates an inherited widget that supports dependencies qualified by
   /// "aspects", i.e. a descendant widget can indicate that it should
