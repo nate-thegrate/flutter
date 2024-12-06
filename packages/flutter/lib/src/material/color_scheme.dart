@@ -976,10 +976,10 @@ class ColorScheme with Diagnosticable {
     Color? errorColor,
     Brightness brightness = Brightness.light,
   }) {
-    final bool isDark = brightness == Brightness.dark;
-    final bool primaryIsDark = _brightnessFor(primarySwatch) == Brightness.dark;
+    final bool isDark = brightness.isDark;
+    final bool primaryIsDark = _brightnessFor(primarySwatch).isDark;
     final Color secondary = accentColor ?? (isDark ? Colors.tealAccent[200]! : primarySwatch);
-    final bool secondaryIsDark = _brightnessFor(secondary) == Brightness.dark;
+    final bool secondaryIsDark = _brightnessFor(secondary).isDark;
 
     return ColorScheme(
       primary: primarySwatch,
@@ -1906,7 +1906,7 @@ class ColorScheme with Diagnosticable {
       contrastLevel >= -1.0 && contrastLevel <= 1.0,
       'contrastLevel must be between -1.0 and 1.0 inclusive.',
     );
-    final bool isDark = brightness == Brightness.dark;
+    final bool isDark = brightness.isDark;
     final Hct sourceColor =  Hct.fromInt(seedColor.value);
     return switch (schemeVariant) {
       DynamicSchemeVariant.tonalSpot => SchemeTonalSpot(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),

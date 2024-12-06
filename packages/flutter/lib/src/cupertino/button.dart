@@ -352,7 +352,7 @@ class _CupertinoButtonState extends State<CupertinoButton> with SingleTickerProv
         : CupertinoDynamicColor.maybeResolve(widget.color, context)
     )?.withOpacity(
       widget._style == _CupertinoButtonStyle.tinted
-        ? CupertinoTheme.brightnessOf(context) == Brightness.light
+        ? CupertinoTheme.brightnessOf(context).isLight
           ? kCupertinoButtonTintedOpacityLight
           : kCupertinoButtonTintedOpacityDark
         : widget.color?.opacity ?? 1.0,

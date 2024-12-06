@@ -1004,18 +1004,14 @@ class _MaterialAppState extends State<MaterialApp> {
   }
 
   bool _isDarkTheme(BuildContext context) {
-    return widget.themeMode == ThemeMode.dark ||
-        widget.themeMode == ThemeMode.system &&
-            MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    return widget.themeMode?.isDark(context) ?? false;
   }
 
   ThemeData _themeBuilder(BuildContext context) {
     ThemeData? theme;
     // Resolve which theme to use based on brightness and high contrast.
     final ThemeMode mode = widget.themeMode ?? ThemeMode.system;
-    final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
-    final bool useDarkTheme = mode == ThemeMode.dark
-      || (mode == ThemeMode.system && platformBrightness == ui.Brightness.dark);
+    final bool useDarkTheme = mode.isDark(context);
     final bool highContrast = MediaQuery.highContrastOf(context);
     if (useDarkTheme && highContrast && widget.highContrastDarkTheme != null) {
       theme = widget.highContrastDarkTheme;

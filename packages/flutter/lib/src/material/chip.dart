@@ -1340,7 +1340,7 @@ class _RawChipState extends State<RawChip> with MaterialStateMixin, TickerProvid
         ? _ChipDefaultsM3(context, widget.isEnabled)
         : ChipThemeData.fromDefaults(
             brightness: brightness,
-            secondaryColor: brightness == Brightness.dark ? Colors.tealAccent[200]! : theme.primaryColor,
+            secondaryColor: brightness.isDark ? Colors.tealAccent[200]! : theme.primaryColor,
             labelStyle: theme.textTheme.bodyLarge!,
           )
         );
@@ -2117,10 +2117,7 @@ class _RenderChip extends RenderBox with SlottedContainerRenderObjectMixin<_Chip
     if (enableAnimation.isCompleted) {
       return Colors.white;
     }
-    final Color color = switch (theme.brightness) {
-      Brightness.light => Colors.white,
-      Brightness.dark  => Colors.black,
-    };
+    final Color color = theme.brightness.isDark ? Colors.black : Colors.white;
     return ColorTween(begin: color.withAlpha(_kDisabledAlpha), end: color).evaluate(enableAnimation)!;
   }
 

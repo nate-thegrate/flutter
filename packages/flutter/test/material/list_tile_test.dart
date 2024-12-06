@@ -3674,7 +3674,7 @@ void main() {
       final Key trailingKey = UniqueKey();
 
       Widget buildFrame({ required Brightness brightness, required bool selected }) {
-        final ThemeData theme = brightness == Brightness.light
+        final ThemeData theme = brightness.isLight
           ? ThemeData.from(colorScheme: const ColorScheme.light(), useMaterial3: false)
           : ThemeData.from(colorScheme: const ColorScheme.dark(), useMaterial3: false);
         return MaterialApp(

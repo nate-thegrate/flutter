@@ -492,7 +492,7 @@ class ButtonThemeData with Diagnosticable {
 
     switch (getTextTheme(button)) {
       case ButtonTextTheme.normal:
-        return getBrightness(button) == Brightness.dark ? Colors.white : Colors.black87;
+        return getBrightness(button).isDark ? Colors.white : Colors.black87;
 
       case ButtonTextTheme.accent:
         return colorScheme!.secondary;
@@ -500,8 +500,8 @@ class ButtonThemeData with Diagnosticable {
       case ButtonTextTheme.primary:
         final Color? fillColor = getFillColor(button);
         final bool fillIsDark = fillColor != null
-          ? ThemeData.estimateBrightnessForColor(fillColor) == Brightness.dark
-          : getBrightness(button) == Brightness.dark;
+          ? ThemeData.estimateBrightnessForColor(fillColor).isDark
+          : getBrightness(button).isDark;
         return fillIsDark ? Colors.white : Colors.black;
     }
   }

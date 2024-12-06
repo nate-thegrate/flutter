@@ -66,9 +66,7 @@ class _ReplyAppState extends State<ReplyApp> with RestorationMixin {
   @override
   Widget build(BuildContext context) {
     final ThemeMode galleryThemeMode = GalleryOptions.of(context).themeMode;
-    final bool isDark = galleryThemeMode == ThemeMode.system
-        ? Theme.of(context).brightness == Brightness.dark
-        : galleryThemeMode == ThemeMode.dark;
+    final bool isDark = galleryThemeMode.isDark(context);
 
     final ThemeData replyTheme =
         isDark ? _buildReplyDarkTheme(context) : _buildReplyLightTheme(context);
@@ -242,10 +240,8 @@ ChipThemeData _buildChipTheme(
     padding: const EdgeInsets.all(4),
     shape: const StadiumBorder(),
     labelStyle: GoogleFonts.workSansTextTheme().bodyMedium!.copyWith(
-          color: brightness == Brightness.dark
-              ? ReplyColors.white50
-              : ReplyColors.black900,
-        ),
+      color: brightness.isDark ? ReplyColors.white50 : ReplyColors.black900,
+    ),
     secondaryLabelStyle: GoogleFonts.workSansTextTheme().bodyMedium,
     brightness: brightness,
   );

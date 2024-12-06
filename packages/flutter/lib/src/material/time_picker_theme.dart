@@ -208,7 +208,7 @@ class TimePickerThemeData with Diagnosticable {
   ///
   /// ```dart
   /// Theme.of(context).colorScheme.onSurface.withOpacity(
-  ///   Theme.of(context).colorScheme.brightness == Brightness.dark ? 1.0 : 0.6,
+  ///   Theme.of(context).colorScheme.brightness.isDark ? 1.0 : 0.6,
   /// )
   /// ```
   final Color? entryModeIconColor;

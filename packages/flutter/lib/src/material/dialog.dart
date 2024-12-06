@@ -1656,7 +1656,7 @@ class _DialogDefaultsM2 extends DialogThemeData {
   Color? get iconColor => iconTheme.color;
 
   @override
-  Color? get backgroundColor => theme.brightness == Brightness.dark
+  Color? get backgroundColor => theme.brightness.isDark
     ? Colors.grey[800]!
     : Colors.white;
 
