@@ -13,8 +13,6 @@
 /// @docImport 'scaffold.dart';
 library;
 
-import 'dart:ui' as ui;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -63,7 +61,21 @@ enum ThemeMode {
   light,
 
   /// Always use the dark mode (if available) regardless of system preference.
-  dark,
+  dark;
+
+  /// The current brightness.
+  /// 
+  /// If a [BuildContext] is provided, the widget will be subscribed to
+  /// platform brightness changes if [ThemeMode.system] is in use.
+  Brightness brightness([BuildContext? context]) => switch (this) {
+    dark  => Brightness.dark,
+    light => Brightness.light,
+    system when context != null => MediaQuery.platformBrightnessOf(context),
+    system => PlatformDispatcher.instance.platformBrightness,
+  };
+
+  /// Whether the current [brightness] is dark.
+  bool isDark([BuildContext? context]) => brightness(context).isDark;
 }
 
 /// An application that uses Material Design.
