@@ -93,7 +93,7 @@ class NextPage extends StatelessWidget {
             backgroundColor: CupertinoColors.systemYellow,
             border: Border(
               bottom: BorderSide(
-                color: brightness == Brightness.light
+                color: brightness.isLight
                     ? CupertinoColors.black
                     : CupertinoColors.white,
               ),

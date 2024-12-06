@@ -470,7 +470,7 @@ void main() {
 
         expect(
           text.style!.color!.value,
-          effectiveBrightness == Brightness.dark
+          effectiveBrightness.isDark
               ? _kToolbarTextColor.darkColor.value
               : _kToolbarTextColor.color.value,
         );

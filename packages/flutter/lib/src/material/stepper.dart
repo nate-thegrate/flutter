@@ -429,9 +429,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     return widget.currentStep == index;
   }
 
-  bool _isDark() {
-    return Theme.of(context).brightness == Brightness.dark;
-  }
+  bool _isDark() => Theme.of(context).brightness.isDark;
 
   bool _isLabel() {
     for (final Step step in widget.steps) {

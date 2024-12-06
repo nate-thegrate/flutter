@@ -402,7 +402,7 @@ class ThemeData with Diagnosticable {
     assert(colorSchemeSeed == null || primarySwatch == null);
     assert(colorSchemeSeed == null || primaryColor == null);
     final Brightness effectiveBrightness = brightness ?? colorScheme?.brightness ?? Brightness.light;
-    final bool isDark = effectiveBrightness == Brightness.dark;
+    final bool isDark = effectiveBrightness.isDark;
     if (colorSchemeSeed != null || useMaterial3) {
       if (colorSchemeSeed != null) {
         colorScheme = ColorScheme.fromSeed(seedColor: colorSchemeSeed, brightness: effectiveBrightness);
@@ -429,7 +429,7 @@ class ThemeData with Diagnosticable {
     final Brightness estimatedPrimaryColorBrightness = estimateBrightnessForColor(primaryColor);
     primaryColorLight ??= isDark ? Colors.grey[500]! : primarySwatch[100]!;
     primaryColorDark ??= isDark ? Colors.black : primarySwatch[700]!;
-    final bool primaryIsDark = estimatedPrimaryColorBrightness == Brightness.dark;
+    final bool primaryIsDark = estimatedPrimaryColorBrightness.isDark;
     focusColor ??= isDark ? Colors.white.withOpacity(0.12) : Colors.black.withOpacity(0.12);
     hoverColor ??= isDark ? Colors.white.withOpacity(0.04) : Colors.black.withOpacity(0.04);
     shadowColor ??= Colors.black;
@@ -805,7 +805,7 @@ class ThemeData with Diagnosticable {
     TextTheme? textTheme,
     bool? useMaterial3,
   }) {
-    final bool isDark = colorScheme.brightness == Brightness.dark;
+    final bool isDark = colorScheme.brightness.isDark;
 
     // For surfaces that use primary color in light themes and surface color in dark
     final Color primarySurfaceColor = isDark ? colorScheme.surface : colorScheme.primary;

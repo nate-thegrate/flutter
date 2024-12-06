@@ -51,7 +51,7 @@ class _CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.brightness == Brightness.dark;
+    final bool isDark = theme.brightness.isDark;
 
     // This repaint boundary prevents the entire _CategoriesPage from being
     // repainted when the button's ink splash animates.
@@ -177,7 +177,7 @@ class _DemoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.brightness == Brightness.dark;
+    final bool isDark = theme.brightness.isDark;
     // The fontSize to use for computing the heuristic UI scaling factor.
     const double defaultFontSize = 14.0;
     final double containerScalingFactor = MediaQuery.textScalerOf(context).scale(defaultFontSize) / defaultFontSize;
@@ -314,7 +314,7 @@ class _GalleryHomeState extends State<GalleryHome> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.brightness == Brightness.dark;
+    final bool isDark = theme.brightness.isDark;
     final MediaQueryData media = MediaQuery.of(context);
     final bool centerHome = media.orientation == Orientation.portrait && media.size.height < 800.0;
 

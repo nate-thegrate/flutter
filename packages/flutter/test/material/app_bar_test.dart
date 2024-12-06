@@ -1475,7 +1475,7 @@ void main() {
         ),
       );
       final Brightness appBarBrightness = ThemeData.estimateBrightnessForColor(appBarMaterial.color!);
-      final Brightness onAppBarBrightness = appBarBrightness == Brightness.light
+      final Brightness onAppBarBrightness = appBarBrightness.isLight
         ? Brightness.dark
         : Brightness.light;
 
@@ -1496,7 +1496,7 @@ void main() {
         ),
       );
       final Brightness appBarBrightness = ThemeData.estimateBrightnessForColor(appBarMaterial.color!);
-      final Brightness onAppBarBrightness = appBarBrightness == Brightness.light
+      final Brightness onAppBarBrightness = appBarBrightness.isLight
           ? Brightness.dark
           : Brightness.light;
 
@@ -3572,7 +3572,7 @@ void main() {
           ),
         );
         final Brightness appBarBrightness = ThemeData.estimateBrightnessForColor(appBarMaterial.color!);
-        final Brightness onAppBarBrightness = appBarBrightness == Brightness.light
+        final Brightness onAppBarBrightness = appBarBrightness.isLight
             ? Brightness.dark
             : Brightness.light;
 
@@ -3592,7 +3592,7 @@ void main() {
           ),
         );
         final Brightness appBarBrightness = ThemeData.estimateBrightnessForColor(appBarMaterial.color!);
-        final Brightness onAppBarBrightness = appBarBrightness == Brightness.light
+        final Brightness onAppBarBrightness = appBarBrightness.isLight
             ? Brightness.dark
             : Brightness.light;
 

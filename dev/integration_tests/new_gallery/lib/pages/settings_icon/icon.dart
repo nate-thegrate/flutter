@@ -62,7 +62,7 @@ class _SettingsIconPainter extends CustomPainter {
   /// Black or white paint, depending on brightness.
   Paint get _monoPaint {
     final Color monoColor =
-        Theme.of(context).colorScheme.brightness == Brightness.light
+        Theme.of(context).colorScheme.brightness.isLight
             ? Colors.black
             : Colors.white;
     return Paint()..color = monoColor;

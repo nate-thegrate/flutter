@@ -834,7 +834,7 @@ class _AppBarState extends State<AppBar> {
   }
 
   SystemUiOverlayStyle _systemOverlayStyleForBrightness(Brightness brightness, [Color? backgroundColor]) {
-    final SystemUiOverlayStyle style = brightness == Brightness.dark
+    final SystemUiOverlayStyle style = brightness.isDark
       ? SystemUiOverlayStyle.light
       : SystemUiOverlayStyle.dark;
     // For backward compatibility, create an overlay style without system navigation bar settings.
@@ -2381,10 +2381,10 @@ class _AppBarDefaultsM2 extends AppBarTheme {
   late final ColorScheme _colors = _theme.colorScheme;
 
   @override
-  Color? get backgroundColor => _colors.brightness == Brightness.dark ? _colors.surface : _colors.primary;
+  Color? get backgroundColor => _colors.brightness.isDark ? _colors.surface : _colors.primary;
 
   @override
-  Color? get foregroundColor => _colors.brightness == Brightness.dark ? _colors.onSurface : _colors.onPrimary;
+  Color? get foregroundColor => _colors.brightness.isDark ? _colors.onSurface : _colors.onPrimary;
 
   @override
   IconThemeData? get iconTheme => _theme.iconTheme;

@@ -1996,7 +1996,7 @@ class _SwitchDefaultsM2 extends SwitchThemeData {
 
   @override
   MaterialStateProperty<Color> get thumbColor {
-    final bool isDark = _theme.brightness == Brightness.dark;
+    final bool isDark = _theme.brightness.isDark;
 
     return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
       if (states.contains(MaterialState.disabled)) {
@@ -2011,7 +2011,7 @@ class _SwitchDefaultsM2 extends SwitchThemeData {
 
   @override
   MaterialStateProperty<Color> get trackColor {
-    final bool isDark = _theme.brightness == Brightness.dark;
+    final bool isDark = _theme.brightness.isDark;
     const Color black32 = Color(0x52000000); // Black with 32% opacity
 
     return MaterialStateProperty.resolveWith((Set<MaterialState> states) {

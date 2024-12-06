@@ -610,7 +610,7 @@ class _SnackBarState extends State<SnackBar> {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
     final SnackBarThemeData snackBarTheme = theme.snackBarTheme;
-    final bool isThemeDark = theme.brightness == Brightness.dark;
+    final bool isThemeDark = theme.brightness.isDark;
     final Color buttonColor =  isThemeDark ? colorScheme.primary : colorScheme.secondary;
     final SnackBarThemeData defaults = theme.useMaterial3
         ? _SnackbarDefaultsM3(context)
@@ -887,14 +887,14 @@ class _SnackbarDefaultsM2 extends SnackBarThemeData {
   late final ColorScheme _colors;
 
   @override
-  Color get backgroundColor => _theme.brightness == Brightness.light
+  Color get backgroundColor => _theme.brightness.isLight
       ? Color.alphaBlend(_colors.onSurface.withOpacity(0.80), _colors.surface)
       : _colors.onSurface;
 
   @override
   TextStyle? get contentTextStyle => ThemeData(
     useMaterial3: _theme.useMaterial3,
-    brightness: _theme.brightness == Brightness.light
+    brightness: _theme.brightness.isLight
       ? Brightness.dark
       : Brightness.light)
     .textTheme
@@ -908,7 +908,7 @@ class _SnackbarDefaultsM2 extends SnackBarThemeData {
 
   @override
   Color get disabledActionTextColor => _colors.onSurface
-      .withOpacity(_theme.brightness == Brightness.light ? 0.38 : 0.3);
+      .withOpacity(_theme.brightness.isLight ? 0.38 : 0.3);
 
   @override
   ShapeBorder get shape => const RoundedRectangleBorder(

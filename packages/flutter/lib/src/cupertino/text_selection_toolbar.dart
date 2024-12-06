@@ -9,7 +9,7 @@ import 'dart:collection';
 import 'dart:math' as math show pi;
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart' show Brightness, clampDouble;
+import 'package:flutter/foundation.dart' show clampDouble;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -141,7 +141,7 @@ class CupertinoTextSelectionToolbar extends StatelessWidget {
     return _CupertinoTextSelectionToolbarShape(
       anchorAbove: anchorAbove,
       anchorBelow: anchorBelow,
-      shadowColor: CupertinoTheme.brightnessOf(context) == Brightness.light
+      shadowColor: CupertinoTheme.brightnessOf(context).isLight
           ? CupertinoColors.black.withOpacity(0.2)
           : null,
       child: ColoredBox(

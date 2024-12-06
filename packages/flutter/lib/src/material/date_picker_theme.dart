@@ -744,7 +744,7 @@ class _DatePickerDefaultsM2 extends DatePickerThemeData {
   late final ThemeData _theme = Theme.of(context);
   late final ColorScheme _colors = _theme.colorScheme;
   late final TextTheme _textTheme = _theme.textTheme;
-  late final bool _isDark = _colors.brightness == Brightness.dark;
+  late final bool _isDark = _colors.brightness.isDark;
 
   @override
   Color? get headerBackgroundColor => _isDark ? _colors.surface : _colors.primary;

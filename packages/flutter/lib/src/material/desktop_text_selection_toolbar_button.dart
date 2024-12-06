@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'colors.dart';
@@ -44,7 +43,7 @@ class DesktopTextSelectionToolbarButton extends StatelessWidget {
          text,
          overflow: TextOverflow.ellipsis,
          style: _kToolbarButtonFontStyle.copyWith(
-           color: Theme.of(context).colorScheme.brightness == Brightness.dark
+           color: Theme.of(context).colorScheme.brightness.isDark
                ? Colors.white
                : Colors.black87,
          ),
@@ -59,8 +58,7 @@ class DesktopTextSelectionToolbarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(hansmuller): Should be colorScheme.onSurface
-    final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.colorScheme.brightness == Brightness.dark;
+    final bool isDark = Theme.of(context).brightness.isDark;
     final Color foregroundColor = isDark ? Colors.white : Colors.black87;
 
     return SizedBox(

@@ -823,7 +823,7 @@ void main() {
     final Hct sourceColor =  Hct.fromInt(seedColor.value);
 
     void colorsMatchDynamicSchemeColors(DynamicSchemeVariant schemeVariant, Brightness brightness, double contrastLevel) {
-      final bool isDark = brightness == Brightness.dark;
+      final bool isDark = brightness.isDark;
       final DynamicScheme dynamicScheme = switch (schemeVariant) {
         DynamicSchemeVariant.tonalSpot => SchemeTonalSpot(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),
         DynamicSchemeVariant.fidelity => SchemeFidelity(sourceColorHct: sourceColor, isDark: isDark, contrastLevel: contrastLevel),

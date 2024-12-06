@@ -80,7 +80,7 @@ class NextPage extends StatelessWidget {
             backgroundColor: CupertinoColors.systemYellow,
             border: Border(
               bottom: BorderSide(
-                color: brightness == Brightness.light ? CupertinoColors.black : CupertinoColors.white,
+                color: brightness.isLight ? CupertinoColors.black : CupertinoColors.white,
               ),
             ),
             // The middle widget is visible in both collapsed and expanded states.

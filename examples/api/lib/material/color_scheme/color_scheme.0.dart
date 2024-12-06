@@ -126,7 +126,7 @@ class _SettingsState extends State<Settings> {
                 children: <Widget>[
                   const Text('Brightness: '),
                   Switch(
-                    value: selectedBrightness == Brightness.light,
+                    value: selectedBrightness.isLight,
                     onChanged: (bool value) {
                       setState(() {
                         selectedBrightness = value ? Brightness.light : Brightness.dark;
@@ -380,7 +380,7 @@ class ColorChip extends StatelessWidget {
 
   static Color contrastColor(Color color) {
     final Brightness brightness = ThemeData.estimateBrightnessForColor(color);
-    return brightness == Brightness.dark ? Colors.white : Colors.black;
+    return brightness.isDark ? Colors.white : Colors.black;
   }
 
   @override

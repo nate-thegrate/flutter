@@ -3211,7 +3211,7 @@ class _TimePickerDefaultsM2 extends _TimePickerDefaults {
   Color get dayPeriodColor {
     return MaterialStateColor.resolveWith((Set<MaterialState> states) {
       if (states.contains(MaterialState.selected)) {
-        return _colors.primary.withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12);
+        return _colors.primary.withOpacity(_colors.brightness.isDark ? 0.24 : 0.12);
       }
       // The unselected day period should match the overall picker dialog color.
       // Making it transparent enables that without being redundant and allows
@@ -3254,7 +3254,7 @@ class _TimePickerDefaultsM2 extends _TimePickerDefaults {
 
   @override
   Color get dialBackgroundColor {
-    return _colors.onSurface.withOpacity(_colors.brightness == Brightness.dark ? 0.12 : 0.08);
+    return _colors.onSurface.withOpacity(_colors.brightness.isDark ? 0.12 : 0.08);
   }
 
   @override
@@ -3304,7 +3304,7 @@ class _TimePickerDefaultsM2 extends _TimePickerDefaults {
 
   @override
   Color get entryModeIconColor {
-    return _colors.onSurface.withOpacity(_colors.brightness == Brightness.dark ? 1.0 : 0.6);
+    return _colors.onSurface.withOpacity(_colors.brightness.isDark ? 1.0 : 0.6);
   }
 
   @override
@@ -3316,7 +3316,7 @@ class _TimePickerDefaultsM2 extends _TimePickerDefaults {
   Color get hourMinuteColor {
     return MaterialStateColor.resolveWith((Set<MaterialState> states) {
       return states.contains(MaterialState.selected)
-          ? _colors.primary.withOpacity(_colors.brightness == Brightness.dark ? 0.24 : 0.12)
+          ? _colors.primary.withOpacity(_colors.brightness.isDark ? 0.24 : 0.12)
           : _colors.onSurface.withOpacity(0.12);
     });
   }

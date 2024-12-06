@@ -204,8 +204,7 @@ class HomePage extends StatelessWidget {
                       },
                       excludeFromSemantics: true,
                       child: FadeInImage(
-                        image: Theme.of(context).colorScheme.brightness ==
-                                Brightness.dark
+                        image: Theme.of(context).brightness.isDark
                             ? const AssetImage(
                                 'assets/logo/flutter_logo.png',
                                 package: 'flutter_gallery_assets',
@@ -1055,7 +1054,7 @@ class _CarouselCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final bool isDark = Theme.of(context).colorScheme.brightness == Brightness.dark;
+    final bool isDark = Theme.of(context).brightness.isDark;
     final ImageProvider<Object>? asset = isDark ? assetDark : this.asset;
     final Color? assetColor = isDark ? assetDarkColor : this.assetColor;
     final Color? textColor = isDark ? Colors.white.withOpacity(0.87) : this.textColor;
