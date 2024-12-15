@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/foundation.dart' show ValueListenable, clampDouble;
+import 'dart:ui' show clampDouble;
+
 import 'package:flutter/widgets.dart';
 
 import 'debug.dart';

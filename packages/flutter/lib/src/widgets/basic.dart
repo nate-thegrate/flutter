@@ -30,6 +30,7 @@ export 'package:flutter/foundation.dart' show
   FlutterErrorDetails,
   Listenable,
   TargetPlatform,
+  ValueListenable,
   ValueNotifier;
 export 'package:flutter/painting.dart';
 export 'package:flutter/rendering.dart' show
