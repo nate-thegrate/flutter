@@ -171,7 +171,7 @@ class _CupertinoTabViewState extends State<CupertinoTabView> {
           ..add(_heroController);
   }
 
-  final Set<_TabRoute> _tabRoutes = <_TabRoute>{};
+  Set<_TabRoute>? _debugTabRoutes;
   GlobalKey<NavigatorState>? _ownedNavigatorKey;
   GlobalKey<NavigatorState> get _navigatorKey {
     return widget.navigatorKey ?? (_ownedNavigatorKey ??= GlobalKey<NavigatorState>());
@@ -180,13 +180,18 @@ class _CupertinoTabViewState extends State<CupertinoTabView> {
   @override
   void reassemble() {
     super.reassemble();
-    final NavigatorState navigator = _navigatorKey.currentState!;
-
-    for (final _TabRoute route in _tabRoutes) {
-      if (route.findBuilder() == null) {
-        navigator.removeRoute(route);
+    assert(() {
+      final NavigatorState navigator = _navigatorKey.currentState!;
+      final Set<_TabRoute>? routes = _debugTabRoutes;
+      if (routes != null) {
+        for (final _TabRoute route in routes) {
+          if (route.findBuilder() == null) {
+            navigator.removeRoute(route);
+          }
+        }
       }
-    }
+      return true;
+    }());
   }
 
   // Whether this tab is currently the active tab.
@@ -262,7 +267,7 @@ typedef _TabRoute = _CupertinoTabViewRoute<Object?>;
 
 class _CupertinoTabViewRoute<T> extends PageRoute<T> with CupertinoRouteTransitionMixin<T> {
   _CupertinoTabViewRoute(this.state, {super.settings}) {
-    state._tabRoutes.add(this);
+    assert((state._debugTabRoutes ??= <_TabRoute>{}).add(this));
   }
 
   final _CupertinoTabViewState state;
