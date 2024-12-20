@@ -153,8 +153,8 @@ class _CupertinoTabViewState extends State<CupertinoTabView> {
   @override
   void didUpdateWidget(CupertinoTabView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.navigatorKey != oldWidget.navigatorKey ||
-        widget.navigatorObservers != oldWidget.navigatorObservers) {
+    if (widget.navigatorKey != oldWidget.navigatorKey
+        || widget.navigatorObservers != oldWidget.navigatorObservers) {
       _updateObservers();
     }
   }
@@ -166,17 +166,27 @@ class _CupertinoTabViewState extends State<CupertinoTabView> {
   }
 
   void _updateObservers() {
-    _navigatorObservers = List<NavigatorObserver>.of(widget.navigatorObservers)
-      ..add(_heroController);
+    _navigatorObservers =
+        List<NavigatorObserver>.of(widget.navigatorObservers)
+          ..add(_heroController);
   }
 
+  final Set<_TabRoute> _tabRoutes = <_TabRoute>{};
   GlobalKey<NavigatorState>? _ownedNavigatorKey;
   GlobalKey<NavigatorState> get _navigatorKey {
-    if (widget.navigatorKey != null) {
-      return widget.navigatorKey!;
+    return widget.navigatorKey ?? (_ownedNavigatorKey ??= GlobalKey<NavigatorState>());
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    final NavigatorState navigator = _navigatorKey.currentState!;
+
+    for (final _TabRoute route in _tabRoutes) {
+      if (route.findBuilder() == null) {
+        navigator.removeRoute(route);
+      }
     }
-    _ownedNavigatorKey ??= GlobalKey<NavigatorState>();
-    return _ownedNavigatorKey!;
   }
 
   // Whether this tab is currently the active tab.
@@ -206,19 +216,13 @@ class _CupertinoTabViewState extends State<CupertinoTabView> {
   }
 
   Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
-    final String? name = settings.name;
-    final WidgetBuilder? routeBuilder;
-    String? title;
-    if (name == Navigator.defaultRouteName && widget.builder != null) {
-      routeBuilder = widget.builder;
-      title = widget.defaultTitle;
-    } else {
-      routeBuilder = widget.routes?[name];
-    }
-    if (routeBuilder != null) {
-      return CupertinoPageRoute<dynamic>(builder: routeBuilder, title: title, settings: settings);
-    }
-    return widget.onGenerateRoute?.call(settings);
+    final bool hasRoute = switch (settings.name) {
+      Navigator.defaultRouteName => widget.builder != null,
+      final String? name => widget.routes?[name] != null,
+    };
+    return hasRoute
+        ? _TabRoute(this, settings: settings)
+        : widget.onGenerateRoute?.call(settings);
   }
 
   Route<dynamic>? _onUnknownRoute(RouteSettings settings) {
@@ -251,5 +255,41 @@ class _CupertinoTabViewState extends State<CupertinoTabView> {
       return true;
     }());
     return result;
+  }
+}
+
+typedef _TabRoute = _CupertinoTabViewRoute<Object?>;
+
+class _CupertinoTabViewRoute<T> extends PageRoute<T> with CupertinoRouteTransitionMixin<T> {
+  _CupertinoTabViewRoute(this.state, {super.settings}) {
+    state._tabRoutes.add(this);
+  }
+
+  final _CupertinoTabViewState state;
+
+  @override
+  DelegatedTransitionBuilder? get delegatedTransition =>
+      CupertinoPageTransition.delegatedTransition;
+
+  bool get isDefault => settings.name == Navigator.defaultRouteName;
+
+  @override
+  String? get title => isDefault ? state.widget.defaultTitle : null;
+
+  @override
+  final bool maintainState = true;
+
+  WidgetBuilder? findBuilder() {
+    final CupertinoTabView widget = state.widget;
+    late final WidgetBuilder? fromMap = widget.routes?[settings.name];
+
+    return isDefault ? (widget.builder ?? fromMap) : fromMap;
+  }
+
+  @override
+  Widget buildContent(BuildContext context) {
+    final WidgetBuilder? builder = findBuilder();
+
+    return builder?.call(context) ?? const SizedBox.shrink();
   }
 }
