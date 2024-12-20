@@ -329,4 +329,53 @@ void main() {
     // Navigator didn't pop, so first route is still visible
     expect(find.text('first route'), findsOneWidget);
   });
+
+  // Regression test for https://github.com/flutter/flutter/issues/43574.
+  testWidgets('CupertinoTabView updates after a hot reload', (WidgetTester tester) async {
+    Future<void> hotReload() => tester.binding.reassembleApplication();
+
+    const Key key = Key('key');
+    Widget builder1(BuildContext context) {
+      return const KeyedSubtree(key: key, child: Center(child: Text('Settings Screen')));
+    }
+    Widget builder2(BuildContext context) {
+      return const KeyedSubtree(key: key, child: Center(child: Text('Different text!')));
+    }
+    WidgetBuilder builder = builder1;
+
+    await tester.pumpWidget(
+      CupertinoApp(
+        home: CupertinoTabScaffold(
+          tabBar: CupertinoTabBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(CupertinoIcons.settings), label: 'Settings'),
+            ],
+          ),
+          tabBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return const Center(child: Text('Home Screen'));
+            } else {
+              return CupertinoTabView(builder: builder);
+            }
+          },
+        ),
+      ),
+    );
+
+    final Finder findTabView = find.byKey(key);
+    expect(findTabView, findsNothing);
+
+    // Navigate to the settings page.
+    await tester.tap(find.byIcon(CupertinoIcons.settings));
+    await tester.pumpAndSettle();
+    expect(findTabView, findsOneWidget);
+    expect(find.text('Settings Screen'), findsOneWidget);
+    expect(find.text('Different text!'), findsNothing);
+
+    builder = builder2;
+    await hotReload();
+    expect(find.text('Settings Screen'), findsNothing);
+    expect(find.text('Different text!'), findsOneWidget);
+  });
 }
