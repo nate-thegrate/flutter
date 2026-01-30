@@ -73,4 +73,15 @@ void main() {
 
     expect(getTextColor(tester), Colors.blueAccent);
   });
+
+  test('WidgetStatesConstraint subtype', () {
+    final WidgetStateEmpty empty = WidgetStateEmpty();
+    expect(empty.isSatisfiedBy(const <WidgetState>{}), true);
+    expect(empty.isSatisfiedBy(const <WidgetState>{WidgetState.error}), false);
+  });
+}
+
+class WidgetStateEmpty with WidgetStatesConstraint {
+  @override
+  bool isSatisfiedBy(Set<WidgetState> states) => states.isEmpty;
 }
