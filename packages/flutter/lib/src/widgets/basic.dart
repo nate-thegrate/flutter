@@ -28,7 +28,13 @@ import 'widget_span.dart';
 
 export 'package:flutter/animation.dart';
 export 'package:flutter/foundation.dart'
-    show ChangeNotifier, FlutterErrorDetails, Listenable, TargetPlatform, ValueNotifier;
+    show
+        ChangeNotifier,
+        FlutterErrorDetails,
+        Listenable,
+        TargetPlatform,
+        ValueListenable,
+        ValueNotifier;
 export 'package:flutter/painting.dart';
 export 'package:flutter/rendering.dart'
     show
