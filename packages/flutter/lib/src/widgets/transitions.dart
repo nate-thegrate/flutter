@@ -192,7 +192,7 @@ class SlideTransition extends AnimatedWidget {
   /// Creates a fractional translation transition.
   const SlideTransition({
     super.key,
-    required Animation<Offset> position,
+    required ValueListenable<Offset> position,
     this.transformHitTests = true,
     this.textDirection,
     this.child,
@@ -203,7 +203,7 @@ class SlideTransition extends AnimatedWidget {
   /// If the current value of the position animation is `(dx, dy)`, the child
   /// will be translated horizontally by `width * dx` and vertically by
   /// `height * dy`, after applying the [textDirection] if available.
-  Animation<Offset> get position => listenable as Animation<Offset>;
+  ValueListenable<Offset> get position => listenable as ValueListenable<Offset>;
 
   /// The direction to use for the x offset described by the [position].
   ///
@@ -275,7 +275,7 @@ class MatrixTransition extends AnimatedWidget {
   /// The [alignment] argument defaults to [Alignment.center].
   const MatrixTransition({
     super.key,
-    required Animation<double> animation,
+    required ValueListenable<double> animation,
     required this.onTransform,
     this.alignment = Alignment.center,
     this.filterQuality,
@@ -290,7 +290,7 @@ class MatrixTransition extends AnimatedWidget {
   ///
   /// The matrix will be computed from the animation with the [onTransform]
   /// callback.
-  Animation<double> get animation => listenable as Animation<double>;
+  ValueListenable<double> get animation => listenable as ValueListenable<double>;
 
   /// The alignment of the origin of the coordinate system in which the
   /// transform takes place, relative to the size of the box.
@@ -321,7 +321,10 @@ class MatrixTransition extends AnimatedWidget {
     return Transform(
       transform: onTransform(animation.value),
       alignment: alignment,
-      filterQuality: animation.isAnimating ? filterQuality : null,
+      filterQuality: switch (animation) {
+        Animation(isAnimating: false) => null,
+        _ => filterQuality,
+      },
       child: child,
     );
   }
@@ -354,14 +357,14 @@ class ScaleTransition extends MatrixTransition {
   /// The [alignment] argument defaults to [Alignment.center].
   const ScaleTransition({
     super.key,
-    required Animation<double> scale,
+    required ValueListenable<double> scale,
     super.alignment = Alignment.center,
     super.filterQuality,
     super.child,
   }) : super(animation: scale, onTransform: _handleScaleMatrix);
 
   /// The animation that controls the scale of the child.
-  Animation<double> get scale => animation;
+  ValueListenable<double> get scale => animation;
 
   /// The callback that controls the scale of the child.
   ///
@@ -393,14 +396,14 @@ class RotationTransition extends MatrixTransition {
   /// Creates a rotation transition.
   const RotationTransition({
     super.key,
-    required Animation<double> turns,
+    required ValueListenable<double> turns,
     super.alignment = Alignment.center,
     super.filterQuality,
     super.child,
   }) : super(animation: turns, onTransform: _handleTurnsMatrix);
 
   /// The animation that controls the rotation of the child.
-  Animation<double> get turns => animation;
+  ValueListenable<double> get turns => animation;
 
   /// The callback that controls the rotation of the child.
   ///
@@ -452,7 +455,7 @@ class SizeTransition extends AnimatedWidget {
   const SizeTransition({
     super.key,
     this.axis = Axis.vertical,
-    required Animation<double> sizeFactor,
+    required ValueListenable<double> sizeFactor,
     @Deprecated(
       'Use alignment instead. '
       'This property provides full control over both axes, which is an improvement over the old axisAlignment. '
@@ -481,7 +484,7 @@ class SizeTransition extends AnimatedWidget {
   ///
   /// If the value of [sizeFactor] is less than one, the child will be clipped
   /// in the appropriate axis.
-  Animation<double> get sizeFactor => listenable as Animation<double>;
+  ValueListenable<double> get sizeFactor => listenable as ValueListenable<double>;
 
   /// Describes how to align the child along the axis that [sizeFactor] is
   /// modifying.
@@ -601,7 +604,7 @@ class FadeTransition extends SingleChildRenderObjectWidget {
   /// painted with an opacity of v. For example, if v is 0.5, the child will be
   /// blended 50% with its background. Similarly, if v is 0.0, the child will be
   /// completely transparent.
-  final Animation<double> opacity;
+  final ValueListenable<double> opacity;
 
   /// Whether the semantic information of the children is always included.
   ///
@@ -628,7 +631,7 @@ class FadeTransition extends SingleChildRenderObjectWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Animation<double>>('opacity', opacity));
+    properties.add(DiagnosticsProperty<ValueListenable<double>>('opacity', opacity));
     properties.add(
       FlagProperty(
         'alwaysIncludeSemantics',
@@ -694,7 +697,7 @@ class SliverFadeTransition extends SingleChildRenderObjectWidget {
   /// painted with an opacity of v. For example, if v is 0.5, the child will be
   /// blended 50% with its background. Similarly, if v is 0.0, the child will be
   /// completely transparent.
-  final Animation<double> opacity;
+  final ValueListenable<double> opacity;
 
   /// Whether the semantic information of the sliver child is always included.
   ///
@@ -724,7 +727,7 @@ class SliverFadeTransition extends SingleChildRenderObjectWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Animation<double>>('opacity', opacity));
+    properties.add(DiagnosticsProperty<ValueListenable<double>>('opacity', opacity));
     properties.add(
       FlagProperty(
         'alwaysIncludeSemantics',
@@ -754,7 +757,7 @@ class RelativeRectTween extends Tween<RelativeRect> {
 }
 
 /// Animated version of [Positioned] which takes a specific
-/// [Animation<RelativeRect>] to transition the child's position from a start
+/// [ValueListenable<RelativeRect>] to transition the child's position from a start
 /// position to an end position over the lifetime of the animation.
 ///
 /// Only works if it's the child of a [Stack].
@@ -788,12 +791,12 @@ class PositionedTransition extends AnimatedWidget {
   /// Creates a transition for [Positioned].
   const PositionedTransition({
     super.key,
-    required Animation<RelativeRect> rect,
+    required ValueListenable<RelativeRect> rect,
     required this.child,
   }) : super(listenable: rect);
 
   /// The animation that controls the child's size and position.
-  Animation<RelativeRect> get rect => listenable as Animation<RelativeRect>;
+  ValueListenable<RelativeRect> get rect => listenable as ValueListenable<RelativeRect>;
 
   /// The widget below this widget in the tree.
   ///
@@ -843,7 +846,7 @@ class RelativePositionedTransition extends AnimatedWidget {
   /// [size].
   const RelativePositionedTransition({
     super.key,
-    required Animation<Rect?> rect,
+    required ValueListenable<Rect?> rect,
     required this.size,
     required this.child,
   }) : super(listenable: rect);
@@ -856,7 +859,7 @@ class RelativePositionedTransition extends AnimatedWidget {
   ///
   ///  * [size], which gets the size of the box that the [Positioned] widget's
   ///    offsets are relative to.
-  Animation<Rect?> get rect => listenable as Animation<Rect?>;
+  ValueListenable<Rect?> get rect => listenable as ValueListenable<Rect?>;
 
   /// The [Positioned] widget's offsets are relative to a box of this
   /// size whose origin is 0,0.
@@ -917,7 +920,7 @@ class DecoratedBoxTransition extends AnimatedWidget {
   ///
   /// Can be created using a [DecorationTween] interpolating typically between
   /// two [BoxDecoration].
-  final Animation<Decoration> decoration;
+  final ValueListenable<Decoration> decoration;
 
   /// Whether to paint the box decoration behind or in front of the child.
   final DecorationPosition position;
@@ -969,14 +972,16 @@ class AlignTransition extends AnimatedWidget {
   ///  * [Align.new].
   const AlignTransition({
     super.key,
-    required Animation<AlignmentGeometry> alignment,
+    required ValueListenable<AlignmentGeometry> alignment,
     required this.child,
     this.widthFactor,
     this.heightFactor,
   }) : super(listenable: alignment);
 
   /// The animation that controls the child's alignment.
-  Animation<AlignmentGeometry> get alignment => listenable as Animation<AlignmentGeometry>;
+  ValueListenable<AlignmentGeometry> get alignment {
+    return listenable as ValueListenable<AlignmentGeometry>;
+  }
 
   /// If non-null, the child's width factor, see [Align.widthFactor].
   final double? widthFactor;
@@ -1021,7 +1026,7 @@ class DefaultTextStyleTransition extends AnimatedWidget {
   /// the widget.
   const DefaultTextStyleTransition({
     super.key,
-    required Animation<TextStyle> style,
+    required ValueListenable<TextStyle> style,
     required this.child,
     this.textAlign,
     this.softWrap = true,
@@ -1030,7 +1035,7 @@ class DefaultTextStyleTransition extends AnimatedWidget {
   }) : super(listenable: style);
 
   /// The animation that controls the descendants' text style.
-  Animation<TextStyle> get style => listenable as Animation<TextStyle>;
+  ValueListenable<TextStyle> get style => listenable as ValueListenable<TextStyle>;
 
   /// How the text should be aligned horizontally.
   final TextAlign? textAlign;

@@ -167,8 +167,8 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo> with Ticker
 
     // We want to have the newly animating (fading in) views on top.
     transitions.sort((FadeTransition a, FadeTransition b) {
-      final Animation<double> aAnimation = a.opacity;
-      final Animation<double> bAnimation = b.opacity;
+      final ValueListenable<double> aAnimation = a.opacity;
+      final ValueListenable<double> bAnimation = b.opacity;
       final double aValue = aAnimation.value;
       final double bValue = bAnimation.value;
       return aValue.compareTo(bValue);

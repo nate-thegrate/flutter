@@ -32,13 +32,13 @@ void main() {
     );
 
     expect(
-      find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RotationTransition &&
-            widget.turns is CurvedAnimation &&
-            widget.turns.value == 0.0 &&
-            widget.turns.status == AnimationStatus.forward,
-      ),
+      find.byWidgetPredicate((Widget widget) {
+        return switch (widget) {
+          RotationTransition(turns: CurvedAnimation(value: 0.0, status: AnimationStatus.forward)) =>
+            true,
+          _ => false,
+        };
+      }),
       findsOneWidget,
     );
 
@@ -47,16 +47,18 @@ void main() {
     await tester.pump();
 
     expect(
-      find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RotationTransition &&
-            widget.turns is CurvedAnimation &&
-            (widget.turns as CurvedAnimation).parent is AnimationController &&
-            ((widget.turns as CurvedAnimation).parent as AnimationController)
-                    .value ==
-                0.5 &&
-            widget.turns.status == AnimationStatus.reverse,
-      ),
+      find.byWidgetPredicate((Widget widget) {
+        return switch (widget) {
+          RotationTransition(
+            turns: CurvedAnimation(
+              parent: AnimationController(value: 0.5),
+              status: AnimationStatus.reverse,
+            ),
+          ) =>
+            true,
+          _ => false,
+        };
+      }),
       findsOneWidget,
     );
   });

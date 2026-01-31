@@ -1002,9 +1002,9 @@ mixin RenderAnimatedOpacityMixin<T extends RenderObject> on RenderObjectWithChil
   ///
   /// This getter cannot be read until the value has been set. It should be set
   /// by the constructor of the class in which this mixin is included.
-  Animation<double> get opacity => _opacity!;
-  Animation<double>? _opacity;
-  set opacity(Animation<double> value) {
+  ValueListenable<double> get opacity => _opacity!;
+  ValueListenable<double>? _opacity;
+  set opacity(ValueListenable<double> value) {
     if (_opacity == value) {
       return;
     }
@@ -1089,7 +1089,7 @@ mixin RenderAnimatedOpacityMixin<T extends RenderObject> on RenderObjectWithChil
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Animation<double>>('opacity', opacity));
+    properties.add(DiagnosticsProperty<ValueListenable<double>>('opacity', opacity));
     properties.add(
       FlagProperty(
         'alwaysIncludeSemantics',
@@ -1102,12 +1102,12 @@ mixin RenderAnimatedOpacityMixin<T extends RenderObject> on RenderObjectWithChil
 
 /// Makes its child partially transparent, driven from an [Animation].
 ///
-/// This is a variant of [RenderOpacity] that uses an [Animation<double>] rather
+/// This is a variant of [RenderOpacity] that uses an [ValueListenable<double>] rather
 /// than a [double] to control the opacity.
 class RenderAnimatedOpacity extends RenderProxyBox with RenderAnimatedOpacityMixin<RenderBox> {
   /// Creates a partially transparent render object.
   RenderAnimatedOpacity({
-    required Animation<double> opacity,
+    required ValueListenable<double> opacity,
     bool alwaysIncludeSemantics = false,
     RenderBox? child,
   }) : super(child) {
