@@ -148,7 +148,8 @@ class AnimationStyle with Diagnosticable {
 
 class _LerpedCurve extends Curve {
   const _LerpedCurve(Curve? a, Curve? b, this._t)
-    : first = a ?? Curves.linear, second = b ?? Curves.linear;
+    : first = a ?? Curves.linear,
+      second = b ?? Curves.linear;
 
   final Curve first;
   final Curve second;
@@ -163,11 +164,11 @@ class _LerpedCurve extends Curve {
   }
 
   @override
-  bool operator==(Object other) {
-    return other is _LerpedCurve
-        && other.first == first
-        && other.second == second
-        && other._t == _t;
+  bool operator ==(Object other) {
+    return other is _LerpedCurve &&
+        other.first == first &&
+        other.second == second &&
+        other._t == _t;
   }
 
   @override
