@@ -77,7 +77,10 @@ void main() {
   test('WidgetStatesConstraint subtype', () {
     final WidgetStateEmpty empty = WidgetStateEmpty();
     expect(empty.isSatisfiedBy(const <WidgetState>{}), isTrue);
-    expect(empty.isSatisfiedBy(const <WidgetState>{WidgetState.error}), isFalse);
+    expect(
+      empty.isSatisfiedBy(const <WidgetState>{WidgetState.error}),
+      isFalse,
+    );
   });
 }
 
