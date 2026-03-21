@@ -28,7 +28,7 @@ import 'debug.dart';
 ///
 ///  * [Padding], a widget that describes margins using [EdgeInsetsGeometry].
 @immutable
-abstract class EdgeInsetsGeometry {
+sealed class EdgeInsetsGeometry {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
   const EdgeInsetsGeometry();

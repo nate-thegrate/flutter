@@ -22,7 +22,7 @@ import 'debug.dart';
 /// To convert an [AlignmentGeometry] object of indeterminate type into an
 /// [Alignment] object, call the [resolve] method.
 @immutable
-abstract class AlignmentGeometry {
+sealed class AlignmentGeometry {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
   const AlignmentGeometry();

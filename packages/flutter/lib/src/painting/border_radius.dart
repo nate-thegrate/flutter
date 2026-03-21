@@ -22,7 +22,7 @@ import 'debug.dart';
 /// To convert a [BorderRadiusGeometry] object of indeterminate type into a
 /// [BorderRadius] object, call the [resolve] method.
 @immutable
-abstract class BorderRadiusGeometry {
+sealed class BorderRadiusGeometry {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
   const BorderRadiusGeometry();
