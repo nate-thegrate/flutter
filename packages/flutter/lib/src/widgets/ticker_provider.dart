@@ -342,7 +342,24 @@ mixin SingleTickerProviderStateMixin<T extends StatefulWidget> on State<T>
       onTick,
       debugLabel: kDebugMode ? 'created by ${describeIdentity(this)}' : null,
     );
-    _updateTickerModeNotifier();
+
+    // The createTicker method can sometimes be called during State.dispose(),
+    // if an animation controller is set as a late final class member and is not referenced
+    // until then.
+    // In these cases, the ticker created by this method will immediately be disposed of,
+    // so there's no need to worry about the stability of the element tree.
+    if (kDebugMode) {
+      try {
+        _updateTickerModeNotifier();
+      } on FlutterError catch (e) {
+        if (!e.message.contains("Looking up a deactivated widget's ancestor is unsafe.")) {
+          rethrow;
+        }
+        _tickerModeNotifier = const AlwaysStoppedAnimation(TickerModeData.fallback);
+      }
+    } else {
+      _updateTickerModeNotifier();
+    }
     _updateTicker(); // Sets _ticker.mute correctly.
     return _ticker!;
   }
@@ -445,8 +462,25 @@ mixin TickerProviderStateMixin<T extends StatefulWidget> on State<T> implements 
   @override
   Ticker createTicker(TickerCallback onTick) {
     if (_tickerModeNotifier == null) {
-      // Setup TickerMode notifier before we vend the first ticker.
-      _updateTickerModeNotifier();
+      // Set up the TickerMode notifier before we vend the first ticker.
+      //
+      // The createTicker method can sometimes be called during State.dispose(),
+      // if an animation controller is set as a late final class member and is not referenced
+      // until then.
+      // In these cases, the ticker created by this method will immediately be disposed of,
+      // so there's no need to worry about the stability of the element tree.
+      if (kDebugMode) {
+        try {
+          _updateTickerModeNotifier();
+        } on FlutterError catch (e) {
+          if (!e.message.contains("Looking up a deactivated widget's ancestor is unsafe.")) {
+            rethrow;
+          }
+          _tickerModeNotifier = const AlwaysStoppedAnimation(TickerModeData.fallback);
+        }
+      } else {
+        _updateTickerModeNotifier();
+      }
     }
     assert(_tickerModeNotifier != null);
     _tickers ??= <_WidgetTicker>{};
