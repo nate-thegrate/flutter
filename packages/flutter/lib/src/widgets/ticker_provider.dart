@@ -178,7 +178,7 @@ class TickerMode extends StatefulWidget {
     // The getInheritedWidgetOfExactType() method throws an assertion error if called during
     // State.dispose(), which becomes a problem when an animation controller is set as a
     // late final class member and isn't referenced until then.
-    if (kDebugMode && !context.mounted) {
+    if (!context.mounted) {
       return fallback;
     }
 
