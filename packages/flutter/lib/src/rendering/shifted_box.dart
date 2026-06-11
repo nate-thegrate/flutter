@@ -310,14 +310,14 @@ abstract class RenderAligningShiftedBox extends RenderShiftedBox {
   /// use [resolvedAlignment] instead of [alignment] directly, for computing the
   /// child's offset.
   ///
-  /// The [performLayout] method will be called when the value changes.
+  /// A repaint will be scheduled when the value changes.
   @protected
   Alignment get resolvedAlignment => _resolvedAlignment ??= alignment.resolve(textDirection);
   Alignment? _resolvedAlignment;
 
   void _markNeedResolution() {
     _resolvedAlignment = null;
-    markNeedsLayout();
+    markNeedsPaint();
   }
 
   /// How to align the child.
@@ -335,7 +335,7 @@ abstract class RenderAligningShiftedBox extends RenderShiftedBox {
   AlignmentGeometry get alignment => _alignment;
   AlignmentGeometry _alignment;
 
-  /// Sets the alignment to a new value, and triggers a layout update.
+  /// Sets the alignment to a new value, and triggers a paint update.
   set alignment(AlignmentGeometry value) {
     if (_alignment == value) {
       return;
@@ -374,6 +374,14 @@ abstract class RenderAligningShiftedBox extends RenderShiftedBox {
     assert(hasSize);
     final childParentData = child!.parentData! as BoxParentData;
     childParentData.offset = resolvedAlignment.alongOffset(size - child!.size as Offset);
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    if (child != null) {
+      alignChild();
+    }
+    super.paint(context, offset);
   }
 
   @override
