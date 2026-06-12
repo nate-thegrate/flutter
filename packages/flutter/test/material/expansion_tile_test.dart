@@ -2319,4 +2319,39 @@ void main() {
     final ListTile listTile = tester.widget<ListTile>(find.byType(ListTile));
     expect(listTile.statesController, isNull);
   });
+
+  // Regression test for https://github.com/flutter/flutter/issues/97583.
+  testWidgets('ExpansionTile can contain a GridView child', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ExpansionTile(
+            key: const PageStorageKey<String>('key'),
+            title: const Text('Expansion Tile'),
+            children: <Widget>[
+              GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 6,
+                children: const <Widget>[
+                  ColoredBox(color: Colors.red),
+                  ColoredBox(color: Colors.orange),
+                  ColoredBox(color: Colors.yellow),
+                  ColoredBox(color: Colors.green),
+                  ColoredBox(color: Colors.blue),
+                  ColoredBox(color: Colors.purple),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    // Tap to expand — this should not throw.
+    await tester.tap(find.text('Expansion Tile'));
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.byType(GridView), findsOneWidget);
+  });
 }
