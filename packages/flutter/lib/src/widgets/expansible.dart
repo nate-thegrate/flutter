@@ -362,6 +362,7 @@ class Expansible extends StatefulWidget {
 class _ExpansibleState extends State<Expansible> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late CurvedAnimation _heightFactor;
+  final PageStorageBucket _childBucket = PageStorageBucket();
 
   Duration get _duration {
     return widget.animationStyle?.duration ?? widget.duration;
@@ -456,7 +457,10 @@ class _ExpansibleState extends State<Expansible> with SingleTickerProviderStateM
 
     final Widget result = Offstage(
       offstage: closed,
-      child: TickerMode(enabled: !closed, child: widget.bodyBuilder(context, _animationController)),
+      child: TickerMode(enabled: !closed, child: PageStorage(
+        bucket: _childBucket,
+        child: widget.bodyBuilder(context, _animationController),
+      )),
     );
 
     return AnimatedBuilder(
