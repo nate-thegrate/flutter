@@ -621,15 +621,17 @@ class DrawerControllerState extends State<DrawerController> with SingleTickerPro
   /// Starts an animation to open the drawer.
   ///
   /// Typically called by [ScaffoldState.openDrawer].
-  void open() {
-    _controller.fling();
+  TickerFuture open() {
+    TickerFuture tickerFuture = _controller.fling();
     widget.drawerCallback?.call(true);
+    return tickerFuture;
   }
 
   /// Starts an animation to close the drawer.
-  void close() {
-    _controller.fling(velocity: -1.0);
+  TickerFuture close() {
+    TickerFuture tickerFuture = _controller.fling(velocity: -1.0);
     widget.drawerCallback?.call(false);
+    return tickerFuture;
   }
 
   final GlobalKey _gestureDetectorKey = GlobalKey();

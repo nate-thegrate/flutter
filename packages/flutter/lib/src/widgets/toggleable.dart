@@ -186,23 +186,11 @@ mixin ToggleableStateMixin<S extends StatefulWidget> on TickerProviderStateMixin
   ///
   /// This method must be called whenever [value] changes to ensure that the
   /// visual representation of the Toggleable matches the current [value].
-  void animateToValue() {
-    if (tristate) {
-      if (value == null) {
-        _positionController.value = 0.0;
-      }
-      if (value ?? true) {
-        _positionController.forward();
-      } else {
-        _positionController.reverse();
-      }
-    } else {
-      if (value ?? false) {
-        _positionController.forward();
-      } else {
-        _positionController.reverse();
-      }
+  TickerFuture animateToValue() {
+    if (tristate && value == null) {
+      _positionController.value = 0.0;
     }
+    return (value ?? tristate) ? _positionController.forward() : _positionController.reverse();
   }
 
   @override

@@ -198,33 +198,32 @@ class TabController extends ChangeNotifier {
   /// [TabBarView.children]'s length.
   final int length;
 
-  void _changeIndex(int value, {Duration? duration, Curve? curve}) {
+  TickerFuture _changeIndex(int value, {Duration? duration, Curve? curve}) {
     assert(value >= 0 && (value < length || length == 0));
     assert(duration != null || curve == null);
     assert(_indexIsChangingCount >= 0);
     if (value == _index || length < 2) {
-      return;
+      return TickerFuture.complete();
     }
     _previousIndex = index;
     _index = value;
     if (duration != null && duration > Duration.zero) {
       _indexIsChangingCount += 1;
       notifyListeners(); // Because the value of indexIsChanging may have changed.
-      _animationController!
-          .animateTo(_index.toDouble(), duration: duration, curve: curve!)
-          .whenCompleteOrCancel(() {
-            if (_animationController != null) {
-              // don't notify if we've been disposed
-              _indexIsChangingCount -= 1;
-              notifyListeners();
-            }
-          });
-    } else {
-      _indexIsChangingCount += 1;
-      _animationController!.value = _index.toDouble();
-      _indexIsChangingCount -= 1;
-      notifyListeners();
+      return _animationController!.animateTo(_index.toDouble(), duration: duration, curve: curve!)
+        ..whenCompleteOrCancel(() {
+          if (_animationController != null) {
+            // don't notify if we've been disposed
+            _indexIsChangingCount -= 1;
+            notifyListeners();
+          }
+        });
     }
+    _indexIsChangingCount += 1;
+    _animationController!.value = _index.toDouble();
+    _indexIsChangingCount -= 1;
+    notifyListeners();
+    return TickerFuture.complete();
   }
 
   /// The index of the currently selected tab.
@@ -262,8 +261,8 @@ class TabController extends ChangeNotifier {
   ///
   /// While the animation is running [indexIsChanging] is true. When the
   /// animation completes [offset] will be 0.0.
-  void animateTo(int value, {Duration? duration, Curve curve = Curves.ease}) {
-    _changeIndex(value, duration: duration ?? _animationDuration, curve: curve);
+  TickerFuture animateTo(int value, {Duration? duration, Curve curve = Curves.ease}) {
+    return _changeIndex(value, duration: duration ?? _animationDuration, curve: curve);
   }
 
   /// The difference between the [animation]'s value and [index].
