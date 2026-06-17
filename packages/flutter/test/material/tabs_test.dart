@@ -9794,4 +9794,72 @@ void main() {
       reason: 'Indicator should repaint when switching tabs',
     );
   });
+
+  testWidgets('TabController.animateTo returns a TickerFuture', (WidgetTester tester) async {
+    final tabs = <String>['A', 'B', 'C'];
+    late TabController controller;
+
+    await tester.pumpWidget(
+      boilerplate(
+        child: TabControllerFrame(
+          length: tabs.length,
+          builder: (BuildContext context, TabController tabController) {
+            controller = tabController;
+            return TabBar(
+              controller: tabController,
+              tabs: tabs.map((String tab) => Tab(text: tab)).toList(),
+            );
+          },
+        ),
+      ),
+    );
+
+    var completed = false;
+    final TickerFuture future = controller.animateTo(
+      2,
+      duration: const Duration(milliseconds: 200),
+    );
+    future.then((_) {
+      completed = true;
+    });
+
+    expect(completed, isFalse);
+    expect(controller.indexIsChanging, isTrue);
+
+    await tester.pumpAndSettle();
+    expect(completed, isTrue);
+    expect(controller.index, 2);
+    expect(controller.indexIsChanging, isFalse);
+  });
+
+  testWidgets('TabController.animateTo returns completed TickerFuture when index is same', (
+    WidgetTester tester,
+  ) async {
+    final tabs = <String>['A', 'B'];
+    late TabController controller;
+
+    await tester.pumpWidget(
+      boilerplate(
+        child: TabControllerFrame(
+          length: tabs.length,
+          builder: (BuildContext context, TabController tabController) {
+            controller = tabController;
+            return TabBar(
+              controller: tabController,
+              tabs: tabs.map((String tab) => Tab(text: tab)).toList(),
+            );
+          },
+        ),
+      ),
+    );
+
+    // Animating to the current index should return an already-completed future.
+    final TickerFuture future = controller.animateTo(0);
+    var completed = false;
+    future.then((_) {
+      completed = true;
+    });
+    await tester.pump();
+    expect(completed, isTrue);
+  });
 }

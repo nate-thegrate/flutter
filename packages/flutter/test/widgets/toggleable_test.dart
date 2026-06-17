@@ -31,6 +31,32 @@ void main() {
     await tester.pumpAndSettle();
     expect(state.value, isFalse);
   });
+
+  testWidgets('animateToValue returns a TickerFuture', (WidgetTester tester) async {
+    await tester.pumpWidget(const TestWidgetsApp(home: TestToggleable()));
+    final TestToggleableState state = tester.state<TestToggleableState>(
+      find.byType(TestToggleable),
+    );
+
+    // Start with value = true (position should be at 1.0).
+    expect(state.value, isTrue);
+
+    // Change value to false and animate.
+    state.value = false;
+    final TickerFuture future = state.animateToValue();
+
+    var completed = false;
+    future.then((_) {
+      completed = true;
+    });
+
+    // The animation should not be completed immediately.
+    await tester.pump();
+    expect(completed, isFalse);
+
+    await tester.pumpAndSettle();
+    expect(completed, isTrue);
+  });
 }
 
 class TestPainter extends ToggleablePainter {

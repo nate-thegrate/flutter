@@ -1138,4 +1138,52 @@ void main() {
     expect(tester.getSize(find.byType(Drawer)), Size.zero);
     expect(tester.getSize(find.byType(DrawerHeader)), Size.zero);
   });
+
+  testWidgets('DrawerControllerState.open returns a TickerFuture', (WidgetTester tester) async {
+    final drawerKey = GlobalKey<DrawerControllerState>();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: DrawerController(
+          key: drawerKey,
+          alignment: DrawerAlignment.start,
+          child: const Drawer(child: Text('Drawer')),
+        ),
+      ),
+    );
+
+    var completed = false;
+    final TickerFuture future = drawerKey.currentState!.open();
+    future.then((_) {
+      completed = true;
+    });
+
+    expect(completed, isFalse);
+    await tester.pumpAndSettle();
+    expect(completed, isTrue);
+  });
+
+  testWidgets('DrawerControllerState.close returns a TickerFuture', (WidgetTester tester) async {
+    final drawerKey = GlobalKey<DrawerControllerState>();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: DrawerController(
+          key: drawerKey,
+          alignment: DrawerAlignment.start,
+          isDrawerOpen: true,
+          child: const Drawer(child: Text('Drawer')),
+        ),
+      ),
+    );
+
+    var completed = false;
+    final TickerFuture future = drawerKey.currentState!.close();
+    future.then((_) {
+      completed = true;
+    });
+
+    expect(completed, isFalse);
+
+    await tester.pumpAndSettle();
+    expect(completed, isTrue);
+  });
 }
