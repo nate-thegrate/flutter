@@ -918,7 +918,7 @@ class EditableText extends StatefulWidget {
     this.hintLocales,
     this.enableInlinePrediction,
   }) : assert(obscuringCharacter.length == 1),
-       autocorrect = autocorrect ?? _inferAutocorrect(autofillHints: autofillHints),
+       autocorrect = autocorrect ?? _inferAutocorrect(autofillHints, keyboardType),
        smartDashesType =
            smartDashesType ?? (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
        smartQuotesType =
@@ -2199,7 +2199,10 @@ class EditableText extends StatefulWidget {
   }
 
   // Infer the value of autocorrect from autofillHints.
-  static bool _inferAutocorrect({required Iterable<String>? autofillHints}) {
+  static bool _inferAutocorrect(Iterable<String>? autofillHints, TextInputType? keyboardType) {
+    if (keyboardType == TextInputType.emailAddress) {
+      return false;
+    }
     if (autofillHints == null || autofillHints.isEmpty || kIsWeb) {
       return true;
     }
