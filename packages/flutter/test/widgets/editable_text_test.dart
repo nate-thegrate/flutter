@@ -889,6 +889,26 @@ void main() {
     );
   });
 
+  // Regression test for https://github.com/flutter/flutter/issues/19779.
+  test('Infers autocorrect as false when using TextInputType.emailAddress', () {
+    const color = Color(0xFF000000);
+    final controller = TextEditingController();
+    final focusNode = FocusNode();
+    addTearDown(controller.dispose);
+    addTearDown(focusNode.dispose);
+
+    final editableText = EditableText(
+      controller: controller,
+      focusNode: focusNode,
+      style: const TextStyle(),
+      cursorColor: color,
+      backgroundCursorColor: color,
+      keyboardType: TextInputType.emailAddress,
+    );
+
+    expect(editableText.autocorrect, isFalse);
+  });
+
   group('Infer keyboardType from autofillHints', () {
     testWidgets(
       'infer keyboard types from autofillHints: ios',
